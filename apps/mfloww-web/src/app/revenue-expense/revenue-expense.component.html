@@ -1,1 +1,7 @@
-<mfloww-view-select></mfloww-view-select>
+<mfloww-view-select (selection)="handleMonthSelection($any($event))">
+  <mfloww-view-option value="Option 1">Option 1</mfloww-view-option>
+  <mfloww-view-option value="Option 2">Option 2</mfloww-view-option>
+  <mfloww-view-option value="VERY LONG OPTION IS HERE TO STAY!"
+    >VERY LONG OPTION IS HERE TO STAY!</mfloww-view-option
+  >
+</mfloww-view-select>

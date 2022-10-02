@@ -1,4 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@mixin app-colors {
+  --app-background: #13171c;
+  --app-foreground: #434f59;
+  --app-foreground-hover: #5a636b;
+  --app-blue: #008eff;
+  --app-success: #82db73;
+  --app-warn: #f44336;
+}
+
+@layer base {
+  :root {
+    @include app-colors;
+  }
+}
+
 @font-face {
   font-family: 'Krona One';
   font-style: normal;
@@ -11,11 +29,7 @@
 }
 
 :root {
-  --app-background: #13171c;
-  --app-foreground: #434f59;
-  --app-blue: #008eff;
-  --app-success: #82db73;
-  --app-warn: #f44336;
+  @include app-colors;
 }
 
 * {
@@ -33,16 +47,7 @@ body {
 body {
   font-family: 'Krona One';
   background-color: var(--app-background);
-
-  h1,
-  h1,
-  h3,
-  h4,
-  h5,
-  h6,
-  p {
-    color: #ffffff;
-  }
+  color: #ffffff;
 
   .app-bg {
     background-color: var(--app-background);

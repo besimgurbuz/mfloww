@@ -5,4 +5,8 @@ import { Component } from '@angular/core';
   templateUrl: './revenue-expense.component.html',
   styleUrls: ['./revenue-expense.component.scss'],
 })
-export class RevenueExpenseComponent {}
+export class RevenueExpenseComponent {
+  handleMonthSelection(selection: string) {
+    console.log(selection);
+  }
+}

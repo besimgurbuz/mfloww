@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MflowwSelectComponent } from '@mfloww/view';
+import { MflowwSelectModule } from '@mfloww/view';
 import { RevenueExpenseComponent } from './revenue-expense.component';
 
 @NgModule({
@@ -12,7 +12,7 @@ import { RevenueExpenseComponent } from './revenue-expense.component';
         component: RevenueExpenseComponent,
       },
     ]),
-    MflowwSelectComponent,
+    MflowwSelectModule,
   ],
 })
 export class RevenueExpenseModule {}

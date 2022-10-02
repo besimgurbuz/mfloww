@@ -1,4 +1,20 @@
-<div class="mfloww-select relative cursor-pointer border-solid rounded w-fit">
-  Select
-  <div class="options absolute"></div>
+<div
+  class="relative border-solid border-2 cursor-pointer border-mfloww_fg rounded h-9 w-fit px-3 py-1 flex items-center gap-3 hover:bg-mfloww_fg select-none"
+  [ngClass]="{ 'bg-mfloww_fg': _opened }"
+  (click)="_opened = !_opened"
+>
+  <div class="flex gap-3 items-center w-fit">
+    <p>{{ (_selection$ | async) || placeholder || 'Select' }}</p>
+    <mfloww-view-icon type="arrow_down" color="#ffffff"></mfloww-view-icon>
+  </div>
+  <ng-container *ngIf="_opened">
+    <div
+      class="absolute top-10 left-0 flex flex-col items-center min-w-max bg-mfloww_fg rounded"
+    >
+      <ng-container
+        *ngFor="let option of _options"
+        [ngTemplateOutlet]="option.template"
+      ></ng-container>
+    </div>
+  </ng-container>
 </div>
