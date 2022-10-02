@@ -1,0 +1,44 @@
+{
+  "name": "mfloww-view",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/mfloww-view/src",
+  "prefix": "mfloww-view",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/libs/mfloww-view"],
+      "options": {
+        "project": "libs/mfloww-view/ng-package.json",
+        "tailwindConfig": "libs/mfloww-view/tailwind.config.js"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/mfloww-view/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/mfloww-view/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/mfloww-view"],
+      "options": {
+        "jestConfig": "libs/mfloww-view/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/mfloww-view/**/*.ts",
+          "libs/mfloww-view/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": ["view", "lib"]
+}

@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@mfloww/view": ["libs/mfloww-view/src/public-api.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
