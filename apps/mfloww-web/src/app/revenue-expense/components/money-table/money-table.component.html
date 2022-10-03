@@ -1,0 +1,26 @@
+<div
+  [ngClass]="{
+    'text-mfloww_success': type === 'revenue',
+    'text-mfloww_warn': type === 'expense'
+  }"
+  class="flex flex-col gap-6 w-full items-center"
+>
+  <h1 class="text-3xl w-fit">{{ title }}</h1>
+  <div class="entries w-full flex flex-col gap-5">
+    <mfloww-money-table-entry
+      *ngFor="let entry of entries"
+      [label]="entry.label"
+      [type]="type"
+      [amount]="entry.amount"
+      [currency]="entry.currency"
+    ></mfloww-money-table-entry>
+  </div>
+  <div class="total w-full m-16">
+    <mfloww-money-table-entry
+      label="Total"
+      [type]="type"
+      [amount]="sumOfEntries"
+      [currency]="entries[0].currency"
+    ></mfloww-money-table-entry>
+  </div>
+</div>

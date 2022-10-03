@@ -14,10 +14,10 @@ import {
   styleUrls: ['./option.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MflowwOptionComponent {
-  @Input() value!: unknown;
+export class MflowwOptionComponent<T> {
+  @Input() value!: T;
 
-  @Output() selected: EventEmitter<unknown> = new EventEmitter();
+  @Output() selected: EventEmitter<T> = new EventEmitter();
 
   @ViewChild('option')
   public template!: TemplateRef<HTMLElement>;

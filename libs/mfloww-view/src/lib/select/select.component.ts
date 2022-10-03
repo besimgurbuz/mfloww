@@ -19,17 +19,18 @@ import { MflowwOptionComponent } from './components/option/option.component';
   styleUrls: ['./select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MflowwSelectComponent implements AfterViewInit {
+export class MflowwSelectComponent<T> implements AfterViewInit {
   @Input() placeholder?: string;
 
-  @Output() selection: EventEmitter<unknown> = new EventEmitter();
+  @Output() selection: EventEmitter<T> = new EventEmitter();
 
   @ContentChildren(MflowwOptionComponent)
-  options!: QueryList<MflowwOptionComponent>;
+  options!: QueryList<MflowwOptionComponent<T>>;
 
   _opened = false;
-  _options: MflowwOptionComponent[] = [];
-  _selection$?: Observable<unknown>;
+  _options: MflowwOptionComponent<T>[] = [];
+  _selectedOption?: MflowwOptionComponent<T>;
+  _selection$?: Observable<T>;
 
   constructor(private elementRef: ElementRef) {}
 

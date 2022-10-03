@@ -1,5 +1,5 @@
 <div
-  class="relative border-solid border-2 cursor-pointer border-mfloww_fg rounded h-9 w-fit px-3 py-1 flex items-center gap-3 hover:bg-mfloww_fg select-none"
+  class="relative border-solid border-2 cursor-pointer border-mfloww_fg rounded h-9 max-w-sm w-fit px-3 py-1 flex items-center gap-3 hover:bg-mfloww_fg select-none"
   [ngClass]="{ 'bg-mfloww_fg': _opened }"
   (click)="_opened = !_opened"
 >
@@ -9,7 +9,7 @@
   </div>
   <ng-container *ngIf="_opened">
     <div
-      class="absolute top-10 left-0 flex flex-col items-center min-w-max bg-mfloww_fg rounded"
+      class="absolute top-10 left-0 right-0 flex flex-col items-center min-w-max bg-mfloww_fg rounded"
     >
       <ng-container
         *ngFor="let option of _options"
