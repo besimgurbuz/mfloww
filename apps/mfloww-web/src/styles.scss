@@ -48,24 +48,4 @@ body {
   font-family: 'Krona One';
   background-color: var(--app-background);
   color: #ffffff;
-
-  .app-bg {
-    background-color: var(--app-background);
-  }
-
-  .app-fg {
-    background-color: var(--app-foreground);
-  }
-
-  .app-success {
-    color: var(--app-success);
-  }
-
-  .app-warn {
-    color: var(--app-warn);
-  }
-
-  .app-blue {
-    color: var(--app-blue);
-  }
 }

@@ -8,4 +8,8 @@ export class CalculatorService {
   sumOfEntries(entries: Entry[]): number {
     return entries.reduce((sum, entry) => sum + entry.amount, 0);
   }
+
+  sumOfTotal(revenues: Entry[], expenses: Entry[]): number {
+    return this.sumOfEntries(revenues) + this.sumOfEntries(expenses);
+  }
 }
