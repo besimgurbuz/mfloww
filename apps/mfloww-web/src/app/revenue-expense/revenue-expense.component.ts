@@ -14,9 +14,9 @@ export class RevenueExpenseComponent {
     { label: 'Others', amount: 500, currency: SupportedCurrency.USD },
   ];
   expenseEntries: Entry[] = [
-    { label: 'Credit Card', amount: 5000, currency: SupportedCurrency.USD },
-    { label: 'Hobby', amount: 1000, currency: SupportedCurrency.USD },
-    { label: 'Subscriptions', amount: 100, currency: SupportedCurrency.EUR },
+    { label: 'Credit Card', amount: -5000, currency: SupportedCurrency.USD },
+    { label: 'Hobby', amount: -1000, currency: SupportedCurrency.USD },
+    { label: 'Subscriptions', amount: -100, currency: SupportedCurrency.EUR },
   ];
 
   handleMonthSelection(selection: string) {

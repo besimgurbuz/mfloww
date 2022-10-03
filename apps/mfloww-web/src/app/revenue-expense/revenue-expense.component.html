@@ -9,14 +9,14 @@
     <mfloww-view-option value="April 2022">April 2022</mfloww-view-option>
   </mfloww-view-select>
 
-  <div class="revenue-expense-section flex justify-around w-full">
+  <div class="revenue-expense-section flex flex-wrap justify-around w-full">
     <mfloww-money-table
-      class="w-2/5"
+      class="lg:w-2/5"
       [entries]="revenueEntries"
     ></mfloww-money-table>
     <mfloww-money-table
       type="expense"
-      class="w-2/5"
+      class="lg:w-2/5"
       [entries]="expenseEntries"
     ></mfloww-money-table>
   </div>
