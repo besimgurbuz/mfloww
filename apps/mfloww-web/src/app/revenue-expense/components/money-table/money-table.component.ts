@@ -12,6 +12,8 @@ export class MoneyTableComponent {
   @Input() entries: Entry[] = [];
   @Input() total = 0;
 
+  _addingModeActive = false;
+
   get title() {
     return `${this.type}s`;
   }

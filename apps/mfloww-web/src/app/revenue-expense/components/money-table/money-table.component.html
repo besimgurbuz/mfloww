@@ -14,6 +14,16 @@
       [amount]="entry.amount"
       [currency]="entry.currency"
     ></mfloww-money-table-entry>
+    <button
+      *ngIf="!_addingModeActive"
+      class="self-center hover:opacity-80 p-[2px] active:p-0 focus:p-0 active:border-2 focus:border-2 active:border-solid focus:border-solid focus:border-mfloww_fg active:rounded-full focus:rounded-full"
+      (click)="_addingModeActive = !_addingModeActive"
+    >
+      <mfloww-view-icon
+        type="filled_plus"
+        [color]="type === 'revenue' ? 'var(--app-success)' : 'var(--app-warn)'"
+      ></mfloww-view-icon>
+    </button>
   </div>
   <div class="total w-full m-16">
     <mfloww-money-table-entry

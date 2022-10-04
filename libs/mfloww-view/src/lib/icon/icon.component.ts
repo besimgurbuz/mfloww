@@ -10,13 +10,14 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
     `
       :host {
         display: block;
+        width: fit-content;
       }
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MflowwIconComponent {
-  @Input() type!: 'arrow_down';
+  @Input() type!: 'arrow_down' | 'filled_plus';
 
   @Input() color!: string;
 }
