@@ -13,15 +13,22 @@
     </mfloww-view-select>
   </div>
 
-  <div class="revenue-expense-section flex flex-wrap justify-around w-full">
+  <div
+    class="revenue-expense-section pb-20 lg:pb-0 flex flex-wrap justify-center lg:justify-around w-full"
+  >
     <mfloww-money-table
       class="lg:w-2/5"
-      [entries]="revenueEntries"
+      [entries]="(revenueEntries$ | async) || []"
+      [total]="(totalRevenue$ | async) || 0"
     ></mfloww-money-table>
     <mfloww-money-table
       type="expense"
       class="lg:w-2/5"
-      [entries]="expenseEntries"
+      [entries]="(expenseEntries$ | async) || []"
+      [total]="(totalExpense$ | async) || 0"
     ></mfloww-money-table>
+    <mfloww-overall-panel
+      [overallTotal]="(overallTotal$ | async) || 0"
+    ></mfloww-overall-panel>
   </div>
 </div>

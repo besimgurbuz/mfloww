@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Entry } from '../../../models/entry';
-import { CalculatorService } from '../../services/calculator.service';
 
 @Component({
   selector: 'mfloww-money-table',
@@ -10,16 +9,10 @@ import { CalculatorService } from '../../services/calculator.service';
 })
 export class MoneyTableComponent {
   @Input() type: 'revenue' | 'expense' = 'revenue';
-
   @Input() entries: Entry[] = [];
-
-  constructor(private calculatorService: CalculatorService) {}
+  @Input() total = 0;
 
   get title() {
     return `${this.type}s`;
-  }
-
-  get sumOfEntries(): number {
-    return this.entries ? this.calculatorService.sumOfEntries(this.entries) : 0;
   }
 }

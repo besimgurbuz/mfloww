@@ -1,0 +1,13 @@
+<div
+  class="fixed bottom-0 p-3 ml-auto mr-auto left-0 right-0 text-center w-fit flex gap-2 flex-col items-center rounded-t-sm bg-mfloww_fg"
+>
+  <h1 class="text-2xl">TOTAL</h1>
+  <p
+    [ngClass]="{
+      'text-mfloww_success': overallTotal > 0,
+      'text-mfloww_warn': overallTotal < 0
+    }"
+  >
+    {{ overallTotal | currency }}
+  </p>
+</div>

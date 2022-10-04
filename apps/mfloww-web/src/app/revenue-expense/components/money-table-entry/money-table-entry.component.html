@@ -1,8 +1,8 @@
-<div class="w-full flex justify-around text-2xl">
-  <span>
+<div class="w-full flex justify-around gap-4 text-2xl">
+  <span class="whitespace-nowrap">
     {{ amount | currency: currency }}
   </span>
-  <span>
+  <span class="text-ellipsis overflow-hidden whitespace-nowrap" [title]="label">
     {{ label }}
   </span>
 </div>
