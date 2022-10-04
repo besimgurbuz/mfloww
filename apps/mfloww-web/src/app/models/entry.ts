@@ -1,4 +1,4 @@
-import { SupportedCurrency } from './currency';
+import { SupportedCurrency } from '@mfloww/common';
 
 export interface Entry {
   amount: number;

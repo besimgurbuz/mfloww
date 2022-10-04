@@ -24,6 +24,11 @@
         [color]="type === 'revenue' ? 'var(--app-success)' : 'var(--app-warn)'"
       ></mfloww-view-icon>
     </button>
+    <div class="self-center max-w-[300px]">
+      <mfloww-view-entry-input
+        [currencies]="currencies"
+      ></mfloww-view-entry-input>
+    </div>
   </div>
   <div class="total w-full m-16">
     <mfloww-money-table-entry

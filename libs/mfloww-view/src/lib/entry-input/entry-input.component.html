@@ -1,0 +1,23 @@
+<div
+  class="flex w-full border-2 border-solid border-mfloww_fg rounded hover:border-mfloww_blue focus-within:border-mfloww_blue"
+>
+  <div class="currency flex">
+    <div class="currency-select w-1/3">
+      <mfloww-view-select [value]="currencies[0]" [borderless]="true">
+        <mfloww-view-option
+          *ngFor="let currency of currencies"
+          [value]="currency"
+          >{{ currency }}</mfloww-view-option
+        >
+      </mfloww-view-select>
+    </div>
+    <input class="w-2/3 h-full bg-mfloww_bg outline-none px-2" />
+  </div>
+  <span class="w-[2px] h-[20px] bg-mfloww_fg self-center"></span>
+  <div class="label px-2 self-center w-full">
+    <input
+      class="h-full bg-mfloww_bg border-none w-full outline-none"
+      type="text"
+    />
+  </div>
+</div>

@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@mfloww/common": ["libs/mfloww-common/src/public-api.ts"],
       "@mfloww/view": ["libs/mfloww-view/src/public-api.ts"]
     }
   },

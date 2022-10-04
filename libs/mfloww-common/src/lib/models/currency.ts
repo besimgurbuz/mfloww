@@ -1,5 +1,5 @@
 export enum SupportedCurrency {
-  TRY = '₺',
   USD = '$',
   EUR = '€',
+  TRY = '₺',
 }

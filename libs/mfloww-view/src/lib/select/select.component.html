@@ -1,14 +1,19 @@
-<div
-  class="relative border-solid border-2 cursor-pointer border-mfloww_fg rounded h-9 w-full px-3 py-1 flex items-center gap-3 hover:bg-mfloww_fg select-none"
-  [ngClass]="{ 'bg-mfloww_fg': _opened }"
+<button
+  class="relative cursor-pointer h-9 w-full px-[6px] flex items-center gap-3 hover:bg-mfloww_fg select-none"
+  [ngClass]="{
+    'bg-mfloww_fg': _opened,
+    'border-solid border-2 border-mfloww_fg rounded py-1': !borderless
+  }"
   (click)="_opened = !_opened"
 >
-  <div class="flex gap-3 items-center w-full">
-    <p class="text-ellipsis overflow-hidden whitespace-nowrap">
-      {{ (_selection$ | async) || placeholder || 'Select' }}
+  <div class="flex items-center w-full">
+    <p
+      class="w-full min-w-[21px] text-ellipsis overflow-hidden whitespace-nowrap"
+    >
+      {{ (_selection$ | async) || placeholder }}
     </p>
     <mfloww-view-icon
-      class="ml-auto"
+      class="ml-auto w-fit h-fit"
       type="arrow_down"
       color="#ffffff"
     ></mfloww-view-icon>
@@ -23,4 +28,4 @@
       ></ng-container>
     </div>
   </ng-container>
-</div>
+</button>

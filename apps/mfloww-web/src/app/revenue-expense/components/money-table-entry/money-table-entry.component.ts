@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { SupportedCurrency } from '../../../models/currency';
+import { SupportedCurrency } from '@mfloww/common';
 
 @Component({
   selector: 'mfloww-money-table-entry',

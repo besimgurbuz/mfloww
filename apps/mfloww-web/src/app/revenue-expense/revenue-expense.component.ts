@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { SupportedCurrency } from '@mfloww/common';
 import { combineLatest, map, Observable, of } from 'rxjs';
-import { SupportedCurrency } from '../models/currency';
 import { Entry } from '../models/entry';
 import { CalculatorService } from './services/calculator.service';
 
