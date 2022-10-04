@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Entry } from '../../../models/entry';
 import { CurrencyService } from '../../services/currency.service';
 
@@ -13,6 +19,8 @@ export class MoneyTableComponent {
   @Input() entries: Entry[] = [];
   @Input() total = 0;
 
+  @Output() entryCreation: EventEmitter<Entry> = new EventEmitter();
+
   _addingModeActive = false;
 
   constructor(private currencyService: CurrencyService) {}
@@ -23,5 +31,10 @@ export class MoneyTableComponent {
 
   get currencies() {
     return this.currencyService.getSupportedCurrencies();
+  }
+
+  handleNewEntry(entry: Entry) {
+    this.entryCreation.emit(entry);
+    this._addingModeActive = false;
   }
 }

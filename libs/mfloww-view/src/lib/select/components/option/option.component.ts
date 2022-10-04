@@ -16,13 +16,13 @@ import {
 })
 export class MflowwOptionComponent<T> {
   @Input() value!: T;
-
-  @Output() selected: EventEmitter<T> = new EventEmitter();
+  @Input() selected = false;
+  @Output() selection: EventEmitter<T> = new EventEmitter();
 
   @ViewChild('option')
   public template!: TemplateRef<HTMLElement>;
 
   handleOptionClick() {
-    this.selected.emit(this.value);
+    this.selection.emit(this.value);
   }
 }

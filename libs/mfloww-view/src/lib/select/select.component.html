@@ -2,15 +2,16 @@
   class="relative cursor-pointer h-9 w-full px-[6px] flex items-center gap-3 hover:bg-mfloww_fg select-none"
   [ngClass]="{
     'bg-mfloww_fg': _opened,
-    'border-solid border-2 border-mfloww_fg rounded py-1': !borderless
+    'border-solid border-2 border-mfloww_fg rounded py-1': !borderless,
+    'opacity-70 bg-mfloww_fg': _disabled
   }"
-  (click)="_opened = !_opened"
+  (click)="handleSelectButtonClick()"
 >
   <div class="flex items-center w-full">
     <p
       class="w-full min-w-[21px] text-ellipsis overflow-hidden whitespace-nowrap"
     >
-      {{ (_selection$ | async) || placeholder }}
+      {{ _value || placeholder }}
     </p>
     <mfloww-view-icon
       class="ml-auto w-fit h-fit"

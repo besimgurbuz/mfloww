@@ -24,9 +24,10 @@
         [color]="type === 'revenue' ? 'var(--app-success)' : 'var(--app-warn)'"
       ></mfloww-view-icon>
     </button>
-    <div class="self-center max-w-[300px]">
+    <div class="self-center max-w-[300px]" *ngIf="_addingModeActive">
       <mfloww-view-entry-input
         [currencies]="currencies"
+        (entryCreated)="handleNewEntry($event)"
       ></mfloww-view-entry-input>
     </div>
   </div>

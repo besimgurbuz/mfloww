@@ -20,12 +20,14 @@
       class="lg:w-2/5"
       [entries]="(revenueEntries$ | async) || []"
       [total]="(totalRevenue$ | async) || 0"
+      (entryCreation)="handleEntryCreation($event)"
     ></mfloww-money-table>
     <mfloww-money-table
       type="expense"
       class="lg:w-2/5"
       [entries]="(expenseEntries$ | async) || []"
       [total]="(totalExpense$ | async) || 0"
+      (entryCreation)="handleEntryCreation($event, 'expense')"
     ></mfloww-money-table>
     <mfloww-overall-panel
       [overallTotal]="(overallTotal$ | async) || 0"

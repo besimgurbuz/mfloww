@@ -1,18 +1,20 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ContentChildren,
   ElementRef,
   EventEmitter,
   HostListener,
   Input,
-  OnInit,
+  OnDestroy,
   Output,
   QueryList,
 } from '@angular/core';
-import { ControlValueAccessor, FormControl } from '@angular/forms';
-import { merge, Observable, ReplaySubject, tap } from 'rxjs';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { merge, Subscription, tap } from 'rxjs';
 import { MflowwOptionComponent } from './components/option/option.component';
 
 @Component({
@@ -20,17 +22,19 @@ import { MflowwOptionComponent } from './components/option/option.component';
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: MflowwSelectComponent,
+    },
+  ],
 })
 export class MflowwSelectComponent<T>
-  implements ControlValueAccessor, OnInit, AfterViewInit
+  implements ControlValueAccessor, AfterViewInit, OnDestroy
 {
   @Input() placeholder?: string;
   @Input() borderless = false;
-  @Input() set value(value: T) {
-    this._defaultValue.next(value);
-  }
-  @Input() formControl?: FormControl;
-  @Input() formControlName?: string;
 
   @Output() selection: EventEmitter<T> = new EventEmitter();
 
@@ -39,37 +43,57 @@ export class MflowwSelectComponent<T>
 
   _opened = false;
   _options: MflowwOptionComponent<T>[] = [];
-  _selection$?: Observable<T>;
-  _defaultValue: ReplaySubject<T> = new ReplaySubject();
+  _value?: T;
+  _disabled = false;
+  _touched = false;
+  _selectionSubs?: Subscription;
+  _onTouched?: () => void = () => {};
+  _onChange: (value: T) => void = () => {};
 
-  constructor(private elementRef: ElementRef) {}
-
-  ngOnInit(): void {
-    this._selection$ = this._defaultValue.asObservable();
-  }
+  constructor(private elementRef: ElementRef, private cd: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     this._options = this.options.toArray();
-    this._selection$ = merge(
-      ...this.options.map((option) => option.selected),
-      this._defaultValue
-    ).pipe(tap((value) => this.selection.emit(value)));
+    this.setInitialSelection();
+    this._selectionSubs = merge(
+      ...this.options.map((option) => option.selection)
+    )
+      .pipe(
+        tap((value) => {
+          this.markAsTouched();
+          this.selection.emit(value);
+          this._value = value;
+          this._onChange(value);
+        })
+      )
+      .subscribe();
   }
 
-  writeValue(obj: any): void {
-    throw new Error('Method not implemented.');
+  ngOnDestroy(): void {
+    this._selectionSubs?.unsubscribe();
   }
 
-  registerOnChange(fn: any): void {
-    throw new Error('Method not implemented.');
+  handleSelectButtonClick(): void {
+    if (this._disabled) {
+      return;
+    }
+    this._opened = !this._opened;
   }
 
-  registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
+  writeValue(obj: T): void {
+    this._value = obj;
+  }
+
+  registerOnChange(fn: (val: T) => void): void {
+    this._onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this._onTouched = fn;
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
+    this._disabled = isDisabled;
   }
 
   @HostListener('document:click', ['$event'])
@@ -78,5 +102,35 @@ export class MflowwSelectComponent<T>
       // Click outside of element
       this._opened = false;
     }
+  }
+
+  private markAsTouched(): void {
+    if (!this._touched) {
+      this._onTouched?.();
+      this._touched = true;
+    }
+  }
+
+  private setInitialSelection() {
+    const selected = this.options.filter((option) => option.selected);
+    const initialValue = selected[0]?.value;
+    if (selected.length <= 0) return;
+    if (selected.length > 1) {
+      throw new Error(
+        `[MflowwSelectComponent]: Only one option can be selected at the same time. ${selected
+          .map((option) => option.value)
+          .join(',')} are selected at the same time.`
+      );
+    }
+    if (!initialValue) {
+      throw new Error(
+        '[MflowwSelectComponent]: Initial value should be given for selected option'
+      );
+    }
+
+    this.markAsTouched();
+    this._onChange(initialValue);
+    this._value = initialValue;
+    this.cd.detectChanges();
   }
 }

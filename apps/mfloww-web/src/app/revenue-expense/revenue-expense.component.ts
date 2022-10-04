@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SupportedCurrency } from '@mfloww/common';
-import { combineLatest, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, map } from 'rxjs';
 import { Entry } from '../models/entry';
 import { CalculatorService } from './services/calculator.service';
 
@@ -10,25 +10,29 @@ import { CalculatorService } from './services/calculator.service';
   styleUrls: ['./revenue-expense.component.scss'],
 })
 export class RevenueExpenseComponent {
-  revenueEntries$: Observable<Entry[]> = of([
+  revenueEntriesSubject: BehaviorSubject<Entry[]> = new BehaviorSubject<
+    Entry[]
+  >([
     { label: 'Salary', amount: 10000, currency: SupportedCurrency.USD },
     { label: 'Rent', amount: 1000, currency: SupportedCurrency.USD },
     { label: 'Others', amount: 500, currency: SupportedCurrency.USD },
   ]);
-  expenseEntries$: Observable<Entry[]> = of([
+  expenseEntriesSubject: BehaviorSubject<Entry[]> = new BehaviorSubject<
+    Entry[]
+  >([
     { label: 'Credit Card', amount: -5000, currency: SupportedCurrency.USD },
     { label: 'Hobby', amount: -1000, currency: SupportedCurrency.USD },
     { label: 'Subscriptions', amount: -100, currency: SupportedCurrency.EUR },
   ]);
-  totalRevenue$ = this.revenueEntries$.pipe(
+  totalRevenue$ = this.revenueEntriesSubject.pipe(
     map(this.calculatorService.sumOfEntries)
   );
-  totalExpense$ = this.expenseEntries$.pipe(
+  totalExpense$ = this.expenseEntriesSubject.pipe(
     map(this.calculatorService.sumOfEntries)
   );
   overallTotal$ = combineLatest([
-    this.revenueEntries$,
-    this.expenseEntries$,
+    this.revenueEntriesSubject,
+    this.expenseEntriesSubject,
   ]).pipe(
     map(([revenues, expenses]) =>
       this.calculatorService.sumOfTotal(revenues, expenses)
@@ -39,5 +43,28 @@ export class RevenueExpenseComponent {
 
   handleMonthSelection(selection: string) {
     console.log(selection);
+  }
+
+  handleEntryCreation(
+    newEntry: Entry,
+    type: 'revenue' | 'expense' = 'revenue'
+  ) {
+    if (type === 'revenue') {
+      this.revenueEntriesSubject.next(
+        this.revenueEntriesSubject.value.concat(newEntry)
+      );
+    } else {
+      this.expenseEntriesSubject.next(
+        this.expenseEntriesSubject.value.concat(newEntry)
+      );
+    }
+  }
+
+  get revenueEntries$() {
+    return this.revenueEntriesSubject.asObservable();
+  }
+
+  get expenseEntries$() {
+    return this.expenseEntriesSubject.asObservable();
   }
 }
