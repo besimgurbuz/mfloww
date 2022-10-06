@@ -1,5 +1,5 @@
 <div class="relative">
-  <button
+  <div
     class="cursor-pointer h-9 w-full px-[6px] flex items-center gap-3 hover:bg-mfloww_fg select-none"
     [ngClass]="{
       'bg-mfloww_fg': _opened,
@@ -20,7 +20,7 @@
         color="#ffffff"
       ></mfloww-view-icon>
     </div>
-  </button>
+  </div>
   <ng-container *ngIf="_opened">
     <div
       class="absolute top-10 left-0 right-0 flex flex-col items-center min-w-max bg-mfloww_fg rounded overflow-hidden"
