@@ -60,9 +60,10 @@ export class MflowwSelectComponent<T>
     )
       .pipe(
         tap((value) => {
+          this._value = value;
+          this._opened = false;
           this.markAsTouched();
           this.selection.emit(value);
-          this._value = value;
           this._onChange(value);
         })
       )
@@ -71,6 +72,14 @@ export class MflowwSelectComponent<T>
 
   ngOnDestroy(): void {
     this._selectionSubs?.unsubscribe();
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOut(event: MouseEvent) {
+    if (!this.elementRef.nativeElement.contains(event.target) && this._opened) {
+      // Click outside of element
+      this._opened = false;
+    }
   }
 
   handleSelectButtonClick(): void {
@@ -94,14 +103,6 @@ export class MflowwSelectComponent<T>
 
   setDisabledState?(isDisabled: boolean): void {
     this._disabled = isDisabled;
-  }
-
-  @HostListener('document:click', ['$event'])
-  clickOut(event: MouseEvent) {
-    if (!this.elementRef.nativeElement.contains(event.target) && this._opened) {
-      // Click outside of element
-      this._opened = false;
-    }
   }
 
   private markAsTouched(): void {

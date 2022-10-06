@@ -5,6 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { EntryType } from '@mfloww/common';
 import { Entry } from '../../../models/entry';
 import { CurrencyService } from '../../services/currency.service';
 
@@ -15,7 +16,7 @@ import { CurrencyService } from '../../services/currency.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoneyTableComponent {
-  @Input() type: 'revenue' | 'expense' = 'revenue';
+  @Input() type: EntryType = 'revenue';
   @Input() entries: Entry[] = [];
   @Input() total = 0;
 

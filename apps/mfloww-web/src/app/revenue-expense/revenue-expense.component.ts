@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SupportedCurrency } from '@mfloww/common';
+import { EntryType, SupportedCurrency } from '@mfloww/common';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
 import { Entry } from '../models/entry';
 import { CalculatorService } from './services/calculator.service';
@@ -45,10 +45,7 @@ export class RevenueExpenseComponent {
     console.log(selection);
   }
 
-  handleEntryCreation(
-    newEntry: Entry,
-    type: 'revenue' | 'expense' = 'revenue'
-  ) {
+  handleEntryCreation(newEntry: Entry, type: EntryType = 'revenue') {
     if (type === 'revenue') {
       this.revenueEntriesSubject.next(
         this.revenueEntriesSubject.value.concat(newEntry)

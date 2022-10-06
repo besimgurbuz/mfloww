@@ -1,6 +1,7 @@
 <form
   class="flex w-full border-2 border-solid border-mfloww_fg rounded hover:border-mfloww_blue focus-within:border-mfloww_blue"
   [formGroup]="_entryFormGroup"
+  (keydown.enter)="handleEntrySubmit($event)"
   (ngSubmit)="handleEntrySubmit()"
 >
   <div class="currency flex">
@@ -15,9 +16,13 @@
       </mfloww-view-select>
     </div>
     <input
+      #amountInput
       class="w-2/3 h-full bg-mfloww_bg outline-none px-2"
       formControlName="amount"
       type="number"
+      mflowwViewAmount
+      [placeholder]="entryType === 'revenue' ? '1000' : '-1000'"
+      [mflowwViewAmountType]="entryType"
     />
   </div>
   <span class="w-[2px] h-[20px] bg-mfloww_fg self-center"></span>
@@ -25,6 +30,7 @@
     <input
       class="h-full bg-mfloww_bg border-none w-full outline-none"
       formControlName="label"
+      placeholder="Label"
       type="text"
     />
   </div>

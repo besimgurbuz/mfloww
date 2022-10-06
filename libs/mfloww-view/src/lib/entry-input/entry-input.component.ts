@@ -1,12 +1,15 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SupportedCurrency } from '@mfloww/common';
+import { EntryType, SupportedCurrency } from '@mfloww/common';
 
 @Component({
   selector: 'mfloww-view-entry-input',
@@ -14,8 +17,13 @@ import { SupportedCurrency } from '@mfloww/common';
   styleUrls: ['./entry-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MflowwEntryInputComponent {
+export class MflowwEntryInputComponent implements AfterViewInit {
   @Input() currencies: SupportedCurrency[] = [];
+  @Input() autofocus = false;
+  @Input() entryType: EntryType = 'revenue';
+
+  @ViewChild('amountInput')
+  amountInputEl!: ElementRef<HTMLInputElement>;
 
   @Output() entryCreated: EventEmitter<{
     currency: SupportedCurrency;
@@ -31,7 +39,14 @@ export class MflowwEntryInputComponent {
 
   constructor(private formBuilder: FormBuilder) {}
 
-  handleEntrySubmit() {
+  ngAfterViewInit(): void {
+    if (this.autofocus) {
+      this.amountInputEl.nativeElement.focus();
+    }
+  }
+
+  handleEntrySubmit(event?: Event) {
+    if (event) event.preventDefault();
     if (this._entryFormGroup.valid) {
       this.entryCreated.emit(this._entryFormGroup.value);
       this._entryFormGroup.reset();

@@ -27,6 +27,8 @@
     <div class="self-center max-w-[300px]" *ngIf="_addingModeActive">
       <mfloww-view-entry-input
         [currencies]="currencies"
+        [autofocus]="true"
+        [entryType]="type"
         (entryCreated)="handleNewEntry($event)"
       ></mfloww-view-entry-input>
     </div>
