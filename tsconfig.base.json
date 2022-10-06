@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@mfloww/common": ["libs/mfloww-common/src/public-api.ts"],
+      "@mfloww/db": ["libs/mfloww-db/src/index.ts"],
       "@mfloww/view": ["libs/mfloww-view/src/public-api.ts"]
     }
   },

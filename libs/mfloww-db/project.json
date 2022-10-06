@@ -1,0 +1,43 @@
+{
+  "name": "mfloww-db",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/mfloww-db/src",
+  "prefix": "mfloww",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/libs/mfloww-db"],
+      "options": {
+        "project": "libs/mfloww-db/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/mfloww-db/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/mfloww-db/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/mfloww-db"],
+      "options": {
+        "jestConfig": "libs/mfloww-db/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/mfloww-db/**/*.ts",
+          "libs/mfloww-db/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": ["lib"]
+}
