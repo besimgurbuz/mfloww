@@ -8,12 +8,7 @@ export class UserController {
   private static readonly logger = new ConsoleLogger(UserController.name);
 
   @Post()
-  loginToUser(@Body() body: UserDto) {
-    UserController.logger.log(body);
-  }
-
-  @Post('/new')
-  createNewUser() {
+  createNewUser(@Body() userDto: UserDto) {
     throw new Error('IMPL');
   }
 }
