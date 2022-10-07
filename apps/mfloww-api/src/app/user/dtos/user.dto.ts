@@ -10,7 +10,7 @@ export type UserCreationResultDto =
       email: string;
       username: string;
     }
-  | { error: string };
+  | { error: string; reason: any };
 
 export interface UpdateUserDto {
   email?: string;
