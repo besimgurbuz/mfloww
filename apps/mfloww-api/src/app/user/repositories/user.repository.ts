@@ -1,6 +1,6 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from '../../core/prisma.service';
 
 @Injectable()
 export class UserRepository {
