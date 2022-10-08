@@ -4,13 +4,13 @@ export interface UserDto {
   password: string;
 }
 
-export type UserCreationResultDto =
+export type UserActionResult =
   | {
       key: string;
       email: string;
       username: string;
     }
-  | { error: string; reason: any };
+  | { error: string; reason?: any };
 
 export interface UpdateUserDto {
   email?: string;

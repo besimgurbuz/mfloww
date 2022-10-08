@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { User } from '@prisma/client';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { env } from 'process';
 
@@ -13,11 +14,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
+  async validate(user: User) {
     return {
-      email: payload.email,
-      username: payload.email,
-      key: payload.key,
+      id: user.id,
+      email: user.email,
+      username: user.email,
+      key: user.key,
     };
   }
 }

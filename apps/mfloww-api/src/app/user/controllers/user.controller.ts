@@ -2,8 +2,10 @@ import {
   Body,
   ConsoleLogger,
   Controller,
+  Delete,
   Post,
   Put,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
@@ -28,7 +30,13 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Put()
-  updateUser(@Body() userDto: UserDto) {
-    return userDto;
+  updateUser(@Request() req, @Body() body: UserDto) {
+    return this.userService.updateUser(req.user, body);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete()
+  async deleteUser(@Request() req) {
+    return this.userService.deleteUser(req.user);
   }
 }
