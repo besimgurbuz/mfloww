@@ -1,1 +1,23 @@
-<p>landing works!</p>
+<div class="landing lg:px-28 md:px-18 flex flex-col gap-[150px]">
+  <header class="flex justify-between">
+    <mfloww-banner size="bigger"></mfloww-banner>
+    <div class="hidden items-center gap-3 text-mfloww_success md:flex">
+      <a class="px-5 py-2 hover:opacity-70 hover:cursor-pointer">Log in</a>
+      <a
+        class="px-5 py-2 border-2 border-solid rounded hover:bg-mfloww_success hover:text-mfloww_bg hover:cursor-pointer"
+      >
+        Sign up
+      </a>
+    </div>
+  </header>
+  <main class="flex lg:flex-row flex-col">
+    <h1
+      class="lg:w-3/5 lg:order-1 lg:text-8xl md:text-6xl order-2 text-mfloww_success"
+    >
+      Make your money flow
+      <span class="text-mfloww_blue">securely</span> visible
+    </h1>
+    <mfloww-landing-image class="lg:w-2/5 lg:order-2 order-1">
+    </mfloww-landing-image>
+  </main>
+</div>

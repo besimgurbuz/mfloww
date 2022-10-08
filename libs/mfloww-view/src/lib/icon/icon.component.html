@@ -1,26 +1,13 @@
 <svg
-  *ngIf="type === 'arrow_down'"
-  xmlns="http://www.w3.org/2000/svg"
-  width="15"
-  height="9"
-  viewBox="0 0 15 9"
+  [attr.width]="size"
+  [attr.height]="size"
+  viewBox="0 0 20 20"
   fill="none"
+  xmlns="http://www.w3.org/2000/svg"
 >
   <path
-    d="M7.5 8.90017L0 1.35232L1.34375 0L7.5 6.22697L13.6562 0.0314489L15 1.38377L7.5 8.90017Z"
-    [attr.fill]="color"
-  />
-</svg>
-<svg
-  *ngIf="type === 'filled_plus'"
-  xmlns="http://www.w3.org/2000/svg"
-  width="36"
-  height="36"
-  viewBox="0 0 36 36"
-  fill="none"
->
-  <path
-    d="M16.5 32V19.5H4V16.5H16.5V4H19.5V16.5H32V19.5H19.5V32H16.5Z"
+    *ngFor="let path of _iconPaths[type]"
+    [attr.d]="path"
     [attr.fill]="color"
   />
 </svg>

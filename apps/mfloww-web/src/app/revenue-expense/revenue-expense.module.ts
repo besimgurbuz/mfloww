@@ -7,6 +7,7 @@ import {
   MflowwIconComponent,
   MflowwSelectModule,
 } from '@mfloww/view';
+import { SharedModule } from '../shared/shared.module';
 import { MoneyTableEntryComponent } from './components/money-table-entry/money-table-entry.component';
 import { MoneyTableComponent } from './components/money-table/money-table.component';
 import { OverallTableComponent } from './components/overall-panel/overall-panel.component';
@@ -21,6 +22,7 @@ import { RevenueExpenseComponent } from './revenue-expense.component';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: '',
