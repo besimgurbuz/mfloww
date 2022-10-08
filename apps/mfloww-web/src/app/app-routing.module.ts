@@ -4,7 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'revenue-expense',
+    loadChildren: () =>
+      import('./landing/landing.module').then((module) => module.LandingModule),
     pathMatch: 'full',
   },
   {
