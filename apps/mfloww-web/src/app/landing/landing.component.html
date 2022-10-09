@@ -1,4 +1,6 @@
-<div class="landing lg:px-28 md:px-18 flex flex-col gap-[150px]">
+<div
+  class="landing lg:px-28 md:px-18 px-10 pb-28 flex flex-col gap-[75px] md:gap-[150px]"
+>
   <header class="flex justify-between">
     <mfloww-banner size="bigger"></mfloww-banner>
     <div class="hidden items-center gap-3 text-mfloww_success md:flex">
@@ -10,14 +12,44 @@
       </a>
     </div>
   </header>
-  <main class="flex lg:flex-row flex-col gap-20">
+  <main class="flex sm:flex-row flex-col gap-20">
     <h1
-      class="lg:w-3/5 lg:order-1 lg:text-8xl md:text-6xl order-2 text-mfloww_success"
+      class="md:w-1/2 lg:w-3/5 md:order-1 order-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-mfloww_success"
     >
       Make your money flow
       <span class="text-mfloww_blue">securely</span> visible
     </h1>
-    <mfloww-landing-image class="lg:w-2/5 lg:order-2 order-1 self-center">
+    <mfloww-landing-image
+      class="hidden md:block md:w-1/2 lg:w-2/5 md:order-2 order-1 w-[60%] self-center"
+    >
     </mfloww-landing-image>
   </main>
+  <div class="flex flex-col gap-6">
+    <h1 class="text-mfloww_success text-2xl md:text-4xl">
+      Stop handing over your data
+    </h1>
+    <p class="sm:max-w-[60%]">
+      Every data is encrypted with a strong key uniquely created for you and
+      stored on your device. No data belonging to you can be processed
+    </p>
+  </div>
+  <div class="flex flex-col gap-6 items-end text-right">
+    <h1 class="text-mfloww_success text-2xl md:text-4xl">
+      Visualize all types of money flows
+    </h1>
+    <p class="sm:max-w-[60%]">
+      See your different revenue and expense types in the currency type you
+      specify
+    </p>
+  </div>
+</div>
+<div
+  class="flex flex-col items-center justify-center gap-6 min-h-[400px] w-full bg-[#161A20]"
+>
+  <h1 class="text-3xl">Start using now</h1>
+  <a
+    class="px-5 py-2 border-2 border-solid rounded text-mfloww_success hover:bg-mfloww_success hover:text-mfloww_bg hover:cursor-pointer"
+  >
+    Sign up
+  </a>
 </div>

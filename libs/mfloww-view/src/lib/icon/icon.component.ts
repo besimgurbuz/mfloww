@@ -11,15 +11,12 @@ import { Icon, ICON_SVG_PATHS } from './icon';
     `
       :host {
         display: block;
-        width: fit-content;
-        height: fit-content;
       }
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MflowwIconComponent {
-  @Input() size = 20;
   @Input() type!: Icon;
   @Input() color = 'white';
 

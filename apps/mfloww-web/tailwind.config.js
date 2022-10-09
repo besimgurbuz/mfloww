@@ -1,5 +1,6 @@
 const { createGlobPatternsForDependencies } = require('@nrwl/angular/tailwind');
 const { join } = require('path');
+const { screens: defaultScreens } = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -8,7 +9,12 @@ module.exports = {
     ...createGlobPatternsForDependencies(__dirname),
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        xs: '475px',
+        ...defaultScreens
+      }
+    },
     colors: {
       mfloww_bg: 'var(--app-background)',
       mfloww_fg: 'var(--app-foreground)',
