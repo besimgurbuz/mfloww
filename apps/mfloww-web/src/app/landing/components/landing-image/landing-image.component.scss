@@ -1,3 +1,52 @@
 :host {
   display: block;
 }
+@keyframes top_to_bottom {
+  0% {
+    transform: translateY(-60%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes bottom_to_top {
+  0% {
+    transform: translateY(60%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  100% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@mixin animate_positive_currency($rotation_deg) {
+  rotate: $rotation_deg;
+  animation: bottom_to_top 1s;
+}
+
+@mixin animate_negative_currency($rotation_deg) {
+  rotate: $rotation_deg;
+  animation: top_to_bottom 1s;
+}
+
+$rotations: -35, -30, -25, -12, 35, 30, 25, 12;
+
+@each $n_rotation in $rotations {
+  @if $n_rotation < 0 {
+    .positive-currency-min#{$n_rotation * -1} {
+      @include animate_positive_currency(#{$n_rotation}deg);
+    }
+    .negative-currency-min#{$n_rotation * -1} {
+      @include animate_negative_currency(#{$n_rotation}deg);
+    }
+  } @else {
+    .positive-currency-#{$n_rotation} {
+      @include animate_positive_currency(#{$n_rotation}deg);
+    }
+    .negative-currency-#{$n_rotation} {
+      @include animate_negative_currency(#{$n_rotation}deg);
+    }
+  }
+}
