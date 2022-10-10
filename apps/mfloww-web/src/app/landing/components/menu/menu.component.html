@@ -1,0 +1,17 @@
+<div class="flex w-fit h-fit">
+  <button *ngIf="!_isOpen" (click)="handleButtonClick()">
+    <mfloww-view-icon type="menu" class="w-9"></mfloww-view-icon>
+  </button>
+  <div
+    *ngIf="_isOpen"
+    class="absolute w-1/2 h-full top-0 bottom-0 right-0 bg-mfloww_fg"
+  >
+    <div class="w-full h-full flex flex-col relative pt-20">
+      <button (click)="handleButtonClick()" class="absolute top-9 right-10">
+        <mfloww-view-icon type="close" class="w-9"></mfloww-view-icon>
+      </button>
+      <a href="" class="px-6 py-6">Log in</a>
+      <a href="" class="px-6 py-6">Sign up</a>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,9 @@ export type Icon =
   | 'pound'
   | 'ruble'
   | 'rupee'
-  | 'yuan';
+  | 'yuan'
+  | 'menu'
+  | 'close';
 
 export const ICON_SVG_PATHS: Record<Icon, string[]> = {
   arrow_down: [
@@ -38,5 +40,11 @@ export const ICON_SVG_PATHS: Record<Icon, string[]> = {
   ],
   yuan: [
     'M9.37501 17.5V11.8333H5.00001V10.5833H9.31251L4.16667 2.5H5.64584L10 9.35417L14.3542 2.5H15.8333L10.6875 10.5833H15V11.8333H10.625V17.5H9.37501Z',
+  ],
+  menu: [
+    'M2.5 15V13.75H17.5V15H2.5ZM2.5 10.625V9.375H17.5V10.625H2.5ZM2.5 6.25V5H17.5V6.25H2.5Z',
+  ],
+  close: [
+    'M5.1875 15.6875L4.3125 14.8125L9.125 10L4.3125 5.1875L5.1875 4.3125L10 9.125L14.8125 4.3125L15.6875 5.1875L10.875 10L15.6875 14.8125L14.8125 15.6875L10 10.875L5.1875 15.6875Z',
   ],
 };

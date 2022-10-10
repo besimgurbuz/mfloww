@@ -1,5 +1,8 @@
 <div
-  class="landing lg:px-28 md:px-18 px-10 pb-28 flex flex-col gap-[75px] md:gap-[150px]"
+  class="landing h-full lg:px-28 md:px-18 px-10 flex flex-col gap-[75px] md:gap-[150px]"
+  [ngClass]="{
+    'overflow-hidden': _focusedToMenu
+  }"
 >
   <header class="flex justify-between">
     <mfloww-banner size="bigger"></mfloww-banner>
@@ -11,6 +14,10 @@
         Sign up
       </a>
     </div>
+    <mfloww-menu
+      class="flex md:hidden self-center"
+      (focused)="handleMenuFocus($event)"
+    ></mfloww-menu>
   </header>
   <main class="flex sm:flex-row flex-col gap-20">
     <h1
@@ -46,7 +53,7 @@
 <div
   class="flex flex-col items-center justify-center gap-6 min-h-[400px] w-full bg-[#161A20]"
 >
-  <h1 class="text-3xl">Start using now</h1>
+  <h1 class="text-xl xs:text-3xl">Start using now</h1>
   <a
     class="px-5 py-2 border-2 border-solid rounded text-mfloww_success hover:bg-mfloww_success hover:text-mfloww_bg hover:cursor-pointer"
   >
