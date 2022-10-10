@@ -1,18 +1,6 @@
 <div
-  class="landing lg:px-28 md:px-18 px-6 pb-24 flex flex-col gap-[75px] md:gap-[150px]"
+  class="landing lg:px-28 md:px-18 px-6 md:pt-10 pb-24 flex flex-col gap-[75px] md:gap-[150px]"
 >
-  <header class="flex items-center justify-between">
-    <mfloww-banner size="bigger"></mfloww-banner>
-    <div class="hidden items-center gap-3 text-mfloww_success md:flex">
-      <a class="px-5 py-2 hover:opacity-70 hover:cursor-pointer">Log in</a>
-      <a
-        class="px-5 py-2 border-2 border-solid rounded hover:bg-mfloww_success hover:text-mfloww_bg hover:cursor-pointer"
-      >
-        Sign up
-      </a>
-    </div>
-    <mfloww-menu class="flex md:hidden self-center"></mfloww-menu>
-  </header>
   <main class="flex sm:flex-row flex-col gap-20">
     <h1
       class="md:w-1/2 lg:w-3/5 md:order-1 order-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-mfloww_success"
@@ -50,6 +38,7 @@
   <h1 class="text-xl xs:text-3xl">Start using now</h1>
   <a
     class="px-5 py-2 border-2 border-solid rounded text-mfloww_success hover:bg-mfloww_success hover:text-mfloww_bg hover:cursor-pointer"
+    routerLink="/user/sign-up"
   >
     Sign up
   </a>

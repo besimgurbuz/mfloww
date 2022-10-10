@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'mfloww-landing-image',
@@ -6,8 +6,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   styleUrls: ['./landing-image.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LandingImageComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class LandingImageComponent {
+  _imageLoaded = false;
+  onLoaded() {
+    this._imageLoaded = true;
+  }
 }

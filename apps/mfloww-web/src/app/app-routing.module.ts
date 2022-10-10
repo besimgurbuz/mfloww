@@ -9,6 +9,11 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'user',
+    loadChildren: () =>
+      import('./user/user.module').then((module) => module.UserModule),
+  },
+  {
     path: 'revenue-expense',
     loadChildren: () =>
       import('./revenue-expense/revenue-expense.module').then(
