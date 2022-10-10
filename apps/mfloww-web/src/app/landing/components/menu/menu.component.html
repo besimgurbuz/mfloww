@@ -1,17 +1,15 @@
-<div class="flex w-fit h-fit">
-  <button *ngIf="!_isOpen" (click)="handleButtonClick()">
-    <mfloww-view-icon type="menu" class="w-9"></mfloww-view-icon>
+<div class="w-fit h-fit relative flex items-center">
+  <button
+    (click)="_isOpen = !_isOpen"
+    class="self-center p-[2px] focus:p-0 focus:border-solid focus:border-mfloww_blue focus:border-2 focus:rounded"
+  >
+    <mfloww-view-icon type="menu" class="w-7"></mfloww-view-icon>
   </button>
   <div
     *ngIf="_isOpen"
-    class="absolute w-1/2 h-full top-0 bottom-0 right-0 bg-mfloww_fg"
+    class="menu-modal absolute flex flex-col rounded w-40 top-10 right-0 bg-mfloww_fg ring-1 ring-opacity-5"
   >
-    <div class="w-full h-full flex flex-col relative pt-20">
-      <button (click)="handleButtonClick()" class="absolute top-9 right-10">
-        <mfloww-view-icon type="close" class="w-9"></mfloww-view-icon>
-      </button>
-      <a href="" class="px-6 py-6">Log in</a>
-      <a href="" class="px-6 py-6">Sign up</a>
-    </div>
+    <a href="" class="px-6 py-3 text-sm">Log in</a>
+    <a href="" class="px-6 py-3 text-sm">Sign up</a>
   </div>
 </div>

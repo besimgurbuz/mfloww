@@ -2,3 +2,22 @@
   width: fit-content;
   height: fit-content;
 }
+
+.menu-modal {
+  animation: modal-opening-effect 200ms;
+}
+
+@keyframes modal-opening-effect {
+  0% {
+    transform: translateX(20%);
+    scale: 0.8;
+  }
+  50% {
+    transform: translateX(10%);
+    scale: 0.9;
+  }
+  100% {
+    transform: translateX(0);
+    scale: 1;
+  }
+}

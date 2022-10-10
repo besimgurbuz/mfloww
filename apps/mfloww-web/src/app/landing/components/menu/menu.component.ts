@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
+  ElementRef,
+  HostListener,
 } from '@angular/core';
 
 @Component({
@@ -12,12 +12,15 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
-  @Output() focused: EventEmitter<boolean> = new EventEmitter();
-
   _isOpen = false;
 
-  handleButtonClick() {
-    this._isOpen = !this._isOpen;
-    this.focused.emit(this._isOpen);
+  constructor(private elementRef: ElementRef) {}
+
+  @HostListener('document:click', ['$event'])
+  clickOut(event: MouseEvent) {
+    if (!this.elementRef.nativeElement.contains(event.target) && this._isOpen) {
+      // Click outside of element
+      this._isOpen = false;
+    }
   }
 }

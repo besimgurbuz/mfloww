@@ -6,10 +6,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./landing.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LandingComponent {
-  _focusedToMenu = false;
-
-  handleMenuFocus(isFocused: boolean) {
-    this._focusedToMenu = isFocused;
-  }
-}
+export class LandingComponent {}

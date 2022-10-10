@@ -1,10 +1,7 @@
 <div
-  class="landing h-full lg:px-28 md:px-18 px-10 flex flex-col gap-[75px] md:gap-[150px]"
-  [ngClass]="{
-    'overflow-hidden': _focusedToMenu
-  }"
+  class="landing lg:px-28 md:px-18 px-6 pb-24 flex flex-col gap-[75px] md:gap-[150px]"
 >
-  <header class="flex justify-between">
+  <header class="flex items-center justify-between">
     <mfloww-banner size="bigger"></mfloww-banner>
     <div class="hidden items-center gap-3 text-mfloww_success md:flex">
       <a class="px-5 py-2 hover:opacity-70 hover:cursor-pointer">Log in</a>
@@ -14,10 +11,7 @@
         Sign up
       </a>
     </div>
-    <mfloww-menu
-      class="flex md:hidden self-center"
-      (focused)="handleMenuFocus($event)"
-    ></mfloww-menu>
+    <mfloww-menu class="flex md:hidden self-center"></mfloww-menu>
   </header>
   <main class="flex sm:flex-row flex-col gap-20">
     <h1
