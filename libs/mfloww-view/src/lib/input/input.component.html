@@ -12,7 +12,7 @@
   <ng-container *ngIf="_touched && _control.errors">
     <p
       *ngIf="(_control.errors | keyvalue)[0] as firstError"
-      class="absolute text-mfloww_warn text-sm"
+      class="absolute text-mfloww_warn text-xs -bottom-5"
     >
       {{
         errorMessages[firstError.key](name, firstError.value?.requiredLength)
