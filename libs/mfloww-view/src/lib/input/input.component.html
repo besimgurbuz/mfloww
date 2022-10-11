@@ -1,0 +1,22 @@
+<div class="relative">
+  <input
+    type="text"
+    [placeholder]="placeholder"
+    class="bg-mfloww_bg xs:w-[450px] border-solid border-2 rounded border-mfloww_success px-3 py-2 outline-none focus:border-mfloww_blue"
+    (input)="onValueChanged($any($event.target).value)"
+    (click)="_focused = true"
+    [ngClass]="{
+      'border-mfloww_warn': _touched && _control.errors
+    }"
+  />
+  <ng-container *ngIf="_touched && _control.errors">
+    <p
+      *ngIf="(_control.errors | keyvalue)[0] as firstError"
+      class="absolute text-mfloww_warn text-sm"
+    >
+      {{
+        errorMessages[firstError.key](name, firstError.value?.requiredLength)
+      }}
+    </p>
+  </ng-container>
+</div>

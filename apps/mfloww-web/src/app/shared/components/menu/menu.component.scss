@@ -4,20 +4,19 @@
 }
 
 .menu-modal {
-  animation: modal-opening-effect 150ms;
+  animation: modal-opening-effect 100ms;
 }
 
 @keyframes modal-opening-effect {
   0% {
-    transform: translateX(20%);
-    scale: 0.8;
+    transform: translateX(5%) translateY(5%);
+    scale: 0.5;
   }
   50% {
-    transform: translateX(10%);
-    scale: 0.9;
+    transform: translateX(2%) translateY(2%);
   }
   100% {
-    transform: translateX(0);
+    transform: translateX(0) translateY(0);
     scale: 1;
   }
 }
