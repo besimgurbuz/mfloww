@@ -1,0 +1,36 @@
+:host {
+  display: block;
+}
+
+.bar {
+  animation: infinite_bar 1800ms infinite linear;
+  display: block;
+}
+
+@keyframes infinite_bar {
+  0% {
+    left: 0%;
+    right: 100%;
+    width: 0%;
+  }
+  25% {
+    left: 0%;
+    right: 75%;
+    width: 10%;
+  }
+  40% {
+    left: 0%;
+    right: 75%;
+    width: 30%;
+  }
+  90% {
+    right: 0%;
+    left: 75%;
+    width: 50%;
+  }
+  100% {
+    left: 100%;
+    right: 0%;
+    width: 0%;
+  }
+}

@@ -7,6 +7,7 @@
   --app-foreground: #434f59;
   --app-foreground-hover: #5a636b;
   --app-blue: #008eff;
+  --app-white: #fff4e3;
   --app-success: #82db73;
   --app-warn: #f44336;
 }
@@ -47,7 +48,7 @@ body {
 body {
   font-family: 'Krona One';
   background-color: var(--app-background);
-  color: #ffffff;
+  color: var(--app-white);
 }
 
 input[type='number']::-webkit-inner-spin-button {

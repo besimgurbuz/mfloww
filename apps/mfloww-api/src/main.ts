@@ -13,6 +13,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
+  Logger.log(`Enabling CORS for origin ${process.env.CORS_ORIGIN}`);
+  app.enableCors({
+    origin: process.env.CORS_ORIGIN,
+  });
   const port = process.env.PORT || 3333;
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);

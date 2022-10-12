@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { tap } from 'rxjs';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'mfloww-sign-up',
@@ -8,6 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpComponent {
+  _inProgress = false;
   signUpForm: FormGroup = new FormGroup({
     username: new FormControl('', [
       Validators.required,
@@ -21,4 +24,15 @@ export class SignUpComponent {
       Validators.maxLength(40),
     ]),
   });
+
+  constructor(private userService: UserService) {}
+
+  handleFormSubmit(): void {
+    if (this.signUpForm.invalid) return;
+    this._inProgress = true;
+    this.userService
+      .createUser(this.signUpForm.value)
+      .pipe(tap(() => (this._inProgress = false)))
+      .subscribe();
+  }
 }

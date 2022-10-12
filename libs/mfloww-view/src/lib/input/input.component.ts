@@ -85,7 +85,6 @@ export class MflowwInputComponent implements ControlValueAccessor, OnInit {
     this._value = value;
     this.markAsTouched();
     this._onChange(value);
-    console.log(this._control.errors);
   }
 
   private markAsTouched() {

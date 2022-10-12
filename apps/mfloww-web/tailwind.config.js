@@ -20,6 +20,7 @@ module.exports = {
       mfloww_fg: 'var(--app-foreground)',
       mfloww_fg_hover: 'var(--app-foreground-hover)',
       mfloww_blue: 'var(--app-blue)',
+      mfloww_white: 'var(--app-white)',
       mfloww_success: 'var(--app-success)',
       mfloww_warn: 'var(--app-warn)',
       ...defaultColors

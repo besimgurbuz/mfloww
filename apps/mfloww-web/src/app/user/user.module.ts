@@ -5,6 +5,7 @@ import { MflowwInputModule } from '@mfloww/view';
 
 import { SharedModule } from '../shared/shared.module';
 import { LogInComponent } from './log-in/log-in.component';
+import { UserService } from './services/user.service';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserRoutingModule } from './user-routing.module';
 
@@ -17,5 +18,6 @@ import { UserRoutingModule } from './user-routing.module';
     ReactiveFormsModule,
     MflowwInputModule,
   ],
+  providers: [UserService],
 })
 export class UserModule {}
