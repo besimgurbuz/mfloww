@@ -26,10 +26,13 @@ export class UserService {
     );
   }
 
-  login(
-    email: string,
-    password: string
-  ): Observable<HttpResponse<UserLoginResult>> {
+  login({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }): Observable<HttpResponse<UserLoginResult>> {
     return this.http.post<UserLoginResult>(
       `${environment.apiUrl}${this.loginPath}`,
       {

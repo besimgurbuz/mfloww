@@ -9,20 +9,23 @@
         <a [routerLink]="'/user/sign-up'" class="text-mfloww_blue">Sign up</a>
       </p>
     </div>
-    <div class="flex flex-col items-center gap-8">
-      <input
+    <form class="flex flex-col items-center gap-8" [formGroup]="logInForm">
+      <mfloww-view-input
         type="email"
         placeholder="E-mail"
-        class="bg-mfloww_bg xs:w-[450px] border-solid border-2 rounded border-mfloww_success px-3 py-2 outline-none focus:border-mfloww_blue"
-      />
-      <input
+        name="E-mail"
+        formControlName="email"
+      ></mfloww-view-input>
+      <mfloww-view-input
         type="password"
         placeholder="Password"
-        class="bg-mfloww_bg xs:w-[450px] border-solid border-2 rounded border-mfloww_success px-3 py-2 outline-none focus:border-mfloww_blue"
-      />
-    </div>
+        name="Password"
+        formControlName="password"
+      ></mfloww-view-input>
+    </form>
     <button
-      class="border-solid border-2 rounded border-mfloww_success px-10 py-2 hover:bg-mfloww_success hover:text-mfloww_bg"
+      class="border-solid border-2 rounded px-10 py-2 hover:bg-mfloww_white hover:text-mfloww_bg"
+      (click)="submitForm()"
     >
       Log in
     </button>

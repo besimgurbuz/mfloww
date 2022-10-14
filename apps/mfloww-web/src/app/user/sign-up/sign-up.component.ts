@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { UserService } from '../services/user.service';
 
@@ -20,14 +21,14 @@ export class SignUpComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
       Validators.required,
-      Validators.minLength(8),
+      Validators.minLength(5),
       Validators.maxLength(40),
     ]),
   });
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
-  handleFormSubmit(): void {
+  submitForm(): void {
     if (this.signUpForm.invalid) return;
     this._inProgress = true;
     this.userService
