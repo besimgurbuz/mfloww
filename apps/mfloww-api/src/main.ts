@@ -5,6 +5,7 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import * as cookieParser from 'cookie-parser';
 
 import { AppModule } from './app/app.module';
 import { PrismaService } from './app/core/prisma.service';
@@ -13,6 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
+  app.use(cookieParser());
   Logger.log(`Enabling CORS for origin ${process.env.CORS_ORIGIN}`);
   app.enableCors({
     origin: process.env.CORS_ORIGIN,
