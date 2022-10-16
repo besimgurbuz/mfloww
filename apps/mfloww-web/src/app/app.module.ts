@@ -13,9 +13,11 @@ import { SharedModule } from './shared/shared.module';
   declarations: [AppComponent],
   imports: [
     CoreModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',
+    }),
     BrowserModule,
     AppRoutingModule,
-    HttpClientXsrfModule,
     SharedModule,
     MflowwProgressBarComponent,
   ],

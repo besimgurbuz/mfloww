@@ -12,7 +12,10 @@ export class AuthController {
   @Post('/login')
   async login(@Request() req, @Response() res) {
     const result = await this.authService.login(req.user);
-    res.cookie('X-XSRF-TOKEN', result.access_token);
+    res.cookie('XSRF-TOKEN', result.access_token, {
+      httpOnly: true,
+      sameSite: 'strict',
+    });
     res.send(result);
   }
 }

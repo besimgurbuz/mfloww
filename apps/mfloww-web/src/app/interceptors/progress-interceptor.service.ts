@@ -16,10 +16,10 @@ export class ProgressInterceptorService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.progressState.inProgress.next(true);
+    this.progressState.emitTrue();
     return next.handle(req).pipe(
       finalize(() => {
-        this.progressState.inProgress.next(false);
+        this.progressState.emitFalse();
       })
     );
   }

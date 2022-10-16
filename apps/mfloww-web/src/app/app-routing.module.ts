@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { inject, NgModule } from '@angular/core';
+import { Router, RouterModule, Routes } from '@angular/router';
+import { AuthService } from './core/auth.service';
 
 const routes: Routes = [
   {
@@ -19,6 +20,20 @@ const routes: Routes = [
       import('./revenue-expense/revenue-expense.module').then(
         (module) => module.RevenueExpenseModule
       ),
+    canActivate: [
+      () => {
+        const isLoggedIn = inject(AuthService).isUserLoggedIn();
+        const router = inject(Router);
+
+        if (!isLoggedIn) {
+          router.navigate(['/user/log-in'], {
+            queryParams: { triedUnauth: true },
+          });
+        }
+        return isLoggedIn;
+      },
+    ],
+    title: 'Revenue-Expense',
   },
 ];
 

@@ -5,7 +5,7 @@
   <p
     [ngClass]="{
       'text-mfloww_success': overallTotal > 0,
-      'text-mfloww_warn': overallTotal < 0
+      'text-mfloww_fatal': overallTotal < 0
     }"
   >
     {{ overallTotal | currency }}

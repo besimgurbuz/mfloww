@@ -1,9 +1,23 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProgressState {
-  public inProgress: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private inProgressSubject: BehaviorSubject<boolean> = new BehaviorSubject(
+    false
+  );
+
+  emitTrue() {
+    this.inProgressSubject.next(true);
+  }
+
+  emitFalse() {
+    this.inProgressSubject.next(false);
+  }
+
+  get inProgress$(): Observable<boolean> {
+    return this.inProgressSubject.asObservable();
+  }
 }

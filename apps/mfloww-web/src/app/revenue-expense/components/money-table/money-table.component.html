@@ -1,7 +1,7 @@
 <div
   [ngClass]="{
     'text-mfloww_success': type === 'revenue',
-    'text-mfloww_warn': type === 'expense'
+    'text-mfloww_fatal': type === 'expense'
   }"
   class="flex flex-col gap-6 w-full items-center"
 >
@@ -21,7 +21,7 @@
     >
       <mfloww-view-icon
         type="plus"
-        [color]="type === 'revenue' ? 'var(--app-success)' : 'var(--app-warn)'"
+        [color]="type === 'revenue' ? 'var(--app-success)' : 'var(--app-fatal)'"
       ></mfloww-view-icon>
     </button>
     <div class="self-center max-w-[300px]" *ngIf="_addingModeActive">

@@ -1,7 +1,4 @@
-<div
-  id="app-container"
-  class="flex flex-col gap-8 md:gap-10 w-full h-full"
->
+<div id="app-container" class="flex flex-col gap-8 md:gap-10 w-full h-full">
   <mfloww-view-progress-bar
     *ngIf="inProgress$ | async"
     class="absolute left-0 right-0 top-0"
@@ -26,4 +23,21 @@
     <mfloww-menu class="flex md:hidden self-center"></mfloww-menu>
   </header>
   <router-outlet></router-outlet>
+  <div
+    *ngIf="errorMessage$ | async as errorMessage"
+    class="absolute bottom-2 md:bottom-10 mx-auto left-0 right-0 min-w-[200px] max-w-[500px] px-5 py-2 text-xs text-mfloww_{{
+      errorMessage.type
+    }} border-solid border-2 rounded"
+    #messageBox
+  >
+    <div class="flex justify-between">
+      {{ errorMessage.message }}
+      <button
+        class="text-mfloww_white opacity-60"
+        (click)="messageBox.style.visibility = 'hidden'"
+      >
+        Close
+      </button>
+    </div>
+  </div>
 </div>

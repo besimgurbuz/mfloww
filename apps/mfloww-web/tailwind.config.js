@@ -23,6 +23,7 @@ module.exports = {
       mfloww_white: 'var(--app-white)',
       mfloww_success: 'var(--app-success)',
       mfloww_warn: 'var(--app-warn)',
+      mfloww_fatal: 'var(--app-fatal)',
       ...defaultColors
     }
   },
