@@ -9,7 +9,11 @@
         <a [routerLink]="'/user/sign-up'" class="text-mfloww_blue">Sign up</a>
       </p>
     </div>
-    <form class="flex flex-col items-center gap-8" [formGroup]="logInForm">
+    <form
+      class="flex flex-col items-center gap-8"
+      [formGroup]="logInForm"
+      (keydown.enter)="submitForm()"
+    >
       <mfloww-view-input
         type="email"
         placeholder="E-mail"

@@ -32,6 +32,8 @@ export class LogInComponent implements OnInit {
   }
 
   submitForm(): void {
-    this.userService.login(this.logInForm.value).subscribe();
+    if (this.logInForm.valid) {
+      this.userService.login(this.logInForm.value).subscribe();
+    }
   }
 }

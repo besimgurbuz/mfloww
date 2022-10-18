@@ -22,6 +22,7 @@ export class UserService {
       payload,
       {
         observe: 'response',
+        withCredentials: true,
       }
     );
   }
@@ -39,7 +40,7 @@ export class UserService {
         email,
         password,
       },
-      { observe: 'response' }
+      { observe: 'response', withCredentials: true }
     );
   }
 }
