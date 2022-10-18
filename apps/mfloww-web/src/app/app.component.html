@@ -25,9 +25,11 @@
   <router-outlet></router-outlet>
   <div
     *ngIf="errorMessage$ | async as errorMessage"
-    class="absolute bottom-2 md:bottom-10 mx-auto left-0 right-0 min-w-[200px] max-w-[500px] px-5 py-2 text-xs text-mfloww_{{
-      errorMessage.type
-    }} border-solid border-2 rounded"
+    class="absolute bottom-2 md:bottom-10 mx-auto left-0 right-0 min-w-[200px] max-w-[500px] px-5 py-2 text-xs border-solid border-2 rounded"
+    [ngClass]="{
+      'text-mfloww_warn': errorMessage.type === 'warn',
+      'text-mfloww_fatal': errorMessage.type === 'fatal'
+    }"
     #messageBox
   >
     <div class="flex justify-between">
