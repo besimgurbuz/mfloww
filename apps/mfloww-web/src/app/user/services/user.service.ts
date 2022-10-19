@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LocalStorageService } from '../../core/local-storage.service';
+import { ProfileInfo } from '../../core/models/profile-info';
 import {
   CreateUserPayload,
   CreateUserResult,
@@ -13,6 +14,7 @@ import {
 export class UserService {
   private readonly createUserPath = '/api/user';
   private readonly loginPath = '/api/auth/login';
+  private readonly profileInfoPath = '/api/user/profile';
 
   constructor(
     private http: HttpClient,
@@ -58,5 +60,12 @@ export class UserService {
           }
         })
       );
+  }
+
+  getProfileInfo(): Observable<HttpResponse<ProfileInfo>> {
+    return this.http.get<ProfileInfo>(
+      `${environment.apiUrl}${this.profileInfoPath}`,
+      { observe: 'response', withCredentials: true }
+    );
   }
 }

@@ -3,6 +3,7 @@ import {
   ConsoleLogger,
   Controller,
   Delete,
+  Get,
   Post,
   Put,
   Request,
@@ -38,5 +39,11 @@ export class UserController {
   @Delete()
   async deleteUser(@Request() req) {
     return this.userService.deleteUser(req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/profile')
+  getProfileInfo(@Request() req) {
+    return this.userService.getProfile(req.user);
   }
 }

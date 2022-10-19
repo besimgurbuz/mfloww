@@ -13,6 +13,17 @@ const routes: Routes = [
     path: 'user',
     loadChildren: () =>
       import('./user/user.module').then((module) => module.UserModule),
+    canActivate: [
+      () => {
+        const isLoggedIn = inject(AuthService).isUserLoggedIn();
+        const router = inject(Router);
+
+        if (isLoggedIn) {
+          router.navigate(['/revenue-expense']);
+        }
+        return !isLoggedIn;
+      },
+    ],
   },
   {
     path: 'revenue-expense',
@@ -22,12 +33,16 @@ const routes: Routes = [
       ),
     canActivate: [
       () => {
-        const isLoggedIn = inject(AuthService).isUserLoggedIn();
+        const authService = inject(AuthService);
+        const isLoggedIn = authService.isUserLoggedIn();
         const router = inject(Router);
+        const reason = authService.isTokenExpired()
+          ? 'expiredToken'
+          : 'triedUnauth';
 
         if (!isLoggedIn) {
           router.navigate(['/user/log-in'], {
-            queryParams: { triedUnauth: true },
+            queryParams: { [reason]: true },
           });
         }
         return isLoggedIn;

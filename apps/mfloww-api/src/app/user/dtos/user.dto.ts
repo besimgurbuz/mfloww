@@ -17,3 +17,8 @@ export interface UpdateUserDto {
   username?: string;
   password?: string;
 }
+
+export interface ProfileInfoDto {
+  username: string;
+  email: string;
+}

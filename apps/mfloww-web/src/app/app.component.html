@@ -3,25 +3,7 @@
     *ngIf="inProgress$ | async"
     class="absolute left-0 right-0 top-0"
   ></mfloww-view-progress-bar>
-  <header
-    class="flex items-center justify-between lg:px-28 md:px-18 px-6 pt-10"
-  >
-    <mfloww-banner size="bigger"></mfloww-banner>
-    <div class="hidden items-center gap-3 text-mfloww_success md:flex">
-      <a
-        routerLink="/user/log-in"
-        class="px-5 py-2 hover:opacity-70 hover:cursor-pointer text-mfloww_white"
-        >Log in</a
-      >
-      <a
-        routerLink="/user/sign-up"
-        class="px-5 py-2 border-2 border-solid border-mfloww_white text-mfloww_white rounded hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
-      >
-        Sign up
-      </a>
-    </div>
-    <mfloww-menu class="flex md:hidden self-center"></mfloww-menu>
-  </header>
+  <mfloww-menu></mfloww-menu>
   <router-outlet></router-outlet>
   <div
     *ngIf="errorMessage$ | async as errorMessage"

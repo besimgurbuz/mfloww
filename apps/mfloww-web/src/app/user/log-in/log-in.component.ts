@@ -6,8 +6,10 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { filter, mergeMap, Subscription, tap } from 'rxjs';
+import { AuthService } from '../../core/auth.service';
 import { ErrorMessengerService } from '../../core/error-messenger.service';
+import { ProfileInfo } from '../../core/models/profile-info';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -25,16 +27,23 @@ export class LogInComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private errorMessenger: ErrorMessengerService
   ) {}
 
   ngOnInit(): void {
-    if (this.route.snapshot.queryParamMap.get('triedUnauth') === 'true') {
+    const queryParamMap = this.route.snapshot.queryParamMap;
+    if (queryParamMap.get('triedUnauth') === 'true') {
       this.errorMessenger.emitMessage(
         'warn',
         'You must be logged in to access'
+      );
+    } else if (queryParamMap.get('expiredToken') === 'true') {
+      this.errorMessenger.emitMessage(
+        'warn',
+        'Your session has expired. Please log in again'
       );
     }
   }
@@ -47,10 +56,21 @@ export class LogInComponent implements OnInit, OnDestroy {
     if (this.logInForm.valid) {
       this._logInSubs = this.userService
         .login(this.logInForm.value)
-        .subscribe((res) => {
-          if (res.ok) {
-            this.router.navigate(['/revenue-expense']);
-          }
+        .pipe(
+          filter((response) => response.ok),
+          mergeMap(() =>
+            this.userService.getProfileInfo().pipe(
+              filter((profileInfoRes) => profileInfoRes.ok),
+              tap((profileInfo) =>
+                this.authService.storeProfileInfo(
+                  profileInfo.body as ProfileInfo
+                )
+              )
+            )
+          )
+        )
+        .subscribe(() => {
+          this.router.navigate(['/revenue-expense']);
         });
     }
   }

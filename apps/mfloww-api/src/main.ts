@@ -18,7 +18,7 @@ async function bootstrap() {
   Logger.log(`Enabling CORS for origin ${process.env.CORS_ORIGIN}`);
   app.enableCors({
     origin: process.env.CORS_ORIGIN,
-    allowedHeaders: ['Content-Type', 'Set-Cookie'],
+    allowedHeaders: ['Content-Type', 'X-CSRF-Token', 'Set-Cookie'],
     credentials: true,
   });
   const port = process.env.PORT || 3333;

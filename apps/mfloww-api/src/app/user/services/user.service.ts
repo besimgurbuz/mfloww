@@ -2,7 +2,7 @@ import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import { hashPassword } from '../../shared/utils';
-import { UserActionResult, UserDto } from '../dtos/user.dto';
+import { ProfileInfoDto, UserActionResult, UserDto } from '../dtos/user.dto';
 import { UserRepository } from '../repositories/user.repository';
 
 @Injectable()
@@ -89,5 +89,12 @@ export class UserService {
         error: 'Failed to delete the user',
       };
     }
+  }
+
+  async getProfile(user: User): Promise<ProfileInfoDto> {
+    return {
+      username: user.username,
+      email: user.email,
+    };
   }
 }
