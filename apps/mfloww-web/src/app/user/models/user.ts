@@ -20,4 +20,5 @@ export type CreateUserResult =
 export type UserLoginResult = {
   access_token: string;
   key: string;
+  expiresIn: number;
 } & { statusCode: number; message: string };

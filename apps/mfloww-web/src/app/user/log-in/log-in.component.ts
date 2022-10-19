@@ -1,6 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ErrorMessengerService } from '../../core/error-messenger.service';
 import { UserService } from '../services/user.service';
 
@@ -10,14 +16,16 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./log-in.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LogInComponent implements OnInit {
+export class LogInComponent implements OnInit, OnDestroy {
   logInForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
+  private _logInSubs?: Subscription;
 
   constructor(
     private userService: UserService,
+    private router: Router,
     private route: ActivatedRoute,
     private errorMessenger: ErrorMessengerService
   ) {}
@@ -31,9 +39,19 @@ export class LogInComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this._logInSubs?.unsubscribe();
+  }
+
   submitForm(): void {
     if (this.logInForm.valid) {
-      this.userService.login(this.logInForm.value).subscribe();
+      this._logInSubs = this.userService
+        .login(this.logInForm.value)
+        .subscribe((res) => {
+          if (res.ok) {
+            this.router.navigate(['/revenue-expense']);
+          }
+        });
     }
   }
 }
