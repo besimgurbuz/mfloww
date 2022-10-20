@@ -7,18 +7,16 @@ import { Icon, ICON_SVG_PATHS } from './icon';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './icon.component.html',
-  styles: [
-    `
-      :host {
-        display: block;
-      }
-    `,
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MflowwIconComponent {
   @Input() type!: Icon;
   @Input() color = 'white';
+  @Input() viewBox?: number;
 
   _iconPaths: Record<Icon, string[]> = ICON_SVG_PATHS;
+
+  get viewBoxProp() {
+    return `0 0 ${this.viewBox || 20} ${this.viewBox || 20}`;
+  }
 }

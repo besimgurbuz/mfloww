@@ -7,5 +7,6 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BannerComponent {
+  @Input() link = '/';
   @Input() size: 'normal' | 'bigger' = 'normal';
 }
