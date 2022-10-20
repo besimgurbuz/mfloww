@@ -1,5 +1,6 @@
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LocalStorageService } from './local-storage.service';
 import { ProfileInfo } from './models/profile-info';
@@ -8,9 +9,13 @@ import { ProfileInfo } from './models/profile-info';
   providedIn: 'root',
 })
 export class AuthService {
+  private profileInfoPath = '/api/user/profile';
   private profileInfoSubject: Subject<ProfileInfo> = new Subject();
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(
+    private localStorageService: LocalStorageService,
+    private http: HttpClient
+  ) {}
 
   isUserLoggedIn(): boolean | Observable<boolean> {
     return (
@@ -23,8 +28,19 @@ export class AuthService {
     return !!this.localStorageService.get(environment.tokenExpKey);
   }
 
-  storeProfileInfo(profileInfo: ProfileInfo): void {
-    this.profileInfoSubject.next(profileInfo);
+  getProfileInfo(): Observable<HttpResponse<ProfileInfo>> {
+    return this.http
+      .get<ProfileInfo>(`${environment.apiUrl}${this.profileInfoPath}`, {
+        observe: 'response',
+        withCredentials: true,
+      })
+      .pipe(
+        tap((profileInfoRes) => {
+          if (profileInfoRes.ok) {
+            this.profileInfoSubject.next(profileInfoRes.body as ProfileInfo);
+          }
+        })
+      );
   }
 
   get profileInfo$(): Observable<ProfileInfo> {

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LocalStorageService } from '../../core/local-storage.service';
-import { ProfileInfo } from '../../core/models/profile-info';
 import {
   CreateUserPayload,
   CreateUserResult,
@@ -60,12 +59,5 @@ export class UserService {
           }
         })
       );
-  }
-
-  getProfileInfo(): Observable<HttpResponse<ProfileInfo>> {
-    return this.http.get<ProfileInfo>(
-      `${environment.apiUrl}${this.profileInfoPath}`,
-      { observe: 'response', withCredentials: true }
-    );
   }
 }

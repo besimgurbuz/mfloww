@@ -1,34 +1,41 @@
 <header class="flex items-center justify-between lg:px-28 md:px-18 px-6 pt-10">
   <mfloww-banner size="bigger"></mfloww-banner>
-  <div class="hidden items-center gap-3 text-mfloww_success md:flex">
-    <a
-      routerLink="/user/log-in"
-      class="px-5 py-2 hover:opacity-70 hover:cursor-pointer text-mfloww_white"
-      >Log in</a
-    >
-    <a
-      routerLink="/user/sign-up"
-      class="px-5 py-2 border-2 border-solid border-mfloww_white text-mfloww_white rounded hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
-    >
-      Sign up
-    </a>
-  </div>
-  <div class="w-fit h-fit relative flex md:hidden self-center items-center">
-    <button
-      (click)="_isOpen = !_isOpen"
-      class="self-center p-[2px] focus:p-0 focus:border-solid focus:border-mfloww_blue focus:border-2 focus:rounded"
-    >
-      <mfloww-view-icon type="menu" class="w-7"></mfloww-view-icon>
-    </button>
-    <div
-      *ngIf="_isOpen"
-      class="menu-modal absolute flex flex-col rounded w-40 top-10 right-0 bg-mfloww_fg ring-1 ring-opacity-5"
-      (click)="_isOpen = !_isOpen"
-    >
-      <a href="" class="px-6 py-3 text-sm" routerLink="/user/log-in">Log in</a>
-      <a href="" class="px-6 py-3 text-sm" routerLink="/user/sign-up"
-        >Sign up</a
+  <ng-container *ngIf="!profileInfo; else avatar">
+    <div class="hidden items-center gap-3 text-mfloww_success md:flex">
+      <a
+        routerLink="/user/log-in"
+        class="px-5 py-2 hover:opacity-70 hover:cursor-pointer text-mfloww_white"
+        >Log in</a
       >
+      <a
+        routerLink="/user/sign-up"
+        class="px-5 py-2 border-2 border-solid border-mfloww_white text-mfloww_white rounded hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
+      >
+        Sign up
+      </a>
     </div>
-  </div>
+    <div class="w-fit h-fit relative flex md:hidden self-center items-center">
+      <button
+        (click)="_isOpen = !_isOpen"
+        class="self-center p-[2px] focus:p-0 focus:border-solid focus:border-mfloww_blue focus:border-2 focus:rounded"
+      >
+        <mfloww-view-icon type="menu" class="w-7"></mfloww-view-icon>
+      </button>
+      <div
+        *ngIf="_isOpen"
+        class="menu-modal absolute flex flex-col rounded w-40 top-10 right-0 bg-mfloww_fg ring-1 ring-opacity-5"
+        (click)="_isOpen = !_isOpen"
+      >
+        <a href="" class="px-6 py-3 text-sm" routerLink="/user/log-in"
+          >Log in</a
+        >
+        <a href="" class="px-6 py-3 text-sm" routerLink="/user/sign-up"
+          >Sign up</a
+        >
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #avatar>
+    <button>{{ profileInfo?.username }}</button>
+  </ng-template>
 </header>

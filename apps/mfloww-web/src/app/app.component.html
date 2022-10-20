@@ -3,7 +3,7 @@
     *ngIf="inProgress$ | async"
     class="absolute left-0 right-0 top-0"
   ></mfloww-view-progress-bar>
-  <mfloww-menu></mfloww-menu>
+  <mfloww-menu [profileInfo]="_profileInfo$ | async"></mfloww-menu>
   <router-outlet></router-outlet>
   <div
     *ngIf="errorMessage$ | async as errorMessage"

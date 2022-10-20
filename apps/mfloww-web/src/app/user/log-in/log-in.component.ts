@@ -6,10 +6,9 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map, mergeMap, Subscription, tap } from 'rxjs';
+import { filter, map, mergeMap, Subscription } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
 import { ErrorMessengerService } from '../../core/error-messenger.service';
-import { ProfileInfo } from '../../core/models/profile-info';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -68,16 +67,7 @@ export class LogInComponent implements OnInit, OnDestroy {
         .login(this.logInForm.value)
         .pipe(
           filter((response) => response.ok),
-          mergeMap(() =>
-            this.userService.getProfileInfo().pipe(
-              filter((profileInfoRes) => profileInfoRes.ok),
-              tap((profileInfo) =>
-                this.authService.storeProfileInfo(
-                  profileInfo.body as ProfileInfo
-                )
-              )
-            )
-          )
+          mergeMap(() => this.authService.getProfileInfo())
         )
         .subscribe(() => {
           this.router.navigate(['/revenue-expense']);

@@ -3,7 +3,9 @@ import {
   Component,
   ElementRef,
   HostListener,
+  Input,
 } from '@angular/core';
+import { ProfileInfo } from '../../../core/models/profile-info';
 
 @Component({
   selector: 'mfloww-menu',
@@ -12,6 +14,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
+  @Input() profileInfo: ProfileInfo | null = null;
+
   _isOpen = false;
 
   constructor(private elementRef: ElementRef) {}
