@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, mergeMap, Subscription, tap } from 'rxjs';
+import { filter, map, mergeMap, Subscription, tap } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
 import { ErrorMessengerService } from '../../core/error-messenger.service';
 import { ProfileInfo } from '../../core/models/profile-info';
@@ -24,6 +24,7 @@ export class LogInComponent implements OnInit, OnDestroy {
     password: new FormControl('', [Validators.required]),
   });
   private _logInSubs?: Subscription;
+  private _redirectionMessageSubs?: Subscription;
 
   constructor(
     private userService: UserService,
@@ -34,22 +35,31 @@ export class LogInComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const queryParamMap = this.route.snapshot.queryParamMap;
-    if (queryParamMap.get('triedUnauth') === 'true') {
-      this.errorMessenger.emitMessage(
-        'warn',
-        'You must be logged in to access'
-      );
-    } else if (queryParamMap.get('expiredToken') === 'true') {
-      this.errorMessenger.emitMessage(
-        'warn',
-        'Your session has expired. Please log in again'
-      );
-    }
+    this._redirectionMessageSubs = this.route.queryParamMap
+      .pipe(
+        filter(
+          (queryMap) =>
+            !!queryMap.get('triedUnauth') || !!queryMap.get('expiredToken')
+        ),
+        map((queryMap) => {
+          const reason =
+            queryMap.get('triedUnauth') === 'true'
+              ? 'triedUnauth'
+              : 'expiredToken';
+          return {
+            triedUnauth: 'You must be logged in',
+            expiredToken: 'Your session has expired. Please log in again',
+          }[reason];
+        })
+      )
+      .subscribe((message) => {
+        this.errorMessenger.emitMessage('warn', message);
+      });
   }
 
   ngOnDestroy(): void {
     this._logInSubs?.unsubscribe();
+    this._redirectionMessageSubs?.unsubscribe();
   }
 
   submitForm(): void {

@@ -43,9 +43,8 @@
   </ng-container>
   <img
     #landing_image
-    class="z-10"
     src="assets/landing-content.png"
     alt="Landing image"
-    (load)="onLoaded()"
+    (load)="_imageLoaded = true"
   />
 </div>

@@ -9,7 +9,7 @@ import { finalize, Observable } from 'rxjs';
 import { ProgressState } from '../core/progress.state';
 
 @Injectable()
-export class GeneralInterceptorService implements HttpInterceptor {
+export class ProgressTriggererInterceptorService implements HttpInterceptor {
   constructor(private progressState: ProgressState) {}
 
   intercept(

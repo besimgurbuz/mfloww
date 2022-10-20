@@ -8,7 +8,10 @@ import { env } from 'process';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        JwtStrategy.extractJwtFromCookie,
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ]),
       ignoreExpiration: false,
       secretOrKey: env.JWT_SECRET,
     });
@@ -21,5 +24,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       username: user.username,
       key: user.key,
     };
+  }
+
+  private static extractJwtFromCookie(req): string | null {
+    if (req.cookies && 'XSRF-TOKEN' in req.cookies) {
+      return req.cookies['XSRF-TOKEN'];
+    }
+    return null;
   }
 }

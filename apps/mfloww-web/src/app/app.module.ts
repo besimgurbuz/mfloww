@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { GeneralInterceptorService } from './interceptors/general-interceptor.service';
+import { ProgressTriggererInterceptorService } from './interceptors/progress-triggerer-interceptor.service';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -21,7 +21,7 @@ import { SharedModule } from './shared/shared.module';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: GeneralInterceptorService,
+      useClass: ProgressTriggererInterceptorService,
       multi: true,
     },
   ],

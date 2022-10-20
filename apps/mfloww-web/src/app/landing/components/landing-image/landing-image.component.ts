@@ -8,7 +8,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class LandingImageComponent {
   _imageLoaded = false;
-  onLoaded() {
-    this._imageLoaded = true;
-  }
 }

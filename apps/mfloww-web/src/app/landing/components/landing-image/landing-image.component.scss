@@ -1,18 +1,20 @@
-@keyframes top_to_bottom {
-  0% {
-    transform: translateY(-60%);
-  }
+@keyframes bottom_to_top {
+  0%,
   100% {
-    transform: translateY(0%);
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-60%);
   }
 }
 
-@keyframes bottom_to_top {
-  0% {
-    transform: translateY(60%);
-  }
+@keyframes top_to_bottom {
+  0%,
   100% {
     transform: translateY(0%);
+  }
+  50% {
+    transform: translateY(60%);
   }
 }
 
@@ -44,6 +46,10 @@ $rotations: -35, -30, -25, -12, 35, 30, 25, 12;
       @include animate_negative_currency(#{$n_rotation}deg);
     }
   }
+}
+
+mfloww-view-icon:hover {
+  animation-iteration-count: infinite;
 }
 
 @media (max-width: 1200px) {
