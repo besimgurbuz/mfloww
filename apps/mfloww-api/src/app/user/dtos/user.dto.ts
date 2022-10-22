@@ -21,4 +21,5 @@ export interface UpdateUserDto {
 export interface ProfileInfoDto {
   username: string;
   email: string;
+  key: string;
 }

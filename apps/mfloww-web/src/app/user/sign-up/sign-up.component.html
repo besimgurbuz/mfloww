@@ -12,6 +12,7 @@
     <form
       class="flex flex-col items-center gap-9 xs:gap-8"
       [formGroup]="signUpForm"
+      (keydown.enter)="submitForm()"
     >
       <mfloww-view-input
         type="text"

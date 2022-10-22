@@ -95,6 +95,7 @@ export class UserService {
     return {
       username: user.username,
       email: user.email,
+      key: user.key,
     };
   }
 }

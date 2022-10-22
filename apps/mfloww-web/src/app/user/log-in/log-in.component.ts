@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, mergeMap, Subscription } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
-import { ErrorMessengerService } from '../../core/error-messenger.service';
+import { Message, MessengerService } from '../../core/messenger.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -30,30 +30,17 @@ export class LogInComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private errorMessenger: ErrorMessengerService
+    private messenger: MessengerService
   ) {}
 
   ngOnInit(): void {
+    this.handleLogInRedirectInfo();
     this._redirectionMessageSubs = this.route.queryParamMap
       .pipe(
-        filter(
-          (queryMap) =>
-            !!queryMap.get('triedUnauth') || !!queryMap.get('expiredToken')
-        ),
-        map((queryMap) => {
-          const reason =
-            queryMap.get('triedUnauth') === 'true'
-              ? 'triedUnauth'
-              : 'expiredToken';
-          return {
-            triedUnauth: 'You must be logged in',
-            expiredToken: 'Your session has expired. Please log in again',
-          }[reason];
-        })
+        map(this.messenger.getActiveMessage),
+        filter((key) => !!key)
       )
-      .subscribe((message) => {
-        this.errorMessenger.emitMessage('warn', message);
-      });
+      .subscribe((key) => this.handleLogInRedirectInfo(key));
   }
 
   ngOnDestroy(): void {
@@ -72,6 +59,15 @@ export class LogInComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.router.navigate(['/revenue-expense']);
         });
+    }
+  }
+
+  private handleLogInRedirectInfo(message?: Message) {
+    if (message) {
+      this.messenger.emitMessage(
+        message.type as Message['type'],
+        message.message
+      );
     }
   }
 }

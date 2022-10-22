@@ -42,13 +42,12 @@ const routes: Routes = [
 
         if (!isLoggedIn) {
           router.navigate(['/user/log-in'], {
-            queryParams: { [reason]: true },
+            queryParams: { reason },
           });
         }
         return isLoggedIn;
       },
     ],
-    title: 'Revenue-Expense',
   },
 ];
 

@@ -1,8 +1,8 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { filter, Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService } from './core/auth.service';
-import { ErrorMessengerService } from './core/error-messenger.service';
+import { MessengerService } from './core/messenger.service';
 import { ProfileInfo } from './core/models/profile-info';
 import { ProgressState } from './core/progress.state';
 
@@ -12,29 +12,37 @@ import { ProgressState } from './core/progress.state';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  readonly errorMessenger = inject(ErrorMessengerService);
-  readonly errorMessage$ = this.errorMessenger.error$;
+  readonly errorMessenger = inject(MessengerService);
   readonly inProgress$ = inject(ProgressState).inProgress$;
-  readonly router = inject(Router);
+  readonly route = inject(ActivatedRoute);
   readonly authService = inject(AuthService);
   readonly _profileInfo$: Observable<ProfileInfo> =
     this.authService.profileInfo$;
 
-  private _messageCleanSubs?: Subscription;
-  private _profileInfoSubs?: Subscription;
+  errorMessage$ = this.errorMessenger.error$;
+  private _destroy: Subject<void> = new Subject();
 
   ngOnInit(): void {
-    this._messageCleanSubs = this.router.events.subscribe(() =>
-      this.errorMessenger.clearMessage()
-    );
+    this.route.queryParamMap
+      .pipe(
+        filter(
+          (paramMap) =>
+            this.errorMessenger.getActiveMessage(paramMap) === undefined
+        ),
+        takeUntil(this._destroy)
+      )
+      .subscribe(() => this.errorMessenger.clearMessage());
 
     if (this.authService.isUserLoggedIn()) {
-      this._profileInfoSubs = this.authService.getProfileInfo().subscribe();
+      this.authService
+        .getProfileInfo()
+        .pipe(takeUntil(this._destroy))
+        .subscribe();
     }
   }
 
   ngOnDestroy(): void {
-    this._messageCleanSubs?.unsubscribe();
-    this._profileInfoSubs?.unsubscribe();
+    this._destroy.next();
+    this._destroy.complete();
   }
 }
