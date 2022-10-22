@@ -32,17 +32,6 @@ export class MessengerService {
     });
   }
 
-  emitReason(queryMap: ParamMap) {
-    const message = this.getActiveMessage(queryMap);
-
-    if (message) {
-      this.errorMessageSubject.next({
-        message: message.message,
-        type: message.type,
-      });
-    }
-  }
-
   clearMessage(): void {
     this.errorMessageSubject.next({ type: 'info', message: '' });
   }

@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { filter, Observable, Subject, takeUntil } from 'rxjs';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService } from './core/auth.service';
 import { MessengerService } from './core/messenger.service';
 import { ProfileInfo } from './core/models/profile-info';
@@ -25,13 +25,16 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.queryParamMap
       .pipe(
-        filter(
-          (paramMap) =>
-            this.errorMessenger.getActiveMessage(paramMap) === undefined
-        ),
+        map((paramMap) => this.errorMessenger.getActiveMessage(paramMap)),
         takeUntil(this._destroy)
       )
-      .subscribe(() => this.errorMessenger.clearMessage());
+      .subscribe((reason) => {
+        if (reason) {
+          this.errorMessenger.emitMessage(reason.type, reason.message);
+        } else {
+          this.errorMessenger.clearMessage();
+        }
+      });
 
     if (this.authService.isUserLoggedIn()) {
       this.authService
