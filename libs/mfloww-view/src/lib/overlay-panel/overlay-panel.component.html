@@ -6,7 +6,7 @@
   <ng-content select="[mflowwOverlayTriggerer]"></ng-content>
   <div
     *ngIf="_opened"
-    class="overlay-modal absolute w-40 top-8 bg-mfloww_fg px-3 py-4 rounded flex flex-col items-center gap-2 ring-1 ring-opacity-5"
+    class="overlay-modal absolute w-40 top-8 bg-mfloww_fg rounded flex flex-col items-center ring-1 ring-opacity-5 z-10"
     #panel
   >
     <ng-content select="[mflowwPanelContent]"></ng-content>
