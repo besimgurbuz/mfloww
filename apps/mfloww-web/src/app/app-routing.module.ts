@@ -8,6 +8,18 @@ const routes: Routes = [
     loadChildren: () =>
       import('./landing/landing.module').then((module) => module.LandingModule),
     pathMatch: 'full',
+    canActivate: [
+      () => {
+        const isLoggedIn = inject(AuthService).isUserLoggedIn();
+        const router = inject(Router);
+
+        if (isLoggedIn) {
+          router.navigate(['/revenue-expense']);
+        }
+
+        return !isLoggedIn;
+      },
+    ],
   },
   {
     path: 'user',

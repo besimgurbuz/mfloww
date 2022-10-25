@@ -10,7 +10,7 @@ import { ProfileInfo } from './models/profile-info';
 })
 export class AuthService {
   private profileInfoPath = '/api/user/profile';
-  private profileInfoSubject: Subject<ProfileInfo> = new Subject();
+  private profileInfoSubject: Subject<ProfileInfo | null> = new Subject();
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -43,7 +43,12 @@ export class AuthService {
       );
   }
 
-  get profileInfo$(): Observable<ProfileInfo> {
+  logOut(): void {
+    this.localStorageService.remove(environment.tokenExpKey);
+    this.profileInfoSubject.next(null);
+  }
+
+  get profileInfo$(): Observable<ProfileInfo | null> {
     return this.profileInfoSubject.asObservable();
   }
 }

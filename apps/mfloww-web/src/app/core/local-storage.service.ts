@@ -12,6 +12,10 @@ export class LocalStorageService {
     return localStorage.getItem(key) as T;
   }
 
+  remove(key: string): void {
+    localStorage.removeItem(key);
+  }
+
   getNumber(key: string): number {
     return Number(localStorage.getItem(key));
   }

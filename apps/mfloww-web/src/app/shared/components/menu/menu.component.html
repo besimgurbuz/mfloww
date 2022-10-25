@@ -14,29 +14,32 @@
         Sign up
       </a>
     </div>
-    <div class="w-fit h-fit relative flex md:hidden self-center items-center">
+    <mfloww-view-overlay-panel class="md:hidden self-center">
       <button
-        (click)="_isOpen = !_isOpen"
         class="self-center w-[30px] p-[2px] focus:p-0 focus:border-solid focus:border-mfloww_blue focus:border-2 focus:rounded"
+        mflowwOverlayTriggerer
       >
         <mfloww-view-icon type="menu" class="w-7"></mfloww-view-icon>
       </button>
-      <div
-        *ngIf="_isOpen"
-        class="overlay-modal absolute flex flex-col rounded w-40 top-10 right-0 bg-mfloww_fg ring-1 ring-opacity-5"
-        (click)="_isOpen = !_isOpen"
-      >
+      <ng-container mflowwPanelContent>
         <a class="px-6 py-3 text-sm" routerLink="/user/log-in">Log in</a>
         <a class="px-6 py-3 text-sm" routerLink="/user/sign-up">Sign up</a>
-      </div>
-    </div>
+      </ng-container>
+    </mfloww-view-overlay-panel>
   </ng-container>
   <ng-template #avatar>
     <mfloww-view-overlay-panel>
-      <button mflowwOverlayTriggerer>{{ profileInfo?.username }}</button>
+      <button
+        mflowwOverlayTriggerer
+        class="overflow-hidden truncate md:max-w-[300px] max-w-[150px] border-solid border-2 p-2 rounded border-mfloww_fg hover:bg-mfloww_fg"
+      >
+        {{ profileInfo?.username }}
+      </button>
       <ng-container mflowwPanelContent>
         <a class="px-6 py-3 text-sm">Settings</a>
-        <a class="px-6 py-3 text-sm">Log out</a>
+        <a class="px-6 py-3 text-sm" (click)="logOutTriggered.emit()"
+          >Log out</a
+        >
       </ng-container>
     </mfloww-view-overlay-panel>
   </ng-template>

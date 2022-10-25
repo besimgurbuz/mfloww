@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   HostListener,
   Input,
+  Output,
 } from '@angular/core';
 import { ProfileInfo } from '../../../core/models/profile-info';
 
@@ -15,6 +17,8 @@ import { ProfileInfo } from '../../../core/models/profile-info';
 })
 export class MenuComponent {
   @Input() profileInfo: ProfileInfo | null = null;
+
+  @Output() logOutTriggered = new EventEmitter<void>();
 
   _isOpen = false;
 
