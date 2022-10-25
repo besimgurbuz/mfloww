@@ -55,3 +55,21 @@ body {
 input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
+
+.overlay-modal {
+  animation: modal-opening-effect 100ms;
+}
+
+@keyframes modal-opening-effect {
+  0% {
+    transform: translateX(5%) translateY(5%);
+    scale: 0.5;
+  }
+  50% {
+    transform: translateX(2%) translateY(2%);
+  }
+  100% {
+    transform: translateX(0) translateY(0);
+    scale: 1;
+  }
+}

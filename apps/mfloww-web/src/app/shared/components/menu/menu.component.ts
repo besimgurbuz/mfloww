@@ -23,7 +23,6 @@ export class MenuComponent {
   @HostListener('document:click', ['$event'])
   clickOut(event: MouseEvent) {
     if (!this.elementRef.nativeElement.contains(event.target) && this._isOpen) {
-      // Click outside of element
       this._isOpen = false;
     }
   }

@@ -1,0 +1,14 @@
+<div
+  class="cursor-pointer relative"
+  (click)="handleTriggererClicked()"
+  #triggerer
+>
+  <ng-content select="[mflowwOverlayTriggerer]"></ng-content>
+  <div
+    *ngIf="_opened"
+    class="overlay-modal absolute w-40 top-8 bg-mfloww_fg px-3 py-4 rounded flex flex-col items-center gap-2 ring-1 ring-opacity-5"
+    #panel
+  >
+    <ng-content select="[mflowwPanelContent]"></ng-content>
+  </div>
+</div>
