@@ -1,6 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { inject, NgModule } from '@angular/core';
+import { Router, RouterModule, Routes } from '@angular/router';
+import { AuthService } from '../core/auth.service';
 import { LogInComponent } from './log-in/log-in.component';
+import { SettingsComponent } from './settings/settings.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
@@ -12,10 +14,47 @@ const routes: Routes = [
   {
     path: 'log-in',
     component: LogInComponent,
+    canActivate: [
+      () => {
+        const isLoggedIn = inject(AuthService).isUserLoggedIn();
+        const router = inject(Router);
+
+        if (isLoggedIn) {
+          router.navigate(['/revenue-expense']);
+        }
+        return !isLoggedIn;
+      },
+    ],
   },
   {
     path: 'sign-up',
+    canActivate: [
+      () => {
+        const isLoggedIn = inject(AuthService).isUserLoggedIn();
+        const router = inject(Router);
+
+        if (isLoggedIn) {
+          router.navigate(['/revenue-expense']);
+        }
+        return !isLoggedIn;
+      },
+    ],
     component: SignUpComponent,
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    canActivate: [
+      () => {
+        const isLoggedIn = inject(AuthService).isUserLoggedIn();
+        const router = inject(Router);
+
+        if (!isLoggedIn) {
+          router.navigate(['/revenue-expense']);
+        }
+        return isLoggedIn;
+      },
+    ],
   },
 ];
 

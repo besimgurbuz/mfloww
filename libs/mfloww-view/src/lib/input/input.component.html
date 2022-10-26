@@ -1,12 +1,21 @@
 <div class="relative">
+  <p
+    class="input-label text-sm text-mfloww_fg pb-2"
+    [style.opacity]="_value ? 100 : 0"
+  >
+    {{ label }}
+  </p>
   <input
     [type]="type"
     [placeholder]="placeholder"
     class="bg-mfloww_bg xs:w-[450px] border-solid border-2 rounded border-mfloww_white px-3 py-2 outline-none focus:border-mfloww_blue"
+    [value]="_value"
+    [disabled]="_disabled"
     (input)="onValueChanged($any($event.target).value)"
     (click)="_focused = true"
     [ngClass]="{
-      'border-mfloww_fatal': _touched && _control.errors
+      'border-mfloww_fatal': _touched && _control.errors,
+      'text-mfloww_fg border-mfloww_fg': _disabled
     }"
   />
   <ng-container *ngIf="_touched && _control.errors">
@@ -15,7 +24,10 @@
       class="absolute text-mfloww_fatal text-[10px] xs:text-xs"
     >
       {{
-        errorMessages[firstError.key](name, firstError.value?.requiredLength)
+        errorMessages[firstError.key](
+          name || label || placeholder,
+          firstError.value?.requiredLength
+        )
       }}
     </p>
   </ng-container>

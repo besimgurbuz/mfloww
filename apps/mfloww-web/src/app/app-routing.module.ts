@@ -26,17 +26,6 @@ const routes: Routes = [
     path: 'user',
     loadChildren: () =>
       import('./user/user.module').then((module) => module.UserModule),
-    canActivate: [
-      () => {
-        const isLoggedIn = inject(AuthService).isUserLoggedIn();
-        const router = inject(Router);
-
-        if (isLoggedIn) {
-          router.navigate(['/revenue-expense']);
-        }
-        return !isLoggedIn;
-      },
-    ],
   },
   {
     path: 'revenue-expense',

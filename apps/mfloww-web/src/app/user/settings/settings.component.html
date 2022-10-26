@@ -1,0 +1,38 @@
+<div
+  class="flex flex-col w-full h-full items-center gap-12 lg:px-60 md:px-18 px-6 pt-10"
+>
+  <h1 class="text-4xl text-mfloww_success">Settings</h1>
+  <div class="flex gap-4 w-full max-h-[300px] items-center justify-around">
+    <div class="flex flex-col gap-2">
+      <h3>Profile</h3>
+      <p class="text-xs opacity-50">
+        Your e-mail adress is your identity on mfloww and is used to log in.
+      </p>
+    </div>
+    <form [formGroup]="profileGroup" class="flex flex-col gap-6 relative">
+      <mfloww-view-input
+        formControlName="email"
+        placeholder="E-mail"
+        label="E-mail"
+      ></mfloww-view-input>
+      <mfloww-view-input
+        formControlName="username"
+        placeholder="Username"
+        label="Username"
+      ></mfloww-view-input>
+      <mfloww-view-input
+        formControlName="key"
+        placeholder="Encryption Key"
+        label="Encryption key"
+      ></mfloww-view-input>
+      <button
+        class="absolute -bottom-[50px]"
+        *ngIf="
+          profileGroup.touched && profileGroup.valid && isFormValueDifferent()
+        "
+      >
+        Save
+      </button>
+    </form>
+  </div>
+</div>

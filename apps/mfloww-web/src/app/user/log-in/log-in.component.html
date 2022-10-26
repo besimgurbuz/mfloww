@@ -15,16 +15,18 @@
       (keydown.enter)="submitForm()"
     >
       <mfloww-view-input
+        formControlName="email"
         type="email"
         placeholder="E-mail"
+        label="E-mail"
         name="E-mail"
-        formControlName="email"
       ></mfloww-view-input>
       <mfloww-view-input
+        formControlName="password"
         type="password"
         placeholder="Password"
+        label="Password"
         name="Password"
-        formControlName="password"
       ></mfloww-view-input>
     </form>
     <button

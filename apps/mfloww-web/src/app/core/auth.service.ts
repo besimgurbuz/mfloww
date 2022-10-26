@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   isUserLoggedIn(): boolean | Observable<boolean> {
-    return this.hasSessionExpired() && this.profileInfoSubject.value !== null;
+    return !this.hasSessionExpired() && this.profileInfoSubject.value !== null;
   }
 
   isTokenExpired(): boolean {

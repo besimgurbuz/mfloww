@@ -36,7 +36,7 @@
         {{ profileInfo?.username }}
       </button>
       <ng-container mflowwPanelContent>
-        <a class="px-6 py-3 text-sm">Settings</a>
+        <a class="px-6 py-3 text-sm" routerLink="/user/settings">Settings</a>
         <a class="px-6 py-3 text-sm" (click)="logOutTriggered.emit()"
           >Log out</a
         >

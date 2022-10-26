@@ -35,6 +35,7 @@ export class MflowwInputComponent implements ControlValueAccessor, OnInit {
   @Input() type!: string;
   @Input() placeholder!: string;
   @Input() name!: string;
+  @Input() label?: string;
 
   _control!: FormControl;
   errorMessages = ERROR_MESSAGES;
