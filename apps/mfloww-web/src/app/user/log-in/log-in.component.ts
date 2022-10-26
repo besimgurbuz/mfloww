@@ -36,8 +36,10 @@ export class LogInComponent implements OnDestroy {
           filter((response) => response.ok),
           mergeMap(() => this.authService.getProfileInfo())
         )
-        .subscribe(() => {
-          this.router.navigate(['/revenue-expense']);
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/revenue-expense']);
+          },
         });
     }
   }

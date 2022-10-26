@@ -1,6 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService } from './core/auth.service';
 import { MessengerService } from './core/messenger.service';
 import { ProfileInfo } from './core/models/profile-info';
@@ -24,24 +25,14 @@ export class AppComponent implements OnInit, OnDestroy {
   private _destroy: Subject<void> = new Subject();
 
   ngOnInit(): void {
-    this.route.queryParamMap
-      .pipe(
-        map((paramMap) => this.errorMessenger.getActiveMessage(paramMap)),
-        takeUntil(this._destroy)
-      )
-      .subscribe((reason) => {
-        if (reason) {
-          this.errorMessenger.emitMessage(reason.type, reason.message);
-        } else {
-          this.errorMessenger.clearMessage();
-        }
-      });
-
-    if (this.authService.isUserLoggedIn()) {
+    if (!this.authService.hasSessionExpired()) {
       this.authService
         .getProfileInfo()
         .pipe(takeUntil(this._destroy))
-        .subscribe();
+        .subscribe({
+          error: (err: HttpErrorResponse) =>
+            this.errorMessenger.emitFromError(err),
+        });
     }
   }
 

@@ -10,19 +10,19 @@
   <router-outlet></router-outlet>
   <ng-container *ngIf="errorMessage$ | async as errorMessage">
     <div
-      *ngIf="errorMessage.message"
-      class="absolute bottom-2 md:bottom-10 mx-auto left-0 right-0 min-w-[200px] max-w-[500px] px-5 py-2 text-xs border-solid border-2 rounded"
+      *ngIf="errorMessage.text"
+      class="fixed bottom-2 md:bottom-10 mx-auto left-0 right-0 min-w-[200px] max-w-[400px] md:max-w-[600px] px-5 py-3 text-xs rounded"
       [ngClass]="{
-        'text-mfloww_warn': errorMessage?.type === 'warn',
-        'text-mfloww_fatal': errorMessage?.type === 'fatal',
-        'text-mfloww_success': errorMessage?.type === 'info'
+        'bg-mfloww_warn': errorMessage?.type === 'warn',
+        'bg-mfloww_fatal': errorMessage?.type === 'fatal',
+        'bg-mfloww_success': errorMessage?.type === 'info'
       }"
       #messageBox
     >
       <div class="flex justify-between">
-        {{ errorMessage?.message }}
+        <p>{{ errorMessage?.text }}</p>
         <button
-          class="text-mfloww_white opacity-60"
+          class="text-mfloww_fg"
           (click)="messageBox.style.visibility = 'hidden'"
         >
           Close

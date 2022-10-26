@@ -1,10 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, ReplaySubject } from 'rxjs';
 
 export interface Message {
   type: 'warn' | 'fatal' | 'info';
-  message: string;
+  text: string;
 }
 
 @Injectable({
@@ -13,35 +14,61 @@ export interface Message {
 export class MessengerService {
   private readonly errorMessageSubject: ReplaySubject<Message> =
     new ReplaySubject<Message>();
-  private redirectionMessageSet: Record<string, Message> = {
-    triedUnauth: { type: 'warn', message: 'You must be logged in' },
+
+  constructor(private route: ActivatedRoute) {
+    this.route.queryParamMap.subscribe((queryParamMap) => {
+      this.emitFromQueryParamMap(queryParamMap);
+    });
+  }
+
+  private redirectionMessageSet: Record<string | number, Message> = {
+    triedUnauth: {
+      type: 'warn',
+      text: "Oops, it look like you haven't logged in yet. Please log in.",
+    },
     expiredToken: {
       type: 'warn',
-      message: 'Your session has expired. Please log in again',
+      text: 'Oops, it look like your session has expired. Please log in again.',
     },
     newAccount: {
       type: 'info',
-      message: 'You can now log-in with your new account',
+      text: 'Welcome! You can now log in with your new account',
     },
   };
 
   emitMessage(type: Message['type'], message: string) {
     this.errorMessageSubject.next({
       type,
-      message,
+      text: message,
     });
   }
 
-  clearMessage(): void {
-    this.errorMessageSubject.next({ type: 'info', message: '' });
+  emitFromError(
+    err: HttpErrorResponse | Record<string, unknown>,
+    messageKey?: string
+  ) {
+    if (err instanceof HttpErrorResponse) {
+      this.errorMessageSubject.next(this.getErrorMessageOfHttpFailure(err));
+      return;
+    }
+
+    this.errorMessageSubject.next({
+      type: 'fatal',
+      text: err[messageKey || ''] as string,
+    });
   }
 
-  getActiveMessage(queryMap: ParamMap): Message | undefined {
-    const reason = queryMap.get('reason');
-    if (!reason) {
-      return undefined;
+  emitFromQueryParamMap(paramMap: ParamMap) {
+    const message = this.getErrorMessageOfQueryParamMap(paramMap);
+    if (message) {
+      this.emitMessage(message.type, message.text);
+    } else {
+      this.clearMessage();
     }
-    return this.redirectionMessageSet[reason];
+  }
+
+  clearMessage(): void {
+    this.errorMessageSubject.next({ type: 'info', text: '' });
   }
 
   get error$(): Observable<Message | null> {
@@ -50,5 +77,28 @@ export class MessengerService {
 
   get messages(): Record<string, Message> {
     return this.redirectionMessageSet;
+  }
+
+  private getErrorMessageOfQueryParamMap(
+    queryMap: ParamMap
+  ): Message | undefined {
+    const reason = queryMap.get('reason');
+    if (!reason) {
+      return undefined;
+    }
+    return this.redirectionMessageSet[reason];
+  }
+
+  private getErrorMessageOfHttpFailure(
+    failResponse: HttpErrorResponse
+  ): Message {
+    const messages: Record<number, Message> = {
+      401: {
+        type: 'warn',
+        text: 'Opps, looks like your session has expired. Please log-in again.',
+      },
+    };
+
+    return messages[failResponse.status];
   }
 }

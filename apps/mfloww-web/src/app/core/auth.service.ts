@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LocalStorageService } from './local-storage.service';
 import { ProfileInfo } from './models/profile-info';
@@ -10,18 +10,23 @@ import { ProfileInfo } from './models/profile-info';
 })
 export class AuthService {
   private profileInfoPath = '/api/user/profile';
-  private profileInfoSubject: Subject<ProfileInfo | null> = new Subject();
+  private profileInfoSubject: BehaviorSubject<ProfileInfo | null> =
+    new BehaviorSubject<ProfileInfo | null>(null);
 
   constructor(
     private localStorageService: LocalStorageService,
     private http: HttpClient
   ) {}
 
-  isUserLoggedIn(): boolean | Observable<boolean> {
+  hasSessionExpired(): boolean {
     return (
-      new Date().getTime() <
+      new Date().getTime() >
       this.localStorageService.getNumber(environment.tokenExpKey)
     );
+  }
+
+  isUserLoggedIn(): boolean | Observable<boolean> {
+    return this.hasSessionExpired() && this.profileInfoSubject.value !== null;
   }
 
   isTokenExpired(): boolean {
@@ -50,5 +55,9 @@ export class AuthService {
 
   get profileInfo$(): Observable<ProfileInfo | null> {
     return this.profileInfoSubject.asObservable();
+  }
+
+  get currentProfileInfo(): ProfileInfo | null {
+    return this.profileInfoSubject.value;
   }
 }
