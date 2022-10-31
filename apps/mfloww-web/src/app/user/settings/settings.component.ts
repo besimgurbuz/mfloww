@@ -22,6 +22,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
     username: new FormControl('', [Validators.required]),
     key: new FormControl({ value: '', disabled: true }),
   });
+  readonly passwordGroup = new FormGroup({
+    currentPassword: new FormControl('', [Validators.required]),
+    newPassword: new FormControl('', [Validators.required]),
+    confirmNewPassword: new FormControl('', [Validators.required]),
+  });
   private readonly profileInfo$ = inject(AuthService).profileInfo$;
   private profileSubs?: Subscription;
 
@@ -41,10 +46,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.profileSubs?.unsubscribe();
   }
 
-  isFormValueDifferent() {
+  isFormValueDifferent(): boolean {
     return (
       this.profileGroup.value.email !== this._profileInfo?.email ||
       this.profileGroup.value.username !== this._profileInfo?.username
+    );
+  }
+
+  isPasswordMatching(): boolean {
+    return (
+      this.passwordGroup.value.currentPassword !== '' &&
+      this.passwordGroup.value.currentPassword ===
+        this.passwordGroup.value.confirmNewPassword
     );
   }
 }

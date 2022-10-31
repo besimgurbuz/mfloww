@@ -5,19 +5,30 @@
   >
     {{ label }}
   </p>
-  <input
-    [type]="type"
-    [placeholder]="placeholder"
-    class="bg-mfloww_bg w-full border-solid border-2 rounded border-mfloww_white px-3 py-2 outline-none focus:border-mfloww_blue text-ellipsis overflow-hidden whitespace-nowrap"
-    [value]="_value"
-    [disabled]="_disabled"
-    (input)="onValueChanged($any($event.target).value)"
-    (click)="_focused = true"
-    [ngClass]="{
-      'border-mfloww_fatal': _touched && _control.errors,
-      'text-mfloww_fg border-mfloww_fg': _disabled
-    }"
-  />
+  <div class="relative">
+    <input
+      [type]="type"
+      [placeholder]="placeholder"
+      class="bg-mfloww_bg w-full border-solid border-2 rounded border-mfloww_white px-3 py-2 outline-none focus:border-mfloww_blue text-ellipsis overflow-hidden whitespace-nowrap"
+      [value]="_value"
+      [disabled]="_disabled"
+      (input)="onValueChanged($any($event.target).value)"
+      (click)="_focused = true"
+      [ngClass]="{
+        'border-mfloww_fatal': _touched && _control.errors,
+        'text-mfloww_fg border-mfloww_fg': _disabled
+      }"
+    />
+    <button
+      *ngIf="copyable"
+      class="absolute right-2 top-0 bottom-0 m-auto h-fit w-fit text-[10px] rounded p-1 bg-mfloww_fg"
+      [ngClass]="{ 'text-mfloww_success': _copied }"
+      [mflowwViewCopyClipboard]="_value"
+      (copied)="informCopyEvent()"
+    >
+      {{ _copied ? 'Copied' : 'Copy' }}
+    </button>
+  </div>
   <ng-container *ngIf="_touched && _control.errors">
     <p
       *ngIf="(_control.errors | keyvalue)[0] as firstError"
@@ -31,13 +42,4 @@
       }}
     </p>
   </ng-container>
-  <button
-    *ngIf="copyable"
-    class="absolute right-2 top-2 h-fit w-fit text-[10px]"
-    [ngClass]="{ 'text-mfloww_success': _copied }"
-    [mflowwViewCopyClipboard]="_value"
-    (copied)="informCopyEvent()"
-  >
-    {{ _copied ? 'Copied' : 'Copy' }}
-  </button>
 </div>

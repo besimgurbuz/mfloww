@@ -27,7 +27,7 @@ export class MessengerService {
       text: "Oops, it look like you haven't logged in yet. Please log in.",
     },
     expiredToken: {
-      type: 'warn',
+      type: 'fatal',
       text: 'Oops, it look like your session has expired. Please log in again.',
     },
     newAccount: {
