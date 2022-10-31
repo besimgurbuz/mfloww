@@ -1,7 +1,7 @@
 <div
   class="flex flex-col w-full h-full items-center gap-12 lg:px-60 md:px-18 px-6 pt-10"
 >
-  <h1 class="text-4xl text-mfloww_success">Settings</h1>
+  <h1 class="text-2xl sm:text-4xl text-mfloww_success">Settings</h1>
   <div class="flex flex-wrap gap-4 w-full items-center justify-around">
     <div class="flex flex-col gap-2 max-w-[450px]">
       <h3 class="text-sm sm:text-lg">Profile</h3>
@@ -9,7 +9,10 @@
         Your e-mail adress is your identity on mfloww and is used to log in.
       </p>
     </div>
-    <form [formGroup]="profileGroup" class="flex flex-col gap-6 relative">
+    <form
+      [formGroup]="profileGroup"
+      class="flex flex-col gap-6 relative flex-grow max-w-[450px]"
+    >
       <mfloww-view-input
         formControlName="email"
         placeholder="E-mail"
@@ -24,6 +27,7 @@
         formControlName="key"
         placeholder="Encryption Key"
         label="Encryption key"
+        [copyable]="true"
       ></mfloww-view-input>
       <button
         class="border-2 border-solid rounded px-5 py-2 hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"

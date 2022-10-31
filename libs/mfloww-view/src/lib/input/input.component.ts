@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
@@ -36,6 +37,7 @@ export class MflowwInputComponent implements ControlValueAccessor, OnInit {
   @Input() placeholder!: string;
   @Input() name!: string;
   @Input() label?: string;
+  @Input() copyable?: boolean;
 
   _control!: FormControl;
   errorMessages = ERROR_MESSAGES;
@@ -43,12 +45,14 @@ export class MflowwInputComponent implements ControlValueAccessor, OnInit {
   _disabled = false;
   _touched = false;
   _focused = false;
+  _copied = false;
   _onTouched: () => void = () => {};
   _onChange: (value: string) => void = () => {};
 
   constructor(
     @Inject(INJECTOR) private injector: Injector,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -86,6 +90,14 @@ export class MflowwInputComponent implements ControlValueAccessor, OnInit {
     this._value = value;
     this.markAsTouched();
     this._onChange(value);
+  }
+
+  informCopyEvent() {
+    this._copied = true;
+    setTimeout(() => {
+      this._copied = false;
+      this.cd.detectChanges();
+    }, 1000);
   }
 
   private markAsTouched() {

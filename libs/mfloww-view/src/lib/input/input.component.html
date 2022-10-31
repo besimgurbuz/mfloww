@@ -1,6 +1,6 @@
-<div class="relative">
+<div class="relative w-full">
   <p
-    class="input-label text-sm text-mfloww_fg pb-2"
+    class="input-label text-xs text-mfloww_fg pb-1"
     [style.opacity]="_value ? 100 : 0"
   >
     {{ label }}
@@ -8,7 +8,7 @@
   <input
     [type]="type"
     [placeholder]="placeholder"
-    class="bg-mfloww_bg xs:w-[450px] border-solid border-2 rounded border-mfloww_white px-3 py-2 outline-none focus:border-mfloww_blue"
+    class="bg-mfloww_bg w-full border-solid border-2 rounded border-mfloww_white px-3 py-2 outline-none focus:border-mfloww_blue text-ellipsis overflow-hidden whitespace-nowrap"
     [value]="_value"
     [disabled]="_disabled"
     (input)="onValueChanged($any($event.target).value)"
@@ -21,7 +21,7 @@
   <ng-container *ngIf="_touched && _control.errors">
     <p
       *ngIf="(_control.errors | keyvalue)[0] as firstError"
-      class="absolute text-mfloww_fatal text-[10px] xs:text-xs"
+      class="absolute text-mfloww_fatal text-[10px]"
     >
       {{
         errorMessages[firstError.key](
@@ -31,4 +31,13 @@
       }}
     </p>
   </ng-container>
+  <button
+    *ngIf="copyable"
+    class="absolute right-2 top-2 h-fit w-fit text-[10px]"
+    [ngClass]="{ 'text-mfloww_success': _copied }"
+    [mflowwViewCopyClipboard]="_value"
+    (copied)="informCopyEvent()"
+  >
+    {{ _copied ? 'Copied' : 'Copy' }}
+  </button>
 </div>

@@ -3,14 +3,18 @@
 >
   <main class="flex flex-col items-center justify-start flex-grow gap-11">
     <div class="flex flex-col gap-4 items-center text-center">
-      <h1 class="text-4xl md:text-5xl text-mfloww_success">Sign up</h1>
-      <p>
+      <h1 class="text-3xl md:text-5xl text-mfloww_success">Sign up</h1>
+      <p class="text-xs md:text-sm">
         Alredy have an account?
-        <a [routerLink]="'/user/log-in'" class="text-mfloww_blue">Log in</a>
+        <a
+          [routerLink]="'/user/log-in'"
+          class="text-mfloww_blue whitespace-nowrap"
+          >Log in</a
+        >
       </p>
     </div>
     <form
-      class="flex flex-col items-center gap-9 xs:gap-8"
+      class="flex flex-col items-center gap-4 w-full max-w-[450px]"
       [formGroup]="signUpForm"
       (keydown.enter)="submitForm()"
     >
