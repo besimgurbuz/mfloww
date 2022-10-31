@@ -23,7 +23,7 @@ export class MessengerService {
 
   private redirectionMessageSet: Record<string | number, Message> = {
     triedUnauth: {
-      type: 'warn',
+      type: 'fatal',
       text: "Oops, it look like you haven't logged in yet. Please log in.",
     },
     expiredToken: {
@@ -94,7 +94,7 @@ export class MessengerService {
   ): Message {
     const messages: Record<number, Message> = {
       401: {
-        type: 'warn',
+        type: 'fatal',
         text: 'Opps, looks like your session has expired. Please log-in again.',
       },
     };
