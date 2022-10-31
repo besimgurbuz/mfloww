@@ -2,10 +2,10 @@
   class="flex flex-col w-full h-full items-center gap-12 lg:px-60 md:px-18 px-6 pt-10"
 >
   <h1 class="text-4xl text-mfloww_success">Settings</h1>
-  <div class="flex gap-4 w-full max-h-[300px] items-center justify-around">
-    <div class="flex flex-col gap-2">
-      <h3>Profile</h3>
-      <p class="text-xs opacity-50">
+  <div class="flex flex-wrap gap-4 w-full items-center justify-around">
+    <div class="flex flex-col gap-2 max-w-[450px]">
+      <h3 class="text-sm sm:text-lg">Profile</h3>
+      <p class="text-[10px] sm:text-xs opacity-50">
         Your e-mail adress is your identity on mfloww and is used to log in.
       </p>
     </div>
@@ -26,9 +26,11 @@
         label="Encryption key"
       ></mfloww-view-input>
       <button
-        class="absolute -bottom-[50px]"
-        *ngIf="
+        class="border-2 border-solid rounded px-5 py-2 hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
+        [style.visibility]="
           profileGroup.touched && profileGroup.valid && isFormValueDifferent()
+            ? 'visible'
+            : 'hidden'
         "
       >
         Save
