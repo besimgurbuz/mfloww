@@ -9,7 +9,7 @@ import { EntryType, SupportedCurrency } from '@mfloww/common';
 })
 export class MoneyTableEntryComponent {
   @Input() type: EntryType = 'revenue';
-  @Input() currency!: SupportedCurrency;
+  @Input() currency: SupportedCurrency = SupportedCurrency.USD;
   @Input() amount!: number;
   @Input() label!: string;
 }

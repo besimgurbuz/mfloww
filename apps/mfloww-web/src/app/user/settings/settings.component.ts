@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MflowwDbService } from '@mfloww/db';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
+import { MessengerService } from '../../core/messenger.service';
 import { ProfileInfo } from '../../core/models/profile-info';
 
 @Component({
@@ -30,7 +31,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
   });
   private readonly profileInfo$ = inject(AuthService).profileInfo$;
   private readonly dbService = inject(MflowwDbService);
+  private readonly messengerService = inject(MessengerService);
   private profileSubs?: Subscription;
+  private deleteDbSubs?: Subscription;
 
   _profileInfo: ProfileInfo | null = null;
 
@@ -46,6 +49,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.profileSubs?.unsubscribe();
+    this.deleteDbSubs?.unsubscribe();
   }
 
   isFormValueDifferent(): boolean {
@@ -65,7 +69,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   handleDeleteLocalDatabase() {
     if (confirm("Are you sure you want to delete this device's database?")) {
-      this.dbService.clearAllStores();
+      if (this.deleteDbSubs) {
+        this.deleteDbSubs.unsubscribe();
+      }
+      this.deleteDbSubs = this.dbService.clearAllStores().subscribe(() => {
+        this.messengerService.emitMessage(
+          'info',
+          'The database on this device is deleted'
+        );
+      });
     }
   }
 }

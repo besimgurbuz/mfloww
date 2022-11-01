@@ -47,6 +47,7 @@ export class MflowwSelectComponent<T>
   _disabled = false;
   _touched = false;
   _selectionSubs?: Subscription;
+  _optionChangeSubs?: Subscription;
   _onTouched?: () => void = () => {};
   _onChange: (value: T) => void = () => {};
 
@@ -55,6 +56,29 @@ export class MflowwSelectComponent<T>
   ngAfterViewInit(): void {
     this._options = this.options.toArray();
     this.setInitialSelection();
+    this.setSelectionChangeSubs();
+    this._optionChangeSubs = this.options.changes.subscribe(() => {
+      this._options = this.options.toArray();
+      this.setSelectionChangeSubs();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this._selectionSubs?.unsubscribe();
+    this._optionChangeSubs?.unsubscribe();
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOut(event: MouseEvent) {
+    if (!this.elementRef.nativeElement.contains(event.target) && this._opened) {
+      // Click outside of element
+      this._opened = false;
+    }
+  }
+
+  setSelectionChangeSubs() {
+    if (this._selectionSubs) this._selectionSubs.unsubscribe();
+
     this._selectionSubs = merge(
       ...this.options.map((option) => option.selection)
     )
@@ -68,18 +92,6 @@ export class MflowwSelectComponent<T>
         })
       )
       .subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this._selectionSubs?.unsubscribe();
-  }
-
-  @HostListener('document:click', ['$event'])
-  clickOut(event: MouseEvent) {
-    if (!this.elementRef.nativeElement.contains(event.target) && this._opened) {
-      // Click outside of element
-      this._opened = false;
-    }
   }
 
   handleSelectButtonClick(): void {

@@ -2,35 +2,32 @@
   <div class="w-[180px] sm:w-[220px]">
     <mfloww-view-select
       placeholder="Select a month"
-      (selection)="handleMonthSelection($any($event))"
+      [formControl]="dateControl"
     >
-      <mfloww-view-option value="January 2022">January 2022</mfloww-view-option>
-      <mfloww-view-option value="February 2022"
-        >February 2022</mfloww-view-option
+      <mfloww-view-option
+        *ngFor="let entryDate of entryDates$ | async"
+        [value]="entryDate"
+        >{{ entryDate | entryDate }}</mfloww-view-option
       >
-      <mfloww-view-option value="March 2022">March 2022</mfloww-view-option>
-      <mfloww-view-option value="April 2022">April 2022</mfloww-view-option>
     </mfloww-view-select>
   </div>
-
   <div
+    *ngIf="dateControl.value"
     class="revenue-expense-section pb-20 lg:pb-0 flex flex-wrap justify-center lg:justify-around w-full"
   >
     <mfloww-money-table
       class="lg:w-2/5"
-      [entries]="(revenueEntries$ | async) || []"
-      [total]="(totalRevenue$ | async) || 0"
+      [entries]="(selectedRevenues$ | async) || []"
+      [total]="0"
       (entryCreation)="handleEntryCreation($event)"
     ></mfloww-money-table>
     <mfloww-money-table
       type="expense"
       class="lg:w-2/5"
-      [entries]="(expenseEntries$ | async) || []"
-      [total]="(totalExpense$ | async) || 0"
+      [entries]="(selectedExpenses$ | async) || []"
+      [total]="0"
       (entryCreation)="handleEntryCreation($event, 'expense')"
     ></mfloww-money-table>
-    <mfloww-overall-panel
-      [overallTotal]="(overallTotal$ | async) || 0"
-    ></mfloww-overall-panel>
+    <mfloww-overall-panel [overallTotal]="0"></mfloww-overall-panel>
   </div>
 </div>

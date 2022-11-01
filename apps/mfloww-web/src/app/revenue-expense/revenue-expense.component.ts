@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
-import { EntryType, SupportedCurrency } from '@mfloww/common';
-import { MflowwDbService } from '@mfloww/db';
-import { BehaviorSubject, combineLatest, map } from 'rxjs';
+import { Component, inject } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { EntryType } from '@mfloww/common';
+import { Observable } from 'rxjs';
 import { Entry } from '../models/entry';
+import { RevenueExpenseEntryService } from './data-access/revenue-expense-entry.service';
+import { queryRevenueExpense } from './data-access/revenue-expense.queries';
 import { CalculatorService } from './services/calculator.service';
 
 @Component({
@@ -11,74 +13,29 @@ import { CalculatorService } from './services/calculator.service';
   styleUrls: ['./revenue-expense.component.scss'],
 })
 export class RevenueExpenseComponent {
-  revenueEntriesSubject: BehaviorSubject<Entry[]> = new BehaviorSubject<
-    Entry[]
-  >([
-    { label: 'Salary', amount: 10000, currency: SupportedCurrency.USD },
-    { label: 'Rent', amount: 1000, currency: SupportedCurrency.USD },
-    { label: 'Others', amount: 500, currency: SupportedCurrency.USD },
-  ]);
-  expenseEntriesSubject: BehaviorSubject<Entry[]> = new BehaviorSubject<
-    Entry[]
-  >([
-    { label: 'Credit Card', amount: -5000, currency: SupportedCurrency.USD },
-    { label: 'Hobby', amount: -1000, currency: SupportedCurrency.USD },
-    { label: 'Subscriptions', amount: -100, currency: SupportedCurrency.EUR },
-  ]);
-  totalRevenue$ = this.revenueEntriesSubject.pipe(
-    map(this.calculatorService.sumOfEntries)
-  );
-  totalExpense$ = this.expenseEntriesSubject.pipe(
-    map(this.calculatorService.sumOfEntries)
-  );
-  overallTotal$ = combineLatest([
-    this.revenueEntriesSubject,
-    this.expenseEntriesSubject,
-  ]).pipe(
-    map(([revenues, expenses]) =>
-      this.calculatorService.sumOfTotal(revenues, expenses)
-    )
-  );
+  private readonly entryService = inject(RevenueExpenseEntryService);
+  entryData$ = queryRevenueExpense();
+  dateControl: FormControl<string> = new FormControl();
 
-  constructor(
-    private calculatorService: CalculatorService,
-    private dbService: MflowwDbService
-  ) {
-    this.dbService.openDb('MFLOWW_DB', [
-      { name: 'revenues', uniquenessType: 'autoIncrement' },
-      { name: 'expenses', uniquenessType: 'autoIncrement' },
-    ]);
-    this.dbService
-      .insert('revenues', {
-        label: 'Credit Card',
-        amount: -5000,
-        currency: SupportedCurrency.USD,
-      })
-      .subscribe(console.log);
-    this.dbService.getAll('revenues').subscribe(console.log);
-  }
-
-  handleMonthSelection(selection: string) {
-    console.log(selection);
-  }
+  constructor(private calculatorService: CalculatorService) {}
 
   handleEntryCreation(newEntry: Entry, type: EntryType = 'revenue') {
-    if (type === 'revenue') {
-      this.revenueEntriesSubject.next(
-        this.revenueEntriesSubject.value.concat(newEntry)
-      );
-    } else {
-      this.expenseEntriesSubject.next(
-        this.expenseEntriesSubject.value.concat(newEntry)
-      );
+    if (this.dateControl.value) {
+      this.entryService
+        .insertNewEntry(this.dateControl.value, newEntry, type)
+        .subscribe();
     }
   }
 
-  get revenueEntries$() {
-    return this.revenueEntriesSubject.asObservable();
+  get entryDates$(): Observable<string[] | undefined> {
+    return this.entryData$[0];
   }
 
-  get expenseEntries$() {
-    return this.expenseEntriesSubject.asObservable();
+  get selectedRevenues$() {
+    return this.entryData$[1](this.dateControl.value || '');
+  }
+
+  get selectedExpenses$() {
+    return this.entryData$[2](this.dateControl.value || '');
   }
 }

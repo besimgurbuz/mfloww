@@ -23,10 +23,10 @@ interface ObjectStoreInstruction {
 export class MflowwDbInitializerService {
   private connectionSubject: ReplaySubject<DbConnectionResult> =
     new ReplaySubject<DbConnectionResult>(1);
-  private _dbRequest!: IDBOpenDBRequest;
+  protected _dbRequest!: IDBOpenDBRequest;
 
   // callbacks
-  private readonly _onConnectionErr = (event: Event) => {
+  private readonly _onConnectionErr = () => {
     console.error(
       `MflowwDb(InitializerService): ${this._dbRequest.error?.message}`
     );
@@ -74,9 +74,7 @@ export class MflowwDbInitializerService {
   }
 
   get db$(): Observable<IDBDatabase | null> {
-    return this.connectionSubject
-      .asObservable()
-      .pipe(map(({ db }) => db || null));
+    return this.connectionSubject.pipe(map(({ db }) => db || null));
   }
 
   get transaction$(): Observable<IDBTransaction | null> {

@@ -1,6 +1,7 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MflowwDbModule } from '@mfloww/db';
 import { MflowwProgressBarComponent } from '@mfloww/view';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -18,6 +19,7 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     SharedModule,
     MflowwProgressBarComponent,
+    MflowwDbModule,
   ],
   providers: [
     {

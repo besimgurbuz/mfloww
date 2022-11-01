@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MflowwInputModule } from '@mfloww/view';
 
-import { MflowwDbModule } from '@mfloww/db';
 import { SharedModule } from '../shared/shared.module';
 import { LogInComponent } from './log-in/log-in.component';
 import { UserService } from './services/user.service';
@@ -19,7 +18,6 @@ import { UserRoutingModule } from './user-routing.module';
     SharedModule,
     ReactiveFormsModule,
     MflowwInputModule,
-    MflowwDbModule,
   ],
   providers: [UserService],
 })

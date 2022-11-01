@@ -9,7 +9,9 @@ export class MflowwDbService extends MflowwDbInitializerService {
   get<T = unknown>(storeName: string, query: string | number) {
     return this.store$(storeName).pipe(
       mergeMap((objectStore) =>
-        this.createStoreRequest$<T>(objectStore, (store) => store.get(query))
+        this.createStoreRequest$<T | undefined>(objectStore, (store) =>
+          store.get(query)
+        )
       )
     );
   }
@@ -17,12 +19,14 @@ export class MflowwDbService extends MflowwDbInitializerService {
   getAll<T = unknown[]>(storeName: string) {
     return this.store$(storeName).pipe(
       mergeMap((objectStore) =>
-        this.createStoreRequest$<T>(objectStore, (store) => store.getAll())
+        this.createStoreRequest$<T | undefined>(objectStore, (store) =>
+          store.getAll()
+        )
       )
     );
   }
 
-  insert<T = unknown>(storeName: string, value: unknown) {
+  insert<T = unknown>(storeName: string, value: T) {
     return this.store$(storeName).pipe(
       mergeMap((objectStore) =>
         this.createStoreRequest$<T>(objectStore, (store) => store.add(value))
@@ -39,15 +43,16 @@ export class MflowwDbService extends MflowwDbInitializerService {
   }
 
   clearAllStores() {
-    return this.db$.pipe(
+    return this.transaction$.pipe(
       mergeMap(
-        (db) =>
-          new Observable((subscriber) => {
-            const storeNames = db?.objectStoreNames
-              ? Array.from(db.objectStoreNames)
+        (transaction) =>
+          new Observable<void>((subscriber) => {
+            const storeNames = transaction?.objectStoreNames
+              ? Array.from(transaction.objectStoreNames)
               : [];
-
-            storeNames.forEach((storeName) => db?.deleteObjectStore(storeName));
+            storeNames.forEach((storeName) => {
+              transaction?.objectStore(storeName).clear();
+            });
             subscriber.next();
             subscriber.complete();
           })

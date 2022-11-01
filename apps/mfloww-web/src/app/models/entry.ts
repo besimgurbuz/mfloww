@@ -5,3 +5,9 @@ export interface Entry {
   currency: SupportedCurrency;
   label: string;
 }
+
+export interface MonthYearEntry {
+  month_year: string;
+  revenues: Entry[];
+  expenses: Entry[];
+}

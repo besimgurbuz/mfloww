@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MflowwDbService } from '@mfloww/db';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService } from './core/auth.service';
 import { MessengerService } from './core/messenger.service';
@@ -14,6 +15,7 @@ import { ProgressState } from './core/progress.state';
 })
 export class AppComponent implements OnInit, OnDestroy {
   readonly errorMessenger = inject(MessengerService);
+  readonly dbService = inject(MflowwDbService);
   readonly inProgress$ = inject(ProgressState).inProgress$;
   readonly router = inject(Router);
   readonly route = inject(ActivatedRoute);
@@ -25,6 +27,9 @@ export class AppComponent implements OnInit, OnDestroy {
   private _destroy: Subject<void> = new Subject();
 
   ngOnInit(): void {
+    this.dbService.openDb('MFLOWW_DB', [
+      { name: 'entries', key: 'month_year', uniquenessType: 'keyPath' },
+    ]);
     if (!this.authService.hasSessionExpired()) {
       this.authService
         .getProfileInfo()
