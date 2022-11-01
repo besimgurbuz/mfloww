@@ -4,14 +4,15 @@
 
 @keyframes modal-opening-effect {
   0% {
-    transform: translateX(5%) translateY(5%);
-    scale: 0.5;
+    transform: translateY(-10%);
+    // scale: 0.5;
   }
   50% {
-    transform: translateX(2%) translateY(2%);
+    transform: translateY(-2%);
+    // scale: 0.8;
   }
   100% {
-    transform: translateX(0) translateY(0);
-    scale: 1;
+    transform: translateY(0);
+    // scale: 1;
   }
 }

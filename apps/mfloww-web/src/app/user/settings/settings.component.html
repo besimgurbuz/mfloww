@@ -1,5 +1,5 @@
 <div
-  class="flex flex-col w-full h-full items-center gap-12 lg:px-60 md:px-18 px-6 py-10"
+  class="flex flex-col w-full h-full items-center gap-10 lg:px-60 md:px-18 px-6 pb-10"
 >
   <h1 class="text-2xl sm:text-4xl text-mfloww_success">Settings</h1>
   <div class="flex flex-wrap gap-4 w-full items-center justify-around">
@@ -31,7 +31,7 @@
         [copyable]="true"
       ></mfloww-view-input>
       <button
-        class="border-2 border-solid rounded px-5 py-2 hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
+        class="border-2 border-solid rounded px-5 py-2 hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer w-fit text-sm"
         [style.visibility]="
           profileGroup.touched && profileGroup.valid && isFormValueDifferent()
             ? 'visible'
@@ -72,16 +72,30 @@
         type="password"
       ></mfloww-view-input>
       <button
-        class="border-2 border-solid rounded px-5 py-2 hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
+        class="border-2 border-solid rounded px-5 py-2 hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer w-fit text-sm"
         [style.visibility]="
-          passwordGroup.touched && passwordGroup.valid && isPasswordMatching()
-            ? 'visible'
-            : 'hidden'
+          passwordGroup.touched && passwordGroup.valid ? 'visible' : 'hidden'
         "
       >
         Save
       </button>
     </form>
+  </div>
+  <div class="flex flex-wrap gap-4 w-full items-center justify-around">
+    <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
+      <h3 class="text-sm sm:text-lg">Delete local database</h3>
+      <p class="text-[10px] sm:text-xs opacity-50">
+        Data on this device will be deleted.
+        <strong>Warning</strong> deletion is irreversible.
+      </p>
+    </div>
+    <div class="flex flex-grow max-w-[450px]">
+      <button
+        class="border-2 border-solid border-mfloww_fatal text-mfloww_fatal rounded text-sm px-6 py-3 hover:bg-mfloww_fatal hover:text-mfloww_white"
+      >
+        Delete local database
+      </button>
+    </div>
   </div>
   <div class="flex flex-wrap gap-4 w-full items-center justify-around">
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">

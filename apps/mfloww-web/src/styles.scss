@@ -55,3 +55,22 @@ body {
 input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
+
+.fade-in {
+  animation: fade-in;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

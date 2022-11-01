@@ -53,9 +53,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
     );
   }
 
-  isPasswordMatching(): boolean {
+  isPasswordFormValid(): boolean {
     return (
-      this.passwordGroup.value.currentPassword !== '' &&
+      this.passwordGroup.valid &&
       this.passwordGroup.value.currentPassword ===
         this.passwordGroup.value.confirmNewPassword
     );
