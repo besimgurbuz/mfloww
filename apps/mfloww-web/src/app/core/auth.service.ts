@@ -60,4 +60,8 @@ export class AuthService {
   get currentProfileInfo(): ProfileInfo | null {
     return this.profileInfoSubject.value;
   }
+
+  get currentEncryptionKey(): string | undefined {
+    return this.currentProfileInfo?.key;
+  }
 }

@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MflowwDbService } from '@mfloww/db';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
 import { ProfileInfo } from '../../core/models/profile-info';
@@ -28,6 +29,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     confirmNewPassword: new FormControl('', [Validators.required]),
   });
   private readonly profileInfo$ = inject(AuthService).profileInfo$;
+  private readonly dbService = inject(MflowwDbService);
   private profileSubs?: Subscription;
 
   _profileInfo: ProfileInfo | null = null;
@@ -59,5 +61,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.passwordGroup.value.currentPassword ===
         this.passwordGroup.value.confirmNewPassword
     );
+  }
+
+  handleDeleteLocalDatabase() {
+    if (confirm("Are you sure you want to delete this device's database?")) {
+      this.dbService.clearAllStores();
+    }
   }
 }

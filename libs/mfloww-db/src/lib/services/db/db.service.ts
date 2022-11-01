@@ -1,0 +1,80 @@
+import { Injectable } from '@angular/core';
+import { filter, map, mergeMap, Observable } from 'rxjs';
+import { MflowwDbInitializerService } from '../db-initializer/db-initializer.service';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class MflowwDbService extends MflowwDbInitializerService {
+  get<T = unknown>(storeName: string, query: string | number) {
+    return this.store$(storeName).pipe(
+      mergeMap((objectStore) =>
+        this.createStoreRequest$<T>(objectStore, (store) => store.get(query))
+      )
+    );
+  }
+
+  getAll<T = unknown[]>(storeName: string) {
+    return this.store$(storeName).pipe(
+      mergeMap((objectStore) =>
+        this.createStoreRequest$<T>(objectStore, (store) => store.getAll())
+      )
+    );
+  }
+
+  insert<T = unknown>(storeName: string, value: unknown) {
+    return this.store$(storeName).pipe(
+      mergeMap((objectStore) =>
+        this.createStoreRequest$<T>(objectStore, (store) => store.add(value))
+      )
+    );
+  }
+
+  delete<T = unknown>(storeName: string, query: string | number) {
+    return this.store$(storeName).pipe(
+      mergeMap((objectStore) =>
+        this.createStoreRequest$<T>(objectStore, (store) => store.delete(query))
+      )
+    );
+  }
+
+  clearAllStores() {
+    return this.db$.pipe(
+      mergeMap(
+        (db) =>
+          new Observable((subscriber) => {
+            const storeNames = db?.objectStoreNames
+              ? Array.from(db.objectStoreNames)
+              : [];
+
+            storeNames.forEach((storeName) => db?.deleteObjectStore(storeName));
+            subscriber.next();
+            subscriber.complete();
+          })
+      )
+    );
+  }
+
+  private store$(storeName: string): Observable<IDBObjectStore> {
+    return this.transaction$.pipe(
+      map((transaction) => transaction?.objectStore(storeName)),
+      filter((objectStore) => objectStore !== undefined)
+    ) as Observable<IDBObjectStore>;
+  }
+
+  private createStoreRequest$<T>(
+    store: IDBObjectStore,
+    callback: (store: IDBObjectStore) => IDBRequest
+  ) {
+    return new Observable<T>((subscriber) => {
+      const dbRequest = callback(store);
+      dbRequest.onerror = () => {
+        subscriber.error(dbRequest.error);
+      };
+      dbRequest.onsuccess = () => {
+        subscriber.next(dbRequest.result);
+        subscriber.complete();
+      };
+    });
+  }
+}

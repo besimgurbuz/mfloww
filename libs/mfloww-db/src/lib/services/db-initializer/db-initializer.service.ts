@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs';
+import { map, Observable, ReplaySubject } from 'rxjs';
 
 enum DbState {
-  NOT_SUPPORTED,
-  HAS_ERROR,
-  CONNECTED,
+  NOT_SUPPORTED = 'NOT_SUPPORTED',
+  CONNECTION_ERROR = 'CONNECTION_ERROR',
+  CONNECTED = 'CONNECTED',
 }
 
 interface DbConnectionResult {
@@ -14,8 +14,9 @@ interface DbConnectionResult {
 }
 
 interface ObjectStoreInstruction {
-  key: string;
+  key?: string;
   name: string;
+  uniquenessType: 'keyPath' | 'autoIncrement';
 }
 
 @Injectable()
@@ -27,12 +28,10 @@ export class MflowwDbInitializerService {
   // callbacks
   private readonly _onConnectionErr = (event: Event) => {
     console.error(
-      `MflowwDb(InitializerService): ConnectionError ${
-        (event.target as any).errorCode
-      }`
+      `MflowwDb(InitializerService): ${this._dbRequest.error?.message}`
     );
-    this.connectionSubject.next({
-      state: DbState.HAS_ERROR,
+    this.connectionSubject.error({
+      state: DbState.CONNECTION_ERROR,
       error: this._dbRequest.error,
     });
   };
@@ -44,15 +43,13 @@ export class MflowwDbInitializerService {
     });
   };
   private readonly _onTransactionComplete = () => {
-    console.log(`MflowwDb(InitializerService): transaction completed`);
+    console.log('MflowwDb(InitializerService): transaction completed');
   };
   private readonly _onUpgradeNeeded =
-    (objectStores?: ObjectStoreInstruction[]) => (event: Event) => {
-      objectStores?.forEach(({ key, name }) => {
-        const objectStore = (
-          (event.target as any).result as IDBDatabase
-        ).createObjectStore(name, {
-          keyPath: key,
+    (objectStores?: ObjectStoreInstruction[]) => () => {
+      objectStores?.forEach(({ key, name, uniquenessType }) => {
+        const objectStore = this._dbRequest.result.createObjectStore(name, {
+          [uniquenessType]: key || true,
         });
         objectStore.transaction.oncomplete = this._onTransactionComplete;
       });
@@ -64,7 +61,7 @@ export class MflowwDbInitializerService {
     version = 1
   ): Observable<DbConnectionResult> {
     if (!window.indexedDB) {
-      this.connectionSubject.next({ state: DbState.NOT_SUPPORTED });
+      this.connectionSubject.error({ state: DbState.NOT_SUPPORTED });
       this.connectionSubject.complete();
     } else {
       this._dbRequest = window.indexedDB.open(dataBaseName, version);
@@ -74,5 +71,22 @@ export class MflowwDbInitializerService {
     }
 
     return this.connectionSubject.asObservable();
+  }
+
+  get db$(): Observable<IDBDatabase | null> {
+    return this.connectionSubject
+      .asObservable()
+      .pipe(map(({ db }) => db || null));
+  }
+
+  get transaction$(): Observable<IDBTransaction | null> {
+    return this.db$.pipe(
+      map((db) => {
+        const storeNames = db?.objectStoreNames
+          ? Array.from(db.objectStoreNames)
+          : [];
+        return db?.transaction(storeNames, 'readwrite') || null;
+      })
+    );
   }
 }
