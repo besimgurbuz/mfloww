@@ -25,8 +25,14 @@
         <mfloww-view-icon type="menu" class="w-7"></mfloww-view-icon>
       </button>
       <ng-container mflowwPanelContent>
-        <a class="px-6 py-3 text-sm" routerLink="/user/log-in">Log in</a>
-        <a class="px-6 py-3 text-sm" routerLink="/user/sign-up">Sign up</a>
+        <a class="px-6 py-3 text-sm whitespace-nowrap" routerLink="/user/log-in"
+          >Log in</a
+        >
+        <a
+          class="px-6 py-3 text-sm whitespace-nowrap"
+          routerLink="/user/sign-up"
+          >Sign up</a
+        >
       </ng-container>
     </mfloww-view-overlay-panel>
   </ng-container>
@@ -39,8 +45,10 @@
         {{ profileInfo?.username }}
       </button>
       <ng-container mflowwPanelContent>
-        <a class="px-6 py-3 text-sm" routerLink="/user/settings">Settings</a>
-        <a class="px-6 py-3 text-sm" (click)="logOutTriggered.emit()"
+        <a class="w-full px-6 py-3 text-sm" routerLink="/user/settings"
+          >Settings</a
+        >
+        <a class="w-full px-6 py-3 text-sm" (click)="logOutTriggered.emit()"
           >Log out</a
         >
       </ng-container>
