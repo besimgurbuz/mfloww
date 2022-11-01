@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { EntryType, SupportedCurrency } from '@mfloww/common';
+import { MflowwDbInitializerService } from '@mfloww/db';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
 import { Entry } from '../models/entry';
 import { CalculatorService } from './services/calculator.service';
@@ -39,7 +40,17 @@ export class RevenueExpenseComponent {
     )
   );
 
-  constructor(private calculatorService: CalculatorService) {}
+  constructor(
+    private calculatorService: CalculatorService,
+    private dbInitializer: MflowwDbInitializerService
+  ) {
+    this.dbInitializer
+      .openDb('MFLOWW_DB', [
+        { key: 'id', name: 'revenues' },
+        { key: 'id', name: 'expenses' },
+      ])
+      .subscribe(console.log);
+  }
 
   handleMonthSelection(selection: string) {
     console.log(selection);
