@@ -5,8 +5,8 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { EntryType } from '@mfloww/common';
-import { Entry } from '../../../models/entry';
+import { RevenueExpenseRecordType } from '@mfloww/common';
+import { RevenueExpenseRecord } from '../../../models/entry';
 import { CurrencyService } from '../../services/currency.service';
 
 @Component({
@@ -16,11 +16,12 @@ import { CurrencyService } from '../../services/currency.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoneyTableComponent {
-  @Input() type: EntryType = 'revenue';
-  @Input() entries: Entry[] = [];
+  @Input() type: RevenueExpenseRecordType = 'revenue';
+  @Input() entries: RevenueExpenseRecord[] = [];
   @Input() total = 0;
 
-  @Output() entryCreation: EventEmitter<Entry> = new EventEmitter();
+  @Output() entryCreation: EventEmitter<RevenueExpenseRecord> =
+    new EventEmitter();
 
   _addingModeActive = false;
 
@@ -34,7 +35,7 @@ export class MoneyTableComponent {
     return this.currencyService.getSupportedCurrencies();
   }
 
-  handleNewEntry(entry: Entry) {
+  handleNewEntry(entry: RevenueExpenseRecord) {
     this.entryCreation.emit(entry);
     this._addingModeActive = false;
   }

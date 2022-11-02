@@ -34,6 +34,14 @@ export class MflowwDbService extends MflowwDbInitializerService {
     );
   }
 
+  update<T = unknown>(storeName: string, value: T) {
+    return this.store$(storeName).pipe(
+      mergeMap((objectStore) =>
+        this.createStoreRequest$<T>(objectStore, (store) => store.put(value))
+      )
+    );
+  }
+
   delete<T = unknown>(storeName: string, query: string | number) {
     return this.store$(storeName).pipe(
       mergeMap((objectStore) =>

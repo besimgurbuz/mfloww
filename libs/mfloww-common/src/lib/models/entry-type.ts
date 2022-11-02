@@ -1,1 +1,1 @@
-export type EntryType = 'revenue' | 'expense';
+export type RevenueExpenseRecordType = 'revenue' | 'expense';

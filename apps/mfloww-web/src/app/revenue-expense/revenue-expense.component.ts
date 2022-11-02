@@ -1,41 +1,42 @@
-import { Component, inject } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { EntryType } from '@mfloww/common';
-import { Observable } from 'rxjs';
-import { Entry } from '../models/entry';
-import { RevenueExpenseEntryService } from './data-access/revenue-expense-entry.service';
-import { queryRevenueExpense } from './data-access/revenue-expense.queries';
-import { CalculatorService } from './services/calculator.service';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { RevenueExpenseRecordType } from '@mfloww/common';
+import { Observable, Subscription } from 'rxjs';
+import { RevenueExpenseRecord } from '../models/entry';
+import { RevenueExpenseFacade } from './data-access/revenue-expense.facade';
 
 @Component({
   selector: 'mfloww-revenue-expense',
   templateUrl: './revenue-expense.component.html',
   styleUrls: ['./revenue-expense.component.scss'],
 })
-export class RevenueExpenseComponent {
-  private readonly entryService = inject(RevenueExpenseEntryService);
-  entryData$ = queryRevenueExpense();
-  dateControl: FormControl<string> = new FormControl();
+export class RevenueExpenseComponent implements OnInit, OnDestroy {
+  private readonly revenueExpenseFacade = inject(RevenueExpenseFacade);
+  entryDates$: Observable<string[]> = this.revenueExpenseFacade.entryDates$;
+  revenues$: Observable<RevenueExpenseRecord[]> =
+    this.revenueExpenseFacade.selectedRevenues$;
+  expenses$: Observable<RevenueExpenseRecord[]> =
+    this.revenueExpenseFacade.selectedExpenses$;
 
-  constructor(private calculatorService: CalculatorService) {}
+  loadEntryListSubs?: Subscription;
+  _selectedMonthYear?: string;
 
-  handleEntryCreation(newEntry: Entry, type: EntryType = 'revenue') {
-    if (this.dateControl.value) {
-      this.entryService
-        .insertNewEntry(this.dateControl.value, newEntry, type)
-        .subscribe();
-    }
+  ngOnInit(): void {
+    this.loadEntryListSubs = this.revenueExpenseFacade.loadEntryList();
   }
 
-  get entryDates$(): Observable<string[] | undefined> {
-    return this.entryData$[0];
+  ngOnDestroy(): void {
+    this.loadEntryListSubs?.unsubscribe();
   }
 
-  get selectedRevenues$() {
-    return this.entryData$[1](this.dateControl.value || '');
+  handleMonthYearChange(month_year: string) {
+    this._selectedMonthYear = month_year;
+    this.revenueExpenseFacade.setSelectedEntryByMonthYear(month_year);
   }
 
-  get selectedExpenses$() {
-    return this.entryData$[2](this.dateControl.value || '');
+  handleEntryCreation(
+    newEntry: RevenueExpenseRecord,
+    type: RevenueExpenseRecordType = 'revenue'
+  ) {
+    this.revenueExpenseFacade.insertNewRevenueExpenseRecord(newEntry, type);
   }
 }

@@ -1,20 +1,22 @@
 import { inject, Injectable } from '@angular/core';
-import { EntryType } from '@mfloww/common';
+import { RevenueExpenseRecordType } from '@mfloww/common';
 import { MflowwDbService } from '@mfloww/db';
 import { mergeMap, Observable } from 'rxjs';
-import { Entry, MonthYearEntry } from '../../models/entry';
+import { MonthYearEntry, RevenueExpenseRecord } from '../../models/entry';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class RevenueExpenseEntryService {
+@Injectable()
+export class RevenueExpenseDataService {
   private readonly dbService = inject(MflowwDbService);
 
-  entries$(): Observable<MonthYearEntry[] | undefined> {
+  getEntryList$(): Observable<MonthYearEntry[] | undefined> {
     return this.dbService.getAll<MonthYearEntry[]>('entries');
   }
 
-  insertNewEntry(month_year: string, entry: Entry, entryType: EntryType) {
+  insertNewRevenueExpenseRecord$(
+    month_year: string,
+    record: RevenueExpenseRecord,
+    recordType: RevenueExpenseRecordType
+  ) {
     const currentEntry$ = this.dbService.get<MonthYearEntry>(
       'entries',
       month_year
@@ -24,12 +26,12 @@ export class RevenueExpenseEntryService {
       mergeMap((currentEntry) => {
         if (currentEntry) {
           const updateList =
-            entryType === 'revenue'
+            recordType === 'revenue'
               ? currentEntry.revenues
               : currentEntry.expenses;
-          updateList.push(entry);
+          updateList.push(record);
         }
-        return this.dbService.insert<MonthYearEntry>('entries', {
+        return this.dbService.update<MonthYearEntry>('entries', {
           month_year,
           expenses: currentEntry?.expenses || [],
           revenues: currentEntry?.revenues || [],

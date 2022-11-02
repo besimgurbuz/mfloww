@@ -1,6 +1,6 @@
 import { SupportedCurrency } from '@mfloww/common';
 
-export interface Entry {
+export interface RevenueExpenseRecord {
   amount: number;
   currency: SupportedCurrency;
   label: string;
@@ -8,6 +8,6 @@ export interface Entry {
 
 export interface MonthYearEntry {
   month_year: string;
-  revenues: Entry[];
-  expenses: Entry[];
+  revenues: RevenueExpenseRecord[];
+  expenses: RevenueExpenseRecord[];
 }

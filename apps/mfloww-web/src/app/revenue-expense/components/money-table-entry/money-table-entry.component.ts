@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { EntryType, SupportedCurrency } from '@mfloww/common';
+import { RevenueExpenseRecordType, SupportedCurrency } from '@mfloww/common';
 
 @Component({
   selector: 'mfloww-money-table-entry',
@@ -8,7 +8,7 @@ import { EntryType, SupportedCurrency } from '@mfloww/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoneyTableEntryComponent {
-  @Input() type: EntryType = 'revenue';
+  @Input() type: RevenueExpenseRecordType = 'revenue';
   @Input() currency: SupportedCurrency = SupportedCurrency.USD;
   @Input() amount!: number;
   @Input() label!: string;

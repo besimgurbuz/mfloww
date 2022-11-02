@@ -1,13 +1,13 @@
 import { Directive, Host, Input, OnInit } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { EntryType } from '@mfloww/common';
+import { RevenueExpenseRecordType } from '@mfloww/common';
 
 @Directive({
   selector: 'input[mflowwViewAmount]',
   standalone: true,
 })
 export class MflowwAmountDirective implements OnInit {
-  @Input() mflowwViewAmountType: EntryType = 'revenue';
+  @Input() mflowwViewAmountType: RevenueExpenseRecordType = 'revenue';
 
   _latestValidInput?: number;
 

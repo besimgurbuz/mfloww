@@ -2,7 +2,7 @@
   <div class="w-[180px] sm:w-[220px]">
     <mfloww-view-select
       placeholder="Select a month"
-      [formControl]="dateControl"
+      (selection)="handleMonthYearChange($event)"
     >
       <mfloww-view-option
         *ngFor="let entryDate of entryDates$ | async"
@@ -12,19 +12,19 @@
     </mfloww-view-select>
   </div>
   <div
-    *ngIf="dateControl.value"
+    *ngIf="_selectedMonthYear"
     class="revenue-expense-section pb-20 lg:pb-0 flex flex-wrap justify-center lg:justify-around w-full"
   >
     <mfloww-money-table
       class="lg:w-2/5"
-      [entries]="(selectedRevenues$ | async) || []"
+      [entries]="(revenues$ | async) || []"
       [total]="0"
       (entryCreation)="handleEntryCreation($event)"
     ></mfloww-money-table>
     <mfloww-money-table
       type="expense"
       class="lg:w-2/5"
-      [entries]="(selectedExpenses$ | async) || []"
+      [entries]="(expenses$ | async) || []"
       [total]="0"
       (entryCreation)="handleEntryCreation($event, 'expense')"
     ></mfloww-money-table>

@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EntryType, SupportedCurrency } from '@mfloww/common';
+import { RevenueExpenseRecordType, SupportedCurrency } from '@mfloww/common';
 
 @Component({
   selector: 'mfloww-view-entry-input',
@@ -20,7 +20,7 @@ import { EntryType, SupportedCurrency } from '@mfloww/common';
 export class MflowwEntryInputComponent implements AfterViewInit {
   @Input() currencies: SupportedCurrency[] = [];
   @Input() autofocus = false;
-  @Input() entryType: EntryType = 'revenue';
+  @Input() entryType: RevenueExpenseRecordType = 'revenue';
 
   @ViewChild('amountInput')
   amountInputEl!: ElementRef<HTMLInputElement>;
