@@ -60,6 +60,7 @@ export class MflowwSelectComponent<T>
     this._optionChangeSubs = this.options.changes.subscribe(() => {
       this._options = this.options.toArray();
       this.setSelectionChangeSubs();
+      this.setInitialSelection();
     });
   }
 
@@ -125,16 +126,10 @@ export class MflowwSelectComponent<T>
   }
 
   private setInitialSelection() {
-    const selected = this.options.filter((option) => option.selected);
-    const initialValue = selected[0]?.value;
-    if (selected.length <= 0) return;
-    if (selected.length > 1) {
-      throw new Error(
-        `[MflowwSelectComponent]: Only one option can be selected at the same time. ${selected
-          .map((option) => option.value)
-          .join(',')} are selected at the same time.`
-      );
-    }
+    if (this.options.length <= 0) return;
+
+    const selected = this.options.find((option) => option.selected);
+    const initialValue = selected?.value;
     if (!initialValue) {
       throw new Error(
         '[MflowwSelectComponent]: Initial value should be given for selected option'
@@ -144,6 +139,7 @@ export class MflowwSelectComponent<T>
     this.markAsTouched();
     this._onChange(initialValue);
     this._value = initialValue;
+    this.selection.emit(initialValue);
     this.cd.detectChanges();
   }
 }

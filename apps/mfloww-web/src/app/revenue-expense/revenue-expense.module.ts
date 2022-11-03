@@ -12,6 +12,8 @@ import { RevenueExpenseFacade } from './data-access/revenue-expense.facade';
 import { RevenueExpenseState } from './data-access/revenue-expense.state';
 import { EntryDatePipe } from './pipes/entry-date/entry-date.pipe';
 import { RevenueExpenseComponent } from './revenue-expense.component';
+import { CalculatorService } from './services/calculator.service';
+import { CurrencyService } from './services/currency.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { RevenueExpenseComponent } from './revenue-expense.component';
     RevenueExpenseDataService,
     RevenueExpenseState,
     RevenueExpenseFacade,
+    CalculatorService,
+    CurrencyService,
   ],
 })
 export class RevenueExpenseModule {}
