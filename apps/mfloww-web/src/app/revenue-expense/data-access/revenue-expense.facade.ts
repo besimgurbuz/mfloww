@@ -28,7 +28,7 @@ export class RevenueExpenseFacade {
   }
 
   setSelectedEntryByMonthYear(month_year: string): void {
-    this.revenueExpenseState.setSelectedEntryByMonthYear(month_year);
+    this.revenueExpenseState.setSelectedMonth(month_year);
   }
 
   insertNewRevenueExpenseRecord(

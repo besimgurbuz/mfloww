@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RevenueExpenseRecordType } from '@mfloww/common';
 import { RevenueExpenseRecord } from '../../../models/entry';
 import { CurrencyService } from '../../services/currency.service';
@@ -13,7 +7,6 @@ import { CurrencyService } from '../../services/currency.service';
   selector: 'mfloww-money-table',
   templateUrl: './money-table.component.html',
   styleUrls: ['./money-table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoneyTableComponent {
   @Input() type: RevenueExpenseRecordType = 'revenue';

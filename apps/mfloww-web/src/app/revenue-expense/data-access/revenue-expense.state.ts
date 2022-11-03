@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { RevenueExpenseRecordType } from '@mfloww/common';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { MonthYearEntry, RevenueExpenseRecord } from '../../models/entry';
 
 @Injectable()
 export class RevenueExpenseState {
-  private readonly entryDatesSubject: BehaviorSubject<string[]> =
+  private readonly entryMonthsSubject: BehaviorSubject<string[]> =
     new BehaviorSubject<string[]>([]);
   private readonly entryListSubject: BehaviorSubject<MonthYearEntry[]> =
     new BehaviorSubject<MonthYearEntry[]>([]);
-  private readonly selectedEntrySubject: BehaviorSubject<MonthYearEntry | null> =
-    new BehaviorSubject<MonthYearEntry | null>(null);
+  private readonly selectedMonthSubject: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   setEntryDates(entryDates: string[]): void {
-    this.entryDatesSubject.next(entryDates);
+    this.entryMonthsSubject.next(entryDates);
   }
 
   setEntryList(entryList: MonthYearEntry[]): void {
@@ -24,7 +24,7 @@ export class RevenueExpenseState {
     record: RevenueExpenseRecord,
     type: RevenueExpenseRecordType
   ): void {
-    const currentEntryMonthYear = this.selectedEntrySubject.value?.month_year;
+    const currentEntryMonthYear = this.selectedMonthSubject.value;
     const entryIndex = this.entryListSubject.value.findIndex(
       (entry) => entry.month_year === currentEntryMonthYear
     );
@@ -37,38 +37,32 @@ export class RevenueExpenseState {
       updatedCurrentEntry[entryProp].push(record);
 
       this.entryListSubject.next(updatedList);
-      this.selectedEntrySubject.next(updatedCurrentEntry);
     }
   }
 
-  setSelectedEntryByMonthYear(month_year: string): void {
-    const entry = this.entryListSubject.value.find(
-      (entry) => entry.month_year === month_year
-    );
-
-    if (entry) {
-      this.selectedEntrySubject.next(entry);
-    }
-  }
-
-  setSelectedEntryByIndex(index: number): void {
-    const selected = this.entryListSubject.value[index];
-
-    if (selected) {
-      this.selectedEntrySubject.next(selected);
-    }
+  setSelectedMonth(month_year: string): void {
+    this.selectedMonthSubject.next(month_year);
   }
 
   get entryDates$(): Observable<string[]> {
-    return this.entryDatesSubject.asObservable();
+    return this.entryMonthsSubject.asObservable();
   }
 
   get entryList$(): Observable<MonthYearEntry[]> {
     return this.entryListSubject.asObservable();
   }
 
+  get selectedMonth$(): Observable<string> {
+    return this.selectedMonthSubject.asObservable();
+  }
+
   get selectedEntry$(): Observable<MonthYearEntry | null> {
-    return this.selectedEntrySubject.asObservable();
+    return combineLatest([this.entryList$, this.selectedMonth$]).pipe(
+      map(
+        ([entryList, selectedMonth]) =>
+          entryList.find((entry) => entry.month_year === selectedMonth) || null
+      )
+    );
   }
 
   get selectedRevenues$(): Observable<RevenueExpenseRecord[]> {
@@ -80,6 +74,6 @@ export class RevenueExpenseState {
   }
 
   get selectedMonthYear(): string {
-    return this.selectedEntrySubject.value?.month_year || '';
+    return this.selectedMonthSubject.value || '';
   }
 }
