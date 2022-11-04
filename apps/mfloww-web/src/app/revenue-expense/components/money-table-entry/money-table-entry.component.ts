@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { RevenueExpenseRecordType, SupportedCurrency } from '@mfloww/common';
 
 @Component({
@@ -12,4 +18,7 @@ export class MoneyTableEntryComponent {
   @Input() currency: SupportedCurrency = SupportedCurrency.USD;
   @Input() amount!: number;
   @Input() label!: string;
+  @Input() deletable = false;
+
+  @Output() deleted: EventEmitter<void> = new EventEmitter();
 }

@@ -1,8 +1,17 @@
-<div class="w-full flex justify-around gap-4 text-lg md:text-xl lg:text-2xl">
+<div
+  class="relative w-full flex justify-around gap-4 text-lg md:text-xl lg:text-2xl"
+>
   <span class="whitespace-nowrap">
     {{ amount | currency: currency }}
   </span>
   <span class="text-ellipsis overflow-hidden whitespace-nowrap" [title]="label">
     {{ label }}
   </span>
+  <mfloww-view-icon
+    *ngIf="deletable"
+    type="trash"
+    class="absolute w-[25px] right-0"
+    color="var(--app-fatal)"
+    [viewBox]="50"
+  ></mfloww-view-icon>
 </div>
