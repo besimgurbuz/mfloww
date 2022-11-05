@@ -1,10 +1,5 @@
 {
   "version": 2,
   "public": true,
-  "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "dist/apps/mfloww-web/**"
-    }
-  }
+  "functions": {}
 }
