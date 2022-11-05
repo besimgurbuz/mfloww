@@ -15,7 +15,9 @@ import { SharedModule } from './shared/shared.module';
   declarations: [AppComponent],
   imports: [
     CoreModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({
+      appId: 'mfloww',
+    }),
     AppRoutingModule,
     SharedModule,
     MflowwProgressBarComponent,
