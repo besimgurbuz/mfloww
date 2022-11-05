@@ -27,7 +27,7 @@ export class UserController {
   createNewUser(@Body() userDto: UserDto) {
     if (process.env.ENABLE_USER_CREATION !== 'ENABLED') {
       throw new HttpException(
-        'User creation is currently forbidden',
+        'User creation is currently blocked',
         HttpStatus.FORBIDDEN
       );
     }
