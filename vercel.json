@@ -4,10 +4,7 @@
   "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
   "functions": {
     "api/index.js": {
-      "includeFiles": [
-        "dist/apps/mfloww-web/browser",
-        "dist/apps/mfloww-web/server"
-      ]
+      "includeFiles": "dist/apps/mfloww-web/**"
     }
   }
 }
