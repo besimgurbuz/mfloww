@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "dist/apps/mfloww-api/main.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/apps/mfloww-api/main.js",
+      "methods": ["GET", "POST", "PUT", "PATCH", "DELETE"]
+    }
+  ]
+}
