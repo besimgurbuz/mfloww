@@ -4,6 +4,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Post,
   Put,
   Request,
@@ -23,6 +25,12 @@ export class UserController {
 
   @Post()
   createNewUser(@Body() userDto: UserDto) {
+    if (process.env.ENABLE_USER_CREATION !== 'ENABLED') {
+      throw new HttpException(
+        'User creation is currently forbidden',
+        HttpStatus.FORBIDDEN
+      );
+    }
     UserController.logger.debug(
       `handling createNewUser request with: { username: ${userDto.username}, email: ${userDto.email} }`
     );
