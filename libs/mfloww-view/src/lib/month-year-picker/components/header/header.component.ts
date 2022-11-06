@@ -1,0 +1,57 @@
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  Output,
+} from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { MflowwIconComponent } from '../../../icon/icon.component';
+
+@Component({
+  selector: 'mfloww-view-month-year-header',
+  standalone: true,
+  imports: [CommonModule, MflowwIconComponent],
+  template: `
+    <div class="flex w-full h-fit justify-between items-center">
+      <button
+        class="w-[32px] h-[32px] rotate-90 flex items-center"
+        (click)="decreaseYear()"
+      >
+        <mfloww-view-icon type="arrow_down"></mfloww-view-icon>
+      </button>
+      <h3>{{ year | async }}</h3>
+      <button
+        class="w-[32px] h-[32px] -rotate-90 flex items-center"
+        (click)="increaseYear()"
+      >
+        <mfloww-view-icon type="arrow_down"></mfloww-view-icon>
+      </button>
+    </div>
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+    `,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class MflowwMonthYearHeaderComponent {
+  @Input() set startYear(year: number) {
+    this.year.next(year);
+  }
+
+  @Output() year: BehaviorSubject<number> = new BehaviorSubject(
+    new Date().getFullYear()
+  );
+
+  increaseYear(): void {
+    this.year.next(this.year.value + 1);
+  }
+
+  decreaseYear(): void {
+    this.year.next(this.year.value - 1);
+  }
+}

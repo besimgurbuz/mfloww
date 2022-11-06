@@ -1,5 +1,7 @@
 <div class="flex flex-col gap-10 items-center justify-center">
-  <div class="w-[180px] sm:w-[220px]">
+  <div
+    class="w-[180px] sm:w-[220px] flex flex-col items-center justify-center gap-4"
+  >
     <mfloww-view-select
       placeholder="Select a month"
       [formControl]="monthSelectionControl"
@@ -11,6 +13,18 @@
         >{{ entryDate | entryDate }}</mfloww-view-option
       >
     </mfloww-view-select>
+    <mfloww-view-month-year-picker (selection)="handleEntryCreation($event)">
+      <button
+        mflowwMonthYearPickerTriggerer
+        class="w-[54px] h-[27px] flex justify-center items-center rounded border-solid border-2 border-mfloww_fg hover:bg-mfloww_fg"
+      >
+        <mfloww-view-icon
+          class="w-[16px] h-[16px]"
+          type="plus"
+          [viewBox]="30"
+        ></mfloww-view-icon>
+      </button>
+    </mfloww-view-month-year-picker>
   </div>
   <div
     *ngIf="monthSelectionControl.value"
@@ -20,14 +34,14 @@
       class="lg:w-2/5"
       [entries]="(revenues$ | async) || []"
       [total]="(totalRevenue$ | async) || 0"
-      (entryCreation)="handleEntryCreation($event)"
+      (entryCreation)="handleRecordCreation($event)"
     ></mfloww-money-table>
     <mfloww-money-table
       type="expense"
       class="lg:w-2/5"
       [entries]="(expenses$ | async) || []"
       [total]="(totalExpense$ | async) || 0"
-      (entryCreation)="handleEntryCreation($event, 'expense')"
+      (entryCreation)="handleRecordCreation($event, 'expense')"
     ></mfloww-money-table>
     <mfloww-overall-panel
       [overallTotal]="(overallTotal$ | async) || 0"

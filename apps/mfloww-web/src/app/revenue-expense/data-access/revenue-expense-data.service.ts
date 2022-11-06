@@ -12,7 +12,7 @@ export class RevenueExpenseDataService {
     return this.dbService.getAll<MonthYearEntry[]>('entries');
   }
 
-  inserNewEntry$(month_year?: string): Observable<MonthYearEntry> {
+  inserNewEntry$(month_year?: string): Observable<string> {
     if (!month_year) {
       const today = new Date();
       month_year = `${today.getMonth()}_${today.getFullYear()}`;

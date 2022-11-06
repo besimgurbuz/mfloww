@@ -2,7 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MflowwEntryInputModule, MflowwSelectModule } from '@mfloww/view';
+import {
+  MflowwEntryInputModule,
+  MflowwMonthYearPickerComponent,
+  MflowwSelectModule,
+} from '@mfloww/view';
 import { SharedModule } from '../shared/shared.module';
 import { MoneyTableEntryComponent } from './components/money-table-entry/money-table-entry.component';
 import { MoneyTableComponent } from './components/money-table/money-table.component';
@@ -35,6 +39,7 @@ import { CurrencyService } from './services/currency.service';
     ReactiveFormsModule,
     MflowwEntryInputModule,
     MflowwSelectModule,
+    MflowwMonthYearPickerComponent,
   ],
   providers: [
     RevenueExpenseDataService,

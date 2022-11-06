@@ -1,0 +1,34 @@
+<mfloww-view-overlay-panel
+  #overlayPanel
+  [centerContent]="true"
+  (panelClosed)="resetSelection()"
+>
+  <ng-content
+    mflowwOverlayTriggerer
+    select="[mflowwMonthYearPickerTriggerer]"
+  ></ng-content>
+  <div mflowwPanelContent class="min-w-[300px] flex flex-col gap-4 p-3">
+    <mfloww-view-month-year-header
+      [startYear]="_selectedYear"
+      (year)="_selectedYear = $event"
+    ></mfloww-view-month-year-header>
+    <div class="grid grid-rows-3 grid-cols-3 gap-x-6 gap-y-2 px-4">
+      <button
+        class="flex items-center justify-center px-8 py-1 rounded border-2 border-solid border-mfloww_fg hover:border-mfloww_success"
+        *ngFor="let monthAbbr of _monthAbbreviations; let i = index"
+        [ngClass]="{
+          'bg-mfloww_success': _selectedMonth === i
+        }"
+        (click)="_selectedMonth = i"
+      >
+        <h4 class="text-sm">{{ monthAbbr }}</h4>
+      </button>
+    </div>
+    <button
+      class="self-end rounded px-4 py-1 border-2 border-solid border-mfloww_success hover:bg-mfloww_success"
+      (click)="completeSelection(); overlayPanel._opened = false"
+    >
+      <p class="text-xs">Ok</p>
+    </button>
+  </div>
+</mfloww-view-overlay-panel>

@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { RevenueExpenseRecordType } from '@mfloww/common';
+import { MonthYearSelection } from '@mfloww/view';
 import { Observable, Subscription } from 'rxjs';
 import { RevenueExpenseRecord } from '../models/entry';
 import { RevenueExpenseFacade } from './data-access/revenue-expense.facade';
@@ -52,10 +53,18 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
     this.monthSelectionChangeSubs?.unsubscribe();
   }
 
-  handleEntryCreation(
+  handleEntryCreation({ month, year }: MonthYearSelection) {
+    this.revenueExpenseFacade
+      .insertNewMonthYearEntry(`${month}_${year}`)
+      .subscribe();
+  }
+
+  handleRecordCreation(
     newEntry: RevenueExpenseRecord,
     type: RevenueExpenseRecordType = 'revenue'
   ) {
-    this.revenueExpenseFacade.insertNewRevenueExpenseRecord(newEntry, type);
+    this.revenueExpenseFacade
+      .insertNewRevenueExpenseRecord(newEntry, type)
+      .subscribe();
   }
 }

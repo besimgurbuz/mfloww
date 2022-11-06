@@ -5,8 +5,11 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   HostListener,
   inject,
+  Input,
+  Output,
   ViewChild,
 } from '@angular/core';
 
@@ -24,6 +27,10 @@ export class MflowwOverlayPanelComponent implements AfterViewInit {
   private readonly cd = inject(ChangeDetectorRef);
   _opened = false;
 
+  @Input() centerContent = false;
+
+  @Output() panelClosed: EventEmitter<void> = new EventEmitter();
+
   @ViewChild('triggerer') triggererContainer?: ElementRef<HTMLDivElement>;
   @ViewChild('panel') panelContainer?: ElementRef<HTMLDivElement>;
 
@@ -35,11 +42,15 @@ export class MflowwOverlayPanelComponent implements AfterViewInit {
   clickOut(event: MouseEvent) {
     if (!this.elementRef.nativeElement.contains(event.target) && this._opened) {
       this._opened = false;
+      this.panelClosed.emit();
     }
   }
 
   handleTriggererClicked() {
     this._opened = !this._opened;
+    if (!this._opened) {
+      this.panelClosed.emit();
+    }
     this.cd.detectChanges();
     if (this._opened) {
       this.positionPanel();
@@ -56,6 +67,16 @@ export class MflowwOverlayPanelComponent implements AfterViewInit {
     }
     const triggererOffsetLeft = this.triggererContainer?.nativeElement
       .offsetLeft as number;
+
+    if (this.centerContent) {
+      const panelWidth = this.panelContainer.nativeElement.clientWidth;
+      const triggerWidth =
+        this.triggererContainer?.nativeElement.clientWidth ?? 0;
+      this.panelContainer.nativeElement.style.left = `${
+        Math.floor(triggerWidth / 2) - Math.floor(panelWidth / 2)
+      }px`;
+      return;
+    }
 
     if (triggererOffsetLeft > this.bodyWidth / 2) {
       this.panelContainer.nativeElement.style.right = '0';

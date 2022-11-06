@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { RevenueExpenseRecordType } from '@mfloww/common';
-import { Observable, Subscription, tap } from 'rxjs';
+import { map, Observable, Subscription, tap } from 'rxjs';
 import { MonthYearEntry, RevenueExpenseRecord } from '../../models/entry';
 import { RevenueExpenseDataService } from './revenue-expense-data.service';
 import { RevenueExpenseState } from './revenue-expense.state';
@@ -16,13 +16,9 @@ export class RevenueExpenseFacade {
     return this.revenueExpenseDataService
       .getEntryList$()
       .pipe(
-        tap((entryList) => {
-          const entryMonthYearList =
-            entryList?.map((entry) => entry.month_year) || [];
-
-          this.revenueExpenseState.setEntryDates(entryMonthYearList);
-          this.revenueExpenseState.setEntryList(entryList || []);
-        })
+        tap((entryList) =>
+          this.revenueExpenseState.setEntryList(entryList || [])
+        )
       )
       .subscribe();
   }
@@ -32,26 +28,44 @@ export class RevenueExpenseFacade {
   }
 
   insertNewMonthYearEntry(month_year?: string) {
-    return this.revenueExpenseDataService.inserNewEntry$(month_year).subscribe;
+    return this.revenueExpenseDataService.inserNewEntry$(month_year).pipe(
+      tap((addedMonthYear) => {
+        this.revenueExpenseState.addNewEmptyEntry(addedMonthYear);
+      })
+    );
   }
 
   insertNewRevenueExpenseRecord(
     record: RevenueExpenseRecord,
     type: RevenueExpenseRecordType
-  ): Subscription {
+  ) {
     return this.revenueExpenseDataService
       .insertNewRevenueExpenseRecord$(
         this.revenueExpenseState.selectedMonthYear,
         record,
         type
       )
-      .subscribe(() =>
-        this.revenueExpenseState.addRevenueExpenseRecord(record, type)
+      .pipe(
+        tap(() =>
+          this.revenueExpenseState.addRevenueExpenseRecord(record, type)
+        )
       );
   }
 
   get entryDates$(): Observable<string[]> {
-    return this.revenueExpenseState.entryDates$;
+    return this.revenueExpenseState.entryDates$.pipe(
+      map((entryDates) =>
+        entryDates.sort((dateA, dateB) => {
+          const [monthA, yearA] = dateA.split('_');
+          const [monthB, yearB] = dateB.split('_');
+
+          if (yearA === yearB) {
+            return Number(monthA) - Number(monthB);
+          }
+          return Number(yearA) - Number(yearB);
+        })
+      )
+    );
   }
 
   get entryList$(): Observable<MonthYearEntry[]> {

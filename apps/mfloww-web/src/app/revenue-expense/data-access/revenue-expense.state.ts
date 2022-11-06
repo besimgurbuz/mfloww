@@ -5,19 +5,23 @@ import { MonthYearEntry, RevenueExpenseRecord } from '../../models/entry';
 
 @Injectable()
 export class RevenueExpenseState {
-  private readonly entryMonthsSubject: BehaviorSubject<string[]> =
-    new BehaviorSubject<string[]>([]);
   private readonly entryListSubject: BehaviorSubject<MonthYearEntry[]> =
     new BehaviorSubject<MonthYearEntry[]>([]);
   private readonly selectedMonthSubject: BehaviorSubject<string> =
     new BehaviorSubject<string>('');
 
-  setEntryDates(entryDates: string[]): void {
-    this.entryMonthsSubject.next(entryDates);
-  }
-
   setEntryList(entryList: MonthYearEntry[]): void {
     this.entryListSubject.next(entryList);
+  }
+
+  addNewEntry(entry: MonthYearEntry): void {
+    const currentList = this.entryListSubject.value;
+    currentList.push(entry);
+    this.entryListSubject.next(currentList);
+  }
+
+  addNewEmptyEntry(month_year: string): void {
+    this.addNewEntry({ month_year, expenses: [], revenues: [] });
   }
 
   addRevenueExpenseRecord(
@@ -45,7 +49,9 @@ export class RevenueExpenseState {
   }
 
   get entryDates$(): Observable<string[]> {
-    return this.entryMonthsSubject.asObservable();
+    return this.entryList$.pipe(
+      map((entryList) => entryList.map((entry) => entry.month_year))
+    );
   }
 
   get entryList$(): Observable<MonthYearEntry[]> {

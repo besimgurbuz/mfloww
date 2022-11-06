@@ -1,13 +1,12 @@
-<div
-  class="cursor-pointer relative"
-  (click)="handleTriggererClicked()"
-  #triggerer
->
-  <ng-content select="[mflowwOverlayTriggerer]"></ng-content>
+<div class="relative">
+  <div class="w-full h-full" #triggerer (click)="handleTriggererClicked()">
+    <ng-content select="[mflowwOverlayTriggerer]"></ng-content>
+  </div>
   <div
     *ngIf="_opened"
-    class="overlay-modal absolute w-fit top-10 bg-mfloww_fg rounded flex flex-col items-center z-50"
+    class="overlay-modal absolute w-fit bg-mfloww_fg rounded flex flex-col items-center z-50"
     #panel
+    [style.top.px]="triggerer.clientHeight + 5"
   >
     <ng-content select="[mflowwPanelContent]"></ng-content>
   </div>
