@@ -1,17 +1,21 @@
 <div
-  class="relative w-full flex justify-around gap-4 text-lg md:text-xl lg:text-2xl"
+  class="relative w-full flex justify-around gap-3 text-lg md:text-xl lg:text-2xl"
+  (mouseenter)="_hovered = true"
+  (mouseleave)="_hovered = false"
 >
   <span class="whitespace-nowrap">
     {{ amount | currency: currency }}
   </span>
-  <span class="text-ellipsis overflow-hidden whitespace-nowrap" [title]="label">
+  <span
+    class="text-ellipsis overflow-hidden whitespace-nowrap md:max-w-[40%]"
+    [title]="label"
+  >
     {{ label }}
   </span>
-  <mfloww-view-icon
-    *ngIf="deletable"
-    type="trash"
-    class="absolute w-[25px] right-0"
-    color="var(--app-fatal)"
-    [viewBox]="50"
-  ></mfloww-view-icon>
+  <button
+    *ngIf="deletable && _hovered"
+    class="absolute flex-grow-0 w-[35px] h-[35px] m-auto -right-2 top-0 bottom-0 p-[5px] justify-center-center items"
+  >
+    <mfloww-view-icon type="close" color="var(--app-white)"></mfloww-view-icon>
+  </button>
 </div>
