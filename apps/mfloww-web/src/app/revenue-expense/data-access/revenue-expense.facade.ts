@@ -31,6 +31,10 @@ export class RevenueExpenseFacade {
     this.revenueExpenseState.setSelectedMonth(month_year);
   }
 
+  insertNewMonthYearEntry(month_year?: string) {
+    return this.revenueExpenseDataService.inserNewEntry$(month_year).subscribe;
+  }
+
   insertNewRevenueExpenseRecord(
     record: RevenueExpenseRecord,
     type: RevenueExpenseRecordType
