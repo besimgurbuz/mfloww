@@ -118,10 +118,19 @@ export class MflowwSelectComponent<T>
   }
 
   private setInitialSelection() {
-    if (this.options.length <= 0) return;
-
     const selected = this.options.find((option) => option.selected);
-    if (!selected) return;
+    if (this.options.length <= 0) return;
+    if (!selected) {
+      if (!this._value) return;
+      this._selectedOptionTemplate = this.options.find(
+        (option) => option.value === this._value
+      )?.template;
+      this._onChange(this._value);
+      this.selection.emit(this._value);
+      this.cd.detectChanges();
+      return;
+    }
+
     const initialValue = selected?.value;
     if (!initialValue) {
       throw new Error(

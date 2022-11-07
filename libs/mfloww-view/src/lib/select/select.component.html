@@ -8,11 +8,14 @@
     }"
     (click)="handleSelectButtonClick()"
   >
-    <div class="flex items-center w-full overflow-hidden">
-      <div *ngIf="_selectedOptionTemplate">
-        <ng-container [ngTemplateOutlet]="_selectedOptionTemplate">
-        </ng-container>
-      </div>
+    <div
+      class="flex items-center w-full text-ellipsis overflow-hidden whitespace-nowrap"
+    >
+      <ng-container
+        *ngIf="_selectedOptionTemplate"
+        [ngTemplateOutlet]="_selectedOptionTemplate"
+      >
+      </ng-container>
       <p
         *ngIf="!_selectedOptionTemplate"
         class="w-full min-w-[21px] text-ellipsis overflow-hidden whitespace-nowrap"

@@ -2,17 +2,15 @@
   <div
     class="w-[180px] sm:w-[220px] flex flex-col items-center justify-center gap-4"
   >
-    <mfloww-view-select
+    <select
       placeholder="Select a month"
       [formControl]="monthSelectionControl"
+      class="bg-mfloww_bg border-2 border-solid border-mfloww_fg rounded p-1"
     >
-      <ng-template
-        mflowwViewSelectOption
-        *ngFor="let entryDate of entryDates$ | async"
-        [value]="entryDate"
-        >{{ entryDate | entryDate }}</ng-template
-      >
-    </mfloww-view-select>
+      <option *ngFor="let entryDate of entryDates$ | async" [value]="entryDate">
+        {{ entryDate | entryDate }}
+      </option>
+    </select>
     <mfloww-view-month-year-picker (selection)="handleEntryCreation($event)">
       <button
         mflowwMonthYearPickerTriggerer

@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { RevenueExpenseRecordType } from '@mfloww/common';
 import { MonthYearSelection } from '@mfloww/view';
 import { Observable, Subscription } from 'rxjs';
+import { LocalStorageService } from '../core/local-storage.service';
 import { RevenueExpenseRecord } from '../models/entry';
 import { RevenueExpenseFacade } from './data-access/revenue-expense.facade';
 import { CalculatorService } from './services/calculator.service';
@@ -22,6 +23,8 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
   private readonly revenueExpenseFacade = inject(RevenueExpenseFacade);
   private readonly calculatorService = inject(CalculatorService);
   private readonly cd = inject(ChangeDetectorRef);
+  private readonly localStorageService = inject(LocalStorageService);
+  private readonly latestMonthYearKey = 'LATEST_MONTH_YEAR';
 
   entryDates$: Observable<string[]> = this.revenueExpenseFacade.entryDates$;
   revenues$: Observable<RevenueExpenseRecord[]> =
@@ -39,11 +42,13 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadEntryListSubs = this.revenueExpenseFacade.loadEntryList();
+    this.setInitialMonthYear();
     this.monthSelectionChangeSubs =
       this.monthSelectionControl.valueChanges.subscribe((month_year) => {
         if (month_year) {
           this.revenueExpenseFacade.setSelectedEntryByMonthYear(month_year);
           this.cd.detectChanges();
+          this.localStorageService.set(this.latestMonthYearKey, month_year);
         }
       });
   }
@@ -54,9 +59,9 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
   }
 
   handleEntryCreation({ month, year }: MonthYearSelection) {
-    this.revenueExpenseFacade
-      .insertNewMonthYearEntry(`${month}_${year}`)
-      .subscribe();
+    const month_year = `${month}_${year}`;
+    this.revenueExpenseFacade.insertNewMonthYearEntry(month_year).subscribe();
+    this.monthSelectionControl.setValue(month_year);
   }
 
   handleRecordCreation(
@@ -66,5 +71,16 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
     this.revenueExpenseFacade
       .insertNewRevenueExpenseRecord(newEntry, type)
       .subscribe();
+  }
+
+  private setInitialMonthYear(): void {
+    const latestMonthYear = this.localStorageService.get<string>(
+      this.latestMonthYearKey
+    );
+
+    if (latestMonthYear) {
+      this.monthSelectionControl.setValue(latestMonthYear);
+      this.revenueExpenseFacade.setSelectedEntryByMonthYear(latestMonthYear);
+    }
   }
 }

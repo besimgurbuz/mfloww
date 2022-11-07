@@ -39,8 +39,8 @@ export class MflowwMonthYearPickerComponent {
   _monthAbbreviations = [
     'Jan',
     'Feb',
-    'Apr',
     'Mar',
+    'Apr',
     'May',
     'Jun',
     'Jul',

@@ -1,10 +1,10 @@
 export enum SupportedCurrency {
   USD = 'USD',
   EUR = 'EUR',
-  TRY = 'TRY',
-  CHF = 'CHF',
-  GBP = 'GBP',
-  RUB = 'RUB',
-  INR = 'INR',
   CNY = 'CNY',
+  GBP = 'GBP',
+  INR = 'INR',
+  CHF = 'CHF',
+  TRY = 'TRY',
+  RUB = 'RUB',
 }

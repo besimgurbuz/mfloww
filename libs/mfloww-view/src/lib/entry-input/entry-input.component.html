@@ -5,20 +5,15 @@
   (ngSubmit)="handleEntrySubmit()"
 >
   <div class="currency flex">
-    <div class="currency-select w-1/3">
-      <mfloww-view-select formControlName="currency" [borderless]="true">
-        <ng-template
-          mflowwViewSelectOption
-          *ngFor="let currency of currencies; let first = first"
-          [selected]="first"
-          [value]="currency"
-        >
-          <div class="w-[30px] p-1">
-            <mfloww-view-icon [type]="currency"></mfloww-view-icon>
-          </div>
-        </ng-template>
-      </mfloww-view-select>
-    </div>
+    <select formControlName="currency" class="bg-mfloww_bg outline-none">
+      <option
+        *ngFor="let currency of currencies; let first = first"
+        [selected]="first"
+        [value]="currency"
+      >
+        {{ currency }}
+      </option>
+    </select>
     <input
       #amountInput
       class="w-2/3 h-full bg-mfloww_bg outline-none px-2"
