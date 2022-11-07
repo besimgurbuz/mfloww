@@ -8,11 +8,16 @@
     }"
     (click)="handleSelectButtonClick()"
   >
-    <div class="flex items-center w-full">
+    <div class="flex items-center w-full overflow-hidden">
+      <div *ngIf="_selectedOptionTemplate">
+        <ng-container [ngTemplateOutlet]="_selectedOptionTemplate">
+        </ng-container>
+      </div>
       <p
+        *ngIf="!_selectedOptionTemplate"
         class="w-full min-w-[21px] text-ellipsis overflow-hidden whitespace-nowrap"
       >
-        {{ _value || placeholder }}
+        {{ placeholder }}
       </p>
       <mfloww-view-icon
         class="ml-auto w-[30px] h-[30px] flex items-center justify-center"
@@ -25,10 +30,13 @@
     <div
       class="absolute top-10 left-0 right-0 flex flex-col items-center min-w-max bg-mfloww_fg rounded overflow-hidden"
     >
-      <ng-container
+      <button
         *ngFor="let option of _options"
-        [ngTemplateOutlet]="option.template"
-      ></ng-container>
+        class="flex items-center justify-center cursor-pointer w-full p-2 hover:bg-mfloww_fg_hover"
+        (click)="handleOptionClick(option)"
+      >
+        <ng-container [ngTemplateOutlet]="option.template"> </ng-container>
+      </button>
     </div>
   </ng-container>
 </div>

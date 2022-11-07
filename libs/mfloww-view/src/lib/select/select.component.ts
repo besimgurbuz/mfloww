@@ -12,10 +12,11 @@ import {
   OnDestroy,
   Output,
   QueryList,
+  TemplateRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { merge, Subscription, tap } from 'rxjs';
-import { MflowwOptionComponent } from './components/option/option.component';
+import { Subscription } from 'rxjs';
+import { MflowwSelectOptionDirective } from './directives/select-option.directive';
 
 @Component({
   selector: 'mfloww-view-select',
@@ -38,11 +39,12 @@ export class MflowwSelectComponent<T>
 
   @Output() selection: EventEmitter<T> = new EventEmitter();
 
-  @ContentChildren(MflowwOptionComponent)
-  options!: QueryList<MflowwOptionComponent<T>>;
+  @ContentChildren(MflowwSelectOptionDirective)
+  options!: QueryList<MflowwSelectOptionDirective<T>>;
 
   _opened = false;
-  _options: MflowwOptionComponent<T>[] = [];
+  _options: MflowwSelectOptionDirective<T>[] = [];
+  _selectedOptionTemplate?: TemplateRef<HTMLElement>;
   _value?: T;
   _disabled = false;
   _touched = false;
@@ -56,11 +58,8 @@ export class MflowwSelectComponent<T>
   ngAfterViewInit(): void {
     this._options = this.options.toArray();
     this.setInitialSelection();
-    this.setSelectionChangeSubs();
     this._optionChangeSubs = this.options.changes.subscribe(() => {
       this._options = this.options.toArray();
-      this.setSelectionChangeSubs();
-      this.setInitialSelection();
     });
   }
 
@@ -77,29 +76,21 @@ export class MflowwSelectComponent<T>
     }
   }
 
-  setSelectionChangeSubs() {
-    if (this._selectionSubs) this._selectionSubs.unsubscribe();
-
-    this._selectionSubs = merge(
-      ...this.options.map((option) => option.selection)
-    )
-      .pipe(
-        tap((value) => {
-          this._value = value;
-          this._opened = false;
-          this.markAsTouched();
-          this.selection.emit(value);
-          this._onChange(value);
-        })
-      )
-      .subscribe();
-  }
-
   handleSelectButtonClick(): void {
     if (this._disabled) {
       return;
     }
     this._opened = !this._opened;
+  }
+
+  handleOptionClick(option: MflowwSelectOptionDirective<T>): void {
+    this._selectedOptionTemplate = option.template;
+    const value = option.value;
+    this._value = value;
+    this._opened = false;
+    this.markAsTouched();
+    this.selection.emit(value);
+    this._onChange(value);
   }
 
   writeValue(obj: T): void {

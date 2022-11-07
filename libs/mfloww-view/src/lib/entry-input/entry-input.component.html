@@ -7,11 +7,12 @@
   <div class="currency flex">
     <div class="currency-select w-1/3">
       <mfloww-view-select formControlName="currency" [borderless]="true">
-        <mfloww-view-option
+        <ng-template
+          mflowwViewSelectOption
           *ngFor="let currency of currencies; let first = first"
           [selected]="first"
           [value]="currency"
-          >{{ currency }}</mfloww-view-option
+          >{{ currency }}</ng-template
         >
       </mfloww-view-select>
     </div>

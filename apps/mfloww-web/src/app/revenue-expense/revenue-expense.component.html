@@ -6,10 +6,11 @@
       placeholder="Select a month"
       [formControl]="monthSelectionControl"
     >
-      <mfloww-view-option
+      <ng-template
+        mflowwViewSelectOption
         *ngFor="let entryDate of entryDates$ | async"
         [value]="entryDate"
-        >{{ entryDate | entryDate }}</mfloww-view-option
+        >{{ entryDate | entryDate }}</ng-template
       >
     </mfloww-view-select>
     <mfloww-view-month-year-picker (selection)="handleEntryCreation($event)">
