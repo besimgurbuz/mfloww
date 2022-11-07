@@ -50,6 +50,11 @@ export class MflowwMonthYearPickerComponent {
     'Nov',
     'Dec',
   ];
+  _yearFilter = (year: number) => {
+    const currentYear = new Date().getFullYear();
+
+    return year <= currentYear && year > currentYear - 8;
+  };
 
   completeSelection(): void {
     this.selection.emit({

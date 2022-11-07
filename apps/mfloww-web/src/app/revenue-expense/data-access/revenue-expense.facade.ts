@@ -72,6 +72,10 @@ export class RevenueExpenseFacade {
     return this.revenueExpenseState.entryList$;
   }
 
+  get selectedMonthYear$(): Observable<string> {
+    return this.revenueExpenseState.selectedMonthYear$;
+  }
+
   get selectedEntry$(): Observable<MonthYearEntry | null> {
     return this.revenueExpenseState.selectedEntry$;
   }

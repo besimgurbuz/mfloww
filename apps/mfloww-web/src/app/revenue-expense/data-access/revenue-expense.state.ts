@@ -58,12 +58,12 @@ export class RevenueExpenseState {
     return this.entryListSubject.asObservable();
   }
 
-  get selectedMonth$(): Observable<string> {
+  get selectedMonthYear$(): Observable<string> {
     return this.selectedMonthSubject.asObservable();
   }
 
   get selectedEntry$(): Observable<MonthYearEntry | null> {
-    return combineLatest([this.entryList$, this.selectedMonth$]).pipe(
+    return combineLatest([this.entryList$, this.selectedMonthYear$]).pipe(
       map(
         ([entryList, selectedMonth]) =>
           entryList.find((entry) => entry.month_year === selectedMonth) || null

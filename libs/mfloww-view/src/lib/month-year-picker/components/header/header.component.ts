@@ -39,6 +39,7 @@ import { MflowwIconComponent } from '../../../icon/icon.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MflowwMonthYearHeaderComponent {
+  @Input() yearFilter?: (year: number) => boolean;
   @Input() set startYear(year: number) {
     this.year.next(year);
   }
@@ -48,10 +49,12 @@ export class MflowwMonthYearHeaderComponent {
   );
 
   increaseYear(): void {
+    if (this.yearFilter && !this.yearFilter(this.year.value + 1)) return;
     this.year.next(this.year.value + 1);
   }
 
   decreaseYear(): void {
+    if (this.yearFilter && !this.yearFilter(this.year.value - 1)) return;
     this.year.next(this.year.value - 1);
   }
 }

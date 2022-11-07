@@ -7,8 +7,7 @@
       [formControl]="monthSelectionControl"
     >
       <mfloww-view-option
-        *ngFor="let entryDate of entryDates$ | async; let i = index"
-        [selected]="i === 0"
+        *ngFor="let entryDate of entryDates$ | async"
         [value]="entryDate"
         >{{ entryDate | entryDate }}</mfloww-view-option
       >

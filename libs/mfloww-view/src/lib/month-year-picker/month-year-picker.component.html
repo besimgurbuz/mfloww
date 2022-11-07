@@ -9,6 +9,7 @@
   ></ng-content>
   <div mflowwPanelContent class="min-w-[300px] flex flex-col gap-4 p-3">
     <mfloww-view-month-year-header
+      [yearFilter]="_yearFilter"
       [startYear]="_selectedYear"
       (year)="_selectedYear = $event"
     ></mfloww-view-month-year-header>
