@@ -60,6 +60,7 @@ export class MflowwSelectComponent<T>
     this.setInitialSelection();
     this._optionChangeSubs = this.options.changes.subscribe(() => {
       this._options = this.options.toArray();
+      this.setInitialSelection();
     });
   }
 
@@ -120,6 +121,7 @@ export class MflowwSelectComponent<T>
     if (this.options.length <= 0) return;
 
     const selected = this.options.find((option) => option.selected);
+    if (!selected) return;
     const initialValue = selected?.value;
     if (!initialValue) {
       throw new Error(
@@ -127,6 +129,7 @@ export class MflowwSelectComponent<T>
       );
     }
 
+    this._selectedOptionTemplate = selected.template;
     this.markAsTouched();
     this._onChange(initialValue);
     this._value = initialValue;

@@ -3,9 +3,7 @@
   (mouseenter)="_hovered = true"
   (mouseleave)="_hovered = false"
 >
-  <span class="whitespace-nowrap">
-    {{ amount | currency: currency }}
-  </span>
+  <span class="whitespace-nowrap"> {{ amount | currency: currency }} </span>
   <span
     class="text-ellipsis overflow-hidden whitespace-nowrap md:max-w-[40%]"
     [title]="label"

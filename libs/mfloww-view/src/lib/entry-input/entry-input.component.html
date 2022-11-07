@@ -12,8 +12,11 @@
           *ngFor="let currency of currencies; let first = first"
           [selected]="first"
           [value]="currency"
-          >{{ currency }}</ng-template
         >
+          <div class="w-[30px] p-1">
+            <mfloww-view-icon [type]="currency"></mfloww-view-icon>
+          </div>
+        </ng-template>
       </mfloww-view-select>
     </div>
     <input
