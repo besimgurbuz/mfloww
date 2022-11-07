@@ -1,3 +1,3 @@
-const server = require('../dist/apps/mfloww-api/main');
+const server = require('../dist/apps/mfloww-web/server/main');
 
-module.exports = server;
+module.exports = server.app();

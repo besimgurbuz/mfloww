@@ -6,8 +6,9 @@
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "start": "nx serve",
-    "build": "nx build",
-    "build:all": "ng build mfloww-api --configuration=production && ng build --prod && ng server",
+    "build:dev": "nx build",
+    "build:ssr": "ng build && ng server",
+    "vercel-build": "npm run build:ssr",
     "test": "nx test"
   },
   "private": true,
