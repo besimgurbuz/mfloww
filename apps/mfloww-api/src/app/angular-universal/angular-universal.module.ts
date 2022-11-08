@@ -4,8 +4,6 @@ import { ANGULAR_UNIVERSAL_OPTIONS } from '@nestjs/ng-universal/dist/angular-uni
 import { existsSync } from 'fs';
 import { join } from 'path';
 
-import { loadESModule } from '../utils/load-esm-module';
-
 import { angularUniversalProviders } from './angular-universal.providers';
 import { AngularUniversalOptions } from './interfaces/angular-universal-options.interface';
 
@@ -53,10 +51,6 @@ export class AngularUniversalModule implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    const { APP_BASE_HREF } = await loadESModule<
-      typeof import('@angular/common')
-    >('@angular/common');
-
     if (!this.httpAdapterHost) {
       return;
     }
@@ -73,7 +67,7 @@ export class AngularUniversalModule implements OnModuleInit {
       res.render(this.ngOptions.templatePath, {
         req,
         res,
-        providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }],
+        providers: [{ provide: '/', useValue: req.baseUrl }],
       })
     );
   }

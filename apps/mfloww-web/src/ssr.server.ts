@@ -4,7 +4,6 @@ import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { join } from 'path';
 
-import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 import { AppServerModule } from './main.server';
 
@@ -44,7 +43,7 @@ export function app() {
   server.get('*', (req, res) => {
     res.render(indexHtml, {
       req,
-      providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }],
+      providers: [{ provide: '/', useValue: req.baseUrl }],
     });
   });
 
