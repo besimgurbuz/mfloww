@@ -7,6 +7,7 @@
       [formControl]="monthSelectionControl"
       class="bg-mfloww_bg border-2 border-solid border-mfloww_fg rounded p-1"
     >
+      <option value selected>Select a date</option>
       <option *ngFor="let entryDate of entryDates$ | async" [value]="entryDate">
         {{ entryDate | entryDate }}
       </option>

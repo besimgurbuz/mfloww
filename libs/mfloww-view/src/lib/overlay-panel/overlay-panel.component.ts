@@ -68,6 +68,12 @@ export class MflowwOverlayPanelComponent implements AfterViewInit {
     const triggererOffsetLeft = this.triggererContainer?.nativeElement
       .offsetLeft as number;
 
+    if (triggererOffsetLeft > this.bodyWidth / 2) {
+      this.panelContainer.nativeElement.style.right = '0';
+    } else {
+      this.panelContainer.nativeElement.style.left = '0';
+    }
+
     if (this.centerContent) {
       const panelWidth = this.panelContainer.nativeElement.clientWidth;
       const triggerWidth =
@@ -75,13 +81,6 @@ export class MflowwOverlayPanelComponent implements AfterViewInit {
       this.panelContainer.nativeElement.style.left = `${
         Math.floor(triggerWidth / 2) - Math.floor(panelWidth / 2)
       }px`;
-      return;
-    }
-
-    if (triggererOffsetLeft > this.bodyWidth / 2) {
-      this.panelContainer.nativeElement.style.right = '0';
-    } else {
-      this.panelContainer.nativeElement.style.left = '0';
     }
   }
 }

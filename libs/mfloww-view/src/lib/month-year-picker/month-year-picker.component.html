@@ -9,18 +9,20 @@
   ></ng-content>
   <div mflowwPanelContent class="min-w-[300px] flex flex-col gap-4 p-3">
     <mfloww-view-month-year-header
-      [yearFilter]="_yearFilter"
+      [dateFilter]="_dateFilter"
       [startYear]="_selectedYear"
-      (year)="_selectedYear = $event"
+      (year)="changeSelection($event)"
     ></mfloww-view-month-year-header>
     <div class="grid grid-rows-3 grid-cols-3 gap-x-6 gap-y-2 px-4">
       <button
         class="flex items-center justify-center px-8 py-1 rounded border-2 border-solid border-mfloww_fg hover:border-mfloww_success"
         *ngFor="let monthAbbr of _monthAbbreviations; let i = index"
         [ngClass]="{
-          'bg-mfloww_success': _selectedMonth === i
+          'bg-mfloww_success': _selectedMonth === i,
+          'opacity-40 hover:border-mfloww_fg': _selectionFilter[i]
         }"
-        (click)="_selectedMonth = i"
+        [disabled]="_selectionFilter[i]"
+        (click)="changeSelection(i, 'month')"
       >
         <h4 class="text-sm">{{ monthAbbr }}</h4>
       </button>
