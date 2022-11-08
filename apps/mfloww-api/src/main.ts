@@ -11,6 +11,11 @@ import { AppModule } from './app/app.module';
 import { PrismaService } from './app/core/prisma.service';
 
 async function bootstrap() {
+  Logger.log('===ENV===');
+  Logger.log(
+    `DATABSE_URL: ${process.env.DATABASE_URL} JWT_SECRET: ${process.env.JWT_SECRET} PORT: ${process.env.PORT} CORS_ORIGIN: ${process.env.CORS_ORIGIN} ENABLE_USER_CREATION: ${process.env.ENABLE_USER_CREATION}`
+  );
+  Logger.log('===ENV===');
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
