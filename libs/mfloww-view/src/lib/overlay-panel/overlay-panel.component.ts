@@ -31,7 +31,8 @@ export class MflowwOverlayPanelComponent implements AfterViewInit {
 
   @Output() panelClosed: EventEmitter<void> = new EventEmitter();
 
-  @ViewChild('triggerer') triggererContainer?: ElementRef<HTMLDivElement>;
+  @ViewChild('triggerContainer')
+  triggererContainer?: ElementRef<HTMLDivElement>;
   @ViewChild('panel') panelContainer?: ElementRef<HTMLDivElement>;
 
   ngAfterViewInit() {

@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { RevenueExpenseRecordType } from '@mfloww/common';
 import { MonthYearSelection } from '@mfloww/view';
 import { Observable, Subscription } from 'rxjs';
+import { LATEST_MONTH_YEAR_KEY } from '../core/core.constants';
 import { LocalStorageService } from '../core/local-storage.service';
 import { RevenueExpenseRecord } from '../models/entry';
 import { RevenueExpenseFacade } from './data-access/revenue-expense.facade';
@@ -24,7 +25,6 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
   private readonly calculatorService = inject(CalculatorService);
   private readonly cd = inject(ChangeDetectorRef);
   private readonly localStorageService = inject(LocalStorageService);
-  private readonly latestMonthYearKey = 'LATEST_MONTH_YEAR';
 
   entryDates$: Observable<string[]> = this.revenueExpenseFacade.entryDates$;
   revenues$: Observable<RevenueExpenseRecord[]> =
@@ -48,7 +48,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
         if (month_year) {
           this.revenueExpenseFacade.setSelectedEntryByMonthYear(month_year);
           this.cd.detectChanges();
-          this.localStorageService.set(this.latestMonthYearKey, month_year);
+          this.localStorageService.set(LATEST_MONTH_YEAR_KEY, month_year);
         }
       });
   }
@@ -75,7 +75,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
 
   private setInitialMonthYear(): void {
     const latestMonthYear = this.localStorageService.get<string>(
-      this.latestMonthYearKey
+      LATEST_MONTH_YEAR_KEY
     );
 
     if (latestMonthYear) {

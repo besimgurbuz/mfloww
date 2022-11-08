@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class LocalStorageService {
   set(key: string, value: string | number | boolean | symbol) {
+    if (!value) return;
     localStorage.setItem(key, value.toString());
   }
 

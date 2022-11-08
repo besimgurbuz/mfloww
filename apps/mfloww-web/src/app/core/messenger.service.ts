@@ -6,6 +6,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 export interface Message {
   type: 'warn' | 'fatal' | 'info';
   text: string;
+  disappearDuration?: number;
 }
 
 @Injectable({
@@ -36,11 +37,8 @@ export class MessengerService {
     },
   };
 
-  emitMessage(type: Message['type'], message: string) {
-    this.errorMessageSubject.next({
-      type,
-      text: message,
-    });
+  emitMessage(message: Message) {
+    this.errorMessageSubject.next(message);
   }
 
   emitFromError(
@@ -61,7 +59,7 @@ export class MessengerService {
   emitFromQueryParamMap(paramMap: ParamMap) {
     const message = this.getErrorMessageOfQueryParamMap(paramMap);
     if (message) {
-      this.emitMessage(message.type, message.text);
+      this.emitMessage(message);
     } else {
       this.clearMessage();
     }

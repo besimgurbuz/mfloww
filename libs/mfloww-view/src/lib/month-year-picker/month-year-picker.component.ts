@@ -45,7 +45,8 @@ const dateFilter = (date: Date) => {
 export class MflowwMonthYearPickerComponent {
   @Output() selection: EventEmitter<MonthYearSelection> = new EventEmitter();
 
-  _selectedYear: number = new Date().getFullYear();
+  _selectedYear?: number;
+  _displayedYear: number = new Date().getFullYear();
   _selectedMonth = 0;
   _monthAbbreviations = [
     'Jan',
@@ -65,23 +66,25 @@ export class MflowwMonthYearPickerComponent {
   _dateFilter = dateFilter;
 
   completeSelection(): void {
+    if (!this._selectedYear) return;
     this.selection.emit({
       month: this._selectedMonth,
-      year: this._selectedYear,
+      year: this._selectedYear as number,
     });
     this.resetSelection();
   }
 
   resetSelection() {
     this._selectedMonth = 0;
-    this._selectedYear = new Date().getFullYear();
+    this._selectedYear = undefined;
   }
 
   changeSelection(value: number, unit: 'year' | 'month' = 'year') {
     if (unit === 'year') {
-      this._selectedYear = value;
+      this._displayedYear = value;
     } else {
       this._selectedMonth = value;
+      this._selectedYear = this._displayedYear;
     }
     this._selectionFilter = this.getFilteredMonthSelection();
   }
@@ -90,7 +93,7 @@ export class MflowwMonthYearPickerComponent {
     return this._monthAbbreviations.map((_, i) => {
       const date = new Date();
       date.setHours(0, 0, 0, 0);
-      date.setFullYear(this._selectedYear);
+      date.setFullYear(this._displayedYear as number);
       date.setMonth(i);
       return !dateFilter(date);
     });

@@ -64,10 +64,29 @@ input[type='number']::-webkit-inner-spin-button {
   transform: translateY(-20px);
 }
 
+.fade-out {
+  animation: fade-out;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
     transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;

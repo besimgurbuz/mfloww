@@ -9,6 +9,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MflowwDbService } from '@mfloww/db';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
+import { LATEST_MONTH_YEAR_KEY } from '../../core/core.constants';
+import { LocalStorageService } from '../../core/local-storage.service';
 import { MessengerService } from '../../core/messenger.service';
 import { ProfileInfo } from '../../core/models/profile-info';
 
@@ -19,6 +21,11 @@ import { ProfileInfo } from '../../core/models/profile-info';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsComponent implements OnInit, OnDestroy {
+  private readonly profileInfo$ = inject(AuthService).profileInfo$;
+  private readonly dbService = inject(MflowwDbService);
+  private readonly messengerService = inject(MessengerService);
+  private readonly localStorageService = inject(LocalStorageService);
+
   readonly profileGroup = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
     username: new FormControl('', [Validators.required]),
@@ -29,9 +36,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     newPassword: new FormControl('', [Validators.required]),
     confirmNewPassword: new FormControl('', [Validators.required]),
   });
-  private readonly profileInfo$ = inject(AuthService).profileInfo$;
-  private readonly dbService = inject(MflowwDbService);
-  private readonly messengerService = inject(MessengerService);
+
   private profileSubs?: Subscription;
   private deleteDbSubs?: Subscription;
 
@@ -73,11 +78,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.deleteDbSubs.unsubscribe();
       }
       this.deleteDbSubs = this.dbService.clearAllStores().subscribe(() => {
-        this.messengerService.emitMessage(
-          'info',
-          'The database on this device is deleted'
-        );
+        this.messengerService.emitMessage({
+          type: 'info',
+          text: 'The database on this device is deleted',
+          disappearDuration: 2500,
+        });
       });
+      this.localStorageService.remove(LATEST_MONTH_YEAR_KEY);
     }
   }
 }

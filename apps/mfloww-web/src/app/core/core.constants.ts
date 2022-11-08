@@ -1,0 +1,1 @@
+export const LATEST_MONTH_YEAR_KEY = 'LATEST_MONTH_YEAR';

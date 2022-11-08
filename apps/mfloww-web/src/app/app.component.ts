@@ -2,9 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MflowwDbService } from '@mfloww/db';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { mergeMap, Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService } from './core/auth.service';
-import { MessengerService } from './core/messenger.service';
+import { Message, MessengerService } from './core/messenger.service';
 import { ProfileInfo } from './core/models/profile-info';
 import { ProgressState } from './core/progress.state';
 
@@ -23,7 +23,20 @@ export class AppComponent implements OnInit, OnDestroy {
   readonly _profileInfo$: Observable<ProfileInfo | null> =
     this.authService.profileInfo$;
 
-  errorMessage$ = this.errorMessenger.error$;
+  errorMessage$ = this.errorMessenger.error$.pipe(
+    mergeMap(
+      (value) =>
+        new Observable<Message | null>((subscriber) => {
+          subscriber.next(value);
+
+          if (value?.disappearDuration) {
+            setTimeout(() => {
+              subscriber.next({ text: '', type: 'info' });
+            }, value.disappearDuration);
+          }
+        })
+    )
+  );
   private _destroy: Subject<void> = new Subject();
 
   ngOnInit(): void {
