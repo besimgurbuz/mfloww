@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   handleLogOut() {
-    this.authService.logOut();
+    this.authService.clearUserCredentials();
     this.router.navigate(['/']);
   }
 }

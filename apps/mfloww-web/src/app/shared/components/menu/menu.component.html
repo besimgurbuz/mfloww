@@ -17,7 +17,7 @@
         Sign up
       </a>
     </div>
-    <mfloww-view-overlay-panel class="md:hidden self-center">
+    <mfloww-view-overlay-panel class="md:hidden self-center" #overlayPanel>
       <button
         class="self-center w-[30px] p-[2px] focus:p-0 focus:border-solid focus:border-mfloww_blue focus:border-2 focus:rounded"
         mflowwOverlayTriggerer
@@ -25,19 +25,23 @@
         <mfloww-view-icon type="menu" class="w-7"></mfloww-view-icon>
       </button>
       <ng-container mflowwPanelContent>
-        <a class="px-6 py-3 text-sm whitespace-nowrap" routerLink="/user/log-in"
+        <a
+          class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"
+          routerLink="/user/log-in"
+          (click)="overlayPanel._opened = false"
           >Log in</a
         >
         <a
-          class="px-6 py-3 text-sm whitespace-nowrap"
+          class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"
           routerLink="/user/sign-up"
+          (click)="overlayPanel._opened = false"
           >Sign up</a
         >
       </ng-container>
     </mfloww-view-overlay-panel>
   </ng-container>
   <ng-template #avatar>
-    <mfloww-view-overlay-panel>
+    <mfloww-view-overlay-panel #overlayPanel>
       <button
         mflowwOverlayTriggerer
         class="overflow-hidden truncate md:max-w-[300px] max-w-[150px] text-xs border-solid border-2 p-2 rounded border-mfloww_fg hover:bg-mfloww_fg"
@@ -45,12 +49,18 @@
         {{ profileInfo?.username }}
       </button>
       <ng-container mflowwPanelContent>
-        <a class="w-full px-6 py-3 text-sm" routerLink="/user/settings"
+        <a
+          class="w-full px-6 py-3 text-sm"
+          routerLink="/user/settings"
+          (click)="overlayPanel._opened = false"
           >Settings</a
         >
-        <a class="w-full px-6 py-3 text-sm" (click)="logOutTriggered.emit()"
-          >Log out</a
+        <button
+          class="w-full px-6 py-3 text-sm"
+          (click)="logOutTriggered.emit(); overlayPanel._opened = false"
         >
+          Log out
+        </button>
       </ng-container>
     </mfloww-view-overlay-panel>
   </ng-template>

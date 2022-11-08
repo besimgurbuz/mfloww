@@ -46,11 +46,15 @@ const routes: Routes = [
     component: SettingsComponent,
     canActivate: [
       () => {
-        const isLoggedIn = inject(AuthService).isUserLoggedIn();
+        const authService = inject(AuthService);
+        const isLoggedIn = authService.isUserLoggedIn();
         const router = inject(Router);
 
         if (!isLoggedIn) {
-          router.navigate(['/revenue-expense']);
+          router.navigate(['/user/log-in'], {
+            queryParams: { reason: 'expiredToken' },
+          });
+          authService.clearUserCredentials();
         }
         return isLoggedIn;
       },

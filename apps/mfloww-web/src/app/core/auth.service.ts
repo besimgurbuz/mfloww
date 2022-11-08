@@ -48,7 +48,7 @@ export class AuthService {
       );
   }
 
-  logOut(): void {
+  clearUserCredentials(): void {
     this.localStorageService.remove(environment.tokenExpKey);
     this.profileInfoSubject.next(null);
   }
