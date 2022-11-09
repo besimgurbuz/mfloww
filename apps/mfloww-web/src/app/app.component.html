@@ -1,4 +1,4 @@
-<div id="app-container" class="flex flex-col w-full h-full">
+<div id="app-container" class="flex flex-col w-full h-full gap-8">
   <mfloww-view-progress-bar
     *ngIf="inProgress$ | async"
     class="absolute left-0 right-0 top-0"
@@ -8,7 +8,6 @@
     (logOutTriggered)="handleLogOut()"
   ></mfloww-menu>
   <router-outlet></router-outlet>
-  <mfloww-footer></mfloww-footer>
   <ng-container *ngIf="errorMessage$ | async as errorMessage">
     <div
       *ngIf="errorMessage.text"

@@ -9,7 +9,6 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { CoreModule } from './core/core.module';
 import { PermissionErrorHandler } from './handlers/permission-error.handler';
@@ -17,7 +16,7 @@ import { ProgressTriggererInterceptorService } from './interceptors/progress-tri
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent, FooterComponent],
+  declarations: [AppComponent, MenuComponent],
   imports: [
     CoreModule,
     BrowserModule.withServerTransition({
