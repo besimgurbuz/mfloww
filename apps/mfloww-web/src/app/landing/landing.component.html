@@ -1,5 +1,5 @@
 <div
-  class="landing lg:px-28 md:px-18 px-6 md:pt-10 pb-24 flex flex-col gap-[75px] md:gap-[150px] overflow-hidden"
+  class="lg:px-28 md:px-18 px-6 md:pt-10 pb-24 pt-12 flex flex-col gap-[75px] md:gap-[150px] overflow-hidden"
 >
   <main
     class="flex sm:flex-row flex-col gap-20 -z-10"
@@ -18,41 +18,43 @@
     </mfloww-landing-image>
   </main>
 </div>
-<div
-  class="flex flex-col gap-16 px-6 py-10 md:py-16 md:px-28 min-h-[400px] w-full bg-[#161A20]"
->
-  <div class="flex flex-col gap-6" mflowwFade="out" [mflowwFadeDelay]="300">
-    <h1 class="text-mfloww_success text-2xl md:text-4xl">
-      Stop handing over your data
-    </h1>
-    <p class="sm:max-w-[60%]">
-      Every data is encrypted with a strong key uniquely created for you and
-      stored on your device. No data belonging to you can be processed
-    </p>
+<div class="bg-mfloww_bg w-full">
+  <div
+    class="flex flex-col gap-16 px-6 py-10 md:py-16 md:px-28 min-h-[400px] w-full"
+  >
+    <div class="flex flex-col gap-6" mflowwFade="out" [mflowwFadeDelay]="300">
+      <h1 class="text-mfloww_success text-2xl md:text-4xl">
+        Stop handing over your data
+      </h1>
+      <p class="sm:max-w-[60%]">
+        Every data is encrypted with a strong key uniquely created for you and
+        stored on your device. No data belonging to you can be processed
+      </p>
+    </div>
+    <div
+      class="flex flex-col gap-6 items-end text-right"
+      mflowwFade="out"
+      [mflowwFadeDelay]="300"
+    >
+      <h1 class="text-mfloww_success text-2xl md:text-4xl">
+        Visualize all types of money flows
+      </h1>
+      <p class="sm:max-w-[60%]">
+        See your different revenue and expense types in the currency type you
+        specify
+      </p>
+    </div>
   </div>
   <div
-    class="flex flex-col gap-6 items-end text-right"
-    mflowwFade="out"
-    [mflowwFadeDelay]="300"
+    class="flex flex-col gap-16 justify-center items-center px-6 py-10 md:py-16 md:px-28 min-h-[400px] w-full"
+    mflowwFade="in"
   >
-    <h1 class="text-mfloww_success text-2xl md:text-4xl">
-      Visualize all types of money flows
-    </h1>
-    <p class="sm:max-w-[60%]">
-      See your different revenue and expense types in the currency type you
-      specify
-    </p>
+    <h1 class="text-xl xs:text-3xl">Start using now</h1>
+    <a
+      class="px-5 py-2 border-2 border-solid rounded text-mfloww_white hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
+      routerLink="/user/sign-up"
+    >
+      Sign up
+    </a>
   </div>
-</div>
-<div
-  class="flex flex-col gap-16 justify-center items-center px-6 py-10 md:py-16 md:px-28 min-h-[400px] w-full bg-[#161A20]"
-  mflowwFade="in"
->
-  <h1 class="text-xl xs:text-3xl">Start using now</h1>
-  <a
-    class="px-5 py-2 border-2 border-solid rounded text-mfloww_white hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
-    routerLink="/user/sign-up"
-  >
-    Sign up
-  </a>
 </div>

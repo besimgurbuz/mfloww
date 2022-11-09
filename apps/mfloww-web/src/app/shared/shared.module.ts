@@ -2,9 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MflowwIconComponent, MflowwOverlayPanelComponent } from '@mfloww/view';
-import { FadeDirective } from '../directives/fade/fade.directive';
 import { BannerComponent } from './components/banner/banner.component';
-import { MenuComponent } from './components/menu/menu.component';
+import { FadeDirective } from './directives/fade/fade.directive';
 
 @NgModule({
   imports: [
@@ -14,7 +13,7 @@ import { MenuComponent } from './components/menu/menu.component';
     RouterModule,
     FadeDirective,
   ],
-  declarations: [BannerComponent, MenuComponent],
-  exports: [BannerComponent, MenuComponent, MflowwIconComponent, FadeDirective],
+  declarations: [BannerComponent],
+  exports: [BannerComponent, MflowwIconComponent, FadeDirective],
 })
 export class SharedModule {}

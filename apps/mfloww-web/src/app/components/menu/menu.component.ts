@@ -7,7 +7,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { ProfileInfo } from '../../../core/models/profile-info';
+import { ProfileInfo } from '../../core/models/profile-info';
 
 @Component({
   selector: 'mfloww-menu',

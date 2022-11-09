@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FadeDirective } from '../directives/fade/fade.directive';
+import { FadeDirective } from '../shared/directives/fade/fade.directive';
 import { SharedModule } from '../shared/shared.module';
 
 import { LandingImageComponent } from './components/landing-image/landing-image.component';
