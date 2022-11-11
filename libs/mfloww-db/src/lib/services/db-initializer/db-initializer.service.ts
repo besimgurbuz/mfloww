@@ -14,9 +14,8 @@ interface DbConnectionResult {
 }
 
 interface ObjectStoreInstruction {
-  key?: string;
   name: string;
-  uniquenessType: 'keyPath' | 'autoIncrement';
+  options: IDBObjectStoreParameters;
 }
 
 @Injectable()
@@ -47,10 +46,11 @@ export class MflowwDbInitializerService {
   };
   private readonly _onUpgradeNeeded =
     (objectStores?: ObjectStoreInstruction[]) => () => {
-      objectStores?.forEach(({ key, name, uniquenessType }) => {
-        const objectStore = this._dbRequest.result.createObjectStore(name, {
-          [uniquenessType]: key || true,
-        });
+      objectStores?.forEach(({ name, options }) => {
+        const objectStore = this._dbRequest.result.createObjectStore(
+          name,
+          options
+        );
         objectStore.transaction.oncomplete = this._onTransactionComplete;
       });
     };

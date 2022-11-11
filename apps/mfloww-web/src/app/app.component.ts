@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dbService.openDb('MFLOWW_DB', [
-      { name: 'entries', key: 'month_year', uniquenessType: 'keyPath' },
+      { name: 'entries', options: { keyPath: 'month_year' } },
     ]);
     if (!this.authService.hasSessionExpired()) {
       this.authService
