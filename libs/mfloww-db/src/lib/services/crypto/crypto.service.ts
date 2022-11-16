@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { AES } from 'crypto-js';
+import { AES, enc } from 'crypto-js';
 import { CryptoSecretService } from './crypto-secret.service';
 
 @Injectable({
@@ -17,8 +17,10 @@ export class CryptoService {
   }
 
   decryptObject<T>(encryptedText: string): T {
-    return JSON.parse(
-      AES.decrypt(encryptedText, this.secretService.secret).toString()
-    ) as T;
+    const result = AES.decrypt(
+      encryptedText,
+      this.secretService.secret
+    ).toString(enc.Utf8);
+    return JSON.parse(result) as T;
   }
 }

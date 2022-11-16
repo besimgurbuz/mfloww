@@ -48,26 +48,36 @@ export class MflowwDbService extends MflowwDbInitializerService {
   insert<T = unknown, R = string>(storeName: string, value: T) {
     return this.store$(storeName).pipe(
       mergeMap((objectStore) => {
-        const keyPath = objectStore.keyPath as string;
-        const keyValue = (value as Record<string, string>)[keyPath];
-        if (keyPath && keyValue) {
-          const encrypted = this.cryptoService.encrypt(JSON.stringify(value));
+        const encrypted = this.cryptoService.encrypt(JSON.stringify(value));
+        if (objectStore.keyPath) {
+          const keyPath = objectStore.keyPath as string;
+          const keyValue = (value as Record<string, string>)[keyPath];
           return this.createStoreRequest$<R>(objectStore, (store) =>
             store.add({ [keyPath]: keyValue, data: encrypted })
           );
         }
         return this.createStoreRequest$<R>(objectStore, (store) =>
-          store.add(value)
+          store.add(encrypted)
         );
       })
     );
   }
 
-  update<T = unknown, R = string>(storeName: string, value: T) {
+  update<T = unknown, R = string>(storeName: string, value: T, index?: number) {
     return this.store$(storeName).pipe(
-      mergeMap((objectStore) =>
-        this.createStoreRequest$<R>(objectStore, (store) => store.put(value))
-      )
+      mergeMap((objectStore) => {
+        const encrypted = this.cryptoService.encrypt(JSON.stringify(value));
+        if (objectStore.keyPath) {
+          const keyPath = objectStore.keyPath as string;
+          const keyValue = (value as Record<string, string>)[keyPath];
+          return this.createStoreRequest$<R>(objectStore, (store) =>
+            store.put({ [keyPath]: keyValue, data: encrypted })
+          );
+        }
+        return this.createStoreRequest$<R>(objectStore, (store) =>
+          store.put(encrypted, index)
+        );
+      })
     );
   }
 
