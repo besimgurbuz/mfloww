@@ -1,5 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { CryptoSecretService } from '@mfloww/db';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LocalStorageService } from './local-storage.service';
@@ -9,6 +10,8 @@ import { ProfileInfo } from './models/profile-info';
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly cryptoSecretService = inject(CryptoSecretService);
+
   private profileInfoPath = '/api/user/profile';
   private profileInfoSubject: BehaviorSubject<ProfileInfo | null> =
     new BehaviorSubject<ProfileInfo | null>(null);
@@ -43,6 +46,8 @@ export class AuthService {
         tap((profileInfoRes) => {
           if (profileInfoRes.ok) {
             this.profileInfoSubject.next(profileInfoRes.body as ProfileInfo);
+            this.cryptoSecretService.secret = profileInfoRes.body
+              ?.key as string;
           }
         })
       );
@@ -51,6 +56,7 @@ export class AuthService {
   clearUserCredentials(): void {
     this.localStorageService.remove(environment.tokenExpKey);
     this.profileInfoSubject.next(null);
+    this.cryptoSecretService.secret = '';
   }
 
   get profileInfo$(): Observable<ProfileInfo | null> {

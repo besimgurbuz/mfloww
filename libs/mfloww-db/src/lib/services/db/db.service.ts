@@ -1,36 +1,65 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { filter, map, mergeMap, Observable } from 'rxjs';
+import { CryptoService } from '../crypto/crypto.service';
 import { MflowwDbInitializerService } from '../db-initializer/db-initializer.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MflowwDbService extends MflowwDbInitializerService {
+  private readonly cryptoService = inject(CryptoService);
+
   get<T = unknown>(storeName: string, query: string | number) {
     return this.store$(storeName).pipe(
       mergeMap((objectStore) =>
-        this.createStoreRequest$<T | undefined>(objectStore, (store) =>
-          store.get(query)
+        this.createStoreRequest$<Record<string, unknown> | undefined>(
+          objectStore,
+          (store) => store.get(query)
         )
-      )
+      ),
+      map((result) => {
+        if (result && result['data']) {
+          return this.cryptoService.decryptObject<T>(result['data'] as string);
+        }
+        return result as T;
+      })
     );
   }
 
-  getAll<T = unknown[]>(storeName: string) {
+  getAll<T = unknown>(storeName: string) {
     return this.store$(storeName).pipe(
       mergeMap((objectStore) =>
-        this.createStoreRequest$<T | undefined>(objectStore, (store) =>
-          store.getAll()
+        this.createStoreRequest$<Record<string, unknown>[] | undefined>(
+          objectStore,
+          (store) => store.getAll()
         )
-      )
+      ),
+      map((result) => {
+        if (result && result[0]['data']) {
+          return result.map((resultElement) =>
+            this.cryptoService.decryptObject<T>(resultElement['data'] as string)
+          );
+        }
+        return result as T[];
+      })
     );
   }
 
   insert<T = unknown, R = string>(storeName: string, value: T) {
     return this.store$(storeName).pipe(
-      mergeMap((objectStore) =>
-        this.createStoreRequest$<R>(objectStore, (store) => store.add(value))
-      )
+      mergeMap((objectStore) => {
+        const keyPath = objectStore.keyPath as string;
+        const keyValue = (value as Record<string, string>)[keyPath];
+        if (keyPath && keyValue) {
+          const encrypted = this.cryptoService.encrypt(JSON.stringify(value));
+          return this.createStoreRequest$<R>(objectStore, (store) =>
+            store.add({ [keyPath]: keyValue, data: encrypted })
+          );
+        }
+        return this.createStoreRequest$<R>(objectStore, (store) =>
+          store.add(value)
+        );
+      })
     );
   }
 

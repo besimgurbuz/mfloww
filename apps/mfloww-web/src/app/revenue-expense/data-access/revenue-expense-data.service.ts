@@ -9,7 +9,7 @@ export class RevenueExpenseDataService {
   private readonly dbService = inject(MflowwDbService);
 
   getEntryList$(): Observable<MonthYearEntry[] | undefined> {
-    return this.dbService.getAll<MonthYearEntry[]>('entries');
+    return this.dbService.getAll<MonthYearEntry>('entries');
   }
 
   inserNewEntry$(month_year?: string): Observable<string> {
