@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class CryptoSecretService {
-  private CRYPTO_SECRET = crypto.randomUUID();
+  private CRYPTO_SECRET = window.crypto.randomUUID();
 
   set secret(secret: string) {
     this.CRYPTO_SECRET = secret;
