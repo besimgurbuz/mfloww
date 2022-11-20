@@ -15,6 +15,7 @@ export class MoneyTableComponent {
 
   @Output() entryCreation: EventEmitter<RevenueExpenseRecord> =
     new EventEmitter();
+  @Output() entryDeletion: EventEmitter<number> = new EventEmitter();
 
   _addingModeActive = false;
 
@@ -31,5 +32,9 @@ export class MoneyTableComponent {
   handleNewEntry(entry: RevenueExpenseRecord) {
     this.entryCreation.emit(entry);
     this._addingModeActive = false;
+  }
+
+  handleDeletion(index: number): void {
+    this.entryDeletion.emit(index);
   }
 }

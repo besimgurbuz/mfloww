@@ -15,6 +15,7 @@
   <button
     *ngIf="deletable && _hovered"
     class="absolute flex-grow-0 w-[35px] h-[35px] m-auto -right-2 top-0 bottom-0 p-[5px] justify-center-center items"
+    (click)="deletionTriggered.emit()"
   >
     <mfloww-view-icon type="close" color="var(--app-white)"></mfloww-view-icon>
   </button>

@@ -20,7 +20,7 @@ export class MoneyTableEntryComponent {
   @Input() label!: string;
   @Input() deletable = false;
 
-  @Output() deleted: EventEmitter<void> = new EventEmitter();
+  @Output() deletionTriggered: EventEmitter<void> = new EventEmitter();
 
   _hovered = false;
 }
