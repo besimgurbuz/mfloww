@@ -44,6 +44,27 @@ export class RevenueExpenseState {
     }
   }
 
+  deleteRevenueExpenseRecord(
+    index: number,
+    type: RevenueExpenseRecordType
+  ): void {
+    const currentEntryMonthYear = this.selectedMonthSubject.value;
+    const entryProp: `${RevenueExpenseRecordType}s` =
+      type === 'revenue' ? 'revenues' : 'expenses';
+
+    const entryIndex = this.entryListSubject.value.findIndex(
+      ({ month_year }) => month_year === currentEntryMonthYear
+    );
+
+    if (entryIndex >= 0) {
+      const updatedList = [...this.entryListSubject.value];
+      const updatedCurrentEntry = updatedList[entryIndex];
+      updatedCurrentEntry[entryProp].splice(index, 1);
+
+      this.entryListSubject.next(updatedList);
+    }
+  }
+
   setSelectedMonth(month_year: string): void {
     this.selectedMonthSubject.next(month_year);
   }

@@ -73,6 +73,15 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  handleRecordDeletion(
+    index: number,
+    type: RevenueExpenseRecordType = 'revenue'
+  ) {
+    this.revenueExpenseFacade
+      .deleteRevenueExpenseRecord(index, type)
+      .subscribe();
+  }
+
   private setInitialMonthYear(): void {
     const latestMonthYear = this.localStorageService.get<string>(
       LATEST_MONTH_YEAR_KEY

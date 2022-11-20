@@ -52,6 +52,20 @@ export class RevenueExpenseFacade {
       );
   }
 
+  deleteRevenueExpenseRecord(index: number, type: RevenueExpenseRecordType) {
+    return this.revenueExpenseDataService
+      .deleteRevenueExpenseRecord$(
+        this.revenueExpenseState.selectedMonthYear,
+        type,
+        index
+      )
+      .pipe(
+        tap(() =>
+          this.revenueExpenseState.deleteRevenueExpenseRecord(index, type)
+        )
+      );
+  }
+
   get entryDates$(): Observable<string[]> {
     return this.revenueExpenseState.entryDates$.pipe(
       map((entryDates) =>
