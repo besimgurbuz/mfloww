@@ -16,10 +16,11 @@
       [deletable]="true"
       (deletionTriggered)="handleDeletion(i)"
     ></mfloww-money-table-entry>
-    <button
+    <mfloww-view-button
+      class="self-center"
       *ngIf="!_addingModeActive"
-      class="self-center hover:opacity-80 flex items-center justify-center w-[30px] p-[2px] active:p-0 focus:p-0 active:border-2 focus:border-2 active:border-solid focus:border-solid focus:border-mfloww_fg active:rounded-full focus:rounded-full"
-      (click)="_addingModeActive = !_addingModeActive"
+      (clicked)="_addingModeActive = !_addingModeActive"
+      class="self-center"
     >
       <mfloww-view-icon
         type="plus"
@@ -27,7 +28,7 @@
         [color]="type === 'revenue' ? 'var(--app-success)' : 'var(--app-fatal)'"
         [viewBox]="30"
       ></mfloww-view-icon>
-    </button>
+    </mfloww-view-button>
     <div class="self-center max-w-[300px]" *ngIf="_addingModeActive">
       <mfloww-view-entry-input
         [currencies]="currencies"

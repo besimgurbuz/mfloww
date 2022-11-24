@@ -12,11 +12,16 @@
   >
     {{ label }}
   </span>
-  <button
-    *ngIf="deletable && _hovered"
-    class="absolute flex-grow-0 w-[35px] h-[35px] m-auto -right-2 top-0 bottom-0 p-[5px] justify-center-center items"
-    (click)="deletionTriggered.emit()"
-  >
-    <mfloww-view-icon type="close" color="var(--app-white)"></mfloww-view-icon>
-  </button>
+  <ng-container *ngIf="deletable">
+    <mfloww-view-button
+      class="absolute flex md:hidden flex-grow-0 w-[40px] h-[40px] m-auto -right-5 top-0 bottom-0 p-[5px]"
+      (clicked)="deletionTriggered.emit()"
+      [style.display]="_hovered ? 'flex' : 'none'"
+    >
+      <mfloww-view-icon
+        type="close"
+        color="var(--app-white)"
+      ></mfloww-view-icon>
+    </mfloww-view-button>
+  </ng-container>
 </div>
