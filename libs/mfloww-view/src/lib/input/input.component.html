@@ -15,7 +15,7 @@
       (input)="onValueChanged($any($event.target).value)"
       (click)="_focused = true"
       [ngClass]="{
-        'border-mfloww_fatal': _touched && _control.errors,
+        'border-mfloww_fatal': _dirty && _control.errors,
         'text-mfloww_fg border-mfloww_fg': _disabled
       }"
     />
@@ -29,7 +29,7 @@
       {{ _copied ? 'Copied' : 'Copy' }}
     </button>
   </div>
-  <ng-container *ngIf="_touched && _control.errors">
+  <ng-container *ngIf="_dirty && _control.errors">
     <p
       *ngIf="(_control.errors | keyvalue)[0] as firstError"
       class="absolute text-mfloww_fatal text-[10px]"

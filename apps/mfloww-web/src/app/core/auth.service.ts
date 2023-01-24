@@ -36,7 +36,7 @@ export class AuthService {
     return !!this.localStorageService.get(environment.tokenExpKey);
   }
 
-  getProfileInfo(): Observable<HttpResponse<ProfileInfo>> {
+  getProfileInfo$(): Observable<HttpResponse<ProfileInfo>> {
     return this.http
       .get<ProfileInfo>(`${environment.apiUrl}${this.profileInfoPath}`, {
         observe: 'response',

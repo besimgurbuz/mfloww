@@ -45,6 +45,7 @@ export class MflowwInputComponent implements ControlValueAccessor, OnInit {
   _disabled = false;
   _touched = false;
   _focused = false;
+  _dirty = false;
   _copied = false;
   _onTouched: () => void = () => {};
   _onChange: (value: string) => void = () => {};
@@ -88,6 +89,7 @@ export class MflowwInputComponent implements ControlValueAccessor, OnInit {
 
   onValueChanged(value: string) {
     this._value = value;
+    this._dirty = true;
     this.markAsTouched();
     this._onChange(value);
   }

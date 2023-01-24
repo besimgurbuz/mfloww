@@ -1,17 +1,19 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LocalStorageService } from '../../core/local-storage.service';
 import {
   CreateUserPayload,
   CreateUserResult,
+  UpdateUserPayload,
+  UpdateUserResult,
   UserLoginResult,
 } from '../models/user';
 
 @Injectable()
 export class UserService {
-  private readonly createUserPath = '/api/user';
+  private readonly userPath = '/api/user';
   private readonly loginPath = '/api/auth/login';
   private readonly profileInfoPath = '/api/user/profile';
 
@@ -24,7 +26,7 @@ export class UserService {
     payload: CreateUserPayload
   ): Observable<HttpResponse<CreateUserResult>> {
     return this.http.post<CreateUserResult>(
-      `${environment.apiUrl}${this.createUserPath}`,
+      `${environment.apiUrl}${this.userPath}`,
       payload,
       {
         observe: 'response',
@@ -57,6 +59,21 @@ export class UserService {
               response.body?.expiresIn as number
             );
           }
+        })
+      );
+  }
+
+  updateProfile(
+    payload: UpdateUserPayload
+  ): Observable<HttpResponse<UpdateUserResult>> {
+    return this.http
+      .put<UpdateUserResult>(`${environment.apiUrl}${this.userPath}`, payload, {
+        observe: 'response',
+        withCredentials: true,
+      })
+      .pipe(
+        catchError((error) => {
+          return of(error as HttpResponse<UpdateUserResult>);
         })
       );
   }

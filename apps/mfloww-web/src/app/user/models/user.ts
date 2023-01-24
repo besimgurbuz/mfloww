@@ -10,12 +10,19 @@ export interface CreateUserPayload {
   password: string;
 }
 
+export interface UpdateUserPayload {
+  username: string;
+  email: string;
+}
+
 export type CreateUserResult =
   | User
   | {
       error: string;
       reason: string;
     };
+
+export type UpdateUserResult = CreateUserResult;
 
 export type UserLoginResult = {
   access_token: string;

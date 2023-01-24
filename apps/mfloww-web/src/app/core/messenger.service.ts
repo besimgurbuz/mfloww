@@ -35,6 +35,10 @@ export class MessengerService {
       type: 'info',
       text: 'Welcome! You can now log in with your new account',
     },
+    updatedProfile: {
+      type: 'info',
+      text: 'Your profile information updated successfully. Please re-login.',
+    },
   };
 
   emitMessage(message: Message) {

@@ -6,13 +6,15 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MflowwDbService } from '@mfloww/db';
-import { Subscription } from 'rxjs';
+import { mergeMap, Subscription } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
 import { LATEST_MONTH_YEAR_KEY } from '../../core/core.constants';
 import { LocalStorageService } from '../../core/local-storage.service';
 import { MessengerService } from '../../core/messenger.service';
 import { ProfileInfo } from '../../core/models/profile-info';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'mfloww-settings',
@@ -21,10 +23,13 @@ import { ProfileInfo } from '../../core/models/profile-info';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-  private readonly profileInfo$ = inject(AuthService).profileInfo$;
+  private readonly userService = inject(UserService);
+  private readonly authService = inject(AuthService);
+  private readonly profileInfo$ = this.authService.profileInfo$;
   private readonly dbService = inject(MflowwDbService);
   private readonly messengerService = inject(MessengerService);
   private readonly localStorageService = inject(LocalStorageService);
+  private readonly router = inject(Router);
 
   readonly profileGroup = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
@@ -70,6 +75,30 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.passwordGroup.value.currentPassword ===
         this.passwordGroup.value.confirmNewPassword
     );
+  }
+
+  updateProfile() {
+    if (this.profileGroup.valid) {
+      this.userService
+        .updateProfile({
+          email: this.profileGroup.value.email as string,
+          username: this.profileGroup.value.username as string,
+        })
+        .pipe(mergeMap(() => this.authService.getProfileInfo$()))
+        .subscribe({
+          complete: () => {
+            this.authService.clearUserCredentials();
+            this.router.navigate(['/user/log-in'], {
+              queryParams: {
+                reason: 'updatedProfile',
+              },
+            });
+          },
+          error: () => {
+            // TODO
+          },
+        });
+    }
   }
 
   handleDeleteLocalDatabase() {

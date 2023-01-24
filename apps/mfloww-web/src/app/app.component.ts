@@ -45,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
     ]);
     if (!this.authService.hasSessionExpired()) {
       this.authService
-        .getProfileInfo()
+        .getProfileInfo$()
         .pipe(takeUntil(this._destroy))
         .subscribe({
           error: (err: HttpErrorResponse) =>

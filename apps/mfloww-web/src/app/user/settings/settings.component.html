@@ -7,6 +7,7 @@
       <h3 class="text-sm sm:text-lg">Profile</h3>
       <p class="text-[10px] sm:text-xs opacity-50">
         Your e-mail adress is your identity on mfloww and is used to log in.
+        Changing your e-mail or username will also expires your session.
       </p>
     </div>
     <form
@@ -37,6 +38,7 @@
             ? 'visible'
             : 'hidden'
         "
+        (click)="updateProfile()"
       >
         Save
       </button>

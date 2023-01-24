@@ -34,7 +34,7 @@ export class LogInComponent implements OnDestroy {
         .login(this.logInForm.value)
         .pipe(
           filter((response) => response.ok),
-          mergeMap(() => this.authService.getProfileInfo())
+          mergeMap(() => this.authService.getProfileInfo$())
         )
         .subscribe(() => {
           this.router.navigate(['/revenue-expense']);
