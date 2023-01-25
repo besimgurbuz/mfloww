@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -86,16 +87,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
         })
         .pipe(mergeMap(() => this.authService.getProfileInfo$()))
         .subscribe({
-          complete: () => {
-            this.authService.clearUserCredentials();
-            this.router.navigate(['/user/log-in'], {
-              queryParams: {
-                reason: 'updatedProfile',
-              },
-            });
+          next: (response) => {
+            if (response.ok) {
+              this.authService.clearUserCredentials();
+              this.router.navigate(['/user/log-in'], {
+                queryParams: {
+                  reason: 'updatedProfile',
+                },
+              });
+            }
           },
-          error: () => {
-            // TODO
+          error: (err: HttpErrorResponse) => {
+            this.messengerService.emitFromError(err.error, 'message');
           },
         });
     }

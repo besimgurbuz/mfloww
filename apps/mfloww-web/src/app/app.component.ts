@@ -14,7 +14,7 @@ import { ProgressState } from './core/progress.state';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  readonly errorMessenger = inject(MessengerService);
+  readonly messenger = inject(MessengerService);
   readonly dbService = inject(MflowwDbService);
   readonly inProgress$ = inject(ProgressState).inProgress$;
   readonly router = inject(Router);
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
   readonly _profileInfo$: Observable<ProfileInfo | null> =
     this.authService.profileInfo$;
 
-  errorMessage$ = this.errorMessenger.error$.pipe(
+  message$ = this.messenger.error$.pipe(
     mergeMap(
       (value) =>
         new Observable<Message | null>((subscriber) => {
@@ -48,8 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
         .getProfileInfo$()
         .pipe(takeUntil(this._destroy))
         .subscribe({
-          error: (err: HttpErrorResponse) =>
-            this.errorMessenger.emitFromError(err),
+          error: (err: HttpErrorResponse) => this.messenger.emitFromError(err),
         });
     }
   }
@@ -62,5 +61,9 @@ export class AppComponent implements OnInit, OnDestroy {
   handleLogOut() {
     this.authService.clearUserCredentials();
     this.router.navigate(['/']);
+  }
+
+  closeMessenger() {
+    this.messenger.clearMessage();
   }
 }

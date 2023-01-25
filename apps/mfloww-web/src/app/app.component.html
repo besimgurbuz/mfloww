@@ -8,27 +8,22 @@
     (logOutTriggered)="handleLogOut()"
   ></mfloww-menu>
   <router-outlet></router-outlet>
-  <ng-container *ngIf="errorMessage$ | async as errorMessage">
+  <ng-container *ngIf="message$ | async as message">
     <div
-      *ngIf="errorMessage.text"
+      *ngIf="message.text"
       mflowwFade="in"
       [mflowwFadeDelay]="100"
       class="fixed bottom-2 md:bottom-10 mx-auto left-0 right-0 min-w-[200px] max-w-[400px] md:max-w-[600px] px-5 py-3 text-xs rounded"
       [ngClass]="{
-        'bg-mfloww_warn': errorMessage?.type === 'warn',
-        'bg-mfloww_fatal': errorMessage?.type === 'fatal',
-        'bg-mfloww_success': errorMessage?.type === 'info'
+        'bg-mfloww_warn': message?.type === 'warn',
+        'bg-mfloww_fatal': message?.type === 'fatal',
+        'bg-mfloww_success': message?.type === 'info'
       }"
       #messageBox
     >
       <div class="flex justify-between">
-        <p>{{ errorMessage?.text }}</p>
-        <button
-          class="text-mfloww_fg"
-          (click)="messageBox.style.visibility = 'hidden'"
-        >
-          Close
-        </button>
+        <p>{{ message?.text }}</p>
+        <button class="text-mfloww_fg" (click)="closeMessenger()">Close</button>
       </div>
     </div>
   </ng-container>

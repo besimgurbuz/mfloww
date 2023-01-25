@@ -2,7 +2,12 @@ import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import { hashPassword } from '../../shared/utils';
-import { ProfileInfoDto, UserActionResult, UserDto } from '../dtos/user.dto';
+import {
+  ProfileInfoDto,
+  UpdateUserDto,
+  UserActionResult,
+  UserDto,
+} from '../dtos/user.dto';
 import { UserRepository } from '../repositories/user.repository';
 
 @Injectable()
@@ -43,33 +48,22 @@ export class UserService {
   }
 
   async updateUser(
-    { id, key }: User,
-    updatePayload: UserDto
+    { id }: User,
+    updatePayload: UpdateUserDto
   ): Promise<UserActionResult> {
-    if (updatePayload.password) {
-      updatePayload.password = hashPassword(updatePayload.password, key);
-    }
-    try {
-      const result = await this.userRepository.updateUser({
-        where: { id },
-        data: updatePayload,
-      });
+    // if (updatePayload.password) {
+    //   updatePayload.password = hashPassword(updatePayload.password, key);
+    // }
+    const result = await this.userRepository.updateUser({
+      where: { id },
+      data: updatePayload,
+    });
 
-      return {
-        key: result.key,
-        email: result.email,
-        username: result.username,
-      };
-    } catch (err) {
-      UserService.logger.debug(
-        `failed to update a user: { where: { id: ${id} }, data: ${JSON.stringify(
-          updatePayload
-        )}, error: ${JSON.stringify(err)} }`
-      );
-      return {
-        error: 'Failed to update the user',
-      };
-    }
+    return {
+      key: result.key,
+      email: result.email,
+      username: result.username,
+    };
   }
 
   async deleteUser({ id }: User): Promise<UserActionResult> {

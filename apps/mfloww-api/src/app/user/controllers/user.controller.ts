@@ -9,10 +9,12 @@ import {
   Post,
   Put,
   Request,
+  Res,
   UseGuards,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { UserDto } from '../dtos/user.dto';
+import { UpdateUserDto, UserDto } from '../dtos/user.dto';
 import { UserService } from '../services/user.service';
 
 @Controller({
@@ -39,8 +41,28 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Put()
-  updateUser(@Request() req, @Body() body: UserDto) {
-    return this.userService.updateUser(req.user, body);
+  async updateUser(
+    @Request() req,
+    @Res() res: Response,
+    @Body() body: UpdateUserDto
+  ) {
+    try {
+      const result = await this.userService.updateUser(req.user, body);
+      res.status(200).send(result);
+    } catch (err) {
+      UserController.logger.debug(
+        `failed to update a user: { where: { id: ${
+          req.user.id
+        } }, data: ${JSON.stringify(body)}, error: ${JSON.stringify(err)} }`
+      );
+
+      res.status(400).send({
+        message:
+          err.code === 'P2002'
+            ? 'Opps, it looks like the mail you want to use is taken already.'
+            : "Couldn't update the profile.",
+      });
+    }
   }
 
   @UseGuards(JwtAuthGuard)

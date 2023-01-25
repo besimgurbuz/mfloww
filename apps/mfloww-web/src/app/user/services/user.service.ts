@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LocalStorageService } from '../../core/local-storage.service';
 import {
@@ -66,15 +66,13 @@ export class UserService {
   updateProfile(
     payload: UpdateUserPayload
   ): Observable<HttpResponse<UpdateUserResult>> {
-    return this.http
-      .put<UpdateUserResult>(`${environment.apiUrl}${this.userPath}`, payload, {
+    return this.http.put<UpdateUserResult>(
+      `${environment.apiUrl}${this.userPath}`,
+      payload,
+      {
         observe: 'response',
         withCredentials: true,
-      })
-      .pipe(
-        catchError((error) => {
-          return of(error as HttpResponse<UpdateUserResult>);
-        })
-      );
+      }
+    );
   }
 }
