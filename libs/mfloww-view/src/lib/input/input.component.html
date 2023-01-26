@@ -22,6 +22,7 @@
     <button
       *ngIf="copyable"
       class="absolute right-2 top-0 bottom-0 m-auto h-fit w-fit text-[10px] rounded p-1 bg-mfloww_fg"
+      type="button"
       [ngClass]="{ 'text-mfloww_success': _copied }"
       [mflowwViewCopyClipboard]="_value"
       (copied)="informCopyEvent()"

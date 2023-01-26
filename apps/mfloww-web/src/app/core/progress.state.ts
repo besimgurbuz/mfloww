@@ -9,6 +9,10 @@ export class ProgressState {
     false
   );
 
+  emit(value: boolean) {
+    this.inProgressSubject.next(value);
+  }
+
   emitTrue() {
     this.inProgressSubject.next(true);
   }

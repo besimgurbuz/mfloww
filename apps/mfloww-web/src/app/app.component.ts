@@ -1,8 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  RouteConfigLoadEnd,
+  RouteConfigLoadStart,
+  Router,
+} from '@angular/router';
 import { MflowwDbService } from '@mfloww/db';
-import { mergeMap, Observable, Subject, takeUntil } from 'rxjs';
+import { filter, mergeMap, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { AuthService } from './core/auth.service';
 import { Message, MessengerService } from './core/messenger.service';
 import { ProfileInfo } from './core/models/profile-info';
@@ -15,6 +20,7 @@ import { ProgressState } from './core/progress.state';
 })
 export class AppComponent implements OnInit, OnDestroy {
   readonly messenger = inject(MessengerService);
+  readonly progressState = inject(ProgressState);
   readonly dbService = inject(MflowwDbService);
   readonly inProgress$ = inject(ProgressState).inProgress$;
   readonly router = inject(Router);
@@ -40,6 +46,18 @@ export class AppComponent implements OnInit, OnDestroy {
   private _destroy: Subject<void> = new Subject();
 
   ngOnInit(): void {
+    this.router.events
+      .pipe(
+        filter(
+          (e) =>
+            e instanceof RouteConfigLoadStart || e instanceof RouteConfigLoadEnd
+        ),
+        tap((e) => {
+          this.progressState.emit(e instanceof RouteConfigLoadStart);
+        }),
+        takeUntil(this._destroy)
+      )
+      .subscribe();
     this.dbService.openDb('MFLOWW_DB', [
       { name: 'entries', options: { keyPath: 'month_year' } },
     ]);

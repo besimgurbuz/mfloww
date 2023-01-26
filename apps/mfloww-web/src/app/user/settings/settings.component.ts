@@ -79,7 +79,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   updateProfile() {
-    if (this.profileGroup.valid) {
+    if (this.profileGroup.valid && this.isFormValueDifferent()) {
       this.userService
         .updateProfile({
           email: this.profileGroup.value.email as string,

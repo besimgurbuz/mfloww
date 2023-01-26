@@ -4,7 +4,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostListener,
   Inject,
   Injector,
   INJECTOR,
@@ -58,17 +57,6 @@ export class MflowwInputComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit(): void {
     this._control = this.injector.get(NgControl) as unknown as FormControl;
-  }
-
-  @HostListener('document:click', ['$event'])
-  clickOut(event: MouseEvent) {
-    if (
-      !this.elementRef.nativeElement.contains(event.target) &&
-      this._focused
-    ) {
-      // Click outside of element
-      this.markAsTouched();
-    }
   }
 
   writeValue(value: string): void {

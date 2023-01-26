@@ -13,9 +13,9 @@ export class ProgressTriggererInterceptorService implements HttpInterceptor {
   constructor(private progressState: ProgressState) {}
 
   intercept(
-    req: HttpRequest<any>,
+    req: HttpRequest<unknown>,
     next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  ): Observable<HttpEvent<unknown>> {
     this.progressState.emitTrue();
     return next.handle(req).pipe(
       finalize(() => {

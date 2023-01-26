@@ -1,8 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { filter, mergeMap, Subscription } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
+import { MessengerService } from '../../core/messenger.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -21,6 +23,7 @@ export class LogInComponent implements OnDestroy {
   constructor(
     private userService: UserService,
     private authService: AuthService,
+    private messenger: MessengerService,
     private router: Router
   ) {}
 
@@ -36,8 +39,21 @@ export class LogInComponent implements OnDestroy {
           filter((response) => response.ok),
           mergeMap(() => this.authService.getProfileInfo$())
         )
-        .subscribe(() => {
-          this.router.navigate(['/revenue-expense']);
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/revenue-expense']);
+          },
+
+          error: (err: HttpErrorResponse) => {
+            const message =
+              err.status === 401
+                ? 'The credentials you typed in are incorrect.'
+                : 'An error occured while trying to login. Please try again.';
+            this.messenger.emitMessage({
+              text: message,
+              type: 'fatal',
+            });
+          },
         });
     }
   }

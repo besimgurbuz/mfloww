@@ -13,6 +13,7 @@
     <form
       [formGroup]="profileGroup"
       class="flex flex-col gap-6 relative flex-grow max-w-[450px]"
+      (keydown.enter)="updateProfile()"
     >
       <mfloww-view-input
         formControlName="email"

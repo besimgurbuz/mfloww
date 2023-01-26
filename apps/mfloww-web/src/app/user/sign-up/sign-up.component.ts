@@ -39,12 +39,14 @@ export class SignUpComponent implements OnDestroy {
     this.signUpSubs = this.userService
       .createUser(this.signUpForm.value)
       .pipe(tap(() => (this._inProgress = false)))
-      .subscribe((response) => {
-        if (response.ok) {
-          this.router.navigate(['/user/log-in'], {
-            queryParams: { reason: 'newAccount' },
-          });
-        }
+      .subscribe({
+        next: (response) => {
+          if (response.ok) {
+            this.router.navigate(['/user/log-in'], {
+              queryParams: { reason: 'newAccount' },
+            });
+          }
+        },
       });
   }
 }

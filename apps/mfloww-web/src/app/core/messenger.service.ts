@@ -1,7 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  ParamMap,
+  Router,
+} from '@angular/router';
+import { filter, Observable, ReplaySubject, Subject, takeUntil } from 'rxjs';
 
 export interface Message {
   type: 'warn' | 'fatal' | 'info';
@@ -12,16 +17,10 @@ export interface Message {
 @Injectable({
   providedIn: 'root',
 })
-export class MessengerService {
+export class MessengerService implements OnDestroy {
   private readonly errorMessageSubject: ReplaySubject<Message> =
     new ReplaySubject<Message>();
-
-  constructor(private route: ActivatedRoute) {
-    this.route.queryParamMap.subscribe((queryParamMap) => {
-      this.emitFromQueryParamMap(queryParamMap);
-    });
-  }
-
+  private _destroy = new Subject<void>();
   private redirectionMessageSet: Record<string | number, Message> = {
     triedUnauth: {
       type: 'fatal',
@@ -40,6 +39,33 @@ export class MessengerService {
       text: 'Your profile information updated successfully. Please re-login.',
     },
   };
+
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.router.events
+      .pipe(
+        filter(
+          (e) =>
+            e instanceof NavigationEnd &&
+            !this.route.snapshot.queryParamMap.get('reason')
+        )
+      )
+      .subscribe(() => {
+        this.errorMessageSubject.next({
+          text: '',
+          type: 'info',
+        });
+      });
+    this.route.queryParamMap
+      .pipe(takeUntil(this._destroy))
+      .subscribe((queryParamMap) => {
+        this.emitFromQueryParamMap(queryParamMap);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this._destroy.next();
+    this._destroy.complete();
+  }
 
   emitMessage(message: Message) {
     this.errorMessageSubject.next(message);
