@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -23,8 +23,12 @@ export class UserService {
   ) {}
 
   createUser(
-    payload: CreateUserPayload
+    createUserPayload: CreateUserPayload
   ): Observable<HttpResponse<CreateUserResult>> {
+    const payload = new HttpParams()
+      .set('email', createUserPayload.email)
+      .set('username', createUserPayload.username)
+      .set('password', createUserPayload.password);
     return this.http.post<CreateUserResult>(
       `${environment.apiUrl}${this.userPath}`,
       payload,
@@ -42,13 +46,13 @@ export class UserService {
     email: string;
     password: string;
   }): Observable<HttpResponse<UserLoginResult>> {
+    const payload = new HttpParams()
+      .set('email', email)
+      .set('password', password);
     return this.http
       .post<UserLoginResult>(
         `${environment.apiUrl}${this.loginPath}`,
-        {
-          email,
-          password,
-        },
+        payload,
         { observe: 'response', withCredentials: true }
       )
       .pipe(

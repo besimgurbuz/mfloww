@@ -1,7 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
+import { MessengerService } from '../../core/messenger.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -27,7 +29,11 @@ export class SignUpComponent implements OnDestroy {
   });
   private signUpSubs?: Subscription;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private messenger: MessengerService
+  ) {}
 
   ngOnDestroy(): void {
     this.signUpSubs?.unsubscribe();
@@ -46,6 +52,9 @@ export class SignUpComponent implements OnDestroy {
               queryParams: { reason: 'newAccount' },
             });
           }
+        },
+        error: (err: HttpErrorResponse) => {
+          this.messenger.emitFromError(err.error, 'message');
         },
       });
   }

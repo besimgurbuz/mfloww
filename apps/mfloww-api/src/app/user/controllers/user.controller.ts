@@ -26,17 +26,31 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post()
-  createNewUser(@Body() userDto: UserDto) {
+  async createNewUser(@Res() res: Response, @Body() userDto: UserDto) {
     if (process.env.ENABLE_USER_CREATION !== 'ENABLED') {
       throw new HttpException(
         'User creation is currently blocked',
         HttpStatus.FORBIDDEN
       );
     }
-    UserController.logger.debug(
-      `handling createNewUser request with: { username: ${userDto.username}, email: ${userDto.email} }`
-    );
-    return this.userService.createUser(userDto);
+    try {
+      UserController.logger.debug(
+        `handling createNewUser request with: { username: ${userDto.username}, email: ${userDto.email} }`
+      );
+      const result = await this.userService.createUser(userDto);
+      res.status(201).send(result);
+    } catch (err) {
+      UserController.logger.debug(
+        `failed to create a new user { data: ${userDto}}`
+      );
+      res.status(400).send({
+        code: err.code === 'P2002' ? 409 : 400,
+        message:
+          err.code === 'P2002'
+            ? 'Opps, it looks like the email you want to use is taken already.'
+            : 'Failed to create a new user with given credentials.',
+      });
+    }
   }
 
   @UseGuards(JwtAuthGuard)
@@ -57,9 +71,10 @@ export class UserController {
       );
 
       res.status(400).send({
+        code: err.code === 'P2002' ? 409 : 400,
         message:
           err.code === 'P2002'
-            ? 'Opps, it looks like the mail you want to use is taken already.'
+            ? 'Opps, it looks like the email you want to use is taken already.'
             : "Couldn't update the profile.",
       });
     }

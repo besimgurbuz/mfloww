@@ -22,29 +22,16 @@ export class UserService {
 
   async createUser(userDto: UserDto): Promise<UserActionResult> {
     const newUserKey = randomBytes(64).toString('hex');
-    try {
-      const result = await this.userRepository.createUser({
-        ...userDto,
-        password: hashPassword(userDto.password, newUserKey),
-        key: newUserKey,
-      });
-      return {
-        key: result.key,
-        email: result.email,
-        username: result.username,
-      };
-    } catch (error) {
-      UserService.logger.debug(
-        `failed to create new user: ${JSON.stringify(error)}`
-      );
-      return {
-        error: 'Failed to create a new user',
-        reason:
-          error?.code === 'P2002'
-            ? `not-unique: ${error.meta.target.join(', ')}`
-            : undefined,
-      };
-    }
+    const result = await this.userRepository.createUser({
+      ...userDto,
+      password: hashPassword(userDto.password, newUserKey),
+      key: newUserKey,
+    });
+    return {
+      key: result.key,
+      email: result.email,
+      username: result.username,
+    };
   }
 
   async updateUser(
