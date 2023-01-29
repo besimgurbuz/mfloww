@@ -17,8 +17,9 @@ export type UserActionResult =
       key: string;
       email: string;
       username: string;
+      platform?: SupportedPlatform;
     }
-  | { error: string; reason?: any };
+  | { error: string; reason?: unknown };
 
 export interface UpdateUserDto {
   email?: string;

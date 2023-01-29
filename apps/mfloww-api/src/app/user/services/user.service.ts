@@ -34,22 +34,6 @@ export class UserService {
       username: result.username,
     };
   }
-
-  async createPlatformUser(
-    platformUserDto: PlatformUserDto
-  ): Promise<UserActionResult> {
-    const newUserKey = randomBytes(64).toString('hex');
-    const result = await this.userRepository.createPlatformUser({
-      ...platformUserDto,
-      key: newUserKey,
-    });
-    return {
-      key: result.key,
-      email: result.email,
-      username: result.username,
-    };
-  }
-
   async updateUser(
     { id }: User,
     updatePayload: UpdateUserDto
@@ -93,6 +77,26 @@ export class UserService {
       username: user.username,
       email: user.email,
       key: user.key,
+    };
+  }
+
+  async getPlatformUserByEmail(email: string): Promise<User | null> {
+    return this.userRepository.getPlatformUser({ email });
+  }
+
+  async createPlatformUser(
+    platformUserDto: PlatformUserDto
+  ): Promise<UserActionResult> {
+    const newUserKey = randomBytes(64).toString('hex');
+    const result = await this.userRepository.createPlatformUser({
+      ...platformUserDto,
+      key: newUserKey,
+    });
+    return {
+      key: result.key,
+      email: result.email,
+      username: result.username,
+      platform: platformUserDto.platform,
     };
   }
 }

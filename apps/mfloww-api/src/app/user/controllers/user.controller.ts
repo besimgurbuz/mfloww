@@ -1,3 +1,4 @@
+import { SupportedPlatform } from '@mfloww/common';
 import {
   Body,
   ConsoleLogger,
@@ -101,7 +102,24 @@ export class UserController {
 
   @Get('google/redirect')
   @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req) {
+  async googleAuthRedirect(@Req() req) {
     const { user: googleUser } = req;
+    try {
+      const platformUser = await this.userService.getPlatformUserByEmail(
+        googleUser.email
+      );
+      if (platformUser) {
+        return platformUser;
+      }
+      const result = await this.userService.createPlatformUser({
+        ...googleUser,
+        platform: SupportedPlatform.GOOGLE,
+      });
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
   }
 }

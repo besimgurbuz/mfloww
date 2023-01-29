@@ -1,1 +1,3 @@
-export type SupportedPlatform = 'GOOGLE';
+export enum SupportedPlatform {
+  GOOGLE = 'GOOGLE',
+}

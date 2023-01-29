@@ -14,9 +14,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   }
 
   async validate(_, __, profile: { id: string; emails: { value: string }[] }) {
-    const { id, emails } = profile;
+    const { emails } = profile;
     return {
-      id,
       email: emails[0].value,
       username: this.generateUsernameFromEmail(emails[0].value),
     };

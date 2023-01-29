@@ -51,9 +51,24 @@ export class UserRepository {
     });
   }
 
+  async getPlatformUser(
+    platformUserWhereUniqueInput: Prisma.PlatformUserWhereUniqueInput
+  ): Promise<User | null> {
+    UserRepository.logger.debug(
+      `user queried with: { email: ${platformUserWhereUniqueInput.email} }`
+    );
+    return this.prisma.user.findUnique({
+      where: platformUserWhereUniqueInput,
+    });
+  }
+
   async createPlatformUser(
     data: Prisma.PlatformUserCreateInput
   ): Promise<PlatformUser> {
+    const isEmailAlreadSaved = await this.getUser({ email: data.email });
+    if (isEmailAlreadSaved) {
+      throw new Error('User already created.');
+    }
     UserRepository.logger.debug(
       `a new PlatformUser creation requested with {email: ${data.email} platform: ${data.platform} }`
     );
