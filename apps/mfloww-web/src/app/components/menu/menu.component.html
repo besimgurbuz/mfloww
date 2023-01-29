@@ -6,9 +6,9 @@
   <ng-container *ngIf="!profileInfo; else avatar">
     <div class="hidden items-center gap-3 text-mfloww_success md:flex">
       <a
-        routerLink="/user/log-in"
+        routerLink="/user/sign-in"
         class="px-5 py-2 hover:opacity-70 hover:cursor-pointer text-mfloww_white"
-        >Log in</a
+        >Sign in</a
       >
       <a
         routerLink="/user/sign-up"
@@ -27,9 +27,9 @@
       <ng-container mflowwPanelContent>
         <a
           class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"
-          routerLink="/user/log-in"
+          routerLink="/user/sign-in"
           (click)="overlayPanel._opened = false"
-          >Log in</a
+          >Sign in</a
         >
         <a
           class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"

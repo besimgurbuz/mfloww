@@ -24,15 +24,15 @@ export class MessengerService implements OnDestroy {
   private redirectionMessageSet: Record<string | number, Message> = {
     triedUnauth: {
       type: 'fatal',
-      text: "Oops, it look like you haven't logged in yet. Please log in.",
+      text: "Oops, it look like you haven't logged in yet. Please sign in.",
     },
     expiredToken: {
       type: 'fatal',
-      text: 'Oops, it look like your session has expired. Please log in again.',
+      text: 'Oops, it look like your session has expired. Please sign in again.',
     },
     newAccount: {
       type: 'info',
-      text: 'Welcome! You can now log in with your new account',
+      text: 'Welcome! You can now sign in with your new account',
     },
     updatedProfile: {
       type: 'info',
@@ -123,7 +123,7 @@ export class MessengerService implements OnDestroy {
     const messages: Record<number, Message> = {
       401: {
         type: 'fatal',
-        text: 'Opps, looks like your session has expired. Please log-in again.',
+        text: 'Opps, looks like your session has expired. Please sign-in again.',
       },
     };
 

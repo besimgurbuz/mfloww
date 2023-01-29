@@ -90,7 +90,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
           next: (response) => {
             if (response.ok) {
               this.authService.clearUserCredentials();
-              this.router.navigate(['/user/log-in'], {
+              this.router.navigate(['/user/sign-in'], {
                 queryParams: {
                   reason: 'updatedProfile',
                 },

@@ -8,10 +8,12 @@ import {
   HttpStatus,
   Post,
   Put,
+  Req,
   Request,
   Res,
   UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { UpdateUserDto, UserDto } from '../dtos/user.dto';
@@ -90,5 +92,16 @@ export class UserController {
   @Get('/profile')
   getProfileInfo(@Request() req) {
     return this.userService.getProfile(req.user);
+  }
+
+  @Get('google')
+  @UseGuards(AuthGuard('google'))
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  async googleAuth() {}
+
+  @Get('google/redirect')
+  @UseGuards(AuthGuard('google'))
+  googleAuthRedirect(@Req() req) {
+    const { user: googleUser } = req;
   }
 }

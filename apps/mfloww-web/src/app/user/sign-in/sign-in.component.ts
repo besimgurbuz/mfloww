@@ -8,13 +8,13 @@ import { MessengerService } from '../../core/messenger.service';
 import { UserService } from '../services/user.service';
 
 @Component({
-  selector: 'mfloww-log-in',
-  templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss'],
+  selector: 'mfloww-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LogInComponent implements OnDestroy {
-  logInForm: FormGroup = new FormGroup({
+export class SignInComponent implements OnDestroy {
+  signInForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
@@ -32,9 +32,9 @@ export class LogInComponent implements OnDestroy {
   }
 
   submitForm(): void {
-    if (this.logInForm.valid) {
+    if (this.signInForm.valid) {
       this._logInSubs = this.userService
-        .login(this.logInForm.value)
+        .signIn(this.signInForm.value)
         .pipe(
           filter((response) => response.ok),
           mergeMap(() => this.authService.getProfileInfo$())

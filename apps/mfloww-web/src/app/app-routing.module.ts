@@ -43,7 +43,7 @@ const routes: Routes = [
           : 'triedUnauth';
 
         if (!isLoggedIn) {
-          router.navigate(['/user/log-in'], {
+          router.navigate(['/user/sign-in'], {
             queryParams: { reason },
           });
         }

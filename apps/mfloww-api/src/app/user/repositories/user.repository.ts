@@ -1,5 +1,5 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
-import { Prisma, User } from '@prisma/client';
+import { PlatformUser, Prisma, User } from '@prisma/client';
 import { PrismaService } from '../../core/prisma.service';
 
 @Injectable()
@@ -47,6 +47,43 @@ export class UserRepository {
       `delete user requested for: { email: ${where.email} }`
     );
     return this.prisma.user.delete({
+      where,
+    });
+  }
+
+  async createPlatformUser(
+    data: Prisma.PlatformUserCreateInput
+  ): Promise<PlatformUser> {
+    UserRepository.logger.debug(
+      `a new PlatformUser creation requested with {email: ${data.email} platform: ${data.platform} }`
+    );
+    return this.prisma.platformUser.create({
+      data,
+    });
+  }
+
+  async updatePlatformUser(params: {
+    where: Prisma.PlatformUserWhereUniqueInput;
+    data: Prisma.PlatformUserUpdateInput;
+  }): Promise<PlatformUser> {
+    const { where, data } = params;
+    if (data.email) delete data.email;
+    UserRepository.logger.debug(
+      `saved PlatformUser update requested for:  { email: ${data.email} }`
+    );
+    return this.prisma.platformUser.update({
+      data,
+      where,
+    });
+  }
+
+  async deletePlatformUser(
+    where: Prisma.PlatformUserWhereUniqueInput
+  ): Promise<PlatformUser> {
+    UserRepository.logger.debug(
+      `delete PlatformUser requested for { email: ${where.email}}`
+    );
+    return this.prisma.platformUser.delete({
       where,
     });
   }

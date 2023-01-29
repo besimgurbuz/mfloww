@@ -1,19 +1,19 @@
 import { inject, NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { AuthService } from '../core/auth.service';
-import { LogInComponent } from './log-in/log-in.component';
 import { SettingsComponent } from './settings/settings.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'log-in',
+    redirectTo: 'sign-in',
     pathMatch: 'full',
   },
   {
-    path: 'log-in',
-    component: LogInComponent,
+    path: 'sign-in',
+    component: SignInComponent,
     canActivate: [
       () => {
         const isLoggedIn = inject(AuthService).isUserLoggedIn();
@@ -51,7 +51,7 @@ const routes: Routes = [
         const router = inject(Router);
 
         if (!isLoggedIn) {
-          router.navigate(['/user/log-in'], {
+          router.navigate(['/user/sign-in'], {
             queryParams: { reason: 'expiredToken' },
           });
           authService.clearUserCredentials();

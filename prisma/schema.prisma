@@ -17,3 +17,17 @@ model User {
   username String
   password String
 }
+
+model PlatformUser {
+  id String @id @default(auto())  @map("_id") @db.ObjectId
+  email String @unique
+  key String @unique
+  username String
+  platform Platform
+  accessToken String
+  refreshToken String
+}
+
+enum Platform {
+  GOOGLE
+}

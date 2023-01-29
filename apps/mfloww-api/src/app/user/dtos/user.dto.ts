@@ -1,7 +1,15 @@
+import { SupportedPlatform } from '@mfloww/common';
+
 export interface UserDto {
   username: string;
   email: string;
   password: string;
+}
+
+export interface PlatformUserDto {
+  email: string;
+  username: string;
+  platform: SupportedPlatform;
 }
 
 export type UserActionResult =

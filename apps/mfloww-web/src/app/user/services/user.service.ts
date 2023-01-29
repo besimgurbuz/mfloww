@@ -22,7 +22,7 @@ export class UserService {
     private localStorageService: LocalStorageService
   ) {}
 
-  createUser(
+  signUp(
     createUserPayload: CreateUserPayload
   ): Observable<HttpResponse<CreateUserResult>> {
     const payload = new HttpParams()
@@ -39,7 +39,7 @@ export class UserService {
     );
   }
 
-  login({
+  signIn({
     email,
     password,
   }: {

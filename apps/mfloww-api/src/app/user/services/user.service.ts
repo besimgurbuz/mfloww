@@ -3,6 +3,7 @@ import { User } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import { hashPassword } from '../../shared/utils';
 import {
+  PlatformUserDto,
   ProfileInfoDto,
   UpdateUserDto,
   UserActionResult,
@@ -25,6 +26,21 @@ export class UserService {
     const result = await this.userRepository.createUser({
       ...userDto,
       password: hashPassword(userDto.password, newUserKey),
+      key: newUserKey,
+    });
+    return {
+      key: result.key,
+      email: result.email,
+      username: result.username,
+    };
+  }
+
+  async createPlatformUser(
+    platformUserDto: PlatformUserDto
+  ): Promise<UserActionResult> {
+    const newUserKey = randomBytes(64).toString('hex');
+    const result = await this.userRepository.createPlatformUser({
+      ...platformUserDto,
       key: newUserKey,
     });
     return {

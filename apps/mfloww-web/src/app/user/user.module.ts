@@ -4,14 +4,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MflowwInputModule } from '@mfloww/view';
 
 import { SharedModule } from '../shared/shared.module';
-import { LogInComponent } from './log-in/log-in.component';
+import { PlatformButtonComponent } from './platform-button/platform-button.component';
 import { UserService } from './services/user.service';
 import { SettingsComponent } from './settings/settings.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
-  declarations: [LogInComponent, SignUpComponent, SettingsComponent],
+  declarations: [
+    SignInComponent,
+    SignUpComponent,
+    SettingsComponent,
+    PlatformButtonComponent,
+  ],
   imports: [
     CommonModule,
     UserRoutingModule,

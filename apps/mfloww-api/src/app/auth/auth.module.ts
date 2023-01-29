@@ -5,6 +5,7 @@ import { env } from 'process';
 import { UserModule } from '../user/user.module';
 import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
+import { GoogleStrategy } from './services/google.strategy';
 import { JwtStrategy } from './services/jwt.strategy';
 import { LocalStrategy } from './services/local.strategy';
 
@@ -18,7 +19,7 @@ import { LocalStrategy } from './services/local.strategy';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, GoogleStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}
