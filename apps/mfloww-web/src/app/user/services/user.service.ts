@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SupportedPlatform } from '@mfloww/common';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LocalStorageService } from '../../core/local-storage.service';
@@ -65,6 +66,12 @@ export class UserService {
           }
         })
       );
+  }
+
+  logInWithPlatform(platform: SupportedPlatform) {
+    return this.http.get(
+      `${environment.apiUrl}${this.userPath}/${platform.toLowerCase()}`
+    );
   }
 
   updateProfile(

@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { SupportedPlatform } from '@mfloww/common';
 
 @Component({
@@ -9,4 +15,15 @@ import { SupportedPlatform } from '@mfloww/common';
 })
 export class PlatformButtonComponent {
   @Input() platfrom!: SupportedPlatform;
+
+  @Output() platformSelected = new EventEmitter<SupportedPlatform>();
+
+  platformButtonClasses: Record<SupportedPlatform, string> = {
+    GOOGLE:
+      'bg-white rounded w-[280px] h-[40px] flex justify-center items-center gap-[24px] px-[12px] hover:border-[2px] hover:border-solid focus:border-[2px] focus:border-solid focus:border-[#C6DAFC] active:bg-[#ecf3fe]',
+  };
+
+  handleButtonClick(): void {
+    this.platformSelected.emit(this.platfrom);
+  }
 }

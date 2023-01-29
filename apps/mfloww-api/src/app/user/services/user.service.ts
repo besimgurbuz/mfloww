@@ -1,5 +1,5 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { PlatformUser, User } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import { hashPassword } from '../../shared/utils';
 import {
@@ -80,7 +80,7 @@ export class UserService {
     };
   }
 
-  async getPlatformUserByEmail(email: string): Promise<User | null> {
+  async getPlatformUserByEmail(email: string): Promise<PlatformUser | null> {
     return this.userRepository.getPlatformUser({ email });
   }
 

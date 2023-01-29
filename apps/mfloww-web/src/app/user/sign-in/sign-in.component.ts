@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SupportedPlatform } from '@mfloww/common';
 import { filter, mergeMap, Subscription } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
 import { MessengerService } from '../../core/messenger.service';
@@ -18,6 +19,7 @@ export class SignInComponent implements OnDestroy {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
+  platforms: SupportedPlatform[] = [SupportedPlatform.GOOGLE];
   private _logInSubs?: Subscription;
 
   constructor(
@@ -29,6 +31,10 @@ export class SignInComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this._logInSubs?.unsubscribe();
+  }
+
+  proceedToPlatform(platform: SupportedPlatform) {
+    this.userService.logInWithPlatform(platform).subscribe(console.log);
   }
 
   submitForm(): void {
@@ -43,7 +49,6 @@ export class SignInComponent implements OnDestroy {
           next: () => {
             this.router.navigate(['/revenue-expense']);
           },
-
           error: (err: HttpErrorResponse) => {
             const message =
               err.status === 401

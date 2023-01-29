@@ -1,12 +1,9 @@
-<div
-  class="bg-white border-solid rounded-[20px] w-[300px] h-[40px] flex cursor-pointer"
+<button
+  [ngClass]="platformButtonClasses[platfrom]"
   [ngSwitch]="platfrom"
+  (click)="handleButtonClick()"
 >
-  <a
-    *ngSwitchCase="'GOOGLE'"
-    href="http://localhost:8080/api/user/google"
-    class="w-full flex justify-center items-center gap-[8px] px-[12px]"
-  >
+  <ng-container *ngSwitchCase="'GOOGLE'">
     <div class="w-[18px]">
       <svg
         version="1.1"
@@ -35,8 +32,8 @@
         </g>
       </svg>
     </div>
-    <span class="font-['Roboto'] overflow-hidden text-sm text-[#757575]"
-      >Sign in with Google</span
+    <span class="font-['Roboto'] overflow-hidden text-[14px] text-[#6E6E6E]"
+      >Continue with Google</span
     >
-  </a>
-</div>
+  </ng-container>
+</button>

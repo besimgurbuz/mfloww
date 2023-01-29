@@ -53,11 +53,11 @@ export class UserRepository {
 
   async getPlatformUser(
     platformUserWhereUniqueInput: Prisma.PlatformUserWhereUniqueInput
-  ): Promise<User | null> {
+  ): Promise<PlatformUser | null> {
     UserRepository.logger.debug(
-      `user queried with: { email: ${platformUserWhereUniqueInput.email} }`
+      `PlatformUser queried with: { email: ${platformUserWhereUniqueInput.email} }`
     );
-    return this.prisma.user.findUnique({
+    return this.prisma.platformUser.findUnique({
       where: platformUserWhereUniqueInput,
     });
   }

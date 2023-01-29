@@ -103,6 +103,12 @@ export class UserController {
   @Get('google/redirect')
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req) {
+    if (process.env.ENABLE_USER_CREATION !== 'ENABLED') {
+      throw new HttpException(
+        'User creation is currently blocked',
+        HttpStatus.FORBIDDEN
+      );
+    }
     const { user: googleUser } = req;
     try {
       const platformUser = await this.userService.getPlatformUserByEmail(
