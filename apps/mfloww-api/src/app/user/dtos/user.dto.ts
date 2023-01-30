@@ -9,6 +9,8 @@ export interface UserDto {
 export interface PlatformUserDto {
   email: string;
   username: string;
+  accessToken: string;
+  refreshToken: string;
   platform: SupportedPlatform;
 }
 
@@ -30,4 +32,5 @@ export interface ProfileInfoDto {
   username: string;
   email: string;
   key: string;
+  platform: SupportedPlatform;
 }

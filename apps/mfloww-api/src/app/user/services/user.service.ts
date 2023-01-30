@@ -1,5 +1,6 @@
+import { SupportedPlatform } from '@mfloww/common';
 import { ConsoleLogger, Injectable } from '@nestjs/common';
-import { PlatformUser, User } from '@prisma/client';
+import { PlatformUser, Prisma, User } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import { hashPassword } from '../../shared/utils';
 import {
@@ -34,6 +35,7 @@ export class UserService {
       username: result.username,
     };
   }
+
   async updateUser(
     { id }: User,
     updatePayload: UpdateUserDto
@@ -72,11 +74,12 @@ export class UserService {
     }
   }
 
-  async getProfile(user: User): Promise<ProfileInfoDto> {
+  async getProfile(user: User | PlatformUser): Promise<ProfileInfoDto> {
     return {
       username: user.username,
       email: user.email,
       key: user.key,
+      platform: (user as PlatformUser).platform as SupportedPlatform,
     };
   }
 
@@ -86,17 +89,22 @@ export class UserService {
 
   async createPlatformUser(
     platformUserDto: PlatformUserDto
-  ): Promise<UserActionResult> {
+  ): Promise<PlatformUser> {
     const newUserKey = randomBytes(64).toString('hex');
-    const result = await this.userRepository.createPlatformUser({
+    return await this.userRepository.createPlatformUser({
       ...platformUserDto,
       key: newUserKey,
     });
-    return {
-      key: result.key,
-      email: result.email,
-      username: result.username,
-      platform: platformUserDto.platform,
-    };
+  }
+  async updatePlatformUser(
+    { id }: { id: string },
+    updatePayload: Prisma.PlatformUserUpdateInput
+  ): Promise<PlatformUser> {
+    const result = await this.userRepository.updatePlatformUser({
+      where: { id },
+      data: updatePayload,
+    });
+
+    return result;
   }
 }

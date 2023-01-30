@@ -33,10 +33,6 @@ export class SignInComponent implements OnDestroy {
     this._logInSubs?.unsubscribe();
   }
 
-  proceedToPlatform(platform: SupportedPlatform) {
-    this.userService.logInWithPlatform(platform).subscribe(console.log);
-  }
-
   submitForm(): void {
     if (this.signInForm.valid) {
       this._logInSubs = this.userService
