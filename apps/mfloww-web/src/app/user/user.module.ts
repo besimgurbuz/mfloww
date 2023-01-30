@@ -10,6 +10,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserRoutingModule } from './user-routing.module';
+import { PlatformRedirectComponent } from './platform-redirect/platform-redirect.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { UserRoutingModule } from './user-routing.module';
     SignUpComponent,
     SettingsComponent,
     PlatformButtonComponent,
+    PlatformRedirectComponent,
   ],
   imports: [
     CommonModule,

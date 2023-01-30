@@ -15,10 +15,7 @@
     </div>
     <div class="providers">
       <ng-container *ngFor="let platform of platforms">
-        <mfloww-platform-button
-          [platfrom]="platform"
-          (platformSelected)="proceedToPlatform(platform)"
-        ></mfloww-platform-button>
+        <mfloww-platform-button [platfrom]="platform"></mfloww-platform-button>
       </ng-container>
     </div>
     <span class="text-sm">or</span>

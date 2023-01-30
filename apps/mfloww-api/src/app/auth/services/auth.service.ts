@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
+import { PlatformUser, User } from '@prisma/client';
 import { hashPassword } from '../../shared/utils';
 import { UserService } from '../../user/services/user.service';
 
@@ -24,12 +24,28 @@ export class AuthService {
     return null;
   }
 
-  async login(user: User) {
+  async validatePlatformUser(
+    email: string,
+    accessToken: string
+  ): Promise<PlatformUser | null> {
+    const platformUser = await this.userService.getPlatformUserByEmail(email);
+
+    if (platformUser && platformUser.accessToken === accessToken) {
+      return {
+        ...platformUser,
+        accessToken: null,
+      };
+    }
+    return null;
+  }
+
+  async login(user: User | PlatformUser) {
     const payload = {
       id: user.id,
       email: user.email,
       username: user.username,
       key: user.key,
+      platform: (user as PlatformUser).platform,
     };
     const expiresIn = new Date().getTime() + 600 * 1000;
 

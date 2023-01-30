@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { User } from '@prisma/client';
+import { PlatformUser, User } from '@prisma/client';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { env } from 'process';
 
@@ -17,12 +17,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(user: User) {
+  async validate(user: User | PlatformUser) {
     return {
       id: user.id,
       email: user.email,
       username: user.username,
       key: user.key,
+      platform: (user as PlatformUser)?.platform,
     };
   }
 

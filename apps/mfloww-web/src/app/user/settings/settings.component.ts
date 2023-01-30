@@ -51,9 +51,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.profileSubs = this.profileInfo$.subscribe((profileInfo) => {
       this._profileInfo = profileInfo;
-      const { username, email, key } = profileInfo as ProfileInfo;
-      this.profileGroup.get('username')?.setValue(username);
+      const { username, email, key, platform } = profileInfo as ProfileInfo;
+      if (platform) {
+        this.profileGroup.get('email')?.disable();
+      }
       this.profileGroup.get('email')?.setValue(email);
+      this.profileGroup.get('username')?.setValue(username);
       this.profileGroup.get('key')?.setValue(key);
     });
   }

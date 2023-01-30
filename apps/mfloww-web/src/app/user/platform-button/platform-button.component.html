@@ -1,6 +1,7 @@
-<button
+<a
   [ngClass]="platformButtonClasses[platfrom]"
   [ngSwitch]="platfrom"
+  href="http://localhost:8080/api/user/{{ platfrom.toLowerCase() }}"
   (click)="handleButtonClick()"
 >
   <ng-container *ngSwitchCase="'GOOGLE'">
@@ -36,4 +37,4 @@
       >Continue with Google</span
     >
   </ng-container>
-</button>
+</a>

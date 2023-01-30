@@ -97,32 +97,41 @@ export class UserController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  async googleAuth() {}
+  async googleAuth() {
+    UserController.logger.log('google platform using for authentication');
+  }
 
   @Get('google/redirect')
   @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@Req() req) {
+  async googleAuthRedirect(@Res() res: Response, @Req() req) {
     if (process.env.ENABLE_USER_CREATION !== 'ENABLED') {
       throw new HttpException(
         'User creation is currently blocked',
         HttpStatus.FORBIDDEN
       );
     }
-    const { user: googleUser } = req;
     try {
-      const platformUser = await this.userService.getPlatformUserByEmail(
+      const { user: googleUser } = req;
+      let platformUser = await this.userService.getPlatformUserByEmail(
         googleUser.email
       );
-      if (platformUser) {
-        return platformUser;
+      if (platformUser && googleUser.accessToken !== platformUser.accessToken) {
+        platformUser = await this.userService.updatePlatformUser(
+          { id: platformUser.id },
+          {
+            accessToken: googleUser.accessToken,
+          }
+        );
+      } else {
+        platformUser = await this.userService.createPlatformUser({
+          ...googleUser,
+          platform: SupportedPlatform.GOOGLE,
+        });
       }
-      const result = await this.userService.createPlatformUser({
-        ...googleUser,
-        platform: SupportedPlatform.GOOGLE,
-      });
 
-      return result;
+      return res.redirect(
+        `/user/platform-redirect?email=${platformUser.email}&accessToken=${platformUser.accessToken}&platform=${platformUser.platform}`
+      );
     } catch (err) {
       console.log(err);
       throw err;

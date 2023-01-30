@@ -1,6 +1,7 @@
 import { inject, NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { AuthService } from '../core/auth.service';
+import { PlatformRedirectComponent } from './platform-redirect/platform-redirect.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'sign-up',
+    component: SignUpComponent,
     canActivate: [
       () => {
         const isLoggedIn = inject(AuthService).isUserLoggedIn();
@@ -39,7 +41,21 @@ const routes: Routes = [
         return !isLoggedIn;
       },
     ],
-    component: SignUpComponent,
+  },
+  {
+    path: 'platform-redirect',
+    component: PlatformRedirectComponent,
+    canActivate: [
+      () => {
+        const isLoggedIn = inject(AuthService).isUserLoggedIn();
+        const router = inject(Router);
+
+        if (isLoggedIn) {
+          router.navigate(['/revenue-expense']);
+        }
+        return !isLoggedIn;
+      },
+    ],
   },
   {
     path: 'settings',

@@ -21,6 +21,7 @@ model User {
 model PlatformUser {
   id String @id @default(auto())  @map("_id") @db.ObjectId
   email String @unique
+  accessToken String
   key String
   username String
   platform Platform
