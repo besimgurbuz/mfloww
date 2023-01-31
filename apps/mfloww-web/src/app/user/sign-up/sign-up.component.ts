@@ -2,8 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SupportedPlatform } from '@mfloww/common';
 import { Subscription, tap } from 'rxjs';
 import { MessengerService } from '../../core/messenger.service';
+import { SUPPORTED_PLATFORMS } from '../constants';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -27,6 +29,7 @@ export class SignUpComponent implements OnDestroy {
       Validators.maxLength(40),
     ]),
   });
+  platforms: SupportedPlatform[] = SUPPORTED_PLATFORMS;
   private signUpSubs?: Subscription;
 
   constructor(

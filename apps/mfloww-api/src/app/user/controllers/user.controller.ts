@@ -1,4 +1,3 @@
-import { SupportedPlatform } from '@mfloww/common';
 import {
   Body,
   ConsoleLogger,
@@ -112,22 +111,8 @@ export class UserController {
     }
     try {
       const { user: googleUser } = req;
-      let platformUser = await this.userService.getPlatformUserByEmail(
-        googleUser.email
-      );
-      if (platformUser && googleUser.accessToken !== platformUser.accessToken) {
-        platformUser = await this.userService.updatePlatformUser(
-          { id: platformUser.id },
-          {
-            accessToken: googleUser.accessToken,
-          }
-        );
-      } else {
-        platformUser = await this.userService.createPlatformUser({
-          ...googleUser,
-          platform: SupportedPlatform.GOOGLE,
-        });
-      }
+      const platformUser =
+        await this.userService.handlePlatformUserRegisteration(googleUser);
 
       return res.redirect(
         `/user/platform-redirect?email=${platformUser.email}&accessToken=${platformUser.accessToken}&platform=${platformUser.platform}`

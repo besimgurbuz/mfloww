@@ -23,11 +23,24 @@ export class UserService {
   }
 
   async createUser(userDto: UserDto): Promise<UserActionResult> {
+    const platformUserRecord = await this.getPlatformUserByEmail(userDto.email);
+    if (
+      platformUserRecord &&
+      userDto.username !== platformUserRecord.username
+    ) {
+      this.updatePlatformUser(
+        { id: platformUserRecord.id },
+        { username: userDto.username }
+      );
+    }
     const newUserKey = randomBytes(64).toString('hex');
     const result = await this.userRepository.createUser({
       ...userDto,
-      password: hashPassword(userDto.password, newUserKey),
-      key: newUserKey,
+      password: hashPassword(
+        userDto.password,
+        platformUserRecord?.key || newUserKey
+      ),
+      key: platformUserRecord?.key || newUserKey,
     });
     return {
       key: result.key,
@@ -37,12 +50,12 @@ export class UserService {
   }
 
   async updateUser(
-    { id }: User,
+    { id, key }: User,
     updatePayload: UpdateUserDto
   ): Promise<UserActionResult> {
-    // if (updatePayload.password) {
-    //   updatePayload.password = hashPassword(updatePayload.password, key);
-    // }
+    if (updatePayload.password) {
+      updatePayload.password = hashPassword(updatePayload.password, key);
+    }
     const result = await this.userRepository.updateUser({
       where: { id },
       data: updatePayload,
@@ -87,15 +100,42 @@ export class UserService {
     return this.userRepository.getPlatformUser({ email });
   }
 
-  async createPlatformUser(
-    platformUserDto: PlatformUserDto
+  async handlePlatformUserRegisteration(
+    user: PlatformUserDto
   ): Promise<PlatformUser> {
-    const newUserKey = randomBytes(64).toString('hex');
+    const nonPlatformRecord = await this.getUserByEmail(user.email);
+    let platformUser = await this.getPlatformUserByEmail(user.email);
+    if (platformUser && user.accessToken !== platformUser.accessToken) {
+      platformUser = await this.updatePlatformUser(
+        { id: platformUser.id },
+        {
+          accessToken: user.accessToken,
+        }
+      );
+    } else {
+      platformUser = await this.createPlatformUser(
+        {
+          ...user,
+          username: nonPlatformRecord && nonPlatformRecord.username,
+          platform: SupportedPlatform.GOOGLE,
+        },
+        nonPlatformRecord?.key
+      );
+    }
+    return platformUser;
+  }
+
+  async createPlatformUser(
+    platformUserDto: PlatformUserDto,
+    givenKey?: string
+  ): Promise<PlatformUser> {
+    const newUserKey = givenKey || randomBytes(64).toString('hex');
     return await this.userRepository.createPlatformUser({
       ...platformUserDto,
       key: newUserKey,
     });
   }
+
   async updatePlatformUser(
     { id }: { id: string },
     updatePayload: Prisma.PlatformUserUpdateInput

@@ -65,10 +65,10 @@ export class UserRepository {
   async createPlatformUser(
     data: Prisma.PlatformUserCreateInput
   ): Promise<PlatformUser> {
-    const isEmailAlreadSaved = await this.getUser({ email: data.email });
-    if (isEmailAlreadSaved) {
-      throw new Error('User already created.');
-    }
+    // const isEmailAlreadSaved = await this.getUser({ email: data.email });
+    // if (isEmailAlreadSaved) {
+    //   throw new Error('User already created.');
+    // }
     UserRepository.logger.debug(
       `a new PlatformUser creation requested with {email: ${data.email} platform: ${data.platform} }`
     );

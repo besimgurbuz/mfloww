@@ -13,6 +13,12 @@
         >
       </p>
     </div>
+    <div class="providers">
+      <ng-container *ngFor="let platform of platforms">
+        <mfloww-platform-button [platfrom]="platform"></mfloww-platform-button>
+      </ng-container>
+    </div>
+    <span class="text-sm">or</span>
     <form
       class="flex flex-col items-center gap-4 w-full max-w-[450px]"
       [formGroup]="signUpForm"

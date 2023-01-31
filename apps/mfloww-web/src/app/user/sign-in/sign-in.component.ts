@@ -6,6 +6,7 @@ import { SupportedPlatform } from '@mfloww/common';
 import { filter, mergeMap, Subscription } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
 import { MessengerService } from '../../core/messenger.service';
+import { SUPPORTED_PLATFORMS } from '../constants';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class SignInComponent implements OnDestroy {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
-  platforms: SupportedPlatform[] = [SupportedPlatform.GOOGLE];
+  platforms: SupportedPlatform[] = SUPPORTED_PLATFORMS;
   private _logInSubs?: Subscription;
 
   constructor(
