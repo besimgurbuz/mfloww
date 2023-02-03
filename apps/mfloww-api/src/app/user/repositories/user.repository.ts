@@ -84,7 +84,7 @@ export class UserRepository {
     const { where, data } = params;
     if (data.email) delete data.email;
     UserRepository.logger.debug(
-      `saved PlatformUser update requested for:  { email: ${data.email} }`
+      `saved PlatformUser update requested for:  { email: ${where.email} }`
     );
     return this.prisma.platformUser.update({
       data,
