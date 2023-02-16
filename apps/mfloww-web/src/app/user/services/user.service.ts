@@ -15,7 +15,6 @@ import {
 export class UserService {
   private readonly userPath = '/api/user';
   private readonly loginPath = '/api/auth/login';
-  private readonly profileInfoPath = '/api/user/profile';
 
   constructor(
     private http: HttpClient,

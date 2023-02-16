@@ -1,12 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { RevenueExpenseRecordType } from '@mfloww/common';
 import { map, Observable, Subscription, tap } from 'rxjs';
+import { AuthService } from '../../core/auth.service';
 import { MonthYearEntry, RevenueExpenseRecord } from '../../models/entry';
 import { RevenueExpenseDataService } from './revenue-expense-data.service';
 import { RevenueExpenseState } from './revenue-expense.state';
 
 @Injectable()
 export class RevenueExpenseFacade {
+  private readonly authService = inject(AuthService);
   private readonly revenueExpenseDataService = inject(
     RevenueExpenseDataService
   );
@@ -14,7 +16,7 @@ export class RevenueExpenseFacade {
 
   loadEntryList(): Subscription {
     return this.revenueExpenseDataService
-      .getEntryList$()
+      .getEntryList$(this.userId)
       .pipe(
         tap((entryList) =>
           this.revenueExpenseState.setEntryList(entryList || [])
@@ -23,16 +25,18 @@ export class RevenueExpenseFacade {
       .subscribe();
   }
 
-  setSelectedEntryByMonthYear(month_year: string): void {
-    this.revenueExpenseState.setSelectedMonth(month_year);
+  setSelectedEntryByMonthYear(monthYear: string): void {
+    this.revenueExpenseState.setSelectedMonth(monthYear);
   }
 
-  insertNewMonthYearEntry(month_year?: string) {
-    return this.revenueExpenseDataService.inserNewEntry$(month_year).pipe(
-      tap((addedMonthYear) => {
-        this.revenueExpenseState.addNewEmptyEntry(addedMonthYear);
-      })
-    );
+  insertNewMonthYearEntry(monthYear: string) {
+    return this.revenueExpenseDataService
+      .inserNewEntry$([monthYear, this.userId])
+      .pipe(
+        tap((addedKey: [string, string]) =>
+          this.revenueExpenseState.addNewEmptyEntry(addedKey)
+        )
+      );
   }
 
   insertNewRevenueExpenseRecord(
@@ -41,7 +45,7 @@ export class RevenueExpenseFacade {
   ) {
     return this.revenueExpenseDataService
       .insertNewRevenueExpenseRecord$(
-        this.revenueExpenseState.selectedMonthYear,
+        [this.revenueExpenseState.selectedMonthYear, this.userId],
         record,
         type
       )
@@ -55,7 +59,7 @@ export class RevenueExpenseFacade {
   deleteRevenueExpenseRecord(index: number, type: RevenueExpenseRecordType) {
     return this.revenueExpenseDataService
       .deleteRevenueExpenseRecord$(
-        this.revenueExpenseState.selectedMonthYear,
+        [this.revenueExpenseState.selectedMonthYear, this.userId],
         type,
         index
       )
@@ -100,5 +104,13 @@ export class RevenueExpenseFacade {
 
   get selectedExpenses$(): Observable<RevenueExpenseRecord[]> {
     return this.revenueExpenseState.selectedExpenses$;
+  }
+
+  get currentEntryDates(): string[] {
+    return this.revenueExpenseState.currentEntryDates;
+  }
+
+  private get userId(): string {
+    return this.authService.currentProfileInfo?.id as string;
   }
 }

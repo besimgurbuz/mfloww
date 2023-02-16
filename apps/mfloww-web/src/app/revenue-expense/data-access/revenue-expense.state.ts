@@ -20,8 +20,14 @@ export class RevenueExpenseState {
     this.entryListSubject.next(currentList);
   }
 
-  addNewEmptyEntry(month_year: string): void {
-    this.addNewEntry({ month_year, expenses: [], revenues: [] });
+  addNewEmptyEntry(key: [string, string]): void {
+    const [monthYear, userId] = key;
+    this.addNewEntry({
+      userId,
+      monthYear,
+      expenses: [],
+      revenues: [],
+    });
   }
 
   addRevenueExpenseRecord(
@@ -30,7 +36,7 @@ export class RevenueExpenseState {
   ): void {
     const currentEntryMonthYear = this.selectedMonthSubject.value;
     const entryIndex = this.entryListSubject.value.findIndex(
-      (entry) => entry.month_year === currentEntryMonthYear
+      (entry) => entry.monthYear === currentEntryMonthYear
     );
     const entryProp: `${RevenueExpenseRecordType}s` =
       type === 'revenue' ? 'revenues' : 'expenses';
@@ -53,7 +59,7 @@ export class RevenueExpenseState {
       type === 'revenue' ? 'revenues' : 'expenses';
 
     const entryIndex = this.entryListSubject.value.findIndex(
-      ({ month_year }) => month_year === currentEntryMonthYear
+      ({ monthYear: month_year }) => month_year === currentEntryMonthYear
     );
 
     if (entryIndex >= 0) {
@@ -65,13 +71,13 @@ export class RevenueExpenseState {
     }
   }
 
-  setSelectedMonth(month_year: string): void {
-    this.selectedMonthSubject.next(month_year);
+  setSelectedMonth(monthYear: string): void {
+    this.selectedMonthSubject.next(monthYear);
   }
 
   get entryDates$(): Observable<string[]> {
     return this.entryList$.pipe(
-      map((entryList) => entryList.map((entry) => entry.month_year))
+      map((entryList) => entryList.map((entry) => entry.monthYear))
     );
   }
 
@@ -87,7 +93,7 @@ export class RevenueExpenseState {
     return combineLatest([this.entryList$, this.selectedMonthYear$]).pipe(
       map(
         ([entryList, selectedMonth]) =>
-          entryList.find((entry) => entry.month_year === selectedMonth) || null
+          entryList.find((entry) => entry.monthYear === selectedMonth) || null
       )
     );
   }
@@ -102,5 +108,9 @@ export class RevenueExpenseState {
 
   get selectedMonthYear(): string {
     return this.selectedMonthSubject.value || '';
+  }
+
+  get currentEntryDates(): string[] {
+    return this.entryListSubject.value.map((entry) => entry.monthYear);
   }
 }

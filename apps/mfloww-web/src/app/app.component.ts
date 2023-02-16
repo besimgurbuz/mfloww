@@ -59,7 +59,7 @@ export class AppComponent implements OnInit, OnDestroy {
       )
       .subscribe();
     this.dbService.openDb('MFLOWW_DB', [
-      { name: 'entries', options: { keyPath: 'month_year' } },
+      { name: 'entries', options: { keyPath: ['monthYear', 'userId'] } },
     ]);
     if (!this.authService.hasSessionExpired()) {
       this.authService

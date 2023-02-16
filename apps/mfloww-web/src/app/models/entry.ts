@@ -7,7 +7,8 @@ export interface RevenueExpenseRecord {
 }
 
 export interface MonthYearEntry {
-  month_year: string;
+  userId: string;
+  monthYear: string;
   revenues: RevenueExpenseRecord[];
   expenses: RevenueExpenseRecord[];
 }

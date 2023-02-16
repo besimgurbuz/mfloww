@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   Output,
 } from '@angular/core';
 import { MflowwOverlayPanelComponent } from '../overlay-panel/overlay-panel.component';
@@ -43,6 +44,11 @@ const dateFilter = (date: Date) => {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MflowwMonthYearPickerComponent {
+  @Input() set value(value: `${number}_${number}`) {
+    const [month, year] = value.split('_');
+    this._selectedMonth = Number(month);
+    this._selectedYear = Number(year);
+  }
   @Output() selection: EventEmitter<MonthYearSelection> = new EventEmitter();
 
   _selectedYear?: number;

@@ -9,7 +9,7 @@ import { MflowwDbInitializerService } from '../db-initializer/db-initializer.ser
 export class MflowwDbService extends MflowwDbInitializerService {
   private readonly cryptoService = inject(CryptoService);
 
-  get<T = unknown>(storeName: string, query: string | number) {
+  get<T = unknown>(storeName: string, query: string | number | string[]) {
     return this.store$(storeName).pipe(
       mergeMap((objectStore) =>
         this.createStoreRequest$<Record<string, unknown> | undefined>(
@@ -26,19 +26,25 @@ export class MflowwDbService extends MflowwDbInitializerService {
     );
   }
 
-  getAll<T = unknown>(storeName: string) {
+  getAll<T = unknown>(storeName: string, key?: IDBValidKey | IDBKeyRange) {
     return this.store$(storeName).pipe(
       mergeMap((objectStore) =>
         this.createStoreRequest$<Record<string, unknown>[] | undefined>(
           objectStore,
-          (store) => store.getAll()
+          (store) => store.getAll(key)
         )
       ),
       map((result) => {
-        if (result && result[0]['data']) {
-          return result.map((resultElement) =>
-            this.cryptoService.decryptObject<T>(resultElement['data'] as string)
-          );
+        if (result && result.length > 0 && result[0]['data']) {
+          return result.map((resultElement) => {
+            try {
+              return this.cryptoService.decryptObject<T>(
+                resultElement['data'] as string
+              );
+            } catch (err) {
+              return null;
+            }
+          });
         }
         return result as T[];
       })
@@ -50,10 +56,18 @@ export class MflowwDbService extends MflowwDbInitializerService {
       mergeMap((objectStore) => {
         const encrypted = this.cryptoService.encrypt(JSON.stringify(value));
         if (objectStore.keyPath) {
-          const keyPath = objectStore.keyPath as string;
-          const keyValue = (value as Record<string, string>)[keyPath];
+          const keys =
+            typeof objectStore.keyPath === 'string'
+              ? [objectStore.keyPath]
+              : objectStore.keyPath;
+
+          const keyValues = keys.reduce((acc, key) => {
+            acc[key] = (value as Record<string, string>)[key];
+            return acc;
+          }, {} as Record<string, string>);
+
           return this.createStoreRequest$<R>(objectStore, (store) =>
-            store.add({ [keyPath]: keyValue, data: encrypted })
+            store.add({ ...keyValues, data: encrypted })
           );
         }
         return this.createStoreRequest$<R>(objectStore, (store) =>
@@ -68,10 +82,17 @@ export class MflowwDbService extends MflowwDbInitializerService {
       mergeMap((objectStore) => {
         const encrypted = this.cryptoService.encrypt(JSON.stringify(value));
         if (objectStore.keyPath) {
-          const keyPath = objectStore.keyPath as string;
-          const keyValue = (value as Record<string, string>)[keyPath];
+          const keys =
+            typeof objectStore.keyPath === 'string'
+              ? [objectStore.keyPath]
+              : objectStore.keyPath;
+
+          const keyValues = keys.reduce((acc, key) => {
+            acc[key] = (value as Record<string, string>)[key];
+            return acc;
+          }, {} as Record<string, string>);
           return this.createStoreRequest$<R>(objectStore, (store) =>
-            store.put({ [keyPath]: keyValue, data: encrypted })
+            store.put({ ...keyValues, data: encrypted })
           );
         }
         return this.createStoreRequest$<R>(objectStore, (store) =>
@@ -81,7 +102,10 @@ export class MflowwDbService extends MflowwDbInitializerService {
     );
   }
 
-  delete<T = unknown, R = string>(storeName: string, query: string | number) {
+  delete<T = unknown, R = string>(
+    storeName: string,
+    query: string | number | string[]
+  ) {
     return this.store$(storeName).pipe(
       mergeMap((objectStore) =>
         this.createStoreRequest$<R>(objectStore, (store) => store.delete(query))

@@ -12,7 +12,10 @@
         {{ entryDate | entryDate }}
       </option>
     </select>
-    <mfloww-view-month-year-picker (selection)="handleEntryCreation($event)">
+    <mfloww-view-month-year-picker
+      [value]="$any(monthSelectionControl.value)"
+      (selection)="handleEntryCreation($event)"
+    >
       <button
         mflowwMonthYearPickerTriggerer
         class="w-[54px] h-[27px] flex justify-center items-center rounded border-solid border-2 border-mfloww_fg hover:bg-mfloww_fg"
@@ -26,7 +29,7 @@
     </mfloww-view-month-year-picker>
   </div>
   <div
-    *ngIf="monthSelectionControl.value"
+    *ngIf="monthSelectionControl.value && (hasEntry$ | async)"
     class="revenue-expense-section pb-20 lg:pb-0 flex flex-wrap justify-center lg:justify-around w-full"
   >
     <mfloww-money-table

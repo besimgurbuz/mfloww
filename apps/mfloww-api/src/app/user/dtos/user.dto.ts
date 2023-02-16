@@ -30,6 +30,7 @@ export interface UpdateUserDto {
 }
 
 export interface ProfileInfoDto {
+  id: string;
   username: string;
   email: string;
   key: string;
