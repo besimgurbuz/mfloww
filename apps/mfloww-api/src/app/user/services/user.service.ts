@@ -50,12 +50,9 @@ export class UserService {
   }
 
   async updateUser(
-    { id, key }: User,
+    { id }: User,
     updatePayload: UpdateUserDto
   ): Promise<UserActionResult> {
-    if (updatePayload.password) {
-      updatePayload.password = hashPassword(updatePayload.password, key);
-    }
     const result = await this.userRepository.updateUser({
       where: { id },
       data: updatePayload,
@@ -66,6 +63,19 @@ export class UserService {
       email: result.email,
       username: result.username,
     };
+  }
+
+  async isPasswordCorrect(
+    { id, key }: User,
+    password: string
+  ): Promise<boolean> {
+    const user = await this.userRepository.getUser({ id });
+    const hashedPassword = hashPassword(password, key);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    return hashedPassword === user.password;
   }
 
   async deleteUser({ id }: User): Promise<UserActionResult> {

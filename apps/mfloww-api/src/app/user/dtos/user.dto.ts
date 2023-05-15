@@ -29,6 +29,11 @@ export interface UpdateUserDto {
   password?: string;
 }
 
+export interface UpdatePasswordDto {
+  currentPassword: string;
+  newPassword: string;
+}
+
 export interface ProfileInfoDto {
   id: string;
   username: string;

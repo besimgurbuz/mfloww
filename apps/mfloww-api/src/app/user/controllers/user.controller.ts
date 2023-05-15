@@ -16,7 +16,8 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { UpdateUserDto, UserDto } from '../dtos/user.dto';
+import { hashPassword } from '../../shared/utils';
+import { UpdatePasswordDto, UpdateUserDto, UserDto } from '../dtos/user.dto';
 import { UserService } from '../services/user.service';
 
 @Controller({
@@ -63,7 +64,11 @@ export class UserController {
     @Body() body: UpdateUserDto
   ) {
     try {
-      const result = await this.userService.updateUser(req.user, body);
+      const clearedBody: Record<string, unknown> = { ...body };
+      delete clearedBody.password;
+      delete clearedBody.id;
+      delete clearedBody.key;
+      const result = await this.userService.updateUser(req.user, clearedBody);
       res.status(200).send(result);
     } catch (err) {
       UserController.logger.debug(
@@ -78,6 +83,45 @@ export class UserController {
           err.code === 'P2002'
             ? 'Opps, it looks like the email you want to use is taken already.'
             : "Couldn't update the profile.",
+      });
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('/password')
+  async updatePassword(
+    @Request() req,
+    @Res() res: Response,
+    @Body() body: UpdatePasswordDto
+  ) {
+    try {
+      const isPasswordCorrect = await this.userService.isPasswordCorrect(
+        req.user,
+        body.currentPassword
+      );
+
+      if (!isPasswordCorrect) {
+        res.status(401).send({
+          code: 401,
+          message: 'Password is incorrect',
+        });
+        return;
+      }
+
+      const result = await this.userService.updateUser(req.user, {
+        password: hashPassword(body.newPassword, req.user.key),
+      });
+      res.status(200).send(result);
+    } catch (err) {
+      UserController.logger.debug(
+        `failed to update the password of a user: { where: { id: ${
+          req.user.id
+        } }, data: ${JSON.stringify(body)}, error: ${JSON.stringify(err)} }`
+      );
+
+      res.status(400).send({
+        code: 400,
+        message: 'Failed to update the password. Please try again.',
       });
     }
   }

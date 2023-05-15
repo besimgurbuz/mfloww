@@ -6,7 +6,7 @@ import {
   ParamMap,
   Router,
 } from '@angular/router';
-import { filter, Observable, ReplaySubject, Subject, takeUntil } from 'rxjs';
+import { Observable, ReplaySubject, Subject, filter, takeUntil } from 'rxjs';
 
 export interface Message {
   type: 'warn' | 'fatal' | 'info';
@@ -37,6 +37,10 @@ export class MessengerService implements OnDestroy {
     updatedProfile: {
       type: 'info',
       text: 'Your profile information updated successfully. Please re-login.',
+    },
+    updatedPassword: {
+      type: 'info',
+      text: 'Your password updated successfully. Please re-login.',
     },
   };
 

@@ -13,7 +13,7 @@
     <form
       [formGroup]="profileGroup"
       class="flex flex-col gap-6 relative flex-grow max-w-[450px]"
-      (keydown.enter)="updateProfile()"
+      (ngSubmit)="updateProfile()"
     >
       <mfloww-view-input
         formControlName="email"
@@ -39,7 +39,7 @@
             ? 'visible'
             : 'hidden'
         "
-        (click)="updateProfile()"
+        type="submit"
       >
         Save
       </button>
@@ -58,6 +58,7 @@
     <form
       [formGroup]="passwordGroup"
       class="flex flex-col gap-6 relative flex-grow max-w-[450px]"
+      (ngSubmit)="updatePassword()"
     >
       <mfloww-view-input
         formControlName="currentPassword"
@@ -82,6 +83,7 @@
         [style.visibility]="
           passwordGroup.touched && passwordGroup.valid ? 'visible' : 'hidden'
         "
+        type="submit"
       >
         Save
       </button>

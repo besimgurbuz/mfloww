@@ -13,8 +13,8 @@ import {
 import {
   ControlValueAccessor,
   FormControl,
-  NgControl,
   NG_VALUE_ACCESSOR,
+  NgControl,
 } from '@angular/forms';
 import { ERROR_MESSAGES } from './input-errors';
 
@@ -34,6 +34,8 @@ import { ERROR_MESSAGES } from './input-errors';
 export class MflowwInputComponent implements ControlValueAccessor, OnInit {
   @Input() type!: string;
   @Input() placeholder!: string;
+  @Input() autocomplete: 'on' | 'off' | 'current-password' | 'new-password' =
+    'off';
   @Input() name!: string;
   @Input() label?: string;
   @Input() copyable?: boolean;

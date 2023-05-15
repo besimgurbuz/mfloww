@@ -6,6 +6,7 @@ import { LocalStorageService } from '../../core/local-storage.service';
 import {
   CreateUserPayload,
   CreateUserResult,
+  UpdatePasswordPayload,
   UpdateUserPayload,
   UpdateUserResult,
   UserLoginResult,
@@ -96,6 +97,19 @@ export class UserService {
   ): Observable<HttpResponse<UpdateUserResult>> {
     return this.http.put<UpdateUserResult>(
       `${environment.apiUrl}${this.userPath}`,
+      payload,
+      {
+        observe: 'response',
+        withCredentials: true,
+      }
+    );
+  }
+
+  updatePassword(
+    payload: UpdatePasswordPayload
+  ): Observable<HttpResponse<UpdateUserResult>> {
+    return this.http.put<UpdateUserResult>(
+      `${environment.apiUrl}${this.userPath}/password`,
       payload,
       {
         observe: 'response',

@@ -15,6 +15,11 @@ export interface UpdateUserPayload {
   email: string;
 }
 
+export interface UpdatePasswordPayload {
+  currentPassword: string;
+  newPassword: string;
+}
+
 export type CreateUserResult =
   | User
   | {

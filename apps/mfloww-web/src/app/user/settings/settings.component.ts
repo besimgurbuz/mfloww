@@ -15,6 +15,7 @@ import { LATEST_MONTH_YEAR_KEY } from '../../core/core.constants';
 import { LocalStorageService } from '../../core/local-storage.service';
 import { MessengerService } from '../../core/messenger.service';
 import { ProfileInfo } from '../../core/models/profile-info';
+import { PasswordMatchValidator } from '../password-match.validator';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -37,11 +38,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
     username: new FormControl('', [Validators.required]),
     key: new FormControl({ value: '', disabled: true }),
   });
-  readonly passwordGroup = new FormGroup({
-    currentPassword: new FormControl('', [Validators.required]),
-    newPassword: new FormControl('', [Validators.required]),
-    confirmNewPassword: new FormControl('', [Validators.required]),
-  });
+  readonly passwordGroup = new FormGroup(
+    {
+      currentPassword: new FormControl('', [Validators.required]),
+      newPassword: new FormControl('', [Validators.required]),
+      confirmNewPassword: new FormControl('', [Validators.required]),
+    },
+    PasswordMatchValidator('newPassword', 'confirmNewPassword')
+  );
 
   private profileSubs?: Subscription;
   private deleteDbSubs?: Subscription;
@@ -96,6 +100,32 @@ export class SettingsComponent implements OnInit, OnDestroy {
               this.router.navigate(['/user/sign-in'], {
                 queryParams: {
                   reason: 'updatedProfile',
+                },
+              });
+            }
+          },
+          error: (err: HttpErrorResponse) => {
+            this.messengerService.emitFromError(err.error, 'message');
+          },
+        });
+    }
+  }
+
+  updatePassword() {
+    if (this.passwordGroup.valid) {
+      this.userService
+        .updatePassword({
+          currentPassword: this.passwordGroup.value.currentPassword as string,
+          newPassword: this.passwordGroup.value.newPassword as string,
+        })
+        .pipe(mergeMap(() => this.authService.getProfileInfo$()))
+        .subscribe({
+          next: (response) => {
+            if (response.ok) {
+              this.authService.clearUserCredentials();
+              this.router.navigate(['/user/sign-in'], {
+                queryParams: {
+                  reason: 'updatedPassword',
                 },
               });
             }
