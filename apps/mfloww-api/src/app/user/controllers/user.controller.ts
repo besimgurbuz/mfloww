@@ -88,7 +88,13 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put('/password')
+  @Delete()
+  async deleteUser(@Request() req) {
+    return this.userService.deleteUser(req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('password')
   async updatePassword(
     @Request() req,
     @Res() res: Response,
@@ -127,13 +133,7 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete()
-  async deleteUser(@Request() req) {
-    return this.userService.deleteUser(req.user);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('/profile')
+  @Get('profile')
   getProfileInfo(@Request() req) {
     return this.userService.getProfile(req.user);
   }

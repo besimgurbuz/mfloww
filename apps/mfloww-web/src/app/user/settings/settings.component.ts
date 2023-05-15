@@ -152,4 +152,23 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.localStorageService.remove(LATEST_MONTH_YEAR_KEY);
     }
   }
+
+  handleDeleteUser() {
+    if (confirm('Are you sure you want to delete this account?')) {
+      this.userService.deleteUser().subscribe({
+        next: () => {
+          this.authService.clearUserCredentials();
+          this.router.navigate(['/'], {
+            queryParams: { reason: 'accountDeletion' },
+          });
+        },
+        error: () => {
+          this.messengerService.emitMessage({
+            type: 'fatal',
+            text: 'Failed to delete your account. Please try again.',
+          });
+        },
+      });
+    }
+  }
 }

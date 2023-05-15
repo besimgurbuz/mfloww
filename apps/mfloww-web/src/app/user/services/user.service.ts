@@ -117,4 +117,11 @@ export class UserService {
       }
     );
   }
+
+  deleteUser(): Observable<HttpResponse<void>> {
+    return this.http.delete<void>(`${environment.apiUrl}${this.userPath}`, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
 }
