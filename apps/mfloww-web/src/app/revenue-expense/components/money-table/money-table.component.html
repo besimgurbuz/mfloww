@@ -29,13 +29,22 @@
         [viewBox]="30"
       ></mfloww-view-icon>
     </mfloww-view-button>
-    <div class="self-center max-w-[300px]" *ngIf="_addingModeActive">
+    <div class="relative self-center max-w-[300px]" *ngIf="_addingModeActive">
       <mfloww-view-entry-input
         [currencies]="currencies"
         [autofocus]="true"
         [entryType]="type"
         (entryCreated)="handleNewEntry($event)"
       ></mfloww-view-entry-input>
+      <mfloww-view-button
+        class="absolute flex flex-grow-0 w-[40px] h-[40px] m-auto -right-10 top-0 bottom-0 p-[5px]"
+        (clicked)="_addingModeActive = false"
+      >
+        <mfloww-view-icon
+          type="close"
+          color="var(--app-white)"
+        ></mfloww-view-icon>
+      </mfloww-view-button>
     </div>
   </div>
   <div class="total w-full m-16">
