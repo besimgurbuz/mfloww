@@ -42,6 +42,11 @@ export class MessengerService implements OnDestroy {
       type: 'info',
       text: 'Your password updated successfully. Please re-login.',
     },
+    accountDeletion: {
+      type: 'info',
+      text: 'Your account successfully deleted. Farewell..',
+      disappearDuration: 3000,
+    },
   };
 
   constructor(private route: ActivatedRoute, private router: Router) {

@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SupportedPlatform } from '@mfloww/common';
-import { filter, mergeMap, Subscription } from 'rxjs';
+import { Subscription, filter, mergeMap } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
 import { MessengerService } from '../../core/messenger.service';
 import { SUPPORTED_PLATFORMS } from '../constants';
@@ -49,7 +49,7 @@ export class SignInComponent implements OnDestroy {
           error: (err: HttpErrorResponse) => {
             const message =
               err.status === 401
-                ? 'The credentials you typed in are incorrect.'
+                ? 'The credentials you entered are incorrect.'
                 : 'An error occured while trying to login. Please try again.';
             this.messenger.emitMessage({
               text: message,

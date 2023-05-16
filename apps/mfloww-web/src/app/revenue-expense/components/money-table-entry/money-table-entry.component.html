@@ -4,7 +4,7 @@
   (mouseleave)="_hovered = false"
 >
   <span class="whitespace-nowrap flex items-center">
-    {{ amount | currency: currency }}
+    {{ amount | currency : currency }}
   </span>
   <span
     class="text-ellipsis overflow-hidden whitespace-nowrap md:max-w-[40%]"
@@ -14,7 +14,7 @@
   </span>
   <ng-container *ngIf="deletable">
     <mfloww-view-button
-      class="absolute flex md:hidden flex-grow-0 w-[40px] h-[40px] m-auto -right-5 top-0 bottom-0 p-[5px]"
+      class="absolute flex md:hidden flex-grow-0 w-[40px] h-[40px] m-auto right-0 top-0 bottom-0 p-[5px]"
       (clicked)="deletionTriggered.emit()"
       [style.display]="_hovered ? 'flex' : 'none'"
     >

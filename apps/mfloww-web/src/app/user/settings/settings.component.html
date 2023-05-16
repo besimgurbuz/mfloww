@@ -82,7 +82,7 @@
         *ngIf="passwordGroup.errors?.['mismatch'] && passwordGroup.get('newPassword')?.dirty && passwordGroup.get('confirmNewPassword')?.dirty"
       >
         <p class="absolute text-mfloww_fatal text-[10px] bottom-[30px]">
-          Password should match
+          Passwords should match
         </p>
       </ng-container>
       <button
@@ -124,6 +124,7 @@
     <div class="flex flex-grow max-w-[450px]">
       <button
         class="border-2 border-solid border-mfloww_fatal text-mfloww_fatal rounded text-sm px-6 py-3 hover:bg-mfloww_fatal hover:text-mfloww_white"
+        (click)="handleDeleteUser()"
       >
         Delete this account
       </button>
