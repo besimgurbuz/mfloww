@@ -57,7 +57,7 @@
     </div>
     <form
       [formGroup]="passwordGroup"
-      class="flex flex-col gap-6 relative flex-grow max-w-[450px]"
+      class="flex flex-col gap-6 relative flex-grow max-w-[450px] relative"
       (ngSubmit)="updatePassword()"
     >
       <mfloww-view-input
@@ -78,6 +78,13 @@
         label="Confirm new password"
         type="password"
       ></mfloww-view-input>
+      <ng-container
+        *ngIf="passwordGroup.errors?.['mismatch'] && passwordGroup.get('newPassword')?.dirty && passwordGroup.get('confirmNewPassword')?.dirty"
+      >
+        <p class="absolute text-mfloww_fatal text-[10px] bottom-[30px]">
+          Password should match
+        </p>
+      </ng-container>
       <button
         class="border-2 border-solid rounded px-5 py-2 hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer w-fit text-sm"
         [style.visibility]="

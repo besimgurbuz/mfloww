@@ -26,7 +26,6 @@ export class SignUpComponent implements OnDestroy {
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(5),
-      Validators.maxLength(40),
     ]),
   });
   platforms: SupportedPlatform[] = SUPPORTED_PLATFORMS;

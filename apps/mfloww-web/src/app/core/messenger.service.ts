@@ -129,6 +129,10 @@ export class MessengerService implements OnDestroy {
         type: 'fatal',
         text: 'Opps, looks like your session has expired. Please sign-in again.',
       },
+      0: {
+        type: 'fatal',
+        text: 'Server is not responding. Please try again later.',
+      },
     };
 
     return messages[failResponse.status];

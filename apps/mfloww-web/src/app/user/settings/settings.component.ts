@@ -41,8 +41,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
   readonly passwordGroup = new FormGroup(
     {
       currentPassword: new FormControl('', [Validators.required]),
-      newPassword: new FormControl('', [Validators.required]),
-      confirmNewPassword: new FormControl('', [Validators.required]),
+      newPassword: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
+      confirmNewPassword: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
     },
     PasswordMatchValidator('newPassword', 'confirmNewPassword')
   );
@@ -131,7 +137,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
             }
           },
           error: (err: HttpErrorResponse) => {
-            this.messengerService.emitFromError(err.error, 'message');
+            this.messengerService.emitFromError(err, 'message');
           },
         });
     }
