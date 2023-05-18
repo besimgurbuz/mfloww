@@ -1,13 +1,14 @@
+import { SupportedCurrency } from '@mfloww/common';
 import { Observable } from 'rxjs';
 
 export interface ExchangeClient {
   getLatestExchangeRates(
-    sourceCurrency: string,
-    targetCurrencies: string[]
+    sourceCurrency: SupportedCurrency,
+    targetCurrencies: SupportedCurrency[]
   ): Observable<LatestExchangeResult>;
 }
 
 export type LatestExchangeResult = {
-  base: string;
-  rates: Record<string, number>;
+  base: SupportedCurrency;
+  rates: Record<SupportedCurrency, number>;
 } & { message: string };

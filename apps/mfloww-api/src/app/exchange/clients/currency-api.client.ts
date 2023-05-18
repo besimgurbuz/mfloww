@@ -18,9 +18,9 @@ export class CurrencyApiClientService implements ExchangeClient {
     return this.http
       .get<CurrencyApiResponse>(`${this.API_URL}/latest`, {
         params: {
-          base_currency: sourceCurrency,
-          currencies: targetCurrencies,
           apikey: this.API_KEY,
+          base_currency: sourceCurrency,
+          currencies: targetCurrencies.join(','),
         },
       })
       .pipe(

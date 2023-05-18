@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AngularUniversalModule } from './angular-universal/angular-universal.module';
 
+import { ScheduleModule } from '@nestjs/schedule';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { PrismaService } from './core/prisma.service';
@@ -21,6 +22,7 @@ import { loadESModule } from './utils/load-esm-module';
         viewsPath: join(process.cwd(), 'dist/apps/mfloww-web/browser'),
       };
     }),
+    ScheduleModule.forRoot(),
     UserModule,
     AuthModule,
     ExchangeModule,
