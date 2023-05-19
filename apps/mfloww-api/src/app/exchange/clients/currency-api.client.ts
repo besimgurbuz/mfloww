@@ -1,20 +1,24 @@
+import { SupportedCurrency } from '@mfloww/common';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { Observable, catchError, map, of } from 'rxjs';
+import { AxiosResponse } from 'axios';
+import { Observable, map } from 'rxjs';
 import { CurrencyApiResponse } from '../models/currency-api.model';
 import { ExchangeClient, LatestExchangeResult } from './exchange.client';
 
 @Injectable()
 export class CurrencyApiClientService implements ExchangeClient {
+  name = 'Currency API';
   private readonly API_URL = process.env.CURRENCY_API_URL;
   private readonly API_KEY = process.env.CURRENCY_API_KEY;
+  private readonly API_REMAINING_KEY = 'x-ratelimit-remaining-quota-month';
 
   constructor(private http: HttpService) {}
 
   getLatestExchangeRates(
-    sourceCurrency: string,
-    targetCurrencies: string[]
-  ): Observable<LatestExchangeResult> {
+    sourceCurrency: SupportedCurrency,
+    targetCurrencies: SupportedCurrency[]
+  ): Observable<AxiosResponse<LatestExchangeResult>> {
     return this.http
       .get<CurrencyApiResponse>(`${this.API_URL}/latest`, {
         params: {
@@ -25,21 +29,22 @@ export class CurrencyApiClientService implements ExchangeClient {
       })
       .pipe(
         map((response) => {
-          if (response.status !== 200) {
-            return {
-              message: `Couldn't fetched latest exchanges for ${sourceCurrency}`,
-            } as LatestExchangeResult;
+          const result = {
+            ...response,
+            data: {},
+          } as AxiosResponse<LatestExchangeResult>;
+          if (result.status !== 200) {
+            result.data = {
+              message: `Couldn't fetched exchange rates for ${sourceCurrency}`,
+            };
+          } else {
+            result.data = {
+              base: sourceCurrency,
+              rates: this.convertResponseToRateData(response.data.data),
+              remaining: response.headers[this.API_REMAINING_KEY],
+            };
           }
-          return {
-            base: sourceCurrency,
-            rates: this.convertResponseToRateData(response.data.data),
-          } as LatestExchangeResult;
-        }),
-        catchError((err) => {
-          console.log(err);
-          return of({
-            message: 'API error: currencyapi',
-          } as LatestExchangeResult);
+          return result;
         })
       );
   }

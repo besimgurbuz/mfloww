@@ -1,20 +1,24 @@
+import { SupportedCurrency } from '@mfloww/common';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { AxiosResponse } from 'axios';
 import { Observable, map } from 'rxjs';
 import { CurrencyLayerResponse } from '../models/currency-layer-api.model';
 import { ExchangeClient, LatestExchangeResult } from './exchange.client';
 
 @Injectable()
-export class CurrencyLayerClient implements ExchangeClient {
+export class CurrencyLayerClientService implements ExchangeClient {
+  name = 'Currency Layer';
   private readonly API_URL = process.env.CURRENCY_LAYER_API_URL;
   private readonly API_KEY = process.env.CURRENCY_LAYER_API_KEY;
+  private readonly REMAINING_KEY = 'X-RateLimit-Remaining-Month';
 
   constructor(private http: HttpService) {}
 
   getLatestExchangeRates(
-    sourceCurrency: string,
-    targetCurrencies: string[]
-  ): Observable<LatestExchangeResult> {
+    sourceCurrency: SupportedCurrency,
+    targetCurrencies: SupportedCurrency[]
+  ): Observable<AxiosResponse<LatestExchangeResult>> {
     return this.http
       .get<CurrencyLayerResponse>(`${this.API_URL}/live`, {
         params: {
@@ -27,19 +31,25 @@ export class CurrencyLayerClient implements ExchangeClient {
       })
       .pipe(
         map((response) => {
+          const result = {
+            ...response,
+            data: {},
+          } as AxiosResponse<LatestExchangeResult>;
           if (response.status !== 200) {
-            return {
+            result.data = {
               message: `Couldn't fetched latest exchanges for ${sourceCurrency}`,
-            } as LatestExchangeResult;
+            };
+          } else {
+            result.data = {
+              base: response.data.source as SupportedCurrency,
+              rates: this.convertQuotesToRates(
+                response.data.source,
+                response.data.quotes
+              ),
+              remaining: response.headers[this.REMAINING_KEY],
+            };
           }
-
-          return {
-            base: response.data.source,
-            rates: this.convertQuotesToRates(
-              response.data.source,
-              response.data.quotes
-            ),
-          } as LatestExchangeResult;
+          return result;
         })
       );
   }
