@@ -2,7 +2,7 @@ import { SupportedCurrency } from '@mfloww/common';
 import { tap } from 'rxjs';
 import { ExchangeClient } from './clients/exchange.client';
 
-export class ClientWrapper {
+export class ExchangeClientWrapper {
   private _remainingCalls: number;
   constructor(
     private _client: ExchangeClient,
