@@ -8,3 +8,5 @@ export enum SupportedCurrency {
   TRY = 'TRY',
   RUB = 'RUB',
 }
+
+export const SUPPORTED_CURRENY_LIST = Object.values(SupportedCurrency);

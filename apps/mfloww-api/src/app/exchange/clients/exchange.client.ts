@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 export interface ExchangeClient {
   name: string;
-  getLatestExchangeRates(
+  getLatestExchangeRates$(
     sourceCurrency: SupportedCurrency,
     targetCurrencies: SupportedCurrency[]
   ): Observable<AxiosResponse<LatestExchangeResult>>;

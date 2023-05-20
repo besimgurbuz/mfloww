@@ -1,13 +1,11 @@
 import { SupportedCurrency } from '@mfloww/common';
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
 import { Observable, map } from 'rxjs';
 import { FixerResponse } from '../models/fixer-api.model';
 import { ExchangeClient, LatestExchangeResult } from './exchange.client';
 
-@Injectable()
-export class FixerClientService implements ExchangeClient {
+export class FixerClient implements ExchangeClient {
   name = 'Fixer';
   private readonly API_URL = process.env.FIXER_API_URL;
   private readonly API_KEY = process.env.FIXER_API_KEY;
@@ -15,7 +13,7 @@ export class FixerClientService implements ExchangeClient {
 
   constructor(private http: HttpService) {}
 
-  getLatestExchangeRates(
+  getLatestExchangeRates$(
     sourceCurrency: SupportedCurrency,
     targetCurrencies: SupportedCurrency[]
   ): Observable<AxiosResponse<LatestExchangeResult>> {

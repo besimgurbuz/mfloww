@@ -1,13 +1,11 @@
 import { SupportedCurrency } from '@mfloww/common';
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
 import { Observable, map } from 'rxjs';
 import { CurrencyLayerResponse } from '../models/currency-layer-api.model';
 import { ExchangeClient, LatestExchangeResult } from './exchange.client';
 
-@Injectable()
-export class CurrencyLayerClientService implements ExchangeClient {
+export class CurrencyLayerClient implements ExchangeClient {
   name = 'Currency Layer';
   private readonly API_URL = process.env.CURRENCY_LAYER_API_URL;
   private readonly API_KEY = process.env.CURRENCY_LAYER_API_KEY;
@@ -15,7 +13,7 @@ export class CurrencyLayerClientService implements ExchangeClient {
 
   constructor(private http: HttpService) {}
 
-  getLatestExchangeRates(
+  getLatestExchangeRates$(
     sourceCurrency: SupportedCurrency,
     targetCurrencies: SupportedCurrency[]
   ): Observable<AxiosResponse<LatestExchangeResult>> {
