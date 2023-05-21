@@ -13,6 +13,7 @@ import { LATEST_MONTH_YEAR_KEY } from '../core/core.constants';
 import { LocalStorageService } from '../core/local-storage.service';
 import { RevenueExpenseRecord } from '../models/entry';
 import { RevenueExpenseFacade } from './data-access/revenue-expense.facade';
+import { ExchangeFacade } from './facades/exchange.facade';
 import { CalculatorService } from './services/calculator.service';
 
 @Component({
@@ -21,6 +22,7 @@ import { CalculatorService } from './services/calculator.service';
   styleUrls: ['./revenue-expense.component.scss'],
 })
 export class RevenueExpenseComponent implements OnInit, OnDestroy {
+  private readonly exchangeFacade = inject(ExchangeFacade);
   private readonly revenueExpenseFacade = inject(RevenueExpenseFacade);
   private readonly calculatorService = inject(CalculatorService);
   private readonly cd = inject(ChangeDetectorRef);
@@ -37,6 +39,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
     this.revenueExpenseFacade.selectedRevenues$;
   expenses$: Observable<RevenueExpenseRecord[]> =
     this.revenueExpenseFacade.selectedExpenses$;
+  baseCurrency = this.exchangeFacade.baseCurrency;
   totalRevenue$: Observable<number> = this.calculatorService.totalRevenue$;
   totalExpense$: Observable<number> = this.calculatorService.totalExpense$;
   overallTotal$: Observable<number> = this.calculatorService.overallTotal$;
@@ -45,8 +48,11 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
 
   loadEntryListSubs?: Subscription;
   monthSelectionChangeSubs?: Subscription;
+  exchangeRatesUpdateSubs?: Subscription;
 
   ngOnInit(): void {
+    this.exchangeRatesUpdateSubs =
+      this.exchangeFacade.loadExchangeRateInterval();
     this.loadEntryListSubs = this.revenueExpenseFacade.loadEntryList();
     this.setInitialMonthYear();
     this.monthSelectionChangeSubs =
@@ -60,6 +66,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.exchangeRatesUpdateSubs?.unsubscribe();
     this.loadEntryListSubs?.unsubscribe();
     this.monthSelectionChangeSubs?.unsubscribe();
   }

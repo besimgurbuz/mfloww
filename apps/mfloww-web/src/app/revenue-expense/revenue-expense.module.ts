@@ -14,10 +14,12 @@ import { OverallTableComponent } from './components/overall-panel/overall-panel.
 import { RevenueExpenseDataService } from './data-access/revenue-expense-data.service';
 import { RevenueExpenseFacade } from './data-access/revenue-expense.facade';
 import { RevenueExpenseState } from './data-access/revenue-expense.state';
+import { ExchangeFacade } from './facades/exchange.facade';
 import { EntryDatePipe } from './pipes/entry-date/entry-date.pipe';
 import { RevenueExpenseComponent } from './revenue-expense.component';
 import { CalculatorService } from './services/calculator.service';
-import { CurrencyService } from './services/currency.service';
+import { ExchangeService } from './services/exchange.service';
+import { ExchangeState } from './states/exchange.state';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { CurrencyService } from './services/currency.service';
     RevenueExpenseState,
     RevenueExpenseFacade,
     CalculatorService,
-    CurrencyService,
+    ExchangeFacade,
+    ExchangeState,
+    ExchangeService,
   ],
 })
 export class RevenueExpenseModule {}

@@ -1,23 +1,26 @@
-import { SUPPORTED_CURRENCY_LIST, SupportedCurrency } from '@mfloww/common';
+import {
+  ExchangeRate,
+  SUPPORTED_CURRENCY_LIST,
+  SupportedCurrency,
+} from '@mfloww/common';
 import { Injectable } from '@nestjs/common';
-import { LatestExchangeResult } from '../clients/exchange.client';
 
 @Injectable()
 export class ExchangeStoreService {
   private _latestRatesRecord: {
     lastUpdateDate: Date;
-    record: LatestExchangeResult;
+    record: ExchangeRate;
   } = {
     lastUpdateDate: null,
     record: null,
   };
 
-  updateLatestRates(latestRatest: LatestExchangeResult) {
+  updateLatestRates(latestRatest: ExchangeRate) {
     this._latestRatesRecord.lastUpdateDate = new Date();
     this._latestRatesRecord.record = latestRatest;
   }
 
-  getLatestRatesBaseAs(base: SupportedCurrency): LatestExchangeResult | null {
+  getLatestRatesBaseAs(base: SupportedCurrency): ExchangeRate | null {
     if (!this._latestRatesRecord.record) {
       return null;
     }
@@ -40,7 +43,7 @@ export class ExchangeStoreService {
     };
   }
 
-  private get _latestRates(): LatestExchangeResult {
+  private get _latestRates(): ExchangeRate {
     return this._latestRatesRecord.record;
   }
 }

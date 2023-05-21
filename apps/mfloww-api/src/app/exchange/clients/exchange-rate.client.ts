@@ -1,9 +1,9 @@
-import { SupportedCurrency } from '@mfloww/common';
+import { ExchangeRate, SupportedCurrency } from '@mfloww/common';
 import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
 import { Observable, map } from 'rxjs';
 import { ExchangeRateResponse } from '../models/exchange-rate-api.model';
-import { ExchangeClient, LatestExchangeResult } from './exchange.client';
+import { ExchangeClient } from './exchange.client';
 
 export class ExchangeRateClient implements ExchangeClient {
   name = 'Exchange Rate';
@@ -15,7 +15,7 @@ export class ExchangeRateClient implements ExchangeClient {
   getLatestExchangeRates$(
     sourceCurrency: SupportedCurrency,
     targetCurrencies: SupportedCurrency[]
-  ): Observable<AxiosResponse<LatestExchangeResult>> {
+  ): Observable<AxiosResponse<ExchangeRate>> {
     return this.http
       .get<ExchangeRateResponse>(`${this.API_URL}/latest`, {
         params: { base: sourceCurrency, symbols: targetCurrencies.join(',') },
@@ -28,7 +28,7 @@ export class ExchangeRateClient implements ExchangeClient {
           const result = {
             ...response,
             data: {},
-          } as AxiosResponse<LatestExchangeResult>;
+          } as AxiosResponse<ExchangeRate>;
           if (response.status !== 200) {
             result.data = {
               message: `Couldn't fetched latest exchanges for ${sourceCurrency}`,

@@ -8,8 +8,10 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SUPPORTED_CURRENCY_LIST, SupportedCurrency } from '@mfloww/common';
 import { MflowwDbService } from '@mfloww/db';
 import { mergeMap, Subscription } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { AuthService } from '../../core/auth.service';
 import { LATEST_MONTH_YEAR_KEY } from '../../core/core.constants';
 import { LocalStorageService } from '../../core/local-storage.service';
@@ -52,8 +54,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
     },
     PasswordMatchValidator('newPassword', 'confirmNewPassword')
   );
+  readonly baseCurrencyControl = new FormControl();
+  readonly currencyOptions = SUPPORTED_CURRENCY_LIST;
 
   private profileSubs?: Subscription;
+  private currencyChangeSubs?: Subscription;
   private deleteDbSubs?: Subscription;
 
   _profileInfo: ProfileInfo | null = null;
@@ -69,10 +74,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.profileGroup.get('username')?.setValue(username);
       this.profileGroup.get('key')?.setValue(key);
     });
+    this.handleBaseCurrencySelection();
   }
 
   ngOnDestroy(): void {
     this.profileSubs?.unsubscribe();
+    this.currencyChangeSubs?.unsubscribe();
     this.deleteDbSubs?.unsubscribe();
   }
 
@@ -176,5 +183,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
         },
       });
     }
+  }
+
+  handleBaseCurrencySelection() {
+    const selectedCurrency: SupportedCurrency =
+      this.localStorageService.get(environment.baseCurrencyKey) || 'USD';
+    this.baseCurrencyControl.setValue(selectedCurrency);
+    this.currencyChangeSubs = this.baseCurrencyControl.valueChanges.subscribe(
+      (selection: SupportedCurrency) =>
+        this.localStorageService.set(environment.baseCurrencyKey, selection)
+    );
   }
 }

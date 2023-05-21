@@ -1,7 +1,10 @@
-import { SUPPORTED_CURRENCY_LIST, SupportedCurrency } from '@mfloww/common';
+import {
+  ExchangeRate,
+  SUPPORTED_CURRENCY_LIST,
+  SupportedCurrency,
+} from '@mfloww/common';
 import { Injectable, Logger } from '@nestjs/common';
 import { Observable, catchError, map, of } from 'rxjs';
-import { LatestExchangeResult } from '../clients/exchange.client';
 import { ExchangeClientFactoryService } from './exchange-client-factory.service';
 import { ExchangeStoreService } from './exchange-store.service';
 
@@ -17,7 +20,7 @@ export class ExchangeService {
 
   getExchangeRatesFor(
     base: SupportedCurrency
-  ): LatestExchangeResult | Observable<LatestExchangeResult> {
+  ): ExchangeRate | Observable<ExchangeRate> {
     const latestRates = this.exchangeStore.getLatestRatesBaseAs(base);
     if (latestRates === null) {
       return this.exchangeClientFactory.currrentClient
@@ -32,7 +35,7 @@ export class ExchangeService {
             const ratesData = {
               base: response.data.base,
               rates: response.data.rates,
-            } as LatestExchangeResult;
+            } as ExchangeRate;
             this.exchangeStore.updateLatestRates(ratesData);
 
             return this.exchangeStore.getLatestRatesBaseAs(base);
@@ -42,7 +45,7 @@ export class ExchangeService {
             return of({
               base,
               rates: {},
-            } as LatestExchangeResult);
+            } as ExchangeRate);
           })
         );
     }

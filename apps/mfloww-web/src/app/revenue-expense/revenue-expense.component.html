@@ -36,6 +36,7 @@
       class="lg:w-2/5"
       [entries]="(revenues$ | async) || []"
       [total]="(totalRevenue$ | async) || 0"
+      [baseCurrency]="baseCurrency"
       (entryCreation)="handleRecordCreation($event)"
       (entryDeletion)="handleRecordDeletion($event)"
     ></mfloww-money-table>
@@ -44,11 +45,13 @@
       class="lg:w-2/5"
       [entries]="(expenses$ | async) || []"
       [total]="(totalExpense$ | async) || 0"
+      [baseCurrency]="baseCurrency"
       (entryCreation)="handleRecordCreation($event, 'expense')"
       (entryDeletion)="handleRecordDeletion($event, 'expense')"
     ></mfloww-money-table>
     <mfloww-overall-panel
       [overallTotal]="(overallTotal$ | async) || 0"
+      [currency]="baseCurrency"
     ></mfloww-overall-panel>
   </div>
 </div>

@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   RevenueExpenseRecordType,
   SUPPORTED_CURRENCY_LIST,
+  SupportedCurrency,
 } from '@mfloww/common';
 import { RevenueExpenseRecord } from '../../../models/entry';
-import { CurrencyService } from '../../services/currency.service';
+import { ExchangeService } from '../../services/exchange.service';
 
 @Component({
   selector: 'mfloww-money-table',
@@ -13,6 +14,7 @@ import { CurrencyService } from '../../services/currency.service';
 })
 export class MoneyTableComponent {
   @Input() type: RevenueExpenseRecordType = 'revenue';
+  @Input() baseCurrency: SupportedCurrency = 'USD';
   @Input() entries: RevenueExpenseRecord[] = [];
   @Input() total = 0;
 
@@ -22,7 +24,7 @@ export class MoneyTableComponent {
 
   _addingModeActive = false;
 
-  constructor(private currencyService: CurrencyService) {}
+  constructor(private currencyService: ExchangeService) {}
 
   get title() {
     return `${this.type}s`;
