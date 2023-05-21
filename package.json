@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
-    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
+    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main && prisma generate",
     "start": "nx serve",
     "build:dev": "nx build",
     "build:ssr": "ng build mfloww-api --configuration=production && ng build && ng server",

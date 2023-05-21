@@ -50,7 +50,9 @@ export class AuthService {
     const expiresIn = new Date().getTime() + 600 * 1000;
 
     return {
-      access_token: this.jwtService.sign(payload, { expiresIn: '600s' }),
+      access_token: this.jwtService.sign(payload, {
+        expiresIn: process.env.JWT_TOKEN_EXPIRE_TIME,
+      }),
       expiresIn,
       key: user.key,
     };

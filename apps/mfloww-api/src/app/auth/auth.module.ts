@@ -16,7 +16,7 @@ import { PlatformAuthStrategy } from './services/platform-auth.strategy';
     PassportModule,
     JwtModule.register({
       secret: env.JWT_SECRET,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: env.JWT_TOKEN_EXPIRE_TIME },
     }),
   ],
   controllers: [AuthController],
