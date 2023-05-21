@@ -9,7 +9,6 @@ import * as cookieParser from 'cookie-parser';
 
 import { AppModule } from './app/app.module';
 import { PrismaService } from './app/core/prisma.service';
-import { environment } from './environments/environment';
 
 async function bootstrap() {
   Logger.log('===ENV===');
@@ -33,11 +32,9 @@ async function bootstrap() {
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
   await app.listen(port);
-  if (!environment.production) {
-    Logger.log(
-      `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
-    );
-  }
+  Logger.log(
+    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+  );
 
   return app;
 }
