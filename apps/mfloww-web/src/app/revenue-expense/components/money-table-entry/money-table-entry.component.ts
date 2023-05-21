@@ -15,7 +15,7 @@ import { RevenueExpenseRecordType, SupportedCurrency } from '@mfloww/common';
 })
 export class MoneyTableEntryComponent {
   @Input() type: RevenueExpenseRecordType = 'revenue';
-  @Input() currency: SupportedCurrency = SupportedCurrency.USD;
+  @Input() currency: SupportedCurrency = 'USD';
   @Input() amount!: number;
   @Input() label!: string;
   @Input() deletable = false;

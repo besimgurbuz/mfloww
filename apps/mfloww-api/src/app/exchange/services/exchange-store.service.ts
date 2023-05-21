@@ -1,4 +1,4 @@
-import { SUPPORTED_CURRENY_LIST, SupportedCurrency } from '@mfloww/common';
+import { SUPPORTED_CURRENCY_LIST, SupportedCurrency } from '@mfloww/common';
 import { Injectable } from '@nestjs/common';
 import { LatestExchangeResult } from '../clients/exchange.client';
 
@@ -23,7 +23,7 @@ export class ExchangeStoreService {
     }
     if (this._latestRates.base === base) return this._latestRates;
 
-    const otherCurrencies = SUPPORTED_CURRENY_LIST.filter(
+    const otherCurrencies = SUPPORTED_CURRENCY_LIST.filter(
       (currency) => currency !== base
     );
     const baseValueOnLatestBase = this._latestRates.rates[base];

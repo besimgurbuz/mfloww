@@ -1,4 +1,4 @@
-import { SUPPORTED_CURRENY_LIST, SupportedCurrency } from '@mfloww/common';
+import { SUPPORTED_CURRENCY_LIST, SupportedCurrency } from '@mfloww/common';
 import { Injectable, Logger } from '@nestjs/common';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { LatestExchangeResult } from '../clients/exchange.client';
@@ -21,7 +21,7 @@ export class ExchangeService {
       return this.exchangeClientFactory.currrentClient
         .getLatestExchangeRates$(
           base,
-          SUPPORTED_CURRENY_LIST.filter((currency) => currency !== base)
+          SUPPORTED_CURRENCY_LIST.filter((currency) => currency !== base)
         )
         .pipe(
           map(

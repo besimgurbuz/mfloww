@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { RevenueExpenseRecordType } from '@mfloww/common';
+import {
+  RevenueExpenseRecordType,
+  SUPPORTED_CURRENCY_LIST,
+} from '@mfloww/common';
 import { RevenueExpenseRecord } from '../../../models/entry';
 import { CurrencyService } from '../../services/currency.service';
 
@@ -26,7 +29,7 @@ export class MoneyTableComponent {
   }
 
   get currencies() {
-    return this.currencyService.getSupportedCurrencies();
+    return SUPPORTED_CURRENCY_LIST;
   }
 
   handleNewEntry(entry: RevenueExpenseRecord) {

@@ -1,4 +1,4 @@
-import { SUPPORTED_CURRENY_LIST, SupportedCurrency } from '@mfloww/common';
+import { SUPPORTED_CURRENCY_LIST, SupportedCurrency } from '@mfloww/common';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { ExchangeClientWrapper } from '../exchange-client.wrapper';
@@ -29,7 +29,7 @@ export class ExchangeScheduleService {
       this.clientFactory.getAvailableClientWrapper();
 
     availableClientWrapper
-      .getLatestExchangeRates$(this.storeCurrencyBase, SUPPORTED_CURRENY_LIST)
+      .getLatestExchangeRates$(this.storeCurrencyBase, SUPPORTED_CURRENCY_LIST)
       .subscribe({
         error: (err) => {
           this.logger.error(
@@ -53,7 +53,7 @@ export class ExchangeScheduleService {
     }
 
     nextClient
-      .getLatestExchangeRates$(this.storeCurrencyBase, SUPPORTED_CURRENY_LIST)
+      .getLatestExchangeRates$(this.storeCurrencyBase, SUPPORTED_CURRENCY_LIST)
       .subscribe({
         error: (err) => {
           this.logger.error(

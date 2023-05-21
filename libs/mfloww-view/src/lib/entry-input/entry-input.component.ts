@@ -32,7 +32,7 @@ export class MflowwEntryInputComponent implements AfterViewInit {
   }> = new EventEmitter();
 
   _entryFormGroup: FormGroup = this.formBuilder.group({
-    currency: [SupportedCurrency.USD, [Validators.required]],
+    currency: ['USD', [Validators.required]],
     amount: ['', [Validators.required]],
     label: ['', Validators.required],
   });
