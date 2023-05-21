@@ -1,8 +1,8 @@
 <div
-  class="group relative flex justify-around gap-3 text-lg md:text-xl lg:text-2xl"
+  class="mfloww-table-entry-container relative flex justify-around gap-3 text-lg md:text-xl lg:text-2xl"
 >
   <span class="whitespace-nowrap flex items-center">
-    {{ amount | currency : currency }}
+    {{ amount | currency: currency }}
   </span>
   <span
     class="text-ellipsis overflow-hidden whitespace-nowrap max-w-[180px] md:max-w-[40%]"
@@ -10,11 +10,10 @@
   >
     {{ label }}
   </span>
-  <ng-container *ngIf="deletable">
+  <div *ngIf="deletable" class="money-table-entry-delete-button">
     <mfloww-view-button
-      class="absolute flex md:hidden flex-grow-0 w-[40px] h-[40px] m-auto -right-5 top-0 bottom-0 p-[5px]"
+      class="absolute flex flex-grow-0 w-[40px] h-[40px] m-auto -right-5 top-0 bottom-0 p-[5px]"
       (clicked)="deletionTriggered.emit()"
-      [style.display]="_hovered ? 'flex' : 'none'"
     >
       <mfloww-view-icon
         type="close"

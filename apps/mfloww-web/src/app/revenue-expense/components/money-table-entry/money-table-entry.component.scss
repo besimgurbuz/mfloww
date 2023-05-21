@@ -1,3 +1,13 @@
 :host {
   display: block;
 }
+
+.mfloww-table-entry-container {
+  .money-table-entry-delete-button {
+    visibility: hidden;
+  }
+
+  &:hover .money-table-entry-delete-button {
+    visibility: visible;
+  }
+}
