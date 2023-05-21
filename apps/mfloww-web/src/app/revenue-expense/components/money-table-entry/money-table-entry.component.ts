@@ -21,6 +21,4 @@ export class MoneyTableEntryComponent {
   @Input() deletable = false;
 
   @Output() deletionTriggered: EventEmitter<void> = new EventEmitter();
-
-  _hovered = false;
 }

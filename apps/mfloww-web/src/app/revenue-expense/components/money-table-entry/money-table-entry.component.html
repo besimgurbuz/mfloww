@@ -1,20 +1,18 @@
 <div
-  class="relative w-full flex justify-around gap-3 text-lg md:text-xl lg:text-2xl"
-  (mouseenter)="_hovered = true"
-  (mouseleave)="_hovered = false"
+  class="group relative flex justify-around gap-3 text-lg md:text-xl lg:text-2xl"
 >
   <span class="whitespace-nowrap flex items-center">
     {{ amount | currency : currency }}
   </span>
   <span
-    class="text-ellipsis overflow-hidden whitespace-nowrap md:max-w-[40%]"
+    class="text-ellipsis overflow-hidden whitespace-nowrap max-w-[180px] md:max-w-[40%]"
     [title]="label"
   >
     {{ label }}
   </span>
   <ng-container *ngIf="deletable">
     <mfloww-view-button
-      class="absolute flex md:hidden flex-grow-0 w-[40px] h-[40px] m-auto right-0 top-0 bottom-0 p-[5px]"
+      class="absolute flex md:hidden flex-grow-0 w-[40px] h-[40px] m-auto -right-5 top-0 bottom-0 p-[5px]"
       (clicked)="deletionTriggered.emit()"
       [style.display]="_hovered ? 'flex' : 'none'"
     >
@@ -23,5 +21,5 @@
         color="var(--app-white)"
       ></mfloww-view-icon>
     </mfloww-view-button>
-  </ng-container>
+  </div>
 </div>
