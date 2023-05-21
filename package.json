@@ -8,7 +8,6 @@
     "start": "nx serve",
     "build:dev": "nx build",
     "build:ssr": "ng build mfloww-api --configuration=production && ng build && ng server",
-    "vercel-build": "npm run build:ssr",
     "test": "nx test"
   },
   "private": true,
