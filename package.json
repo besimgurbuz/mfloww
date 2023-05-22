@@ -7,7 +7,8 @@
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main && prisma generate",
     "start": "nx serve",
     "build:dev": "nx build",
-    "build:all": "ng build mfloww-api --configuration=production && ng build --configuration=production",
+    "build:web": "ng build --configuration=production",
+    "build:server": "ng build mfloww-api --configuration=production",
     "test": "nx test"
   },
   "private": true,
