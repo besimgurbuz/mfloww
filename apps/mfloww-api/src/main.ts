@@ -3,21 +3,21 @@
  * This is only a minimal backend to get started.
  */
 
-import { Logger } from '@nestjs/common';
+import { INestApplication, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 
 import { AppModule } from './app/app.module';
 import { PrismaService } from './app/core/prisma.service';
 
-async function bootstrap() {
+async function bootstrap(): Promise<INestApplication> {
   Logger.log('===ENV===');
   Logger.log(
-    `DATABSE_URL: ${process.env.DATABASE_URL} JWT_SECRET: ${process.env.JWT_SECRET} PORT: ${process.env.PORT} CORS_ORIGIN: ${process.env.CORS_ORIGIN} ENABLE_USER_CREATION: ${process.env.ENABLE_USER_CREATION}`
+    `SERVER_PREFIX: ${process.env.SERVER_PREFIX} DATABSE_URL: ${process.env.DATABASE_URL} JWT_SECRET: ${process.env.JWT_SECRET} PORT: ${process.env.PORT} CORS_ORIGIN: ${process.env.CORS_ORIGIN} ENABLE_USER_CREATION: ${process.env.ENABLE_USER_CREATION}`
   );
   Logger.log('===ENV===');
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
+  const globalPrefix = process.env.SERVER_PREFIX;
   app.setGlobalPrefix(globalPrefix);
   app.use(cookieParser());
   if (process.env.CORS_ORIGIN) {
