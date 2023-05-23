@@ -1,6 +1,3 @@
-const server = require('../dist/apps/mfloww-api/main').default;
+const server = require('../dist/apps/mfloww-api/main');
 
-module.exports = async function () {
-  const app = await server;
-  return app;
-};
+module.exports = server;
