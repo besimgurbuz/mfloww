@@ -12,7 +12,14 @@ import { RevenueExpenseRecord } from '../../../models/entry';
   styleUrls: ['./money-table.component.scss'],
 })
 export class MoneyTableComponent {
-  @Input() type: RevenueExpenseRecordType = 'revenue';
+  @Input() set type(recordType: RevenueExpenseRecordType) {
+    this._type = recordType;
+    this._title = `${this.type}s`;
+  }
+  get type() {
+    return this._type;
+  }
+  _type: RevenueExpenseRecordType = 'revenue';
   @Input() baseCurrency: SupportedCurrency = 'USD';
   @Input() sizePercentageMap: Record<number, number> = {};
   @Input() entries: RevenueExpenseRecord[] = [];
@@ -22,15 +29,12 @@ export class MoneyTableComponent {
     new EventEmitter();
   @Output() entryDeletion: EventEmitter<number> = new EventEmitter();
 
+  _title = '';
   _addingModeActive = false;
   _classMap: Record<RevenueExpenseRecordType, string> = {
     revenue: 'text-mfloww_success pr-10',
     expense: 'text-mfloww_fatal pl-10',
   };
-
-  get title() {
-    return `${this.type}s`;
-  }
 
   get currencies() {
     return SUPPORTED_CURRENCY_LIST;
