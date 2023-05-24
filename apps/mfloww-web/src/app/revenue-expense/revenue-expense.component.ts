@@ -43,6 +43,8 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
   totalRevenue$: Observable<number> = this.calculatorService.totalRevenue$;
   totalExpense$: Observable<number> = this.calculatorService.totalExpense$;
   overallTotal$: Observable<number> = this.calculatorService.overallTotal$;
+  entryPercentageMap$: Observable<Record<number, number>> =
+    this.calculatorService.entryValuesPercentageMap$;
 
   monthSelectionControl = new FormControl<string>('');
 

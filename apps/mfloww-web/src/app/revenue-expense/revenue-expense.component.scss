@@ -1,17 +1,3 @@
 :host {
   display: block;
 }
-
-.revenue-expense-section {
-  gap: 10%;
-
-  mfloww-money-table {
-    flex-basis: 100%;
-  }
-
-  @media (min-width: 835px) {
-    mfloww-money-table {
-      flex-basis: 45%;
-    }
-  }
-}

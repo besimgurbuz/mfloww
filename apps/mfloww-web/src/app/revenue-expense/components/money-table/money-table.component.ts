@@ -5,7 +5,6 @@ import {
   SupportedCurrency,
 } from '@mfloww/common';
 import { RevenueExpenseRecord } from '../../../models/entry';
-import { ExchangeService } from '../../services/exchange.service';
 
 @Component({
   selector: 'mfloww-money-table',
@@ -15,6 +14,7 @@ import { ExchangeService } from '../../services/exchange.service';
 export class MoneyTableComponent {
   @Input() type: RevenueExpenseRecordType = 'revenue';
   @Input() baseCurrency: SupportedCurrency = 'USD';
+  @Input() sizePercentageMap: Record<number, number> = {};
   @Input() entries: RevenueExpenseRecord[] = [];
   @Input() total = 0;
 
@@ -23,8 +23,10 @@ export class MoneyTableComponent {
   @Output() entryDeletion: EventEmitter<number> = new EventEmitter();
 
   _addingModeActive = false;
-
-  constructor(private currencyService: ExchangeService) {}
+  _classMap: Record<RevenueExpenseRecordType, string> = {
+    revenue: 'text-mfloww_success pr-10',
+    expense: 'text-mfloww_fatal pl-10',
+  };
 
   get title() {
     return `${this.type}s`;

@@ -1,14 +1,12 @@
 <svg
-  width="100%"
-  heigth="100%"
-  [attr.viewBox]="viewBoxProp"
+  viewBox="0 0 24 24"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
-  preserveAspectRatio="none"
+  class="w-full h-full"
 >
   <path
     *ngFor="let path of _iconPaths[type]"
+    fill="currentColor"
     [attr.d]="path"
-    [attr.fill]="color"
   />
 </svg>

@@ -1,5 +1,5 @@
 <form
-  class="flex w-full border-2 border-solid border-mfloww_fg rounded hover:border-mfloww_blue focus-within:border-mfloww_blue"
+  class="flex w-full h-full border-2 border-solid border-mfloww_fg rounded hover:border-mfloww_blue focus-within:border-mfloww_blue"
   [formGroup]="_entryFormGroup"
   (keydown.enter)="handleEntrySubmit($event)"
   (ngSubmit)="handleEntrySubmit()"
@@ -29,7 +29,7 @@
     <input
       class="h-full bg-mfloww_bg border-none w-full outline-none"
       formControlName="label"
-      placeholder="Label"
+      placeholder="Name"
       type="text"
     />
   </div>

@@ -1,58 +1,101 @@
 <div
-  [ngClass]="{
-    'text-mfloww_success': type === 'revenue',
-    'text-mfloww_fatal': type === 'expense'
-  }"
   class="flex flex-col gap-6 w-full items-center"
+  [ngClass]="{
+    'md:items-end': type === 'revenue',
+    'md:items-start': type === 'expense'
+  }"
 >
-  <h1 class="text-2xl lg:text-3xl w-fit">{{ title }}</h1>
-  <div class="entries w-full max-w-[400px] flex flex-col gap-5">
+  <h1 class="text-2xl lg:text-3xl w-fit" [ngClass]="_classMap[type]">
+    {{ title }}
+  </h1>
+  <div
+    class="entries w-full flex flex-col gap-2"
+    [ngClass]="{
+      'items-end': type === 'revenue',
+      'items-start': type === 'expense'
+    }"
+  >
     <mfloww-money-table-entry
       *ngFor="let entry of entries; let i = index"
       [label]="entry.label"
       [type]="type"
       [amount]="entry.amount"
+      [sizePercentage]="sizePercentageMap[entry.amount]"
       [currency]="entry.currency"
       [deletable]="true"
       (deletionTriggered)="handleDeletion(i)"
     ></mfloww-money-table-entry>
     <mfloww-view-button
-      class="self-center"
       *ngIf="!_addingModeActive"
       (clicked)="_addingModeActive = !_addingModeActive"
-      class="self-center"
+      [ngClass]="_classMap[type]"
     >
       <mfloww-view-icon
         type="plus"
-        class="w-[25px]"
-        [color]="type === 'revenue' ? 'var(--app-success)' : 'var(--app-fatal)'"
-        [viewBox]="30"
+        class="w-[40px]"
+        color="currentColor"
       ></mfloww-view-icon>
     </mfloww-view-button>
-    <div class="relative self-center max-w-[300px]" *ngIf="_addingModeActive">
+    <div
+      class="relative max-w-[350px] h-[40px] flex items-center"
+      [ngClass]="_classMap[type]"
+      *ngIf="_addingModeActive"
+    >
       <mfloww-view-entry-input
         [currencies]="currencies"
         [autofocus]="true"
         [entryType]="type"
         (entryCreated)="handleNewEntry($event)"
+        class="h-full"
+        #entryInput
       ></mfloww-view-entry-input>
-      <mfloww-view-button
-        class="absolute flex flex-grow-0 w-[40px] h-[40px] m-auto -right-10 top-0 bottom-0 p-[5px]"
-        (clicked)="_addingModeActive = false"
+      <div
+        class="absolute flex gap-2 m-auto top-0 bottom-0"
+        [ngClass]="{
+          '-left-[82px]': type === 'revenue',
+          '-right-[82px]': type === 'expense'
+        }"
       >
-        <mfloww-view-icon
-          type="close"
-          color="var(--app-white)"
-        ></mfloww-view-icon>
-      </mfloww-view-button>
+        <mfloww-view-button
+          class="flex flex-grow-0 w-[35px] h-[35px]"
+          [ngClass]="{
+            'order-2': type === 'revenue',
+            'order-1': type === 'expense'
+          }"
+          (clicked)="
+            entryInput._entryFormGroup.valid &&
+              handleNewEntry(entryInput._entryFormGroup.value)
+          "
+        >
+          <mfloww-view-icon
+            type="tick"
+            class="text-mfloww_white"
+          ></mfloww-view-icon>
+        </mfloww-view-button>
+        <mfloww-view-button
+          class="flex flex-grow-0 w-[35px] h-[35px]"
+          [ngClass]="{
+            'order-1': type === 'revenue',
+            'order-2': type === 'expense'
+          }"
+          (clicked)="_addingModeActive = false"
+        >
+          <mfloww-view-icon
+            type="close"
+            class="text-mfloww_white"
+          ></mfloww-view-icon>
+        </mfloww-view-button>
+      </div>
     </div>
   </div>
-  <div class="total w-full m-16">
-    <mfloww-money-table-entry
-      label="TOTAL"
-      [currency]="baseCurrency"
-      [type]="type"
-      [amount]="total"
-    ></mfloww-money-table-entry>
+  <div
+    class="total w-full flex gap-4 justify-center md:justify-end"
+    [ngClass]="{
+      'pr-10 text-mfloww_success': type === 'revenue',
+      'pl-10 text-mfloww_fatal flex-row-reverse': type === 'expense'
+    }"
+  >
+    <h3>TOTAL</h3>
+    <h3>{{ total | currency : baseCurrency }}</h3>
   </div>
 </div>

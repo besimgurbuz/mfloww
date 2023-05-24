@@ -22,6 +22,16 @@ module.exports = {
         mfloww_warn: 'var(--app-warn)',
         mfloww_fatal: 'var(--app-fatal)',
       },
+      keyframes: {
+        grow_x: {
+          '0%': {
+            width: '0%',
+          },
+        },
+      },
+      animation: {
+        grow_x: 'grow_x 1s ease-in-out',
+      },
     },
   },
   plugins: [],

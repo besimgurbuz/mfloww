@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Icon, ICON_SVG_PATHS } from './icon';
+import { ICON_SVG_PATHS, Icon } from './icon';
 
 @Component({
   selector: 'mfloww-view-icon',
@@ -11,12 +11,6 @@ import { Icon, ICON_SVG_PATHS } from './icon';
 })
 export class MflowwIconComponent {
   @Input() type!: Icon;
-  @Input() color = 'white';
-  @Input() viewBox?: number;
 
   _iconPaths: Record<Icon, string[]> = ICON_SVG_PATHS;
-
-  get viewBoxProp() {
-    return `0 0 ${this.viewBox || 20} ${this.viewBox || 20}`;
-  }
 }
