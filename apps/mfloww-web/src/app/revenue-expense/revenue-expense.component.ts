@@ -6,12 +6,14 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { RevenueExpenseRecordType } from '@mfloww/common';
 import { MonthYearSelection } from '@mfloww/view';
 import { map, Observable, Subscription, tap } from 'rxjs';
 import { LATEST_MONTH_YEAR_KEY } from '../core/core.constants';
 import { LocalStorageService } from '../core/local-storage.service';
 import { RevenueExpenseRecord } from '../models/entry';
+import { convertEntryDate } from '../shared/entry-date-converter';
 import { RevenueExpenseFacade } from './data-access/revenue-expense.facade';
 import { ExchangeFacade } from './facades/exchange.facade';
 import { CalculatorService } from './services/calculator.service';
@@ -27,6 +29,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
   private readonly calculatorService = inject(CalculatorService);
   private readonly cd = inject(ChangeDetectorRef);
   private readonly localStorageService = inject(LocalStorageService);
+  private readonly title = inject(Title);
 
   entryDates$: Observable<string[]> =
     this.revenueExpenseFacade.entryDates$.pipe(
@@ -53,6 +56,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
   exchangeRatesUpdateSubs?: Subscription;
 
   ngOnInit(): void {
+    this.title.setTitle('balance');
     this.exchangeRatesUpdateSubs =
       this.exchangeFacade.loadExchangeRateInterval();
     this.loadEntryListSubs = this.revenueExpenseFacade.loadEntryList();
@@ -63,6 +67,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
           this.revenueExpenseFacade.setSelectedEntryByMonthYear(monthYear);
           this.cd.detectChanges();
           this.localStorageService.set(LATEST_MONTH_YEAR_KEY, monthYear);
+          this.title.setTitle(`balance • ${convertEntryDate(monthYear)}`);
         }
       });
   }
@@ -108,6 +113,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
     ) {
       this.monthSelectionControl.setValue(latestMonthYear);
       this.revenueExpenseFacade.setSelectedEntryByMonthYear(latestMonthYear);
+      this.title.setTitle(`balance • ${convertEntryDate(latestMonthYear)}`);
     } else {
       this.monthSelectionControl.setValue('');
     }
