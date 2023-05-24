@@ -47,13 +47,13 @@ export class AuthService {
       key: user.key,
       platform: (user as PlatformUser).platform,
     };
-    const expiresIn = new Date().getTime() + 600 * 1000;
+    const now = Date.now();
 
     return {
       access_token: this.jwtService.sign(payload, {
-        expiresIn: process.env.JWT_TOKEN_EXPIRE_TIME,
+        expiresIn: now + process.env.JWT_TOKEN_EXPIRE_TIME,
       }),
-      expiresIn,
+      expiresIn: now + process.env.JWT_TOKEN_EXPIRE_TIME,
       key: user.key,
     };
   }

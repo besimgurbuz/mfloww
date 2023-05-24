@@ -9,10 +9,10 @@
     {{ _title }}
   </h1>
   <div
-    class="entries w-full flex flex-col gap-2"
+    class="entries w-full flex flex-col gap-2 items-center"
     [ngClass]="{
-      'items-end': type === 'revenue',
-      'items-start': type === 'expense'
+      ' md:items-end': type === 'revenue',
+      'md:items-start': type === 'expense'
     }"
   >
     <mfloww-money-table-entry
@@ -29,20 +29,22 @@
       *ngIf="!_addingModeActive"
       (clicked)="_addingModeActive = !_addingModeActive"
       [ngClass]="_classMap[type]"
+      class="mt-10 md:mt-5"
     >
       <mfloww-view-icon
         type="plus"
-        class="w-[40px]"
+        class="w-[35px]"
         color="currentColor"
       ></mfloww-view-icon>
     </mfloww-view-button>
     <div
-      class="relative max-w-[350px] h-[40px] flex items-center"
+      class="relative mt-10 px-[10px] md:mt-5 max-w-[380px] h-[39px] flex"
       [ngClass]="_classMap[type]"
       *ngIf="_addingModeActive"
     >
       <mfloww-view-entry-input
         [currencies]="currencies"
+        [selectedCurrency]="baseCurrency"
         [autofocus]="true"
         [entryType]="type"
         (entryCreated)="handleNewEntry($event)"
@@ -50,18 +52,14 @@
         #entryInput
       ></mfloww-view-entry-input>
       <div
-        class="absolute flex gap-2 m-auto top-0 bottom-0"
+        class="flex gap-2 m-auto top-0 bottom-0 items-center"
         [ngClass]="{
-          '-left-[82px]': type === 'revenue',
-          '-right-[82px]': type === 'expense'
+          'md:-left-[82px] md:flex-row-reverse': type === 'revenue',
+          'md:-right-[82px]': type === 'expense'
         }"
       >
         <mfloww-view-button
-          class="flex flex-grow-0 w-[35px] h-[35px]"
-          [ngClass]="{
-            'order-2': type === 'revenue',
-            'order-1': type === 'expense'
-          }"
+          class="flex flex-grow-0 w-[28px] h-[28px] md:w-[35px] md:h-[35px]"
           (clicked)="
             entryInput._entryFormGroup.valid &&
               handleNewEntry(entryInput._entryFormGroup.value)
@@ -73,11 +71,7 @@
           ></mfloww-view-icon>
         </mfloww-view-button>
         <mfloww-view-button
-          class="flex flex-grow-0 w-[35px] h-[35px]"
-          [ngClass]="{
-            'order-1': type === 'revenue',
-            'order-2': type === 'expense'
-          }"
+          class="flex flex-grow-0 w-[28px] h-[28px] md:w-[35px] md:h-[35px]"
           (clicked)="_addingModeActive = false"
         >
           <mfloww-view-icon

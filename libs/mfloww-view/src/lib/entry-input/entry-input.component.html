@@ -1,11 +1,14 @@
 <form
-  class="flex w-full h-full border-2 border-solid border-mfloww_fg rounded hover:border-mfloww_blue focus-within:border-mfloww_blue"
+  class="flex w-full h-full border-2 border-solid border-mfloww_fg rounded hover:border-mfloww_blue focus-within:border-mfloww_blue text-xs md:text-sm"
   [formGroup]="_entryFormGroup"
   (keydown.enter)="handleEntrySubmit($event)"
   (ngSubmit)="handleEntrySubmit()"
 >
-  <div class="currency flex">
-    <select formControlName="currency" class="bg-mfloww_bg outline-none">
+  <div class="currency flex basis-1/2 max-w-[50%]">
+    <select
+      formControlName="currency"
+      class="bg-mfloww_bg outline-none basis-[40%] max-w-[40%]"
+    >
       <option
         *ngFor="let currency of currencies; let first = first"
         [selected]="first"
@@ -16,16 +19,14 @@
     </select>
     <input
       #amountInput
-      class="w-2/3 h-full bg-mfloww_bg outline-none px-2"
+      class="basis-[60%] max-w-[60%] h-full bg-mfloww_bg outline-none pl-2"
       formControlName="amount"
       type="number"
-      mflowwViewAmount
       [placeholder]="entryType === 'revenue' ? '1000' : '-1000'"
-      [mflowwViewAmountType]="entryType"
     />
   </div>
   <span class="w-[2px] h-[20px] bg-mfloww_fg self-center"></span>
-  <div class="label px-2 self-center w-full">
+  <div class="label px-2 self-center w-full basis-1/2">
     <input
       class="h-full bg-mfloww_bg border-none w-full outline-none"
       formControlName="label"

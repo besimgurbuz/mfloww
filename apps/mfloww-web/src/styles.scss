@@ -63,10 +63,12 @@ body {
   color: var(--app-white);
 }
 
-input[type='number']::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+input[type='number'] {
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    color-scheme: dark;
+  }
 }
-
 .fade-in {
   animation: fade-in;
   animation-duration: 1s;

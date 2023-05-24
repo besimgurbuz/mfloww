@@ -44,12 +44,22 @@ export class MoneyTableEntryComponent {
   _barClassMap: Record<RevenueExpenseRecordType, string[]> = {
     revenue: [
       'bg-mfloww_success',
-      'rounded-l',
+      'md:rounded-l',
       'justify-start',
       'px-2',
       'order-3',
+      'rounded-r',
+      'md:rounded-r-none',
     ],
-    expense: ['bg-mfloww_fatal', 'rounded-r', 'justify-end', 'px-2', 'order-1'],
+    expense: [
+      'bg-mfloww_fatal',
+      'md:rounded-r',
+      'justify-end',
+      'px-2',
+      'order-1',
+      'rounded-l',
+      'md:rounded-l-none',
+    ],
   };
   _shouldShowLabelOutside?: boolean;
   _shouldShowAmountOutside?: boolean;

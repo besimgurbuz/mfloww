@@ -32,8 +32,8 @@ export class MoneyTableComponent {
   _title = '';
   _addingModeActive = false;
   _classMap: Record<RevenueExpenseRecordType, string> = {
-    revenue: 'text-mfloww_success pr-10',
-    expense: 'text-mfloww_fatal pl-10',
+    revenue: 'text-mfloww_success md:pr-6 md:flex-row-reverse',
+    expense: 'text-mfloww_fatal md:pl-6',
   };
 
   get currencies() {

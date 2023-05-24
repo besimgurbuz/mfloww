@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RevenueExpenseRecordType, SupportedCurrency } from '@mfloww/common';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'mfloww-view-entry-input',
@@ -19,6 +20,11 @@ import { RevenueExpenseRecordType, SupportedCurrency } from '@mfloww/common';
 })
 export class MflowwEntryInputComponent implements AfterViewInit {
   @Input() currencies: SupportedCurrency[] = [];
+  @Input() set selectedCurrency(currency: SupportedCurrency) {
+    if (currency) {
+      this._entryFormGroup.get('currency')?.setValue(currency);
+    }
+  }
   @Input() autofocus = false;
   @Input() entryType: RevenueExpenseRecordType = 'revenue';
 
@@ -37,7 +43,21 @@ export class MflowwEntryInputComponent implements AfterViewInit {
     label: ['', Validators.required],
   });
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+    const amountControl = this._entryFormGroup.get('amount');
+    amountControl?.valueChanges
+      .pipe(
+        filter((amountValue) => {
+          return (
+            (this.entryType === 'revenue' && amountValue < 0) ||
+            (this.entryType === 'expense' && amountValue > 0)
+          );
+        })
+      )
+      .subscribe((amountValue) => {
+        amountControl.setValue(amountValue * -1, { emitEvent: false });
+      });
+  }
 
   ngAfterViewInit(): void {
     if (this.autofocus) {

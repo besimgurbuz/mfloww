@@ -1,5 +1,5 @@
 <div
-  class="flex items-center gap-3 group overflow-hidden text-sm"
+  class="flex flex-row-reverse md:flex-row items-center gap-2 group overflow-hidden text-sm"
   [ngClass]="{
     'justify-end': type === 'revenue',
     'justify-start': type === 'expense'
@@ -19,9 +19,10 @@
   <div
     *ngIf="_shouldShowAmountOutside"
     [ngClass]="{
-      'text-mfloww_success order-2': type === 'revenue',
-      'text-mfloww_fatal order-3': type === 'expense'
+      'text-mfloww_success': type === 'revenue',
+      'text-mfloww_fatal': type === 'expense'
     }"
+    class="order-2"
   >
     <h3>{{ amount | currency : currency }}</h3>
   </div>
@@ -59,7 +60,7 @@
   >
     <div *ngIf="deletable">
       <mfloww-view-button
-        class="flex flex-grow-0 w-[40px] h-[40px] p-[5px]"
+        class="flex flex-grow-0 w-[28px] h-[28px] md:w-[35px] md:h-[35px]"
         (clicked)="deletionTriggered.emit()"
       >
         <mfloww-view-icon
