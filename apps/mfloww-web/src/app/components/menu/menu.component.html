@@ -8,13 +8,13 @@
       <a
         routerLink="/user/sign-in"
         class="px-5 py-2 hover:opacity-70 hover:cursor-pointer text-mfloww_white"
-        >Sign in</a
+        >{{ 'Common.SignIn' | translate }}</a
       >
       <a
         routerLink="/user/sign-up"
         class="px-5 py-2 border-2 border-solid border-mfloww_white text-mfloww_white rounded hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
       >
-        Sign up
+        {{ 'Common.SignUp' | translate }}
       </a>
     </div>
     <mfloww-view-overlay-panel class="md:hidden self-center" #overlayPanel>
@@ -29,13 +29,13 @@
           class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"
           routerLink="/user/sign-in"
           (click)="overlayPanel._opened = false"
-          >Sign in</a
+          >{{ 'Common.SignIn' | translate }}</a
         >
         <a
           class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"
           routerLink="/user/sign-up"
           (click)="overlayPanel._opened = false"
-          >Sign up</a
+          >{{ 'Common.SignUp' }}</a
         >
       </ng-container>
     </mfloww-view-overlay-panel>
@@ -53,13 +53,13 @@
           class="w-full px-6 py-3 text-sm"
           routerLink="/user/settings"
           (click)="overlayPanel._opened = false"
-          >Settings</a
+          >{{ 'Menu.Settings' | translate }}</a
         >
         <button
           class="w-full px-6 py-3 text-sm"
           (click)="logOutTriggered.emit(); overlayPanel._opened = false"
         >
-          Log out
+          {{ 'Menu.LogOut' | translate }}
         </button>
       </ng-container>
     </mfloww-view-overlay-panel>

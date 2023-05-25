@@ -6,6 +6,7 @@ import {
   MflowwIconComponent,
   MflowwOverlayPanelComponent,
 } from '@mfloww/view';
+import { TranslateModule } from '@ngx-translate/core';
 import { BannerComponent } from './components/banner/banner.component';
 import { FadeDirective } from './directives/fade/fade.directive';
 
@@ -24,6 +25,7 @@ import { FadeDirective } from './directives/fade/fade.directive';
     MflowwIconComponent,
     MflowwButtonComponent,
     FadeDirective,
+    TranslateModule,
   ],
 })
 export class SharedModule {}

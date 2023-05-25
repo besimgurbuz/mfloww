@@ -8,10 +8,8 @@
   >
     <h1
       class="lg:w-3/5 md:order-1 order-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-mfloww_success"
-    >
-      Make your money flow
-      <span class="text-mfloww_blue">securely</span> visible
-    </h1>
+      [innerHTML]="'Landing.HeroText' | translate"
+    ></h1>
     <mfloww-landing-image
       class="hidden lg:block md:w-1/2 lg:w-2/5 md:order-2 order-1 w-[60%] self-center"
     >
@@ -24,11 +22,10 @@
   >
     <div class="flex flex-col gap-6" mflowwFade="out" [mflowwFadeDelay]="300">
       <h1 class="text-mfloww_success text-2xl md:text-4xl">
-        Stop handing over your data
+        {{ 'Landing.InfluenceHeader1' | translate }}
       </h1>
       <p class="sm:max-w-[60%]">
-        Every data is encrypted with a strong key uniquely created for you and
-        stored on your device. No data belonging to you can be processed
+        {{ 'Landing.InfluenceDesc1' | translate }}
       </p>
     </div>
     <div
@@ -37,11 +34,18 @@
       [mflowwFadeDelay]="300"
     >
       <h1 class="text-mfloww_success text-2xl md:text-4xl">
-        Visualize all types of money flows
+        {{ 'Landing.InfluenceHeader2' | translate }}
       </h1>
       <p class="sm:max-w-[60%]">
-        See your different revenue and expense types in the currency type you
-        specify
+        {{ 'Landing.InfluenceDesc2' | translate }}
+      </p>
+    </div>
+    <div class="flex flex-col gap-6" mflowwFade="out" [mflowwFadeDelay]="300">
+      <h1 class="text-mfloww_success text-2xl md:text-4xl">
+        {{ 'Landing.InfluenceHeader3' | translate }}
+      </h1>
+      <p class="sm:max-w-[60%]">
+        {{ 'Landing.InfluenceDesc3' | translate }}
       </p>
     </div>
   </div>
@@ -49,12 +53,14 @@
     class="flex flex-col gap-16 justify-center items-center px-6 py-10 md:py-16 md:px-28 min-h-[400px] w-full"
     mflowwFade="in"
   >
-    <h1 class="text-xl xs:text-3xl">Start using now</h1>
+    <h1 class="text-xl xs:text-3xl">
+      {{ 'Landing.StartUsingNow' | translate }}
+    </h1>
     <a
       class="px-5 py-2 border-2 border-solid rounded text-mfloww_white hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
       routerLink="/user/sign-up"
     >
-      Sign up
+      {{ 'Common.SignUp' | translate }}
     </a>
   </div>
 </div>

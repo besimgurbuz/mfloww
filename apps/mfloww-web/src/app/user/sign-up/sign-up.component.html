@@ -3,13 +3,15 @@
 >
   <main class="flex flex-col items-center justify-start flex-grow gap-[1.5rem]">
     <div class="flex flex-col gap-4 items-center text-center">
-      <h1 class="text-3xl md:text-5xl text-mfloww_success">Sign up</h1>
+      <h1 class="text-3xl md:text-5xl text-mfloww_success">
+        {{ 'Common.SignUp' | translate }}
+      </h1>
       <p class="text-xs md:text-sm">
-        Alredy have an account?
+        {{ 'SignUp.HaveAccountQuestion' | translate }}
         <a
           [routerLink]="'/user/sign-in'"
           class="text-mfloww_blue whitespace-nowrap"
-          >Sign in</a
+          >{{ 'Common.SignIn' | translate }}</a
         >
       </p>
     </div>
@@ -18,7 +20,7 @@
         <mfloww-platform-button [platfrom]="platform"></mfloww-platform-button>
       </ng-container>
     </div>
-    <span class="text-sm">or</span>
+    <span class="text-sm">{{ 'SignUp.Or' | translate }}</span>
     <form
       class="flex flex-col items-center gap-4 w-full max-w-[450px]"
       [formGroup]="signUpForm"
@@ -26,21 +28,21 @@
     >
       <mfloww-view-input
         type="text"
-        placeholder="Username"
+        [placeholder]="'Common.Username' | translate"
         formControlName="username"
         autocomplete="username"
         name="Username"
       ></mfloww-view-input>
       <mfloww-view-input
         type="email"
-        placeholder="E-mail"
+        [placeholder]="'Common.Email' | translate"
         formControlName="email"
         autocomplete="email"
-        name="E-mail"
+        name="Email"
       ></mfloww-view-input>
       <mfloww-view-input
         type="password"
-        placeholder="Password"
+        [placeholder]="'Common.Password' | translate"
         formControlName="password"
         name="Password"
         autocomplete="new-password"
@@ -50,7 +52,7 @@
       class="border-solid border-2 rounded border-mfloww_white px-10 py-2 hover:bg-mfloww_white hover:text-mfloww_bg"
       (click)="submitForm()"
     >
-      Sign up
+      {{ 'Common.SignUp' | translate }}
     </button>
   </main>
 </div>

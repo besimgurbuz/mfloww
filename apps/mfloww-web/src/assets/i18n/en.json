@@ -1,0 +1,44 @@
+{
+  "Landing": {
+    "HeroText": "Make your money flow <span class='text-mfloww_blue'>securely</span> visible",
+    "HeroImageAlt": "Screenshots of mfloww's graph and balance pages",
+    "InfluenceHeader1": "Stop handing over your data",
+    "InfluenceDesc1": "Every data is encrypted with a strong key uniquely created for you and stored on your device. No data belonging to you can be processed",
+    "InfluenceHeader2": "Exchange diverse currency collection",
+    "InfluenceDesc2": "Add your income/expense in any currency you want from a large exchange rate pool",
+    "InfluenceHeader3": "Visualize your money flow like never before",
+    "InfluenceDesc3": "Detailly inspect your money flow on a very talented graph",
+    "StartUsingNow": "Start using now"
+  },
+  "Menu": {
+    "Settings": "Settings",
+    "LogOut": "Log out"
+  },
+  "Footer": {
+    "Copyright": "© Copyright 2022 mfloww",
+    "TwitterIconTitle": "mfloww's twitter page",
+    "GithubIconTitle": "mfloww's github page",
+    "About": "About",
+    "Team": "Team",
+    "FAQ": "FAQ",
+    "Changelog": "Changelog",
+    "Developers": "Developers",
+    "Documentation": "Documentation",
+    "Contribute": "Contribute"
+  },
+  "SignIn": {
+    "DontHaveAccountQuestion": "Don't have an account?"
+  },
+  "SignUp": {
+    "HaveAccountQuestion": "Alredy have an account?",
+    "Or": "or"
+  },
+  "Settings": {},
+  "Common": {
+    "SignIn": "Sign in",
+    "SignUp": "Sign up",
+    "Email": "Email",
+    "Password": "Password",
+    "Username": "Username"
+  }
+}

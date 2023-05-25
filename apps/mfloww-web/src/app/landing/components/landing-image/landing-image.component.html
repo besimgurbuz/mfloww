@@ -44,7 +44,8 @@
   <img
     #landing_image
     src="assets/landing-content.png"
-    alt="Landing image"
+    [attr.alt]="'Landing.HeroImageAlt' | translate"
+    [title]="'Landing.HeroImageAlt' | translate"
     (load)="_imageLoaded = true"
   />
 </div>

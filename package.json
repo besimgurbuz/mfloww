@@ -30,6 +30,8 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/schedule": "^2.2.2",
     "@nguniversal/express-engine": "^14.2.1",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "@nrwl/angular": "14.8.1",
     "@prisma/client": "^4.9.0",
     "axios": "^1.4.0",
