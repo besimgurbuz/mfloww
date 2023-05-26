@@ -9,7 +9,7 @@
     >
       <option value disabled selected>Select a date</option>
       <option *ngFor="let entryDate of entryDates$ | async" [value]="entryDate">
-        {{ entryDate | entryDate }}
+        {{ 'MonthYearSelection.' + (entryDate | entryDate) | translate }}
       </option>
     </select>
     <mfloww-view-month-year-picker
@@ -29,7 +29,7 @@
   </div>
   <div
     *ngIf="monthSelectionControl.value && (hasEntry$ | async)"
-    class="revenue-expense-section pb-44 lg:pb-0 flex flex-wrap justify-center gap-8 md:gap-0 w-full"
+    class="revenue-expense-section pb-44 lg:pb-32 flex flex-wrap justify-center gap-8 md:gap-0 w-full"
   >
     <ng-container
       *ngIf="{

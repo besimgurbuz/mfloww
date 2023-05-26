@@ -1,0 +1,111 @@
+{
+  "App": {
+    "MainTitle": "mfloww • güvenli para akışı"
+  },
+  "Landing": {
+    "HeroText": "Paranızın akışını <span class='text-mfloww_blue'>güvenli</span> bir şekilde görünür kılın",
+    "HeroImageAlt": "mfloww'nun grafik ve bakiye sayfalarının ekran görüntüleri",
+    "InfluenceHeader1": "Verilerinizi teslim etmeyi durdurun",
+    "InfluenceDesc1": "Her veri, size özel olarak oluşturulan güçlü bir anahtarla şifrelenir ve cihazınızda saklanır. Size ait hiçbir veri işlenemez.",
+    "InfluenceHeader2": "Çeşitli para birimi koleksiyonunu değiştirin",
+    "InfluenceDesc2": "Büyük bir döviz kuru havuzundan istediğiniz herhangi bir para biriminde gelir/giderinizi ekleyin",
+    "InfluenceHeader3": "Paranızın akışını hiç olmadığı kadar görselleştirin",
+    "InfluenceDesc3": "Çok yetenekli bir grafik üzerinde para akışınızı ayrıntılı olarak inceleyin",
+    "StartUsingNow": "Şimdi kullanmaya başlayın"
+  },
+  "Menu": {
+    "LogOut": "Çıkış yap"
+  },
+  "Footer": {
+    "Copyright": "© Telif Hakkı 2022 mfloww",
+    "TwitterIconTitle": "mfloww'nun Twitter sayfası",
+    "GithubIconTitle": "mfloww'nun GitHub sayfası",
+    "About": "Hakkında",
+    "Team": "Ekip",
+    "FAQ": "Sıkça Sorulan Sorular",
+    "Changelog": "Değişiklik Günlüğü",
+    "Developers": "Geliştiriciler",
+    "Documentation": "Belgeler",
+    "Contribute": "Katkıda Bulun"
+  },
+  "SignIn": {
+    "DontHaveAccountQuestion": "Hesabınız yok mu?"
+  },
+  "SignUp": {
+    "HaveAccountQuestion": "Zaten bir hesabınız var mı?"
+  },
+  "Settings": {
+    "Profile": "Profil",
+    "ProfileDesc": "E-posta adresiniz mfloww'daki kimliğinizdir. E-posta veya kullanıcı adınızı değiştirmek aynı zamanda oturumunuzun süresinin dolmasına neden olur.",
+    "EncryptionKey": "Şifreleme Anahtarı",
+    "Save": "Kaydet",
+    "PasswordDesc": "Şifrenizi değiştirmek aynı zamanda oturumunuzun süresinin dolmasına neden olur.",
+    "CurrentPassword": "Mevcut şifre",
+    "NewPassword": "Yeni şifre",
+    "ConfirmPassword": "Yeni şifreyi onayla",
+    "PasswordsShouldMatch": "Şifreler eşleşmelidir",
+    "ChangeBaseCurrency": "Baz para birimini değiştir",
+    "ChangeBaseCurrencyDesc": "Hesaplamalar seçilen para birimine dönüştürülecektir",
+    "DeleteLocalDB": "Yerel veritabanını sil",
+    "DeleteLocalDBDesc": "Bu cihazdaki veriler silinecektir. <strong>Uyarı</strong>: Silme işlemi geri alınamaz.",
+    "DeleteAccount": "Hesabı sil",
+    "DeleteAccountDesc": "Hesabınız ve bu cihazdaki veriler silinecektir. <strong>Uyarı</strong>: Silme işlemi geri alınamaz."
+  },
+  "RevenueExpense": {
+    "Balance": "bakiye",
+    "BalanceDate": "bakiye • {{date}}",
+    "Revenues": "gelirler",
+    "Expenses": "giderler",
+    "Total": "TOPLAM"
+  },
+  "MonthSelection": {
+    "January": "Ocak",
+    "February": "Şubat",
+    "March": "Mart",
+    "April": "Nisan",
+    "May": "Mayıs",
+    "June": "Haziran",
+    "July": "Temmuz",
+    "August": "Ağustos",
+    "September": "Eylül",
+    "October": "Ekim",
+    "November": "Kasım",
+    "December": "Aralık"
+  },
+  "MonthYearPicker": {
+    "Jan": "Oca",
+    "Feb": "Şub",
+    "Mar": "Mar",
+    "Apr": "Nis",
+    "May": "May",
+    "Jun": "Haz",
+    "Jul": "Tem",
+    "Aug": "Ağu",
+    "Sep": "Eyl",
+    "Oct": "Eki",
+    "Nov": "Kas",
+    "Dec": "Ara",
+    "Ok": "Tamam"
+  },
+  "ValidationMessages": {
+    "Required": "{{name}} zorunlu",
+    "Email": "Bu alan e-posta formatında olmalıdır",
+    "MaxLength": "Bu alan en fazla {{requiredLength}} karakter uzunluğunda olabilir",
+    "MinLength": "Bu alan en az {{requiredLength}} karakter uzunluğunda olmalıdır",
+    "Pattern": "Bu alan geçerli değil"
+  },
+  "Input": {
+    "Copy": "Kopyala",
+    "Copied": "Kopyalandı"
+  },
+  "Common": {
+    "Settings": "Ayarlar",
+    "SignIn": "Oturum aç",
+    "SignUp": "Kaydol",
+    "Email": "E-posta",
+    "Or": "veya",
+    "ContinueWithGoogle": "Google ile devam edin",
+    "Password": "Şifre",
+    "Username": "Kullanıcı adı"
+  }
+}

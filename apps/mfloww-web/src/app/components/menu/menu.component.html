@@ -50,13 +50,13 @@
       </button>
       <ng-container mflowwPanelContent>
         <a
-          class="w-full px-6 py-3 text-sm"
+          class="w-full text-center p-4 text-sm min-w-[120px]"
           routerLink="/user/settings"
           (click)="overlayPanel._opened = false"
-          >{{ 'Menu.Settings' | translate }}</a
+          >{{ 'Common.Settings' | translate }}</a
         >
         <button
-          class="w-full px-6 py-3 text-sm"
+          class="w-full text-center p-4 text-sm min-w-[120px]"
           (click)="logOutTriggered.emit(); overlayPanel._opened = false"
         >
           {{ 'Menu.LogOut' | translate }}

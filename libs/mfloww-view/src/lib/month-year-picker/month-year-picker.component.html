@@ -25,14 +25,16 @@
         [disabled]="_selectionFilter[i]"
         (click)="changeSelection(i, 'month')"
       >
-        <h4 class="text-sm">{{ monthAbbr }}</h4>
+        <h4 class="text-sm">
+          {{ 'MonthYearPicker.' + monthAbbr | translate }}
+        </h4>
       </button>
     </div>
     <button
       class="self-end rounded px-4 py-1 border-2 border-solid border-mfloww_success hover:bg-mfloww_success"
       (click)="completeSelection(); overlayPanel._opened = false"
     >
-      <p class="text-xs">Ok</p>
+      <p class="text-xs">{{ 'MonthYearPicker.Ok' | translate }}</p>
     </button>
   </div>
 </mfloww-view-overlay-panel>

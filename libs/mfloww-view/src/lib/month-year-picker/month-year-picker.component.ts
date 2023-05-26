@@ -6,6 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { MflowwOverlayPanelComponent } from '../overlay-panel/overlay-panel.component';
 import { MflowwMonthYearHeaderComponent } from './components/header/header.component';
 
@@ -32,6 +33,7 @@ const dateFilter = (date: Date) => {
     CommonModule,
     MflowwOverlayPanelComponent,
     MflowwMonthYearHeaderComponent,
+    TranslateModule,
   ],
   templateUrl: './month-year-picker.component.html',
   styles: [
@@ -44,10 +46,11 @@ const dateFilter = (date: Date) => {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MflowwMonthYearPickerComponent {
-  @Input() set value(value: `${number}_${number}`) {
-    const [month, year] = value.split('_');
-    this._selectedMonth = Number(month);
-    this._selectedYear = Number(year);
+  @Input() set value(value: MonthYearSelection) {
+    if (value) {
+      this._selectedMonth = value.month;
+      this._selectedYear = value.year;
+    }
   }
   @Output() selection: EventEmitter<MonthYearSelection> = new EventEmitter();
 

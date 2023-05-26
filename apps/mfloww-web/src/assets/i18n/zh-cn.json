@@ -1,0 +1,111 @@
+{
+  "App": {
+    "MainTitle": "mfloww • 安全资金流动"
+  },
+  "Landing": {
+    "HeroText": "让您的资金流动<span class='text-mfloww_blue'>安全</span>可见",
+    "HeroImageAlt": "mfloww的图表和余额页面的截图",
+    "InfluenceHeader1": "停止提供您的数据",
+    "InfluenceDesc1": "每个数据都使用独特的强密钥加密，并存储在您的设备上。您的数据不会被处理",
+    "InfluenceHeader2": "交换多样的货币收藏",
+    "InfluenceDesc2": "从大量汇率库中添加您想要的任何货币的收入/支出",
+    "InfluenceHeader3": "以前所未有的方式可视化您的资金流动",
+    "InfluenceDesc3": "详细检查您的资金流动情况，使用一款非常出色的图表",
+    "StartUsingNow": "立即开始使用"
+  },
+  "Menu": {
+    "LogOut": "退出"
+  },
+  "Footer": {
+    "Copyright": "© 2022版权归 mfloww",
+    "TwitterIconTitle": "mfloww的 Twitter 页面",
+    "GithubIconTitle": "mfloww的 Github 页面",
+    "About": "关于",
+    "Team": "团队",
+    "FAQ": "常见问题",
+    "Changelog": "更新日志",
+    "Developers": "开发人员",
+    "Documentation": "文档",
+    "Contribute": "贡献"
+  },
+  "SignIn": {
+    "DontHaveAccountQuestion": "还没有帐号？"
+  },
+  "SignUp": {
+    "HaveAccountQuestion": "已经有帐号了？"
+  },
+  "Settings": {
+    "Profile": "个人资料",
+    "ProfileDesc": "您的电子邮件地址是您在 mfloww 上的身份标识。更改电子邮件或用户名也会使您的会话过期。",
+    "EncryptionKey": "加密密钥",
+    "Save": "保存",
+    "PasswordDesc": "更改密码也会使您的会话过期。",
+    "CurrentPassword": "当前密码",
+    "NewPassword": "新密码",
+    "ConfirmPassword": "确认新密码",
+    "PasswordsShouldMatch": "密码必须匹配",
+    "ChangeBaseCurrency": "更改基本货币",
+    "ChangeBaseCurrencyDesc": "计算将转换为所选货币",
+    "DeleteLocalDB": "删除本地数据库",
+    "DeleteLocalDBDesc": "将删除此设备上的数据。 <strong>警告：</strong>此操作无法撤销。",
+    "DeleteAccount": "删除帐号",
+    "DeleteAccountDesc": "将删除您的帐号和此设备上的数据。 <strong>警告：</strong>此操作无法撤销。"
+  },
+  "RevenueExpense": {
+    "Balance": "余额",
+    "BalanceDate": "余额 • {{date}}",
+    "Revenues": "收入",
+    "Expenses": "支出",
+    "Total": "总计"
+  },
+  "MonthSelection": {
+    "January": "一月",
+    "February": "二月",
+    "March": "三月",
+    "April": "四月",
+    "May": "五月",
+    "June": "六月",
+    "July": "七月",
+    "August": "八月",
+    "September": "九月",
+    "October": "十月",
+    "November": "十一月",
+    "December": "十二月"
+  },
+  "MonthYearPicker": {
+    "Jan": "一月",
+    "Feb": "二月",
+    "Mar": "三月",
+    "Apr": "四月",
+    "May": "五月",
+    "Jun": "六月",
+    "Jul": "七月",
+    "Aug": "八月",
+    "Sep": "九月",
+    "Oct": "十月",
+    "Nov": "十一月",
+    "Dec": "十二月",
+    "Ok": "确定"
+  },
+  "ValidationMessages": {
+    "Required": "{{name}} 是必填项",
+    "Email": "此字段应为电子邮件格式",
+    "MaxLength": "此字段最多可以有 {{requiredLength}} 个字符",
+    "MinLength": "此字段最少应有 {{requiredLength}} 个字符",
+    "Pattern": "此字段无效"
+  },
+  "Input": {
+    "Copy": "复制",
+    "Copied": "已复制"
+  },
+  "Common": {
+    "Settings": "设置",
+    "SignIn": "登录",
+    "SignUp": "注册",
+    "Email": "电子邮件",
+    "Or": "或",
+    "ContinueWithGoogle": "使用 Google 登录",
+    "Password": "密码",
+    "Username": "用户名"
+  }
+}

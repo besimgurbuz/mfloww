@@ -6,7 +6,7 @@
   }"
 >
   <h1 class="text-2xl lg:text-3xl w-fit" [ngClass]="_classMap[type]">
-    {{ _title }}
+    {{ _titlesMap[_type] | translate }}
   </h1>
   <div
     class="entries w-full flex flex-col gap-2 items-center"
@@ -89,7 +89,7 @@
       'pl-10 text-mfloww_fatal flex-row-reverse': type === 'expense'
     }"
   >
-    <h3>TOTAL</h3>
+    <h3>{{ 'RevenueExpense.Total' | translate }}</h3>
     <h3>{{ total | currency : baseCurrency }}</h3>
   </div>
 </div>

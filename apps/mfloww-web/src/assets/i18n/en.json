@@ -1,4 +1,7 @@
 {
+  "App": {
+    "MainTitle": "mfloww • secure money flow"
+  },
   "Landing": {
     "HeroText": "Make your money flow <span class='text-mfloww_blue'>securely</span> visible",
     "HeroImageAlt": "Screenshots of mfloww's graph and balance pages",
@@ -11,7 +14,6 @@
     "StartUsingNow": "Start using now"
   },
   "Menu": {
-    "Settings": "Settings",
     "LogOut": "Log out"
   },
   "Footer": {
@@ -30,14 +32,79 @@
     "DontHaveAccountQuestion": "Don't have an account?"
   },
   "SignUp": {
-    "HaveAccountQuestion": "Alredy have an account?",
-    "Or": "or"
+    "HaveAccountQuestion": "Alredy have an account?"
   },
-  "Settings": {},
+  "Settings": {
+    "Profile": "Profile",
+    "ProfileDesc": "Your e-mail adress is your identity on mfloww. Changing your e-mail or username will also expires your session.",
+    "EncryptionKey": "Encryption Key",
+    "Save": "Save",
+    "PasswordDesc": "Changing your password will also expires your session.",
+    "CurrentPassword": "Current password",
+    "NewPassword": "New password",
+    "ConfirmPassword": "Confirm new password",
+    "PasswordsShouldMatch": "Passwords should match",
+    "ChangeBaseCurrency": "Change base currency",
+    "ChangeBaseCurrencyDesc": "Calculations will be exchanged to selected currency",
+    "DeleteLocalDB": "Delete local database",
+    "DeleteLocalDBDesc": "Data on this device will be deleted. <strong>Warning</strong> deletion is irreversible.",
+    "DeleteAccount": "Delete account",
+    "DeleteAccountDesc": "Your account and data on this device will be deleted. <strong>Warning</strong> deletion is irreversible."
+  },
+  "RevenueExpense": {
+    "Balance": "balance",
+    "BalanceDate": "balance • {{date}}",
+    "Revenues": "revenues",
+    "Expenses": "expenses",
+    "Total": "TOTAL"
+  },
+  "MonthYearSelection": {
+    "January": "January {{year}}",
+    "February": "February {{year}}",
+    "March": "March {{year}}",
+    "April": "April {{year}}",
+    "May": "May {{year}}",
+    "June": "June {{year}}",
+    "July": "July {{year}}",
+    "August": "August {{year}}",
+    "September": "September {{year}}",
+    "October": "October {{year}}",
+    "November": "November {{year}}",
+    "December": "December {{year}}"
+  },
+  "MonthYearPicker": {
+    "Jan": "Jan",
+    "Feb": "Feb",
+    "Mar": "Mar",
+    "Apr": "Apr",
+    "May": "May",
+    "Jun": "Jun",
+    "Jul": "Jul",
+    "Aug": "Aug",
+    "Sep": "Sep",
+    "Oct": "Oct",
+    "Nov": "Nov",
+    "Dec": "Dec",
+    "Ok": "Ok"
+  },
+  "ValidationMessages": {
+    "Required": "{{name}} is required",
+    "Email": "This field should be in email format",
+    "MaxLength": "This field can be up to {{requiredLength}} characters long",
+    "MinLength": "This field must be at least {{requiredLength}} characters long",
+    "Pattern": "This field is not valid"
+  },
+  "Input": {
+    "Copy": "Copy",
+    "Copied": "Copied"
+  },
   "Common": {
+    "Settings": "Settings",
     "SignIn": "Sign in",
     "SignUp": "Sign up",
     "Email": "Email",
+    "Or": "or",
+    "ContinueWithGoogle": "Continue with Google",
     "Password": "Password",
     "Username": "Username"
   }

@@ -28,7 +28,7 @@
       [mflowwViewCopyClipboard]="_value"
       (copied)="informCopyEvent()"
     >
-      {{ _copied ? 'Copied' : 'Copy' }}
+      {{ _copied ? ('Input.Copied' | translate) : ('Input.Copy' | translate) }}
     </button>
   </div>
   <ng-container *ngIf="_dirty && _control.errors">
@@ -37,10 +37,12 @@
       class="absolute text-mfloww_fatal text-[10px]"
     >
       {{
-        errorMessages[firstError.key](
-          name || label || placeholder,
-          firstError.value?.requiredLength
-        )
+        errorMessages[firstError.key]
+          | translate
+            : {
+                name: name || label || placeholder,
+                requiredLength: firstError.value?.requiredLength
+              }
       }}
     </p>
   </ng-container>

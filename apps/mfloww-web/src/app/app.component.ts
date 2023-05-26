@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import {
   ActivatedRoute,
   RouteConfigLoadEnd,
@@ -7,6 +8,7 @@ import {
   Router,
 } from '@angular/router';
 import { MflowwDbService } from '@mfloww/db';
+import { TranslateService } from '@ngx-translate/core';
 import { filter, mergeMap, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { AuthService } from './core/auth.service';
 import { Message, MessengerService } from './core/messenger.service';
@@ -26,6 +28,8 @@ export class AppComponent implements OnInit, OnDestroy {
   readonly router = inject(Router);
   readonly route = inject(ActivatedRoute);
   readonly authService = inject(AuthService);
+  readonly titleService = inject(Title);
+  readonly translateService = inject(TranslateService);
   readonly _profileInfo$: Observable<ProfileInfo | null> =
     this.authService.profileInfo$;
 
@@ -69,6 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
           error: (err: HttpErrorResponse) => this.messenger.emitFromError(err),
         });
     }
+    // this.titleService.setTitle(this.translateService.instant('App.MainTitle'));
   }
 
   ngOnDestroy(): void {

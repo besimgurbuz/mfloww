@@ -14,7 +14,6 @@ import { RevenueExpenseRecord } from '../../../models/entry';
 export class MoneyTableComponent {
   @Input() set type(recordType: RevenueExpenseRecordType) {
     this._type = recordType;
-    this._title = `${this.type}s`;
   }
   get type() {
     return this._type;
@@ -29,7 +28,10 @@ export class MoneyTableComponent {
     new EventEmitter();
   @Output() entryDeletion: EventEmitter<number> = new EventEmitter();
 
-  _title = '';
+  _titlesMap: Record<RevenueExpenseRecordType, string> = {
+    revenue: 'RevenueExpense.Revenues',
+    expense: 'RevenueExpense.Expenses',
+  };
   _addingModeActive = false;
   _classMap: Record<RevenueExpenseRecordType, string> = {
     revenue: 'text-mfloww_success md:pr-6 md:flex-row-reverse',

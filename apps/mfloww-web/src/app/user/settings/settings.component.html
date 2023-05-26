@@ -1,13 +1,14 @@
 <div
-  class="flex flex-col w-full h-full items-center gap-10 lg:px-40 md:px-18 px-6 pb-10"
+  class="flex flex-col w-full h-full items-center gap-10 lg:px-40 md:px-18 px-6 pb-24"
 >
-  <h1 class="text-2xl sm:text-4xl text-mfloww_success">Settings</h1>
+  <h1 class="text-2xl sm:text-4xl text-mfloww_success">
+    {{ 'Common.Settings' | translate }}
+  </h1>
   <div class="flex flex-wrap gap-4 w-full items-center justify-around">
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
-      <h3 class="text-sm sm:text-lg">Profile</h3>
+      <h3 class="text-sm sm:text-lg">{{ 'Settings.Profile' | translate }}</h3>
       <p class="text-[10px] sm:text-xs opacity-50">
-        Your e-mail adress is your identity on mfloww. Changing your e-mail or
-        username will also expires your session.
+        {{ 'Settings.ProfileDesc' | translate }}
       </p>
     </div>
     <form
@@ -17,19 +18,19 @@
     >
       <mfloww-view-input
         formControlName="email"
-        placeholder="E-mail"
-        label="E-mail"
+        [placeholder]="'Common.Email' | translate"
+        [label]="'Common.Email' | translate"
         type="email"
       ></mfloww-view-input>
       <mfloww-view-input
         formControlName="username"
-        placeholder="Username"
-        label="Username"
+        [placeholder]="'Common.Username' | translate"
+        [label]="'Common.Username' | translate"
       ></mfloww-view-input>
       <mfloww-view-input
         formControlName="key"
-        placeholder="Encryption Key"
-        label="Encryption key"
+        [placeholder]="'Settings.EncryptionKey' | translate"
+        [label]="'Settings.EncryptionKey' | translate"
         [copyable]="true"
       ></mfloww-view-input>
       <button
@@ -41,7 +42,7 @@
         "
         type="submit"
       >
-        Save
+        {{ 'Settings.Save' | translate }}
       </button>
     </form>
   </div>
@@ -50,39 +51,39 @@
     *ngIf="!_profileInfo?.platform"
   >
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
-      <h3 class="text-sm sm:text-lg">Password</h3>
+      <h3 class="text-sm sm:text-lg">{{ 'Common.Password' | translate }}</h3>
       <p class="text-[10px] sm:text-xs opacity-50">
-        Changing your password will also expires your session.
+        {{ 'Settings.PasswordDesc' | translate }}
       </p>
     </div>
     <form
       [formGroup]="passwordGroup"
-      class="flex flex-col gap-6 relative flex-grow max-w-[450px] relative"
+      class="flex flex-col gap-6 flex-grow max-w-[450px] relative"
       (ngSubmit)="updatePassword()"
     >
       <mfloww-view-input
         formControlName="currentPassword"
-        placeholder="Current password"
-        label="Current password"
+        [placeholder]="'Settings.CurrentPassword' | translate"
+        [label]="'Settings.CurrentPassword' | translate"
         type="password"
       ></mfloww-view-input>
       <mfloww-view-input
         formControlName="newPassword"
-        placeholder="New password"
-        label="New password"
+        [placeholder]="'Settings.NewPassword' | translate"
+        [label]="'Settings.NewPassword' | translate"
         type="password"
       ></mfloww-view-input>
       <mfloww-view-input
         formControlName="confirmNewPassword"
-        placeholder="Confirm new password"
-        label="Confirm new password"
+        [placeholder]="'Settings.ConfirmPassword' | translate"
+        [label]="'Settings.ConfirmPassword' | translate"
         type="password"
       ></mfloww-view-input>
       <ng-container
         *ngIf="passwordGroup.errors?.['mismatch'] && passwordGroup.get('newPassword')?.dirty && passwordGroup.get('confirmNewPassword')?.dirty"
       >
         <p class="absolute text-mfloww_fatal text-[10px] bottom-[30px]">
-          Passwords should match
+          {{ 'Settings.PasswordsShouldMatch' | translate }}
         </p>
       </ng-container>
       <button
@@ -92,15 +93,17 @@
         "
         type="submit"
       >
-        Save
+        {{ 'Settings.Save' | translate }}
       </button>
     </form>
   </div>
   <div class="flex flex-wrap gap-4 w-full items-center justify-around">
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
-      <h3 class="text-sm sm:text-lg">Change base currency</h3>
+      <h3 class="text-sm sm:text-lg">
+        {{ 'Settings.ChangeBaseCurrency' | translate }}
+      </h3>
       <p class="text-[10px] sm:text-xs opacity-50">
-        Calculations will be exchanged to selected currency
+        {{ 'Settings.ChangeBaseCurrencyDesc' | translate }}
       </p>
     </div>
     <div class="flex flex-grow max-w-[450px]">
@@ -117,35 +120,39 @@
   </div>
   <div class="flex flex-wrap gap-4 w-full items-center justify-around">
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
-      <h3 class="text-sm sm:text-lg">Delete local database</h3>
-      <p class="text-[10px] sm:text-xs opacity-50">
-        Data on this device will be deleted.
-        <strong>Warning</strong> deletion is irreversible.
-      </p>
+      <h3 class="text-sm sm:text-lg">
+        {{ 'Settings.DeleteLocalDB' | translate }}
+      </h3>
+      <p
+        class="text-[10px] sm:text-xs opacity-50"
+        [innerHTML]="'Settings.DeleteLocalDBDesc' | translate"
+      ></p>
     </div>
     <div class="flex flex-grow max-w-[450px]">
       <button
         class="border-2 border-solid border-mfloww_fatal text-mfloww_fatal rounded text-sm px-6 py-3 hover:bg-mfloww_fatal hover:text-mfloww_white"
         (click)="handleDeleteLocalDatabase()"
       >
-        Delete local database
+        {{ 'Settings.DeleteLocalDB' | translate }}
       </button>
     </div>
   </div>
   <div class="flex flex-wrap gap-4 w-full items-center justify-around">
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
-      <h3 class="text-sm sm:text-lg">Delete account</h3>
-      <p class="text-[10px] sm:text-xs opacity-50">
-        Your account and data on this device will be deleted.
-        <strong>Warning</strong> deletion is irreversible.
-      </p>
+      <h3 class="text-sm sm:text-lg">
+        {{ 'Settings.DeleteAccount' | translate }}
+      </h3>
+      <p
+        class="text-[10px] sm:text-xs opacity-50"
+        [innerHTML]="'Settings.DeleteAccount' | translate"
+      ></p>
     </div>
     <div class="flex flex-grow max-w-[450px]">
       <button
         class="border-2 border-solid border-mfloww_fatal text-mfloww_fatal rounded text-sm px-6 py-3 hover:bg-mfloww_fatal hover:text-mfloww_white"
         (click)="handleDeleteUser()"
       >
-        Delete this account
+        {{ 'Settings.DeleteAccount' | translate }}
       </button>
     </div>
   </div>

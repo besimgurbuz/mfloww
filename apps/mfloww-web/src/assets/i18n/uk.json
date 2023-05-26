@@ -1,0 +1,111 @@
+{
+  "App": {
+    "MainTitle": "mfloww • безпечний рух грошей"
+  },
+  "Landing": {
+    "HeroText": "Зробіть свій грошовий потік <span class='text-mfloww_blue'>безпечним</span> та видимим",
+    "HeroImageAlt": "Скріншоти графіків та сторінок балансу mfloww",
+    "InfluenceHeader1": "Припиніть передавати свої дані",
+    "InfluenceDesc1": "Кожен дані шифрується міцним унікальним ключем, створеним спеціально для вас, і зберігається на вашому пристрої. Жодні дані, належні вам, не можуть бути оброблені",
+    "InfluenceHeader2": "Обмін різноманітними валютами",
+    "InfluenceDesc2": "Додайте свій дохід/витрати в будь-якій валюті з великого басейну обмінних курсів",
+    "InfluenceHeader3": "Візуалізуйте свій грошовий потік як ніколи раніше",
+    "InfluenceDesc3": "Детально огляньте свій грошовий потік на дуже талановитому графіку",
+    "StartUsingNow": "Почніть використовувати зараз"
+  },
+  "Menu": {
+    "LogOut": "Вийти"
+  },
+  "Footer": {
+    "Copyright": "© Авторські права 2022 mfloww",
+    "TwitterIconTitle": "Twitter-сторінка mfloww",
+    "GithubIconTitle": "Github-сторінка mfloww",
+    "About": "Про нас",
+    "Team": "Команда",
+    "FAQ": "Поширені питання",
+    "Changelog": "Журнал змін",
+    "Developers": "Розробники",
+    "Documentation": "Документація",
+    "Contribute": "Внести вклад"
+  },
+  "SignIn": {
+    "DontHaveAccountQuestion": "Не маєте облікового запису?"
+  },
+  "SignUp": {
+    "HaveAccountQuestion": "Вже маєте обліковий запис?"
+  },
+  "Settings": {
+    "Profile": "Профіль",
+    "ProfileDesc": "Ваша електронна адреса є вашою ідентичністю в mfloww. Зміна електронної адреси або імені також призведе до завершення вашої сесії.",
+    "EncryptionKey": "Ключ шифрування",
+    "Save": "Зберегти",
+    "PasswordDesc": "Зміна пароля також призведе до завершення вашої сесії.",
+    "CurrentPassword": "Поточний пароль",
+    "NewPassword": "Новий пароль",
+    "ConfirmPassword": "Підтвердити новий пароль",
+    "PasswordsShouldMatch": "Паролі повинні збігатися",
+    "ChangeBaseCurrency": "Змінити базову валюту",
+    "ChangeBaseCurrencyDesc": "Розрахунки будуть переведені в обрану валюту",
+    "DeleteLocalDB": "Видалити локальну базу даних",
+    "DeleteLocalDBDesc": "Дані на цьому пристрої будуть видалені. <strong>Увага:</strong> видалення незворотне.",
+    "DeleteAccount": "Видалити обліковий запис",
+    "DeleteAccountDesc": "Ваш обліковий запис та дані на цьому пристрої будуть видалені. <strong>Увага:</strong> видалення незворотне."
+  },
+  "RevenueExpense": {
+    "Balance": "баланс",
+    "BalanceDate": "баланс • {{date}}",
+    "Revenues": "доходи",
+    "Expenses": "витрати",
+    "Total": "ВСЬОГО"
+  },
+  "MonthSelection": {
+    "January": "Січень",
+    "February": "Лютий",
+    "March": "Березень",
+    "April": "Квітень",
+    "May": "Травень",
+    "June": "Червень",
+    "July": "Липень",
+    "August": "Серпень",
+    "September": "Вересень",
+    "October": "Жовтень",
+    "November": "Листопад",
+    "December": "Грудень"
+  },
+  "MonthYearPicker": {
+    "Jan": "Січ",
+    "Feb": "Лют",
+    "Mar": "Бер",
+    "Apr": "Кві",
+    "May": "Тра",
+    "Jun": "Чер",
+    "Jul": "Лип",
+    "Aug": "Сер",
+    "Sep": "Вер",
+    "Oct": "Жов",
+    "Nov": "Лис",
+    "Dec": "Гру",
+    "Ok": "Ок"
+  },
+  "ValidationMessages": {
+    "Required": "{{name}} обов'язково",
+    "Email": "Це поле повинно бути у форматі електронної пошти",
+    "MaxLength": "Це поле може містити до {{requiredLength}} символів",
+    "MinLength": "Це поле повинно містити принаймні {{requiredLength}} символів",
+    "Pattern": "Це поле недійсне"
+  },
+  "Input": {
+    "Copy": "Копіювати",
+    "Copied": "Скопійовано"
+  },
+  "Common": {
+    "Settings": "Налаштування",
+    "SignIn": "Увійти",
+    "SignUp": "Зареєструватися",
+    "Email": "Електронна пошта",
+    "Or": "або",
+    "ContinueWithGoogle": "Продовжити з Google",
+    "Password": "Пароль",
+    "Username": "Ім'я користувача"
+  }
+}

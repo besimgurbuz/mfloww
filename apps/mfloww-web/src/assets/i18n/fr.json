@@ -1,0 +1,111 @@
+{
+  "App": {
+    "MainTitle": "mfloww • flux d'argent sécurisé"
+  },
+  "Landing": {
+    "HeroText": "Rendez votre flux d'argent <span class='text-mfloww_blue'>visiblement</span> sécurisé",
+    "HeroImageAlt": "Captures d'écran des graphiques et des pages de solde de mfloww",
+    "InfluenceHeader1": "Arrêtez de fournir vos données",
+    "InfluenceDesc1": "Chaque donnée est chiffrée avec une clé forte créée spécifiquement pour vous et stockée sur votre appareil. Aucune donnée vous appartenant ne peut être traitée",
+    "InfluenceHeader2": "Échangez une collection de devises diversifiée",
+    "InfluenceDesc2": "Ajoutez vos revenus/dépenses dans n'importe quelle devise de votre choix à partir d'un large pool de taux de change",
+    "InfluenceHeader3": "Visualisez votre flux d'argent comme jamais auparavant",
+    "InfluenceDesc3": "Examinez en détail votre flux d'argent sur un graphique très talentueux",
+    "StartUsingNow": "Commencez à utiliser maintenant"
+  },
+  "Menu": {
+    "LogOut": "Se déconnecter"
+  },
+  "Footer": {
+    "Copyright": "© Droits d'auteur 2022 mfloww",
+    "TwitterIconTitle": "Page Twitter de mfloww",
+    "GithubIconTitle": "Page GitHub de mfloww",
+    "About": "À propos",
+    "Team": "Équipe",
+    "FAQ": "FAQ",
+    "Changelog": "Journal des modifications",
+    "Developers": "Développeurs",
+    "Documentation": "Documentation",
+    "Contribute": "Contribuer"
+  },
+  "SignIn": {
+    "DontHaveAccountQuestion": "Vous n'avez pas de compte ?"
+  },
+  "SignUp": {
+    "HaveAccountQuestion": "Vous avez déjà un compte ?"
+  },
+  "Settings": {
+    "Profile": "Profil",
+    "ProfileDesc": "Votre adresse e-mail est votre identité sur mfloww. Le changement de votre e-mail ou de votre nom d'utilisateur entraînera également l'expiration de votre session.",
+    "EncryptionKey": "Clé de chiffrement",
+    "Save": "Enregistrer",
+    "PasswordDesc": "Le changement de votre mot de passe entraînera également l'expiration de votre session.",
+    "CurrentPassword": "Mot de passe actuel",
+    "NewPassword": "Nouveau mot de passe",
+    "ConfirmPassword": "Confirmer le nouveau mot de passe",
+    "PasswordsShouldMatch": "Les mots de passe doivent correspondre",
+    "ChangeBaseCurrency": "Changer la devise de base",
+    "ChangeBaseCurrencyDesc": "Les calculs seront échangés dans la devise sélectionnée",
+    "DeleteLocalDB": "Supprimer la base de données locale",
+    "DeleteLocalDBDesc": "Les données de cet appareil seront supprimées. <strong>Avertissement</strong> : la suppression est irréversible.",
+    "DeleteAccount": "Supprimer le compte",
+    "DeleteAccountDesc": "Votre compte et les données de cet appareil seront supprimés. <strong>Avertissement</strong> : la suppression est irréversible."
+  },
+  "RevenueExpense": {
+    "Balance": "solde",
+    "BalanceDate": "solde • {{date}}",
+    "Revenues": "revenus",
+    "Expenses": "dépenses",
+    "Total": "TOTAL"
+  },
+  "MonthSelection": {
+    "January": "Janvier",
+    "February": "Février",
+    "March": "Mars",
+    "April": "Avril",
+    "May": "Mai",
+    "June": "Juin",
+    "July": "Juillet",
+    "August": "Août",
+    "September": "Septembre",
+    "October": "Octobre",
+    "November": "Novembre",
+    "December": "Décembre"
+  },
+  "MonthYearPicker": {
+    "Jan": "Janv",
+    "Feb": "Fév",
+    "Mar": "Mar",
+    "Apr": "Avr",
+    "May": "Mai",
+    "Jun": "Juin",
+    "Jul": "Juil",
+    "Aug": "Août",
+    "Sep": "Sep",
+    "Oct": "Oct",
+    "Nov": "Nov",
+    "Dec": "Déc",
+    "Ok": "Ok"
+  },
+  "ValidationMessages": {
+    "Required": "{{name}} est requis",
+    "Email": "Ce champ doit être au format e-mail",
+    "MaxLength": "Ce champ peut contenir jusqu'à {{requiredLength}} caractères",
+    "MinLength": "Ce champ doit contenir au moins {{requiredLength}} caractères",
+    "Pattern": "Ce champ n'est pas valide"
+  },
+  "Input": {
+    "Copy": "Copier",
+    "Copied": "Copié"
+  },
+  "Common": {
+    "Settings": "Paramètres",
+    "SignIn": "Se connecter",
+    "SignUp": "S'inscrire",
+    "Email": "E-mail",
+    "Or": "ou",
+    "ContinueWithGoogle": "Continuer avec Google",
+    "Password": "Mot de passe",
+    "Username": "Nom d'utilisateur"
+  }
+}

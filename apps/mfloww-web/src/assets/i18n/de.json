@@ -1,0 +1,111 @@
+{
+  "App": {
+    "MainTitle": "mfloww • sicherer geldfluss"
+  },
+  "Landing": {
+    "HeroText": "Machen Sie Ihren Geldfluss <span class='text-mfloww_blue'>sicher</span> sichtbar",
+    "HeroImageAlt": "Screenshots von mfloww's Graph- und Balance-Seiten",
+    "InfluenceHeader1": "Geben Sie Ihre Daten nicht weiter",
+    "InfluenceDesc1": "Jede Daten werden mit einem starken Schlüssel verschlüsselt, der speziell für Sie erstellt und auf Ihrem Gerät gespeichert wird. Keine Daten, die Ihnen gehören, können verarbeitet werden",
+    "InfluenceHeader2": "Tauschen Sie verschiedene Währungssammlungen aus",
+    "InfluenceDesc2": "Fügen Sie Ihr Einkommen/Ausgaben in jeder gewünschten Währung aus einem großen Pool von Wechselkursen hinzu",
+    "InfluenceHeader3": "Visualisieren Sie Ihren Geldfluss wie nie zuvor",
+    "InfluenceDesc3": "Inspektieren Sie Ihren Geldfluss detailliert auf einem sehr talentierten Diagramm",
+    "StartUsingNow": "Jetzt starten"
+  },
+  "Menu": {
+    "LogOut": "Abmelden"
+  },
+  "Footer": {
+    "Copyright": "© Urheberrecht 2022 mfloww",
+    "TwitterIconTitle": "mfloww's Twitter-Seite",
+    "GithubIconTitle": "mfloww's GitHub-Seite",
+    "About": "Über uns",
+    "Team": "Team",
+    "FAQ": "FAQ",
+    "Changelog": "Änderungsprotokoll",
+    "Developers": "Entwickler",
+    "Documentation": "Dokumentation",
+    "Contribute": "Beitragen"
+  },
+  "SignIn": {
+    "DontHaveAccountQuestion": "Sie haben noch keinen Account?"
+  },
+  "SignUp": {
+    "HaveAccountQuestion": "Haben Sie bereits ein Konto?"
+  },
+  "Settings": {
+    "Profile": "Profil",
+    "ProfileDesc": "Ihre E-Mail-Adresse ist Ihre Identität bei mfloww. Wenn Sie Ihre E-Mail oder Ihren Benutzernamen ändern, wird auch Ihre Sitzung ablaufen.",
+    "EncryptionKey": "Verschlüsselungsschlüssel",
+    "Save": "Speichern",
+    "PasswordDesc": "Wenn Sie Ihr Passwort ändern, wird auch Ihre Sitzung ablaufen.",
+    "CurrentPassword": "Aktuelles Passwort",
+    "NewPassword": "Neues Passwort",
+    "ConfirmPassword": "Neues Passwort bestätigen",
+    "PasswordsShouldMatch": "Passwörter sollten übereinstimmen",
+    "ChangeBaseCurrency": "Basiswährung ändern",
+    "ChangeBaseCurrencyDesc": "Berechnungen werden in die ausgewählte Währung umgerechnet",
+    "DeleteLocalDB": "Lokale Datenbank löschen",
+    "DeleteLocalDBDesc": "Daten auf diesem Gerät werden gelöscht. <strong>Warnung</strong>: Die Löschung ist unwiderruflich.",
+    "DeleteAccount": "Konto löschen",
+    "DeleteAccountDesc": "Ihr Konto und die Daten auf diesem Gerät werden gelöscht. <strong>Warnung</strong>: Die Löschung ist unwiderruflich."
+  },
+  "RevenueExpense": {
+    "Balance": "guthaben",
+    "BalanceDate": "guthaben • {{date}}",
+    "Revenues": "einnahmen",
+    "Expenses": "ausgaben",
+    "Total": "GESAMT"
+  },
+  "MonthSelection": {
+    "January": "Januar",
+    "February": "Februar",
+    "March": "März",
+    "April": "April",
+    "May": "Mai",
+    "June": "Juni",
+    "July": "Juli",
+    "August": "August",
+    "September": "September",
+    "October": "Oktober",
+    "November": "November",
+    "December": "Dezember"
+  },
+  "MonthYearPicker": {
+    "Jan": "Jan",
+    "Feb": "Feb",
+    "Mar": "Mär",
+    "Apr": "Apr",
+    "May": "Mai",
+    "Jun": "Jun",
+    "Jul": "Jul",
+    "Aug": "Aug",
+    "Sep": "Sep",
+    "Oct": "Okt",
+    "Nov": "Nov",
+    "Dec": "Dez",
+    "Ok": "Ok"
+  },
+  "ValidationMessages": {
+    "Required": "{{name}} ist erforderlich",
+    "Email": "Dieses Feld sollte im E-Mail-Format sein",
+    "MaxLength": "Dieses Feld darf maximal {{requiredLength}} Zeichen lang sein",
+    "MinLength": "Dieses Feld muss mindestens {{requiredLength}} Zeichen lang sein",
+    "Pattern": "Dieses Feld ist ungültig"
+  },
+  "Input": {
+    "Copy": "Kopieren",
+    "Copied": "Kopiert"
+  },
+  "Common": {
+    "Settings": "Einstellungen",
+    "SignIn": "Anmelden",
+    "SignUp": "Registrieren",
+    "Email": "E-Mail",
+    "Or": "oder",
+    "ContinueWithGoogle": "Mit Google fortfahren",
+    "Password": "Passwort",
+    "Username": "Benutzername"
+  }
+}
