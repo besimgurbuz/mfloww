@@ -17,7 +17,7 @@
     "LogOut": "Вийти"
   },
   "Footer": {
-    "Copyright": "© Авторські права 2022 mfloww",
+    "Copyright": "© Авторські права 2023 mfloww",
     "TwitterIconTitle": "Twitter-сторінка mfloww",
     "GithubIconTitle": "Github-сторінка mfloww",
     "About": "Про нас",
@@ -58,19 +58,19 @@
     "Expenses": "витрати",
     "Total": "ВСЬОГО"
   },
-  "MonthSelection": {
-    "January": "Січень",
-    "February": "Лютий",
-    "March": "Березень",
-    "April": "Квітень",
-    "May": "Травень",
-    "June": "Червень",
-    "July": "Липень",
-    "August": "Серпень",
-    "September": "Вересень",
-    "October": "Жовтень",
-    "November": "Листопад",
-    "December": "Грудень"
+  "MonthYearSelection": {
+    "January": "Січень {{year}}",
+    "February": "Лютий {{year}}",
+    "March": "Березень {{year}}",
+    "April": "Квітень {{year}}",
+    "May": "Травень {{year}}",
+    "June": "Червень {{year}}",
+    "July": "Липень {{year}}",
+    "August": "Серпень {{year}}",
+    "September": "Вересень {{year}}",
+    "October": "Жовтень {{year}}",
+    "November": "Листопад {{year}}",
+    "December": "Грудень {{year}}"
   },
   "MonthYearPicker": {
     "Jan": "Січ",

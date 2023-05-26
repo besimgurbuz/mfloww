@@ -64,4 +64,7 @@
     </a>
   </div>
 </div>
-<mfloww-footer></mfloww-footer>
+<mfloww-footer
+  [initialLanguage]="_initialLanguage"
+  (languageChanged)="handleLanguageChange($event)"
+></mfloww-footer>

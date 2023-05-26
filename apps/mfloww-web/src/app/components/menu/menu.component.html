@@ -1,67 +1,75 @@
-<header
+<nav
   class="flex items-center justify-between lg:px-28 md:px-18 px-6 pt-10"
   mflowwFade="in"
 >
   <mfloww-banner size="bigger"></mfloww-banner>
   <ng-container *ngIf="!profileInfo; else avatar">
-    <div class="hidden items-center gap-3 text-mfloww_success md:flex">
-      <a
-        routerLink="/user/sign-in"
-        class="px-5 py-2 hover:opacity-70 hover:cursor-pointer text-mfloww_white"
-        >{{ 'Common.SignIn' | translate }}</a
-      >
-      <a
-        routerLink="/user/sign-up"
-        class="px-5 py-2 border-2 border-solid border-mfloww_white text-mfloww_white rounded hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
-      >
-        {{ 'Common.SignUp' | translate }}
-      </a>
-    </div>
-    <mfloww-view-overlay-panel class="md:hidden self-center" #overlayPanel>
-      <button
-        class="self-center w-[30px] p-[2px] focus:p-0 focus:border-solid focus:border-mfloww_blue focus:border-2 focus:rounded"
-        mflowwOverlayTriggerer
-      >
-        <mfloww-view-icon type="menu" class="w-7"></mfloww-view-icon>
-      </button>
-      <ng-container mflowwPanelContent>
+    <div class="flex items-center gap-1">
+      <div class="hidden items-center gap-3 text-mfloww_success md:flex">
         <a
-          class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"
           routerLink="/user/sign-in"
-          (click)="overlayPanel._opened = false"
+          class="px-5 py-2 hover:opacity-70 hover:cursor-pointer text-mfloww_white"
           >{{ 'Common.SignIn' | translate }}</a
         >
         <a
-          class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"
           routerLink="/user/sign-up"
-          (click)="overlayPanel._opened = false"
-          >{{ 'Common.SignUp' }}</a
+          class="px-5 py-2 border-2 border-solid border-mfloww_white text-mfloww_white rounded hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
         >
-      </ng-container>
-    </mfloww-view-overlay-panel>
+          {{ 'Common.SignUp' | translate }}
+        </a>
+      </div>
+      <mfloww-view-overlay-panel class="md:hidden self-center" #overlayPanel>
+        <button
+          class="self-center w-[30px] p-[2px] focus:p-0 focus:border-solid focus:border-mfloww_blue focus:border-2 focus:rounded"
+          mflowwOverlayTriggerer
+        >
+          <mfloww-view-icon type="menu" class="w-7"></mfloww-view-icon>
+        </button>
+        <ng-container mflowwPanelContent>
+          <a
+            class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"
+            routerLink="/user/sign-in"
+            (click)="overlayPanel._opened = false"
+            >{{ 'Common.SignIn' | translate }}</a
+          >
+          <a
+            class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"
+            routerLink="/user/sign-up"
+            (click)="overlayPanel._opened = false"
+            >{{ 'Common.SignUp' }}</a
+          >
+        </ng-container>
+      </mfloww-view-overlay-panel>
+    </div>
   </ng-container>
   <ng-template #avatar>
-    <mfloww-view-overlay-panel #overlayPanel>
-      <button
-        mflowwOverlayTriggerer
-        class="overflow-hidden truncate md:max-w-[300px] max-w-[150px] text-xs border-solid border-2 p-2 rounded border-mfloww_fg hover:bg-mfloww_fg"
-      >
-        {{ profileInfo?.username }}
-      </button>
-      <ng-container mflowwPanelContent>
-        <a
-          class="w-full text-center p-4 text-sm min-w-[120px]"
-          routerLink="/user/settings"
-          (click)="overlayPanel._opened = false"
-          >{{ 'Common.Settings' | translate }}</a
-        >
+    <div class="flex items-center gap-3">
+      <mfloww-language-selector
+        [initialLanguage]="initialLanguage"
+        (selection)="languageChanged.emit($event)"
+      ></mfloww-language-selector>
+      <mfloww-view-overlay-panel #overlayPanel>
         <button
-          class="w-full text-center p-4 text-sm min-w-[120px]"
-          (click)="logOutTriggered.emit(); overlayPanel._opened = false"
+          mflowwOverlayTriggerer
+          class="truncate md:max-w-[300px] max-w-[150px] text-xs border-solid border-2 p-2 rounded border-mfloww_fg hover:bg-mfloww_fg"
         >
-          {{ 'Menu.LogOut' | translate }}
+          {{ profileInfo?.username }}
         </button>
-      </ng-container>
-    </mfloww-view-overlay-panel>
+        <ng-container mflowwPanelContent>
+          <a
+            class="w-full text-center p-4 text-sm min-w-[120px]"
+            routerLink="/user/settings"
+            (click)="overlayPanel._opened = false"
+            >{{ 'Common.Settings' | translate }}</a
+          >
+          <button
+            class="w-full text-center p-4 text-sm min-w-[120px]"
+            (click)="logOutTriggered.emit(); overlayPanel._opened = false"
+          >
+            {{ 'Menu.LogOut' | translate }}
+          </button>
+        </ng-container>
+      </mfloww-view-overlay-panel>
+    </div>
   </ng-template>
-</header>
+</nav>

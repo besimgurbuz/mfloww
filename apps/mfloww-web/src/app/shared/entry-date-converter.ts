@@ -14,7 +14,7 @@ const monthNames = [
 ] as const;
 
 export function convertEntryDate(value: string): string {
-  const [month, year] = value.split('_');
+  const [month] = value.split('_');
 
-  return `${monthNames[+month]} ${year}`;
+  return `MonthYearSelection.${monthNames[+month]}`;
 }

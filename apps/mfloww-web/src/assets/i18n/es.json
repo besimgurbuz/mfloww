@@ -17,7 +17,7 @@
     "LogOut": "Cerrar sesión"
   },
   "Footer": {
-    "Copyright": "© Derechos de autor 2022 mfloww",
+    "Copyright": "© Derechos de autor 2023 mfloww",
     "TwitterIconTitle": "Página de Twitter de mfloww",
     "GithubIconTitle": "Página de GitHub de mfloww",
     "About": "Acerca de",
@@ -58,19 +58,19 @@
     "Expenses": "gastos",
     "Total": "TOTAL"
   },
-  "MonthSelection": {
-    "January": "Enero",
-    "February": "Febrero",
-    "March": "Marzo",
-    "April": "Abril",
-    "May": "Mayo",
-    "June": "Junio",
-    "July": "Julio",
-    "August": "Agosto",
-    "September": "Septiembre",
-    "October": "Octubre",
-    "November": "Noviembre",
-    "December": "Diciembre"
+  "MonthYearSelection": {
+    "January": "Enero {{year}}",
+    "February": "Febrero {{year}}",
+    "March": "Marzo {{year}}",
+    "April": "Abril {{year}}",
+    "May": "Mayo {{year}}",
+    "June": "Junio {{year}}",
+    "July": "Julio {{year}}",
+    "August": "Agosto {{year}}",
+    "September": "Septiembre {{year}}",
+    "October": "Octubre {{year}}",
+    "November": "Noviembre {{year}}",
+    "December": "Diciembre {{year}}"
   },
   "MonthYearPicker": {
     "Jan": "Ene",

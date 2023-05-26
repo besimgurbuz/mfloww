@@ -8,6 +8,7 @@ import {
 } from '@mfloww/view';
 import { TranslateModule } from '@ngx-translate/core';
 import { BannerComponent } from './components/banner/banner.component';
+import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
 import { FadeDirective } from './directives/fade/fade.directive';
 
 @NgModule({
@@ -19,13 +20,14 @@ import { FadeDirective } from './directives/fade/fade.directive';
     RouterModule,
     FadeDirective,
   ],
-  declarations: [BannerComponent],
+  declarations: [BannerComponent, LanguageSelectorComponent],
   exports: [
     BannerComponent,
     MflowwIconComponent,
     MflowwButtonComponent,
     FadeDirective,
     TranslateModule,
+    LanguageSelectorComponent,
   ],
 })
 export class SharedModule {}

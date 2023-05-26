@@ -1,0 +1,14 @@
+<mfloww-view-overlay-panel class="text-xl">
+  <button mflowwOverlayTriggerer>
+    {{ _selectedLang }}
+  </button>
+  <div mflowwPanelContent class="flex flex-row flex-wrap w-28 overflow-hidden">
+    <button
+      *ngFor="let language of _supportedLanguages | keyvalue"
+      class="w-9 p-1 hover:bg-mfloww_fg_hover grow"
+      (click)="handleLanguageSelection($any(language.key))"
+    >
+      {{ language.value }}
+    </button>
+  </div>
+</mfloww-view-overlay-panel>

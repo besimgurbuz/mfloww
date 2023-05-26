@@ -9,7 +9,7 @@
     >
       <option value disabled selected>Select a date</option>
       <option *ngFor="let entryDate of entryDates$ | async" [value]="entryDate">
-        {{ 'MonthYearSelection.' + (entryDate | entryDate) | translate }}
+        {{ entryDate | entryDate | async }}
       </option>
     </select>
     <mfloww-view-month-year-picker

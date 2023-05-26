@@ -12,7 +12,7 @@
       'text-mfloww_success': type === 'revenue',
       'text-mfloww_fatal order-3': type === 'expense'
     }"
-    class="order-2"
+    class="order-2 truncate"
   >
     <h3>{{ label }}</h3>
   </div>
@@ -22,7 +22,7 @@
       'text-mfloww_success': type === 'revenue',
       'text-mfloww_fatal': type === 'expense'
     }"
-    class="order-2"
+    class="order-2 truncate"
   >
     <h3>{{ amount | currency : currency }}</h3>
   </div>
@@ -37,12 +37,13 @@
         'order-1': type === 'expense',
         'order-2': type === 'revenue'
       }"
+      class="truncate"
     >
       <h3>{{ label }}</h3>
     </div>
     <div
       *ngIf="!_shouldShowAmountOutside"
-      class="w-fit h-fit"
+      class="w-fit h-fit truncate"
       [ngClass]="{
         'order-1': type === 'revenue',
         'order-2': type === 'expense'

@@ -1,6 +1,9 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts"],
+  "include": [
+    "**/*.ts",
+    "../../libs/mfloww-common/src/lib/models/supported-languages.ts"
+  ],
   "compilerOptions": {
     "types": ["jest", "node"]
   }

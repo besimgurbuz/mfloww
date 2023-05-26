@@ -71,9 +71,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
           this.revenueExpenseFacade.setSelectedEntryByMonthYear(monthYear);
           this.cd.detectChanges();
           this.localStorageService.set(LATEST_MONTH_YEAR_KEY, monthYear);
-          this.titleService.setTitle(
-            `balance • ${convertEntryDate(monthYear)}`
-          );
+          this.setBalanceTitle(monthYear);
         }
       });
   }
@@ -119,13 +117,21 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
     ) {
       this.monthSelectionControl.setValue(latestMonthYear);
       this.revenueExpenseFacade.setSelectedEntryByMonthYear(latestMonthYear);
-      this.titleService.setTitle(
-        this.translateService.instant('RevenueExpense.BalanceDate', {
-          date: convertEntryDate(latestMonthYear),
-        })
-      );
+      this.setBalanceTitle(latestMonthYear);
     } else {
       this.monthSelectionControl.setValue(null);
     }
+  }
+
+  private setBalanceTitle(monthYear: string): void {
+    const translatedDate = this.translateService.instant(
+      convertEntryDate(monthYear),
+      { year: monthYear.split('_')[1] }
+    );
+    this.titleService.setTitle(
+      this.translateService.instant('RevenueExpense.BalanceDate', {
+        date: translatedDate,
+      })
+    );
   }
 }

@@ -4,8 +4,10 @@
     class="absolute left-0 right-0 top-0"
   ></mfloww-view-progress-bar>
   <mfloww-menu
+    [initialLanguage]="_initialLanguage"
     [profileInfo]="_profileInfo$ | async"
     (logOutTriggered)="handleLogOut()"
+    (languageChanged)="handleLanguageChange($event)"
   ></mfloww-menu>
   <router-outlet></router-outlet>
   <ng-container *ngIf="message$ | async as message">

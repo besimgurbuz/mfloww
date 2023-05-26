@@ -17,12 +17,12 @@
     "LogOut": "Çıkış yap"
   },
   "Footer": {
-    "Copyright": "© Telif Hakkı 2022 mfloww",
+    "Copyright": "© Telif Hakkı 2023 mfloww",
     "TwitterIconTitle": "mfloww'nun Twitter sayfası",
     "GithubIconTitle": "mfloww'nun GitHub sayfası",
     "About": "Hakkında",
     "Team": "Ekip",
-    "FAQ": "Sıkça Sorulan Sorular",
+    "FAQ": "SSS",
     "Changelog": "Değişiklik Günlüğü",
     "Developers": "Geliştiriciler",
     "Documentation": "Belgeler",
@@ -58,19 +58,19 @@
     "Expenses": "giderler",
     "Total": "TOPLAM"
   },
-  "MonthSelection": {
-    "January": "Ocak",
-    "February": "Şubat",
-    "March": "Mart",
-    "April": "Nisan",
-    "May": "Mayıs",
-    "June": "Haziran",
-    "July": "Temmuz",
-    "August": "Ağustos",
-    "September": "Eylül",
-    "October": "Ekim",
-    "November": "Kasım",
-    "December": "Aralık"
+  "MonthYearSelection": {
+    "January": "Ocak {{year}}",
+    "February": "Şubat {{year}}",
+    "March": "Mart {{year}}",
+    "April": "Nisan {{year}}",
+    "May": "Mayıs {{year}}",
+    "June": "Haziran {{year}}",
+    "July": "Temmuz {{year}}",
+    "August": "Ağustos {{year}}",
+    "September": "Eylül {{year}}",
+    "October": "Ekim {{year}}",
+    "November": "Kasım {{year}}",
+    "December": "Aralık {{year}}"
   },
   "MonthYearPicker": {
     "Jan": "Oca",

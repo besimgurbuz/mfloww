@@ -1,3 +1,5 @@
+import { ObjectValues } from './object-values';
+
 const SUPPORTED_CURRENCY = {
   USD: 'USD',
   EUR: 'EUR',
@@ -9,7 +11,6 @@ const SUPPORTED_CURRENCY = {
   RUB: 'RUB',
 } as const;
 
-type ObjectValues<T> = T[keyof T];
 export type SupportedCurrency = ObjectValues<typeof SUPPORTED_CURRENCY>;
 
 export const SUPPORTED_CURRENCY_LIST = Object.values(SUPPORTED_CURRENCY);

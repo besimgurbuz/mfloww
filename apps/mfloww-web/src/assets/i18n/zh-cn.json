@@ -17,7 +17,7 @@
     "LogOut": "退出"
   },
   "Footer": {
-    "Copyright": "© 2022版权归 mfloww",
+    "Copyright": "© 2023版权归 mfloww",
     "TwitterIconTitle": "mfloww的 Twitter 页面",
     "GithubIconTitle": "mfloww的 Github 页面",
     "About": "关于",
@@ -58,19 +58,19 @@
     "Expenses": "支出",
     "Total": "总计"
   },
-  "MonthSelection": {
-    "January": "一月",
-    "February": "二月",
-    "March": "三月",
-    "April": "四月",
-    "May": "五月",
-    "June": "六月",
-    "July": "七月",
-    "August": "八月",
-    "September": "九月",
-    "October": "十月",
-    "November": "十一月",
-    "December": "十二月"
+  "MonthYearSelection": {
+    "January": "一月{{year}}",
+    "February": "二月{{year}}",
+    "March": "三月{{year}}",
+    "April": "四月{{year}}",
+    "May": "五月{{year}}",
+    "June": "六月{{year}}",
+    "July": "七月{{year}}",
+    "August": "八月{{year}}",
+    "September": "九月{{year}}",
+    "October": "十月{{year}}",
+    "November": "十一月{{year}}",
+    "December": "十二月{{year}}"
   },
   "MonthYearPicker": {
     "Jan": "一月",
