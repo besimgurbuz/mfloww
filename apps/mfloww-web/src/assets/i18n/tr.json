@@ -3,12 +3,12 @@
     "MainTitle": "mfloww • güvenli para akışı"
   },
   "Landing": {
-    "HeroText": "Paranızın akışını <span class='text-mfloww_blue'>güvenli</span> bir şekilde görünür kılın",
+    "HeroText": "Paranızı <span class='text-mfloww_blue'>güvenle</span> görünür kılın",
     "HeroImageAlt": "mfloww'nun grafik ve bakiye sayfalarının ekran görüntüleri",
     "InfluenceHeader1": "Verilerinizi teslim etmeyi durdurun",
     "InfluenceDesc1": "Her veri, size özel olarak oluşturulan güçlü bir anahtarla şifrelenir ve cihazınızda saklanır. Size ait hiçbir veri işlenemez.",
-    "InfluenceHeader2": "Çeşitli para birimi koleksiyonunu değiştirin",
-    "InfluenceDesc2": "Büyük bir döviz kuru havuzundan istediğiniz herhangi bir para biriminde gelir/giderinizi ekleyin",
+    "InfluenceHeader2": "Çoklu para birimlerinde paranızın akışını anında görüntüleyin",
+    "InfluenceDesc2": "Geniş bir para birimi havuzundan istediğiniz para biriminde gelir/gider ekleyin",
     "InfluenceHeader3": "Paranızın akışını hiç olmadığı kadar görselleştirin",
     "InfluenceDesc3": "Çok yetenekli bir grafik üzerinde para akışınızı ayrıntılı olarak inceleyin",
     "StartUsingNow": "Şimdi kullanmaya başlayın"
