@@ -1,4 +1,5 @@
 const { createGlobPatternsForDependencies } = require('@nrwl/angular/tailwind');
+const defaultTheme = require('tailwindcss/defaultTheme');
 const { join } = require('path');
 
 /** @type {import('tailwindcss').Config} */
@@ -21,6 +22,10 @@ module.exports = {
         mfloww_success: 'var(--app-success)',
         mfloww_warn: 'var(--app-warn)',
         mfloww_fatal: 'var(--app-fatal)',
+      },
+      fontFamily: {
+        sans: ["'Krona One'", ...defaultTheme.fontFamily.sans],
+        google: ['Roboto', ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         grow_x: {
