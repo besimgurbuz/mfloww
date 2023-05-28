@@ -6,6 +6,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./landing-image.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LandingImageComponent {
-  _imageLoaded = false;
-}
+export class LandingImageComponent {}
