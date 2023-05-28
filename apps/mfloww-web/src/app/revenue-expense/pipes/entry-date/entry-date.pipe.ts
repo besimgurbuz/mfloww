@@ -5,6 +5,7 @@ import { convertEntryDate } from '../../../shared/entry-date-converter';
 
 @Pipe({
   name: 'entryDate',
+  pure: false,
 })
 export class EntryDatePipe implements PipeTransform {
   constructor(private translateService: TranslateService) {}

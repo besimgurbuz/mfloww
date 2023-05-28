@@ -6,7 +6,6 @@
     *ngIf="_opened"
     class="overlay-modal absolute bg-mfloww_fg rounded flex flex-col items-center z-50"
     #panel
-    [style.top.px]="triggerer.clientHeight + 5"
   >
     <ng-content select="[mflowwPanelContent]"></ng-content>
   </div>

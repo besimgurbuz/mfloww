@@ -7,10 +7,10 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
-  inject,
   Input,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core';
 
 @Component({
@@ -62,12 +62,21 @@ export class MflowwOverlayPanelComponent implements AfterViewInit {
     return this.document.querySelector('body')?.clientWidth || 0;
   }
 
+  private get bodyHeight(): number {
+    return this.document.querySelector('body')?.clientHeight || 0;
+  }
+
   private positionPanel() {
     if (!this.panelContainer) {
       return;
     }
     const triggererOffsetLeft = this.triggererContainer?.nativeElement
       .offsetLeft as number;
+    const triggererHeight = this.triggererContainer?.nativeElement
+      .clientHeight as number;
+    const triggererVerticalPosition =
+      this.triggererContainer?.nativeElement.getBoundingClientRect()
+        .top as number;
 
     if (triggererOffsetLeft > this.bodyWidth / 2) {
       this.panelContainer.nativeElement.style.right = '0';
@@ -82,6 +91,14 @@ export class MflowwOverlayPanelComponent implements AfterViewInit {
       this.panelContainer.nativeElement.style.left = `${
         Math.floor(triggerWidth / 2) - Math.floor(panelWidth / 2)
       }px`;
+    }
+    const panelHeight = this.panelContainer.nativeElement.clientHeight;
+    if (this.bodyHeight - triggererVerticalPosition - panelHeight <= 0) {
+      this.panelContainer.nativeElement.style.bottom = `${
+        triggererHeight + 5
+      }px`;
+    } else {
+      this.panelContainer.nativeElement.style.top = `${triggererHeight + 5}px`;
     }
   }
 }
