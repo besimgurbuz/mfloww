@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SUPPORTED_CURRENCY_LIST, SupportedCurrency } from '@mfloww/common';
+import { SUPPORTED_CURRENCIES, SupportedCurrencyCode } from '@mfloww/common';
 import { MflowwDbService } from '@mfloww/db';
 import { mergeMap, Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -55,7 +55,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     PasswordMatchValidator('newPassword', 'confirmNewPassword')
   );
   readonly baseCurrencyControl = new FormControl();
-  readonly currencyOptions = SUPPORTED_CURRENCY_LIST;
+  readonly currencyOptions = SUPPORTED_CURRENCIES;
 
   private profileSubs?: Subscription;
   private currencyChangeSubs?: Subscription;
@@ -186,11 +186,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   handleBaseCurrencySelection() {
-    const selectedCurrency: SupportedCurrency =
+    const selectedCurrency: SupportedCurrencyCode =
       this.localStorageService.get(environment.baseCurrencyKey) || 'USD';
     this.baseCurrencyControl.setValue(selectedCurrency);
     this.currencyChangeSubs = this.baseCurrencyControl.valueChanges.subscribe(
-      (selection: SupportedCurrency) =>
+      (selection: SupportedCurrencyCode) =>
         this.localStorageService.set(environment.baseCurrencyKey, selection)
     );
   }

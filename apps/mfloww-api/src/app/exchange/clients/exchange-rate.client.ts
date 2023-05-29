@@ -1,4 +1,4 @@
-import { ExchangeRate, SupportedCurrency } from '@mfloww/common';
+import { ExchangeRate, SupportedCurrencyCode } from '@mfloww/common';
 import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
 import { Observable, map } from 'rxjs';
@@ -13,8 +13,8 @@ export class ExchangeRateClient implements ExchangeClient {
   constructor(private http: HttpService) {}
 
   getLatestExchangeRates$(
-    sourceCurrency: SupportedCurrency,
-    targetCurrencies: SupportedCurrency[]
+    sourceCurrency: SupportedCurrencyCode,
+    targetCurrencies: SupportedCurrencyCode[]
   ): Observable<AxiosResponse<ExchangeRate>> {
     return this.http
       .get<ExchangeRateResponse>(`${this.API_URL}/latest`, {
@@ -35,7 +35,7 @@ export class ExchangeRateClient implements ExchangeClient {
             };
           } else {
             result.data = {
-              base: response.data.base as SupportedCurrency,
+              base: response.data.base as SupportedCurrencyCode,
               rates: response.data.rates,
             };
           }

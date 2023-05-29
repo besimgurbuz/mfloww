@@ -1,7 +1,7 @@
 import {
   ExchangeRate,
-  SUPPORTED_CURRENCY_LIST,
-  SupportedCurrency,
+  SUPPORTED_CURRENCY_CODES,
+  SupportedCurrencyCode,
 } from '@mfloww/common';
 import { Injectable } from '@nestjs/common';
 
@@ -20,13 +20,13 @@ export class ExchangeStoreService {
     this._latestRatesRecord.record = latestRatest;
   }
 
-  getLatestRatesBaseAs(base: SupportedCurrency): ExchangeRate | null {
+  getLatestRatesBaseAs(base: SupportedCurrencyCode): ExchangeRate | null {
     if (!this._latestRatesRecord.record) {
       return null;
     }
     if (this._latestRates.base === base) return this._latestRates;
 
-    const otherCurrencies = SUPPORTED_CURRENCY_LIST.filter(
+    const otherCurrencies = SUPPORTED_CURRENCY_CODES.filter(
       (currency) => currency !== base
     );
     const baseValueOnLatestBase = this._latestRates.rates[base];
@@ -38,7 +38,7 @@ export class ExchangeStoreService {
           ratesMap[currency] =
             (this._latestRates.rates[currency] | 1) / baseValueOnLatestBase;
           return ratesMap;
-        }, {} as Record<SupportedCurrency, number>),
+        }, {} as Record<SupportedCurrencyCode, number>),
       },
     };
   }

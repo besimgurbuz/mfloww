@@ -9,7 +9,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RevenueExpenseRecordType, SupportedCurrency } from '@mfloww/common';
+import {
+  RevenueExpenseRecordType,
+  SUPPORTED_CURRENCIES,
+  SupportedCurrencyCode,
+} from '@mfloww/common';
 import { filter } from 'rxjs';
 
 @Component({
@@ -19,8 +23,7 @@ import { filter } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MflowwEntryInputComponent implements AfterViewInit {
-  @Input() currencies: SupportedCurrency[] = [];
-  @Input() set selectedCurrency(currency: SupportedCurrency) {
+  @Input() set selectedCurrency(currency: SupportedCurrencyCode) {
     if (currency) {
       this._entryFormGroup.get('currency')?.setValue(currency);
     }
@@ -32,7 +35,7 @@ export class MflowwEntryInputComponent implements AfterViewInit {
   amountInputEl!: ElementRef<HTMLInputElement>;
 
   @Output() entryCreated: EventEmitter<{
-    currency: SupportedCurrency;
+    currency: SupportedCurrencyCode;
     amount: number;
     label: string;
   }> = new EventEmitter();
@@ -42,6 +45,7 @@ export class MflowwEntryInputComponent implements AfterViewInit {
     amount: ['', [Validators.required]],
     label: ['', Validators.required],
   });
+  _currencies = SUPPORTED_CURRENCIES;
 
   constructor(private formBuilder: FormBuilder) {
     const amountControl = this._entryFormGroup.get('amount');

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ExchangeRate, SupportedCurrency } from '@mfloww/common';
+import { ExchangeRate, SupportedCurrencyCode } from '@mfloww/common';
 import { combineLatest, map, mergeMap, Observable } from 'rxjs';
 import { RevenueExpenseRecord } from '../../models/entry';
 import { RevenueExpenseFacade } from '../data-access/revenue-expense.facade';
@@ -95,7 +95,7 @@ export class CalculatorService {
 
   private exchange(
     value: number,
-    currency: SupportedCurrency,
+    currency: SupportedCurrencyCode,
     exchangeRate: ExchangeRate
   ): number {
     if (currency === this.exchangeFacade.baseCurrency) return value;

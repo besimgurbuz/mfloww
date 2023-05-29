@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { SupportedCurrency } from '@mfloww/common';
+import { SupportedCurrencyCode } from '@mfloww/common';
 
 @Component({
   selector: 'mfloww-overall-panel',
@@ -9,5 +9,5 @@ import { SupportedCurrency } from '@mfloww/common';
 })
 export class OverallTableComponent {
   @Input() overallTotal = 0;
-  @Input() currency: SupportedCurrency = 'USD';
+  @Input() currency: SupportedCurrencyCode = 'USD';
 }

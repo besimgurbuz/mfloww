@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ExchangeRate, SupportedCurrency } from '@mfloww/common';
+import { ExchangeRate, SupportedCurrencyCode } from '@mfloww/common';
 import { Observable, Subscription, switchMap, tap, timer } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LocalStorageService } from '../../core/local-storage.service';
@@ -38,7 +38,7 @@ export class ExchangeFacade {
     return this.exchangeState.exchangeRate$;
   }
 
-  get baseCurrency(): SupportedCurrency {
+  get baseCurrency(): SupportedCurrencyCode {
     return this.localStorageService.get(environment.baseCurrencyKey) || 'USD';
   }
 }

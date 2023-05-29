@@ -1,8 +1,8 @@
-import { SupportedCurrency } from './supported-currency';
+import { SupportedCurrencyCode } from './supported-currency';
 
 interface LatestExchangeSuccessResult {
-  base: SupportedCurrency;
-  rates: Record<SupportedCurrency, number>;
+  base: SupportedCurrencyCode;
+  rates: Record<SupportedCurrencyCode, number>;
   remaining?: number;
   message?: never;
 }

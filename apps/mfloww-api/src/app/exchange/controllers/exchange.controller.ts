@@ -1,7 +1,7 @@
 import {
   ExchangeRate,
-  SUPPORTED_CURRENCY_LIST,
-  SupportedCurrency,
+  SUPPORTED_CURRENCY_CODES,
+  SupportedCurrencyCode,
 } from '@mfloww/common';
 import {
   Controller,
@@ -25,12 +25,14 @@ export class ExchangeController {
   getLatestExchangeRates(
     @Query('base') base?: string
   ): ExchangeRate | Observable<ExchangeRate> {
-    if (!SUPPORTED_CURRENCY_LIST.includes(base as SupportedCurrency)) {
+    if (!SUPPORTED_CURRENCY_CODES.includes(base as SupportedCurrencyCode)) {
       throw new HttpException(
         `Not supported currency has given - ${base}`,
         400
       );
     }
-    return this.exchangeService.getExchangeRatesFor(base as SupportedCurrency);
+    return this.exchangeService.getExchangeRatesFor(
+      base as SupportedCurrencyCode
+    );
   }
 }

@@ -1,11 +1,11 @@
-import { ExchangeRate, SupportedCurrency } from '@mfloww/common';
+import { ExchangeRate, SupportedCurrencyCode } from '@mfloww/common';
 import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 
 export interface ExchangeClient {
   name: string;
   getLatestExchangeRates$(
-    sourceCurrency: SupportedCurrency,
-    targetCurrencies: SupportedCurrency[]
+    sourceCurrency: SupportedCurrencyCode,
+    targetCurrencies: SupportedCurrencyCode[]
   ): Observable<AxiosResponse<ExchangeRate>>;
 }

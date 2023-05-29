@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   RevenueExpenseRecordType,
-  SUPPORTED_CURRENCY_LIST,
-  SupportedCurrency,
+  SUPPORTED_CURRENCY_CODES,
+  SupportedCurrencyCode,
 } from '@mfloww/common';
 import { RevenueExpenseRecord } from '../../../models/entry';
 
@@ -19,7 +19,7 @@ export class MoneyTableComponent {
     return this._type;
   }
   _type: RevenueExpenseRecordType = 'revenue';
-  @Input() baseCurrency: SupportedCurrency = 'USD';
+  @Input() baseCurrency: SupportedCurrencyCode = 'USD';
   @Input() sizePercentageMap: Record<number, number> = {};
   @Input() entries: RevenueExpenseRecord[] = [];
   @Input() total = 0;
@@ -38,8 +38,8 @@ export class MoneyTableComponent {
     expense: 'text-mfloww_fatal md:pl-6',
   };
 
-  get currencies() {
-    return SUPPORTED_CURRENCY_LIST;
+  get currencies(): SupportedCurrencyCode[] {
+    return SUPPORTED_CURRENCY_CODES;
   }
 
   handleNewEntry(entry: RevenueExpenseRecord) {

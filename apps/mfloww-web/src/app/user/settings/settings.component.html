@@ -112,8 +112,11 @@
         class="bg-mfloww_bg border-2 border-solid border-mfloww_fg rounded p-1"
         [formControl]="baseCurrencyControl"
       >
-        <option *ngFor="let currency of currencyOptions" [value]="currency">
-          {{ currency }}
+        <option
+          *ngFor="let currency of currencyOptions | keyvalue"
+          [value]="currency.key"
+        >
+          {{ currency.key }} {{ currency.value }}
         </option>
       </select>
     </div>

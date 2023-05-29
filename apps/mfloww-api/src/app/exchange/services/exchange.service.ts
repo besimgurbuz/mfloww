@@ -1,7 +1,7 @@
 import {
   ExchangeRate,
-  SUPPORTED_CURRENCY_LIST,
-  SupportedCurrency,
+  SUPPORTED_CURRENCY_CODES,
+  SupportedCurrencyCode,
 } from '@mfloww/common';
 import { Injectable, Logger } from '@nestjs/common';
 import { Observable, catchError, map, of } from 'rxjs';
@@ -19,14 +19,14 @@ export class ExchangeService {
   ) {}
 
   getExchangeRatesFor(
-    base: SupportedCurrency
+    base: SupportedCurrencyCode
   ): ExchangeRate | Observable<ExchangeRate> {
     const latestRates = this.exchangeStore.getLatestRatesBaseAs(base);
     if (latestRates === null) {
       return this.exchangeClientFactory.currrentClient
         .getLatestExchangeRates$(
-          this.storeBaseCurrency as SupportedCurrency,
-          SUPPORTED_CURRENCY_LIST.filter(
+          this.storeBaseCurrency as SupportedCurrencyCode,
+          SUPPORTED_CURRENCY_CODES.filter(
             (currency) => currency !== this.storeBaseCurrency
           )
         )

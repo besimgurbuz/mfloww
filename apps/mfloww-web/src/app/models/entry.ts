@@ -1,8 +1,8 @@
-import { SupportedCurrency } from '@mfloww/common';
+import { SupportedCurrencyCode } from '@mfloww/common';
 
 export interface RevenueExpenseRecord {
   amount: number;
-  currency: SupportedCurrency;
+  currency: SupportedCurrencyCode;
   label: string;
 }
 

@@ -8,7 +8,10 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { RevenueExpenseRecordType, SupportedCurrency } from '@mfloww/common';
+import {
+  RevenueExpenseRecordType,
+  SupportedCurrencyCode,
+} from '@mfloww/common';
 
 @Component({
   selector: 'mfloww-money-table-entry',
@@ -18,7 +21,7 @@ import { RevenueExpenseRecordType, SupportedCurrency } from '@mfloww/common';
 })
 export class MoneyTableEntryComponent {
   @Input() type: RevenueExpenseRecordType = 'revenue';
-  @Input() currency: SupportedCurrency = 'USD';
+  @Input() currency: SupportedCurrencyCode = 'USD';
   @Input() set sizePercentage(percentage: number) {
     if (!percentage) return;
     this._sizePercentage = percentage;

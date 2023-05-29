@@ -1,4 +1,4 @@
-import { SupportedCurrency } from '@mfloww/common';
+import { SupportedCurrencyCode } from '@mfloww/common';
 import { tap } from 'rxjs';
 import { ExchangeClient } from './clients/exchange.client';
 
@@ -21,8 +21,8 @@ export class ExchangeClientWrapper {
   }
 
   getLatestExchangeRates$(
-    source: SupportedCurrency,
-    currencies: SupportedCurrency[]
+    source: SupportedCurrencyCode,
+    currencies: SupportedCurrencyCode[]
   ) {
     return this._client.getLatestExchangeRates$(source, currencies).pipe(
       tap((response) => {

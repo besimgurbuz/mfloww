@@ -1,16 +1,37 @@
-import { ObjectValues } from './object-values';
-
-const SUPPORTED_CURRENCY = {
-  USD: 'USD',
-  EUR: 'EUR',
-  CNY: 'CNY',
-  GBP: 'GBP',
-  INR: 'INR',
-  CHF: 'CHF',
-  TRY: 'TRY',
-  RUB: 'RUB',
+export const SUPPORTED_CURRENCIES = {
+  AUD: '🇦🇺',
+  BND: '🇧🇳',
+  BRL: '🇧🇷',
+  CAD: '🇨🇦',
+  CHF: '🇨🇭',
+  CNY: '🇨🇳',
+  CZK: '🇨🇿',
+  EGP: '🇪🇬',
+  EUR: '🇪🇺',
+  GBP: '🇬🇧',
+  INR: '🇮🇳',
+  IRR: '🇮🇷',
+  JOD: '🇯🇴',
+  JPY: '🇯🇵',
+  KRW: '🇰🇷',
+  KWD: '🇰🇼',
+  LYD: '🇱🇾',
+  MXN: '🇲🇽',
+  NZD: '🇳🇿',
+  OMR: '🇴🇲',
+  PHP: '🇵🇭',
+  RUB: '🇷🇺',
+  SGD: '🇸🇬',
+  THB: '🇹🇭',
+  TRY: '🇹🇷',
+  USD: '🇺🇸',
+  UAH: '🇺🇦',
+  VND: '🇻🇳',
 } as const;
 
-export type SupportedCurrency = ObjectValues<typeof SUPPORTED_CURRENCY>;
+export type SupportedCurrencyCode = keyof typeof SUPPORTED_CURRENCIES;
 
-export const SUPPORTED_CURRENCY_LIST = Object.values(SUPPORTED_CURRENCY);
+export const SUPPORTED_CURRENCY_CODES: SupportedCurrencyCode[] = Object.keys(
+  SUPPORTED_CURRENCIES
+) as SupportedCurrencyCode[];
+export const SUPPORTED_CURRENCY_FLAGS = Object.values(SUPPORTED_CURRENCIES);

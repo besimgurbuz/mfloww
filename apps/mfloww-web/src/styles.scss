@@ -76,7 +76,7 @@ body {
 input[type='number'] {
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
-    color-scheme: dark;
+    display: none;
   }
 }
 .fade-in {
