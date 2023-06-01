@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "public": true,
+  "name": "mfloww api",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api"
+    }
+  ]
+}
