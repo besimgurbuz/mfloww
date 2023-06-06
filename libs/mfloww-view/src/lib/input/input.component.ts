@@ -13,9 +13,11 @@ import {
 import {
   ControlValueAccessor,
   FormControl,
+  FormGroupDirective,
   NG_VALUE_ACCESSOR,
   NgControl,
 } from '@angular/forms';
+import { map, of } from 'rxjs';
 import { ERROR_MESSAGES } from './input-errors';
 
 @Component({
@@ -52,11 +54,17 @@ export class MflowwInputComponent implements ControlValueAccessor, OnInit {
   _focused = false;
   _dirty = false;
   _copied = false;
+
+  _formGroupSubmittedWithErrors =
+    this.formGroup?.ngSubmit
+      ?.asObservable()
+      ?.pipe(map(() => this.formGroup.invalid)) || of(false);
   _onTouched: () => void = () => {};
   _onChange: (value: string) => void = () => {};
 
   constructor(
     @Inject(INJECTOR) private injector: Injector,
+    private formGroup: FormGroupDirective,
     private elementRef: ElementRef,
     private cd: ChangeDetectorRef
   ) {}

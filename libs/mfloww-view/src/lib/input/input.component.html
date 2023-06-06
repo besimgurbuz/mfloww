@@ -13,12 +13,13 @@
       class="bg-mfloww_bg w-full text-sm border-solid border-2 rounded border-mfloww_white px-3 py-2 outline-none focus:ring-2 focus:border-mfloww_blue text-ellipsis overflow-hidden whitespace-nowrap"
       [value]="_value"
       [disabled]="_disabled"
-      (input)="onValueChanged($any($event.target).value)"
-      (click)="_focused = true"
       [ngClass]="{
-        'border-mfloww_fatal': _dirty && _control.errors,
+        '!border-mfloww_fatal': _dirty && _control.errors,
         'text-mfloww_fg border-mfloww_fg': _disabled
       }"
+      [class.!border-mfloww_fatal]="_formGroupSubmittedWithErrors | async"
+      (input)="onValueChanged($any($event.target).value)"
+      (click)="_focused = true"
     />
     <button
       *ngIf="copyable"

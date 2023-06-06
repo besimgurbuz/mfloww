@@ -14,7 +14,11 @@
     </mfloww-landing-image>
   </main>
 </div>
-<div class="bg-mfloww_bg w-full mt-12 lg:px-28 md:px-28 px-6">
+<div
+  class="bg-mfloww_bg w-full mt-12 lg:px-28 md:px-28 px-6"
+  mflowwFade="out"
+  [mflowwFadeDelay]="500"
+>
   <div class="w-full flex justify-center flex-wrap gap-4">
     <div
       *ngFor="let i of [1, 2, 3, 4]"

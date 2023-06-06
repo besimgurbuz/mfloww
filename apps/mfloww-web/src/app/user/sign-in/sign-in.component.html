@@ -24,7 +24,7 @@
     <form
       class="flex flex-col items-center gap-4 w-full max-w-[450px]"
       [formGroup]="signInForm"
-      (keydown.enter)="submitForm()"
+      (ngSubmit)="submitForm()"
     >
       <mfloww-view-input
         formControlName="email"
@@ -40,12 +40,12 @@
         name="Password"
         autocomplete="current-password"
       ></mfloww-view-input>
+      <button
+        class="border-solid border-2 rounded px-10 py-2 hover:bg-mfloww_white hover:text-mfloww_bg"
+        type="submit"
+      >
+        {{ 'Common.SignIn' | translate }}
+      </button>
     </form>
-    <button
-      class="border-solid border-2 rounded px-10 py-2 hover:bg-mfloww_white hover:text-mfloww_bg"
-      (click)="submitForm()"
-    >
-      {{ 'Common.SignIn' | translate }}
-    </button>
   </main>
 </div>
