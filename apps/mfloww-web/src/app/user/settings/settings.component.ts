@@ -8,8 +8,13 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SUPPORTED_CURRENCIES, SupportedCurrencyCode } from '@mfloww/common';
+import {
+  SUPPORTED_CURRENCIES,
+  SupportedCurrencyCode,
+  SupportedLanguage,
+} from '@mfloww/common';
 import { MflowwDbService } from '@mfloww/db';
+import { TranslateService } from '@ngx-translate/core';
 import { mergeMap, Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../core/auth.service';
@@ -29,6 +34,8 @@ import { UserService } from '../services/user.service';
 export class SettingsComponent implements OnInit, OnDestroy {
   private readonly userService = inject(UserService);
   private readonly authService = inject(AuthService);
+  private readonly translateService = inject(TranslateService);
+  private readonly localStorage = inject(LocalStorageService);
   private readonly profileInfo$ = this.authService.profileInfo$;
   private readonly dbService = inject(MflowwDbService);
   private readonly messengerService = inject(MessengerService);
@@ -62,6 +69,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private deleteDbSubs?: Subscription;
 
   _profileInfo: ProfileInfo | null = null;
+  _initialLanguage?: SupportedLanguage | null;
 
   ngOnInit() {
     this.profileSubs = this.profileInfo$.subscribe((profileInfo) => {
@@ -148,6 +156,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
           },
         });
     }
+  }
+
+  handleLanguageChange(lang: SupportedLanguage) {
+    this.translateService.use(lang);
+    this.localStorage.set('LANG', lang);
   }
 
   handleDeleteLocalDatabase() {

@@ -6,7 +6,10 @@ import {
   RouteConfigLoadStart,
   Router,
 } from '@angular/router';
-import { SupportedLanguage } from '@mfloww/common';
+import {
+  convertLocaleToSupportedLanguage,
+  SupportedLanguage,
+} from '@mfloww/common';
 import { MflowwDbService } from '@mfloww/db';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, mergeMap, Observable, Subject, takeUntil, tap } from 'rxjs';
@@ -83,11 +86,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this._destroy.complete();
   }
 
-  handleLanguageChange(lang: SupportedLanguage) {
-    this.translateService.use(lang);
-    this.localStorage.set('LANG', lang);
-  }
-
   handleLogOut() {
     this.authService.clearUserCredentials();
     this.router.navigate(['/']);
@@ -98,8 +96,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private handleInitialLanguage() {
+    const browserLanguage: string = convertLocaleToSupportedLanguage(
+      navigator.language || (navigator as any).userLanguage
+    );
     this._initialLanguage = this.localStorage.get<SupportedLanguage>('LANG');
-    if (
+
+    if (browserLanguage && !this._initialLanguage) {
+      this.translateService.use(browserLanguage.toLowerCase());
+    } else if (
       this._initialLanguage &&
       this.translateService.currentLang !== this._initialLanguage
     ) {

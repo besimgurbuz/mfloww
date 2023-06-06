@@ -20,6 +20,8 @@ export class LanguageSelectorComponent {
     this._selectedLang = language || 'en';
   }
 
+  @Input() extendClassList: string[] = [];
+
   @Output() selection: EventEmitter<SupportedLanguage> = new EventEmitter();
 
   @ViewChild(MflowwOverlayPanelComponent)

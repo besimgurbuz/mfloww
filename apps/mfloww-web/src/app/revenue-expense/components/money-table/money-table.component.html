@@ -29,7 +29,7 @@
       *ngIf="!_addingModeActive"
       (clicked)="_addingModeActive = !_addingModeActive"
       [ngClass]="_classMap[type]"
-      class="mt-10 md:mt-5"
+      class="mt-2"
     >
       <mfloww-view-icon
         type="plus"
@@ -38,7 +38,7 @@
       ></mfloww-view-icon>
     </mfloww-view-button>
     <div
-      class="relative mt-10 px-[10px] md:mt-5 max-w-[380px] h-[39px] flex"
+      class="relative mt-2 px-[10px] max-w-[380px] h-fit gap-1 flex flex-col md:flex-row"
       [ngClass]="_classMap[type]"
       *ngIf="_addingModeActive"
     >
@@ -51,7 +51,7 @@
         #entryInput
       ></mfloww-view-entry-input>
       <div
-        class="flex gap-2 m-auto top-0 bottom-0 items-center"
+        class="flex gap-2 m-auto items-center"
         [ngClass]="{
           'md:-left-[82px] md:flex-row-reverse': type === 'revenue',
           'md:-right-[82px]': type === 'expense'
@@ -84,8 +84,8 @@
   <div
     class="total w-full flex gap-4 justify-center md:justify-end"
     [ngClass]="{
-      'pr-10 text-mfloww_success': type === 'revenue',
-      'pl-10 text-mfloww_fatal flex-row-reverse': type === 'expense'
+      'md:pr-10 text-mfloww_success': type === 'revenue',
+      'md:pl-10 text-mfloww_fatal flex-row-reverse': type === 'expense'
     }"
   >
     <h3>{{ 'RevenueExpense.Total' | translate }}</h3>

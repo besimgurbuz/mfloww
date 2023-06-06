@@ -42,6 +42,8 @@
     "EncryptionKey": "Şifreleme Anahtarı",
     "Save": "Kaydet",
     "PasswordDesc": "Şifrenizi değiştirmek aynı zamanda oturumunuzun süresinin dolmasına neden olur.",
+    "ChangeLanguage": "Dil Değiştir",
+    "ChangeLanguageDesc": "mfloww'un dilini değiştir",
     "CurrentPassword": "Mevcut şifre",
     "NewPassword": "Yeni şifre",
     "ConfirmPassword": "Yeni şifreyi onayla",

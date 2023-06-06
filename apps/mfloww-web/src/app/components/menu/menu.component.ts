@@ -7,7 +7,6 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { SupportedLanguage } from '@mfloww/common';
 import { ProfileInfo } from '../../core/models/profile-info';
 
 @Component({
@@ -17,11 +16,9 @@ import { ProfileInfo } from '../../core/models/profile-info';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
-  @Input() initialLanguage?: SupportedLanguage | null;
   @Input() profileInfo: ProfileInfo | null = null;
 
   @Output() logOutTriggered = new EventEmitter<void>();
-  @Output() languageChanged = new EventEmitter<SupportedLanguage>();
 
   _isOpen = false;
 

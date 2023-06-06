@@ -69,8 +69,7 @@ export class MflowwEntryInputComponent implements AfterViewInit {
     }
   }
 
-  handleEntrySubmit(event?: Event) {
-    if (event) event.preventDefault();
+  handleEntrySubmit() {
     if (this._entryFormGroup.valid) {
       this.entryCreated.emit(this._entryFormGroup.value);
       this._entryFormGroup.reset();

@@ -42,6 +42,8 @@
     "EncryptionKey": "Ключ шифрування",
     "Save": "Зберегти",
     "PasswordDesc": "Зміна пароля також призведе до завершення вашої сесії.",
+    "ChangeLanguage": "Змінити мову",
+    "ChangeLanguageDesc": "Змінити мову mfloww",
     "CurrentPassword": "Поточний пароль",
     "NewPassword": "Новий пароль",
     "ConfirmPassword": "Підтвердити новий пароль",

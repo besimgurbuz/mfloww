@@ -2,6 +2,7 @@
   <button
     mflowwOverlayTriggerer
     class="focus:bg-mfloww_fg_hover hover:bg-mfloww_fg_hover rounded p-2"
+    [ngClass]="extendClassList"
   >
     <mfloww-flag-icon [flagCode]="$any(_selectedLang)"></mfloww-flag-icon>
   </button>

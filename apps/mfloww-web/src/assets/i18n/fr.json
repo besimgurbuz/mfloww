@@ -42,6 +42,8 @@
     "EncryptionKey": "Clé de chiffrement",
     "Save": "Enregistrer",
     "PasswordDesc": "Le changement de votre mot de passe entraînera également l'expiration de votre session.",
+    "ChangeLanguage": "Changer de langue",
+    "ChangeLanguageDesc": "Modifier la langue de mfloww",
     "CurrentPassword": "Mot de passe actuel",
     "NewPassword": "Nouveau mot de passe",
     "ConfirmPassword": "Confirmer le nouveau mot de passe",

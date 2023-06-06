@@ -100,6 +100,23 @@
   <div class="flex flex-wrap gap-4 w-full items-center justify-around">
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
       <h3 class="text-sm sm:text-lg">
+        {{ 'Settings.ChangeLanguage' | translate }}
+      </h3>
+      <p class="text-[10px] sm:text-xs opacity-50">
+        {{ 'Settings.ChangeLanguageDesc' | translate }}
+      </p>
+    </div>
+    <div class="flex flex-grow max-w-[450px]">
+      <mfloww-language-selector
+        [initialLanguage]="_initialLanguage"
+        [extendClassList]="['border-2', 'border-mfloww_fg']"
+        (selection)="handleLanguageChange($event)"
+      ></mfloww-language-selector>
+    </div>
+  </div>
+  <div class="flex flex-wrap gap-4 w-full items-center justify-around">
+    <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
+      <h3 class="text-sm sm:text-lg">
         {{ 'Settings.ChangeBaseCurrency' | translate }}
       </h3>
       <p class="text-[10px] sm:text-xs opacity-50">
@@ -147,7 +164,7 @@
       </h3>
       <p
         class="text-[10px] sm:text-xs opacity-50"
-        [innerHTML]="'Settings.DeleteAccount' | translate"
+        [innerHTML]="'Settings.DeleteAccountDesc' | translate"
       ></p>
     </div>
     <div class="flex flex-grow max-w-[450px]">

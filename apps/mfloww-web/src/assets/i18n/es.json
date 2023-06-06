@@ -42,6 +42,8 @@
     "EncryptionKey": "Clave de cifrado",
     "Save": "Guardar",
     "PasswordDesc": "Cambiar tu contraseña también expirará tu sesión.",
+    "ChangeLanguage": "Cambiar idioma",
+    "ChangeLanguageDesc": "Cambiar el idioma de mfloww",
     "CurrentPassword": "Contraseña actual",
     "NewPassword": "Nueva contraseña",
     "ConfirmPassword": "Confirmar nueva contraseña",

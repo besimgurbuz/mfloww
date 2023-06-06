@@ -42,6 +42,8 @@
     "EncryptionKey": "加密密钥",
     "Save": "保存",
     "PasswordDesc": "更改密码也会使您的会话过期。",
+    "ChangeLanguage": "更改语言",
+    "ChangeLanguageDesc": "更改 mfloww 的语言",
     "CurrentPassword": "当前密码",
     "NewPassword": "新密码",
     "ConfirmPassword": "确认新密码",

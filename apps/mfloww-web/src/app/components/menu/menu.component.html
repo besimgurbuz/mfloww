@@ -44,10 +44,6 @@
   </ng-container>
   <ng-template #avatar>
     <div class="flex items-center gap-3">
-      <mfloww-language-selector
-        [initialLanguage]="initialLanguage"
-        (selection)="languageChanged.emit($event)"
-      ></mfloww-language-selector>
       <mfloww-view-overlay-panel #overlayPanel>
         <button
           mflowwOverlayTriggerer

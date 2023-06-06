@@ -42,6 +42,8 @@
     "EncryptionKey": "암호화 키",
     "Save": "저장",
     "PasswordDesc": "비밀번호를 변경하면 세션이 만료됩니다.",
+    "ChangeLanguage": "언어 변경",
+    "ChangeLanguageDesc": "mfloww의 언어를 변경합니다",
     "CurrentPassword": "현재 비밀번호",
     "NewPassword": "새 비밀번호",
     "ConfirmPassword": "새 비밀번호 확인",

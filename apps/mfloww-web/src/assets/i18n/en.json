@@ -42,6 +42,8 @@
     "EncryptionKey": "Encryption Key",
     "Save": "Save",
     "PasswordDesc": "Changing your password will also expires your session.",
+    "ChangeLanguage": "Change language",
+    "ChangeLanguageDesc": "Change the language of mfloww",
     "CurrentPassword": "Current password",
     "NewPassword": "New password",
     "ConfirmPassword": "Confirm new password",

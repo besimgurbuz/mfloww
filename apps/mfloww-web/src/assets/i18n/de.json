@@ -42,6 +42,8 @@
     "EncryptionKey": "Verschlüsselungsschlüssel",
     "Save": "Speichern",
     "PasswordDesc": "Wenn Sie Ihr Passwort ändern, wird auch Ihre Sitzung ablaufen.",
+    "ChangeLanguage": "Sprache ändern",
+    "ChangeLanguageDesc": "Ändern Sie die Sprache von mfloww",
     "CurrentPassword": "Aktuelles Passwort",
     "NewPassword": "Neues Passwort",
     "ConfirmPassword": "Neues Passwort bestätigen",
