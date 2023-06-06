@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import {
   ActivatedRoute,
   RouteConfigLoadEnd,
@@ -30,7 +29,6 @@ export class AppComponent implements OnInit, OnDestroy {
   readonly router = inject(Router);
   readonly route = inject(ActivatedRoute);
   readonly authService = inject(AuthService);
-  readonly titleService = inject(Title);
   readonly translateService = inject(TranslateService);
   readonly localStorage = inject(LocalStorageService);
   readonly _profileInfo$: Observable<ProfileInfo | null> =

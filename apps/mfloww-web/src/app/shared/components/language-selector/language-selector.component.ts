@@ -17,7 +17,7 @@ import { MflowwOverlayPanelComponent } from '@mfloww/view';
 })
 export class LanguageSelectorComponent {
   @Input() set initialLanguage(language: SupportedLanguage | null | undefined) {
-    this._selectedLang = this._supportedLanguages[language || 'en'];
+    this._selectedLang = language || 'en';
   }
 
   @Output() selection: EventEmitter<SupportedLanguage> = new EventEmitter();
@@ -26,10 +26,10 @@ export class LanguageSelectorComponent {
   overlayPanel!: MflowwOverlayPanelComponent;
 
   _supportedLanguages = SUPPORTED_LANGUAGES;
-  _selectedLang = this._supportedLanguages['en'];
+  _selectedLang = 'en';
 
   handleLanguageSelection(language: SupportedLanguage) {
-    this._selectedLang = this._supportedLanguages[language];
+    this._selectedLang = language;
     this.selection.emit(language);
     this.overlayPanel._opened = false;
   }
