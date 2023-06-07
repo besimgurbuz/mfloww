@@ -3,7 +3,7 @@ import {
   SupportedCurrencyCode,
 } from '@mfloww/common';
 import { Injectable, Logger } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron, CronExpression, Timeout } from '@nestjs/schedule';
 import { ExchangeClientWrapper } from '../exchange-client.wrapper';
 import { ExchangeClientFactoryService } from './exchange-client-factory.service';
 import { ExchangeStoreService } from './exchange-store.service';
@@ -22,6 +22,11 @@ export class ExchangeScheduleService {
     private clientFactory: ExchangeClientFactoryService,
     private exchangeStore: ExchangeStoreService
   ) {}
+
+  @Timeout(3000)
+  initialUpdate() {
+    this.updateExchangeRates();
+  }
 
   @Cron(CronExpression.EVERY_2_HOURS)
   updateExchangeRates(): void {

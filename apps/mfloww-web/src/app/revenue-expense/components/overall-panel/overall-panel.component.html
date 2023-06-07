@@ -8,6 +8,6 @@
       'text-mfloww_fatal': overallTotal < 0
     }"
   >
-    {{ overallTotal | currency : currency }}
+    {{ overallTotal | currency : currency : 'symbol' : '1.2-4' }}
   </p>
 </div>

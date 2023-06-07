@@ -60,6 +60,7 @@
     "BalanceDate": "balance • {{date}}",
     "Revenues": "revenues",
     "Expenses": "expenses",
+    "ExchangeRateWarn": "*Exchange rates may not be up to date",
     "Total": "TOTAL"
   },
   "MonthYearSelection": {

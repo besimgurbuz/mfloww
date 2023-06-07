@@ -60,6 +60,7 @@
     "BalanceDate": "solde • {{date}}",
     "Revenues": "revenus",
     "Expenses": "dépenses",
+    "ExchangeRateWarn": "*Les taux de change peuvent ne pas être à jour",
     "Total": "TOTAL"
   },
   "MonthYearSelection": {

@@ -60,6 +60,7 @@
     "BalanceDate": "guthaben • {{date}}",
     "Revenues": "einnahmen",
     "Expenses": "ausgaben",
+    "ExchangeRateWarn": "*Die Wechselkurse sind möglicherweise nicht aktuell",
     "Total": "GESAMT"
   },
   "MonthYearSelection": {

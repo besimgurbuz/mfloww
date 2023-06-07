@@ -60,6 +60,7 @@
     "BalanceDate": "余额 • {{date}}",
     "Revenues": "收入",
     "Expenses": "支出",
+    "ExchangeRateWarn": "*汇率可能不是最新的",
     "Total": "总计"
   },
   "MonthYearSelection": {

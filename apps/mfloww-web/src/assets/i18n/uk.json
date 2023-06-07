@@ -60,6 +60,7 @@
     "BalanceDate": "баланс • {{date}}",
     "Revenues": "доходи",
     "Expenses": "витрати",
+    "ExchangeRateWarn": "*Курси обміну можуть бути неактуальними",
     "Total": "ВСЬОГО"
   },
   "MonthYearSelection": {

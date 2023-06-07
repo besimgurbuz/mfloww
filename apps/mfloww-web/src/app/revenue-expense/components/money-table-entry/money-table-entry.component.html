@@ -24,7 +24,7 @@
     }"
     class="order-2 truncate"
   >
-    <h3>{{ amount | currency : currency }}</h3>
+    <h3>{{ amount | currency : currency : 'symbol' : '1.2-4' }}</h3>
   </div>
   <div
     [ngClass]="_barClassMap[type]"
@@ -49,7 +49,9 @@
         'order-2': type === 'expense'
       }"
     >
-      <h3 class="text-white">{{ amount | currency : currency }}</h3>
+      <h3 class="text-white">
+        {{ amount | currency : currency : 'symbol' : '1.2-4' }}
+      </h3>
     </div>
   </div>
   <div

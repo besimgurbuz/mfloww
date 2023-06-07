@@ -1,0 +1,17 @@
+<div
+  *ngIf="_displayedRate$ && _displayedRate$ | async as rate"
+  class="text-sm text-center md:text-right"
+>
+  <p>
+    <span class="text-gray-400">{{
+      1.0 | currency : exchangeRate?.base : 'symbol' : '1.2-4'
+    }}</span>
+    =
+    <span class="text-mfloww_success">{{
+      rate[1] | currency : rate[0] : 'symbol' : '1.2-4'
+    }}</span>
+  </p>
+  <p class="text-[10px] text-gray-600">
+    {{ 'RevenueExpense.ExchangeRateWarn' | translate }}
+  </p>
+</div>

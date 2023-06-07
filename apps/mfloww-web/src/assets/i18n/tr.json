@@ -60,6 +60,7 @@
     "BalanceDate": "bakiye • {{date}}",
     "Revenues": "gelirler",
     "Expenses": "giderler",
+    "ExchangeRateWarn": "*Döviz kurları güncel olmayabilir",
     "Total": "TOPLAM"
   },
   "MonthYearSelection": {

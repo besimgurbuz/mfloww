@@ -20,6 +20,7 @@ import { RevenueExpenseComponent } from './revenue-expense.component';
 import { CalculatorService } from './services/calculator.service';
 import { ExchangeService } from './services/exchange.service';
 import { ExchangeState } from './states/exchange.state';
+import { ExchangeRatesComponent } from './components/exchange-rates/exchange-rates.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ExchangeState } from './states/exchange.state';
     MoneyTableEntryComponent,
     OverallTableComponent,
     EntryDatePipe,
+    ExchangeRatesComponent,
   ],
   imports: [
     CommonModule,

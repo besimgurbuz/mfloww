@@ -72,6 +72,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   _initialLanguage?: SupportedLanguage | null;
 
   ngOnInit() {
+    this._initialLanguage = this.localStorageService.get('LANG');
     this.profileSubs = this.profileInfo$.subscribe((profileInfo) => {
       this._profileInfo = profileInfo;
       const { username, email, key, platform } = profileInfo as ProfileInfo;

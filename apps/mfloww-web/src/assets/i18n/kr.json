@@ -60,6 +60,7 @@
     "BalanceDate": "잔액 • {{date}}",
     "Revenues": "수입",
     "Expenses": "지출",
+    "ExchangeRateWarn": "*환율은 최신 정보가 아닐 수 있습니다",
     "Total": "합계"
   },
   "MonthYearSelection": {

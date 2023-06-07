@@ -44,6 +44,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
     this.revenueExpenseFacade.selectedRevenues$;
   expenses$: Observable<RevenueExpenseRecord[]> =
     this.revenueExpenseFacade.selectedExpenses$;
+  exchangeRate$ = this.exchangeFacade.exchangeRate$;
   baseCurrency = this.exchangeFacade.baseCurrency;
   totalRevenue$: Observable<number> = this.calculatorService.totalRevenue$;
   totalExpense$: Observable<number> = this.calculatorService.totalExpense$;
