@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ExchangeRate } from '@mfloww/common';
-import { Observable, map, timer } from 'rxjs';
+import { Observable, filter, map, timer } from 'rxjs';
 
 @Component({
   selector: 'mfloww-exchange-rates',
@@ -21,10 +21,12 @@ export class ExchangeRatesComponent {
   }
   _exchangeRate: ExchangeRate | null = null;
   _displayedRate$?: Observable<[string, number] | null>;
+  _hovered = false;
   private _rates: [string, number][] = [];
 
   createDisplayedRateTimer(): void {
     this._displayedRate$ = timer(0, 5000).pipe(
+      filter(() => !this._hovered),
       map((timerIndex: number) => {
         const currentIndex = timerIndex % this._rates.length;
         const currentRate = this._rates[currentIndex];

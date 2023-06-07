@@ -1,6 +1,8 @@
 <div
   *ngIf="_displayedRate$ && _displayedRate$ | async as rate"
   class="text-sm text-center md:text-right"
+  (mouseenter)="_hovered = true"
+  (mouseleave)="_hovered = false"
 >
   <p>
     <span class="text-gray-400">{{
