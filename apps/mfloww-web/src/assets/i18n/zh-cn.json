@@ -1,6 +1,15 @@
 {
   "App": {
-    "MainTitle": "mfloww • 安全资金流动"
+    "MainTitle": "mfloww • 安全资金流动",
+    "Close": "关闭",
+    "Errors": {
+      "triedUnauth": "哎呀，看起来您还没有登录。请登录。",
+      "expiredToken": "哎呀，您的会话已过期。请重新登录。",
+      "newAccount": "欢迎！您现在可以使用新账号登录。",
+      "updatedProfile": "您的个人资料已成功更新。请重新登录。",
+      "updatedPassword": "您的密码已成功更新。请重新登录。",
+      "accountDeletion": "您的账号已成功删除，再见。"
+    }
   },
   "Landing": {
     "HeroText": "让您的资金流动<span class='text-mfloww_blue'>安全</span>可见",

@@ -21,9 +21,14 @@
       }"
       #messageBox
     >
-      <div class="flex justify-between">
-        <p>{{ message?.text }}</p>
-        <button class="text-mfloww_fg" (click)="closeMessenger()">Close</button>
+      <div class="flex justify-between items-center">
+        <p>{{ message!.text | translate }}</p>
+        <button
+          class="text-[10px] hover:opacity-80 rounded border-2 p-1"
+          (click)="closeMessenger()"
+        >
+          {{ 'App.Close' | translate }}
+        </button>
       </div>
     </div>
   </ng-container>

@@ -1,6 +1,15 @@
 {
   "App": {
-    "MainTitle": "mfloww • flujo de dinero seguro"
+    "MainTitle": "mfloww • flujo de dinero seguro",
+    "Close": "Cerrar",
+    "Errors": {
+      "triedUnauth": "Ups, parece que aún no has iniciado sesión. Por favor, inicia sesión.",
+      "expiredToken": "Ups, parece que tu sesión ha expirado. Por favor, vuelve a iniciar sesión.",
+      "newAccount": "¡Bienvenido! Ahora puedes iniciar sesión con tu nueva cuenta.",
+      "updatedProfile": "Tu información de perfil se ha actualizado correctamente. Por favor, vuelve a iniciar sesión.",
+      "updatedPassword": "Tu contraseña se ha actualizado correctamente. Por favor, vuelve a iniciar sesión.",
+      "accountDeletion": "Tu cuenta se ha eliminado correctamente, adiós."
+    }
   },
   "Landing": {
     "HeroText": "Haz que tu dinero fluya <span class='text-mfloww_blue'>seguro</span> y visible",

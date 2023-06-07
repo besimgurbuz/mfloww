@@ -1,6 +1,15 @@
 {
   "App": {
-    "MainTitle": "mfloww • güvenli para akışı"
+    "MainTitle": "mfloww • güvenli para akışı",
+    "Close": "Kapat",
+    "Errors": {
+      "triedUnauth": "Oops, henüz giriş yapmadınız gibi görünüyor. Lütfen giriş yapın.",
+      "expiredToken": "Oops, oturumunuzun süresi dolmuş gibi görünüyor. Lütfen tekrar giriş yapın.",
+      "newAccount": "Hoş geldiniz! Yeni hesabınızla giriş yapabilirsiniz.",
+      "updatedProfile": "Profil bilgileriniz başarıyla güncellendi. Lütfen tekrar giriş yapın.",
+      "updatedPassword": "Şifreniz başarıyla güncellendi. Lütfen tekrar giriş yapın.",
+      "accountDeletion": "Hesabınız başarıyla silindi, hoşça kalın."
+    }
   },
   "Landing": {
     "HeroText": "Paranızı <span class='text-mfloww_blue'>güvenle</span> görünür kılın",

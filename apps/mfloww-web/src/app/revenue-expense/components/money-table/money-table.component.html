@@ -11,7 +11,7 @@
   <div
     class="entries w-full flex flex-col gap-2 items-center"
     [ngClass]="{
-      ' md:items-end': type === 'revenue',
+      'md:items-end': type === 'revenue',
       'md:items-start': type === 'expense'
     }"
   >
@@ -29,7 +29,6 @@
       *ngIf="!_addingModeActive"
       (clicked)="_addingModeActive = !_addingModeActive"
       [ngClass]="_classMap[type]"
-      class="mt-2"
     >
       <mfloww-view-icon
         type="plus"
@@ -38,7 +37,7 @@
       ></mfloww-view-icon>
     </mfloww-view-button>
     <div
-      class="relative mt-2 px-[10px] max-w-[380px] h-fit gap-1 flex flex-col md:flex-row"
+      class="relative px-[10px] max-w-[380px] h-fit gap-1 flex items-center flex-col md:flex-row"
       [ngClass]="_classMap[type]"
       *ngIf="_addingModeActive"
     >

@@ -29,7 +29,7 @@
   <div
     [ngClass]="_barClassMap[type]"
     [style.width.%]="sizePercentage"
-    class="animate-grow_x flex h-[35px] items-center justify-between overflow-hidden"
+    class="animate-grow_x transition-[width] duration-1000 flex h-[35px] items-center justify-between overflow-hidden"
   >
     <div
       *ngIf="!_shouldShowLabelOutside"

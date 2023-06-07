@@ -1,6 +1,15 @@
 {
   "App": {
-    "MainTitle": "mfloww • flux d'argent sécurisé"
+    "MainTitle": "mfloww • flux d'argent sécurisé",
+    "Close": "Fermer",
+    "Errors": {
+      "triedUnauth": "Oups, il semblerait que vous n'avez pas encore ouvert de session. Veuillez vous connecter.",
+      "expiredToken": "Oups, il semblerait que votre session ait expiré. Veuillez vous connecter à nouveau.",
+      "newAccount": "Bienvenue ! Vous pouvez désormais vous connecter avec votre nouveau compte.",
+      "updatedProfile": "Vos informations de profil ont été mises à jour avec succès. Veuillez vous reconnecter.",
+      "updatedPassword": "Votre mot de passe a été mis à jour avec succès. Veuillez vous reconnecter.",
+      "accountDeletion": "Votre compte a été supprimé avec succès, adieu."
+    }
   },
   "Landing": {
     "HeroText": "Rendez votre flux d'argent <span class='text-mfloww_blue'>visiblement</span> sécurisé",

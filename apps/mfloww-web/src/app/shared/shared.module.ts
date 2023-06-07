@@ -8,9 +8,9 @@ import {
 } from '@mfloww/view';
 import { TranslateModule } from '@ngx-translate/core';
 import { BannerComponent } from './components/banner/banner.component';
+import { FlagIconComponent } from './components/flag-icon/flag-icon.component';
 import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
 import { FadeDirective } from './directives/fade/fade.directive';
-import { FlagIconComponent } from './components/flag-icon/flag-icon.component';
 
 @NgModule({
   imports: [

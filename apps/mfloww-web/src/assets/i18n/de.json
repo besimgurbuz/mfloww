@@ -1,6 +1,15 @@
 {
   "App": {
-    "MainTitle": "mfloww • sicherer geldfluss"
+    "MainTitle": "mfloww • sicherer geldfluss",
+    "Close": "Schließen",
+    "Errors": {
+      "triedUnauth": "Oops, es sieht so aus, als hättest du dich noch nicht angemeldet. Bitte melde dich an.",
+      "expiredToken": "Oops, es sieht so aus, als wäre deine Sitzung abgelaufen. Bitte melde dich erneut an.",
+      "newAccount": "Willkommen! Du kannst dich jetzt mit deinem neuen Konto anmelden.",
+      "updatedProfile": "Deine Profilinformationen wurden erfolgreich aktualisiert. Bitte melde dich erneut an.",
+      "updatedPassword": "Dein Passwort wurde erfolgreich aktualisiert. Bitte melde dich erneut an.",
+      "accountDeletion": "Dein Konto wurde erfolgreich gelöscht, tschüss."
+    }
   },
   "Landing": {
     "HeroText": "Machen Sie Ihren Geldfluss <span class='text-mfloww_blue'>sicher</span> sichtbar",

@@ -107,6 +107,18 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  setMonthSelection(moveStepCount: number, months: string[] | null): void {
+    if (this.monthSelectionControl.value && months) {
+      const movedIndex =
+        months.indexOf(this.monthSelectionControl.value) + moveStepCount;
+
+      if (movedIndex < 0 || movedIndex >= months.length) {
+        return;
+      }
+      this.monthSelectionControl.setValue(months[movedIndex]);
+    }
+  }
+
   private setInitialMonthYear(): void {
     const latestMonthYear = this.localStorageService.get<string>(
       LATEST_MONTH_YEAR_KEY

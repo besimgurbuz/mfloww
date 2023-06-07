@@ -8,6 +8,7 @@ import {
   MflowwSelectModule,
 } from '@mfloww/view';
 import { SharedModule } from '../shared/shared.module';
+import { ExchangeRatesComponent } from './components/exchange-rates/exchange-rates.component';
 import { MoneyTableEntryComponent } from './components/money-table-entry/money-table-entry.component';
 import { MoneyTableComponent } from './components/money-table/money-table.component';
 import { OverallTableComponent } from './components/overall-panel/overall-panel.component';
@@ -20,7 +21,6 @@ import { RevenueExpenseComponent } from './revenue-expense.component';
 import { CalculatorService } from './services/calculator.service';
 import { ExchangeService } from './services/exchange.service';
 import { ExchangeState } from './states/exchange.state';
-import { ExchangeRatesComponent } from './components/exchange-rates/exchange-rates.component';
 
 @NgModule({
   declarations: [

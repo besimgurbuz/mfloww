@@ -24,27 +24,27 @@ export class MessengerService implements OnDestroy {
   private redirectionMessageSet: Record<string | number, Message> = {
     triedUnauth: {
       type: 'fatal',
-      text: "Oops, it look like you haven't logged in yet. Please sign in.",
+      text: 'App.Errors.triedUnauth',
     },
     expiredToken: {
       type: 'fatal',
-      text: 'Oops, it look like your session has expired. Please sign in again.',
+      text: 'App.Errors.expiredToken',
     },
     newAccount: {
       type: 'info',
-      text: 'Welcome! You can now sign in with your new account',
+      text: 'App.Errors.newAccount',
     },
     updatedProfile: {
       type: 'info',
-      text: 'Your profile information updated successfully. Please re-login.',
+      text: 'App.Errors.updatedProfile',
     },
     updatedPassword: {
       type: 'info',
-      text: 'Your password updated successfully. Please re-login.',
+      text: 'App.Errors.updatedPassword',
     },
     accountDeletion: {
       type: 'info',
-      text: 'Your account successfully deleted. Farewell..',
+      text: 'App.Errors.accountDeletion',
       disappearDuration: 3000,
     },
   };

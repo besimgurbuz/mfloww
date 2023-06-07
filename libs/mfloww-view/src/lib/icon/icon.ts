@@ -1,4 +1,7 @@
 export type Icon =
+  | 'arrow_left'
+  | 'arrow_right'
+  | 'arrow_up'
   | 'arrow_down'
   | 'plus'
   | 'USD'
@@ -15,8 +18,17 @@ export type Icon =
   | 'tick';
 
 export const ICON_SVG_PATHS: Record<Icon, string[]> = {
+  arrow_left: [
+    'M14.025 18L8 11.975L14.025 5.95L15.1 7.025L10.15 11.975L15.1 16.925L14.025 18Z',
+  ],
+  arrow_right: [
+    'M9.375 18L8.3 16.925L13.25 11.975L8.3 7.025L9.375 5.95L15.4 11.975L9.375 18Z',
+  ],
+  arrow_up: [
+    'M7.075 15.375L6 14.3L12 8.3L18 14.275L16.925 15.35L12 10.425L7.075 15.375Z',
+  ],
   arrow_down: [
-    'M12 15.4L6 9.4L7.075 8.325L12 13.25L16.925 8.325L18 9.4L12 15.4Z',
+    'M22 7.625L12 17.625L2 7.625L3.425 6.225L12 14.8L20.575 6.225L22 7.625Z',
   ],
   plus: [
     'M11.25 19V12.75H5V11.25H11.25V5H12.75V11.25H19V12.75H12.75V19H11.25Z',

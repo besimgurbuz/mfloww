@@ -1,6 +1,15 @@
 {
   "App": {
-    "MainTitle": "mfloww • secure money flow"
+    "MainTitle": "mfloww • secure money flow",
+    "Close": "Close",
+    "Errors": {
+      "triedUnauth": "Oops, it look like you haven't logged in yet. Please sign in.",
+      "expiredToken": "Oops, it look like your session has expired. Please sign in again.",
+      "newAccount": "Welcome! You can now sign in with your new account.",
+      "updatedProfile": "Your profile information updated successfully. Please re-login.",
+      "updatedPassword": "Your password updated successfully. Please re-login.",
+      "accountDeletion": "Your account successfully deleted, farewell."
+    }
   },
   "Landing": {
     "HeroText": "Make your money flow <span class='text-mfloww_blue'>securely</span> visible",
@@ -58,6 +67,7 @@
   "RevenueExpense": {
     "Balance": "balance",
     "BalanceDate": "balance • {{date}}",
+    "SelectAMonth": "Select a month",
     "Revenues": "revenues",
     "Expenses": "expenses",
     "ExchangeRateWarn": "*Exchange rates may not be up to date",

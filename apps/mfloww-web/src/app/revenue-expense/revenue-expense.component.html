@@ -5,27 +5,49 @@
   ></mfloww-exchange-rates>
   <div
     class="w-[180px] sm:w-[220px] flex flex-col items-center justify-center gap-4"
+    *ngIf="{ entryDates: entryDates$ | async } as selectData"
   >
-    <select
-      placeholder="Select a month"
-      class="bg-mfloww_bg border-2 border-solid border-mfloww_fg rounded p-1 text-sm"
-      [formControl]="monthSelectionControl"
-    >
-      <option value disabled selected>Select a date</option>
-      <option *ngFor="let entryDate of entryDates$ | async" [value]="entryDate">
-        {{ entryDate | entryDate | async }}
-      </option>
-    </select>
+    <div class="flex gap-2" *ngIf="selectData.entryDates?.length">
+      <mfloww-view-button
+        class="w-10"
+        (clicked)="setMonthSelection(-1, selectData.entryDates)"
+      >
+        <mfloww-view-icon type="arrow_left"></mfloww-view-icon>
+      </mfloww-view-button>
+      <select
+        [attr.placeholder]="'RevenueExpense.SelectAMonth' | translate"
+        class="bg-mfloww_bg border-2 border-solid border-mfloww_fg rounded p-1 text-sm"
+        [formControl]="monthSelectionControl"
+      >
+        <option value disabled selected>Select a date</option>
+        <option
+          *ngFor="let entryDate of selectData.entryDates"
+          [value]="entryDate"
+        >
+          {{ entryDate | entryDate | async }}
+        </option>
+      </select>
+      <mfloww-view-button
+        class="w-10 h-10 flex"
+        (clicked)="setMonthSelection(1, selectData.entryDates)"
+      >
+        <mfloww-view-icon
+          type="arrow_left"
+          class="-rotate-180"
+        ></mfloww-view-icon>
+      </mfloww-view-button>
+    </div>
+
     <mfloww-view-month-year-picker
       [value]="$any(monthSelectionControl.value)"
       (selection)="handleEntryCreation($event)"
     >
       <button
         mflowwMonthYearPickerTriggerer
-        class="w-[54px] h-[27px] flex justify-center items-center rounded border-solid border-2 border-mfloww_fg hover:bg-mfloww_fg"
+        class="w-[100px] flex justify-center items-center rounded border-solid border-2 border-mfloww_fg hover:bg-mfloww_fg"
       >
         <mfloww-view-icon
-          class="w-[16px] h-[16px]"
+          class="w-[24px] h-[24px]"
           type="plus"
         ></mfloww-view-icon>
       </button>
