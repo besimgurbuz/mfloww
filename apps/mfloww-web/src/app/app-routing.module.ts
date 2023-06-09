@@ -52,8 +52,17 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'team',
+    loadChildren: () => import('./team/team.module').then((m) => m.TeamModule),
+  },
+  { path: 'faq', loadChildren: () => import('./faq/faq.module').then(m => m.FaqModule) },
+  {
     path: '**',
     component: NotFoundComponent,
+    data: {
+      showFooter: true,
+      title: 'App.NotFoundTitle',
+    },
   },
 ];
 

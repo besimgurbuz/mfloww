@@ -12,7 +12,8 @@
     }
   },
   "Landing": {
-    "HeroText": "Paranızı <span class='text-mfloww_blue'>güvenle</span> görünür kılın",
+    "HeroHeader": "Paranızı <span class='text-mfloww_blue'>güvenle</span> görünür kılın",
+    "HeroText": "Make informed decisions about your financial situation without handing over your data.",
     "HeroImageAlt": "mfloww'nun grafik ve bakiye sayfalarının ekran görüntüleri",
     "InfluenceHeader1": "Verilerinizin işlenmesini durdurun",
     "InfluenceDesc1": "Her veri, benzersiz anahtarınızla şifrelenir ve cihazınızda saklanır",

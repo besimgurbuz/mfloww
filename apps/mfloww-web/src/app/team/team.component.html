@@ -1,0 +1,60 @@
+<section
+  class="lg:px-[300px] md:px-[150px] px-10 pt-20 pb-44 flex flex-col gap-10"
+>
+  <div>
+    <h2 class="text-xl">{{ 'Team.Title' | translate }}</h2>
+    <div class="flex mt-5 justify-between">
+      <div *ngFor="let member of members" class="flex flex-col gap-1 w-40">
+        <img
+          [src]="member.photoUrl"
+          [alt]="member.fullname"
+          class="rounded bg-transparent w-full"
+        />
+        <h4>{{ member.fullname }}</h4>
+        <p class="text-[10px] text-gray-500">{{ member.title }}</p>
+        <div class="flex w-full gap-2">
+          <a
+            *ngFor="let socialMedia of member.links"
+            target="_blank"
+            class="w-5"
+            rel="noreferrer"
+            [href]="socialMedia.href"
+            ><mfloww-view-icon [type]="socialMedia.icon"></mfloww-view-icon
+          ></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2 class="text-xl">{{ 'Team.Contributors' | translate }}</h2>
+    <div
+      class="flex flex-wrap mt-5 gap-3"
+      *ngIf="{
+        loading: contributorsLoading$ | async,
+        data: contributors$ | async
+      } as contributorsState"
+    >
+      <ng-container *ngIf="contributorsState.loading; else displayContributors">
+        <div
+          *mflowwViewRepeat="5"
+          class="animate-pulse bg-mfloww_fg rounded-full w-12 h-12"
+        ></div>
+      </ng-container>
+      <ng-template #displayContributors>
+        <div
+          *ngFor="let contributor of contributorsState.data"
+          class="flex flex-col w-12"
+        >
+          <a [href]="contributor.profileUrl" target="_blank" rel="noreferrer">
+            <img
+              [src]="contributor.photoUrl"
+              [alt]="contributor.username"
+              [title]="contributor.username"
+              class="rounded-full bg-transparent w-12"
+            />
+          </a>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</section>

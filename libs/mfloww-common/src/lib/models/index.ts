@@ -1,3 +1,4 @@
+export * from './contributor';
 export * from './entry-type';
 export * from './latest-exchange-result';
 export * from './object-values';

@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import {
   ActivatedRoute,
+  NavigationEnd,
   RouteConfigLoadEnd,
   RouteConfigLoadStart,
   Router,
@@ -38,6 +39,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authService.profileInfo$;
 
   _initialLanguage?: SupportedLanguage | null;
+  _shouldDisplayFooter = true;
   message$ = this.messenger.error$.pipe(
     mergeMap(
       (value) =>
@@ -55,8 +57,14 @@ export class AppComponent implements OnInit, OnDestroy {
   private _destroy: Subject<void> = new Subject();
 
   ngOnInit(): void {
+    this._initialLanguage = this.localStorage.get('LANG');
     this.router.events
       .pipe(
+        tap((e) => {
+          if (e instanceof NavigationEnd) {
+            this.handleFooterDisplay();
+          }
+        }),
         filter(
           (e) =>
             e instanceof RouteConfigLoadStart || e instanceof RouteConfigLoadEnd
@@ -95,9 +103,22 @@ export class AppComponent implements OnInit, OnDestroy {
     this.messenger.clearMessage();
   }
 
+  handleFooterDisplay() {
+    const currentUrl = this.router.url;
+
+    this._shouldDisplayFooter =
+      !currentUrl.includes('revenue-expense') &&
+      !currentUrl.includes('settings');
+  }
+
+  handleLanguageChange(lang: SupportedLanguage) {
+    this.translateService.use(lang);
+    this.localStorage.set('LANG', lang);
+  }
+
   private handleInitialLanguage() {
     const browserLanguage: string = convertLocaleToSupportedLanguage(
-      navigator.language || (navigator as any).userLanguage
+      navigator.language
     );
     this._initialLanguage = this.localStorage.get<SupportedLanguage>('LANG');
 

@@ -9,13 +9,14 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { CoreModule } from './core/core.module';
 import { ProgressTriggererInterceptorService } from './interceptors/progress-triggerer-interceptor.service';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent],
+  declarations: [AppComponent, MenuComponent, FooterComponent],
   imports: [
     CoreModule,
     BrowserModule.withServerTransition({

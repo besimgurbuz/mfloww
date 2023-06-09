@@ -21,8 +21,14 @@ export class MenuComponent {
   @Output() logOutTriggered = new EventEmitter<void>();
 
   _isOpen = false;
+  _scrollY = 0;
 
   constructor(private elementRef: ElementRef) {}
+
+  @HostListener('document:scroll')
+  scrolled() {
+    this._scrollY = window.scrollY;
+  }
 
   @HostListener('document:click', ['$event'])
   clickOut(event: MouseEvent) {

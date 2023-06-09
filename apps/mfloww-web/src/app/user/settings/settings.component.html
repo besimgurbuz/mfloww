@@ -4,7 +4,7 @@
   <h1 class="text-2xl sm:text-4xl text-mfloww_success">
     {{ 'Common.Settings' | translate }}
   </h1>
-  <div class="flex flex-wrap gap-4 w-full items-center justify-around">
+  <div class="flex flex-wrap gap-4 w-full items-center md:justify-around">
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
       <h3 class="text-sm sm:text-lg">{{ 'Settings.Profile' | translate }}</h3>
       <p class="text-[10px] sm:text-xs opacity-50">
@@ -47,7 +47,7 @@
     </form>
   </div>
   <div
-    class="flex flex-wrap gap-4 w-full items-center justify-around"
+    class="flex flex-wrap gap-4 w-full items-center md:justify-around"
     *ngIf="!_profileInfo?.platform"
   >
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
@@ -97,7 +97,7 @@
       </button>
     </form>
   </div>
-  <div class="flex flex-wrap gap-4 w-full items-center justify-around">
+  <div class="flex flex-wrap gap-4 w-full items-center md:justify-around">
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
       <h3 class="text-sm sm:text-lg">
         {{ 'Settings.ChangeLanguage' | translate }}
@@ -114,7 +114,7 @@
       ></mfloww-language-selector>
     </div>
   </div>
-  <div class="flex flex-wrap gap-4 w-full items-center justify-around">
+  <div class="flex flex-wrap gap-4 w-full items-center md:justify-around">
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
       <h3 class="text-sm sm:text-lg">
         {{ 'Settings.ChangeBaseCurrency' | translate }}
@@ -138,7 +138,7 @@
       </select>
     </div>
   </div>
-  <div class="flex flex-wrap gap-4 w-full items-center justify-around">
+  <div class="flex flex-wrap gap-4 w-full items-center md:justify-around">
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
       <h3 class="text-sm sm:text-lg">
         {{ 'Settings.DeleteLocalDB' | translate }}
@@ -157,7 +157,7 @@
       </button>
     </div>
   </div>
-  <div class="flex flex-wrap gap-4 w-full items-center justify-around">
+  <div class="flex flex-wrap gap-4 w-full items-center md:justify-around">
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
       <h3 class="text-sm sm:text-lg">
         {{ 'Settings.DeleteAccount' | translate }}

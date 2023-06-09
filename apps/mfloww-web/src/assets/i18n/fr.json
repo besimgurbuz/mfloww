@@ -3,34 +3,21 @@
     "MainTitle": "mfloww • flux d'argent sécurisé",
     "Close": "Fermer",
     "Errors": {
-      "triedUnauth": "Oups, il semblerait que vous n'avez pas encore ouvert de session. Veuillez vous connecter.",
-      "expiredToken": "Oups, il semblerait que votre session ait expiré. Veuillez vous connecter à nouveau.",
-      "newAccount": "Bienvenue ! Vous pouvez désormais vous connecter avec votre nouveau compte.",
-      "updatedProfile": "Vos informations de profil ont été mises à jour avec succès. Veuillez vous reconnecter.",
+      "triedUnauth": "Oups, il semble que vous n'ayez pas encore ouvert de session. Veuillez vous connecter.",
+      "expiredToken": "Oups, il semble que votre session ait expiré. Veuillez vous reconnecter.",
+      "newAccount": "Bienvenue ! Vous pouvez maintenant vous connecter avec votre nouveau compte.",
+      "updatedProfile": "Les informations de votre profil ont été mises à jour avec succès. Veuillez vous reconnecter.",
       "updatedPassword": "Votre mot de passe a été mis à jour avec succès. Veuillez vous reconnecter.",
       "accountDeletion": "Votre compte a été supprimé avec succès, adieu."
     }
-  },
-  "Landing": {
-    "HeroText": "Rendez votre flux d'argent <span class='text-mfloww_blue'>visiblement</span> sécurisé",
-    "HeroImageAlt": "Captures d'écran des graphiques et des pages de solde de mfloww",
-    "InfluenceHeader1": "Arrêtez de fournir vos données",
-    "InfluenceDesc1": "Chaque donnée est chiffrée avec votre clé unique et stockée sur votre appareil",
-    "InfluenceHeader2": "28 devises différentes",
-    "InfluenceDesc2": "Ajoutez vos revenus/dépenses dans n'importe quelle devise de votre choix à partir d'un vaste ensemble de devises",
-    "InfluenceHeader3": "Visualisez votre flux d'argent comme jamais auparavant",
-    "InfluenceDesc3": "Examinez en détail votre flux d'argent sur un graphique très talentueux",
-    "InfluenceHeader4": "Open source",
-    "InfluenceDesc4": "Priorisez la sécurité et la confidentialité de vos données financières. Le processus de développement transparent permet des audits de sécurité indépendants",
-    "StartUsingNow": "Commencez à utiliser maintenant"
   },
   "Menu": {
     "LogOut": "Se déconnecter"
   },
   "Footer": {
-    "Copyright": "© Droits d'auteur 2023 mfloww",
+    "Copyright": "© Copyright 2023 mfloww",
     "TwitterIconTitle": "Page Twitter de mfloww",
-    "GithubIconTitle": "Page GitHub de mfloww",
+    "GithubIconTitle": "Page github de mfloww",
     "About": "À propos",
     "Team": "Équipe",
     "FAQ": "FAQ",
@@ -39,37 +26,74 @@
     "Documentation": "Documentation",
     "Contribute": "Contribuer"
   },
+  "Landing": {
+    "StarOnGitHub": "Star sur Github",
+    "HeroHeader": "Rendez votre flux d'argent visible <span class='text-mfloww_blue'>en toute sécurité</span>",
+    "HeroText": "Prenez des décisions éclairées sur votre situation financière sans communiquer vos données.",
+    "HeroImageAlt": "Une illustration pour représenter les fonctionnalités de mfloww",
+    "InfluenceHeader1": "Arrêtez de transmettre vos données",
+    "InfluenceDesc1": "Toutes les données sont cryptées avec votre clé unique et stockées sur votre appareil.",
+    "InfluenceHeader2": "28 devises différentes",
+    "InfluenceDesc2": "Ajoutez vos revenus/dépenses dans la devise de votre choix à partir d'un grand pool de devises.",
+    "InfluenceHeader3": "Visualisez votre flux d'argent comme jamais auparavant",
+    "InfluenceDesc3": "Inspectez en détail votre flux d'argent sur un graphique très talentueux.",
+    "InfluenceHeader4": "Open source",
+    "InfluenceDesc4": "Donnez la priorité à la sécurité et à la confidentialité de vos données financières. Un processus de développement transparent permet des audits de sécurité indépendants.",
+    "StartUsingNow": "Commencez à l'utiliser maintenant"
+  },
+  "Team": {
+    "Title": "Rencontrer l'équipe",
+    "Contributors": "Contributeurs"
+  },
+  "FAQ": {
+    "Title": "Questions fréquemment posées",
+    "FAQTitle1": "Qu'est-ce que c'est ?",
+    "FAQText1": "mfloww est une application open source de visualisation des flux monétaires qui crypte les données et les stocke sur l'appareil de l'utilisateur. Les données cryptées ne peuvent être traitées qu'avec la clé unique de l'utilisateur.",
+    "FAQTitle2": "C'est pour qui ?",
+    "FAQText2": "mfloww a été créé pour toute personne ou organisation qui accorde la priorité à la confidentialité de ses données financières et de sa liberté. Mais cela apporte également de la valeur à ceux qui ne se soucient que des visualisations des flux monétaires.",
+    "FAQTitle3": "Pourquoi ai-je besoin de ça ?",
+    "FAQText3": "mfloww fournit un outil puissant pour prendre le contrôle de vos finances, prendre des décisions éclairées et atteindre vos objectifs financiers. mfloww répond à un besoin fondamental pour les individus/organisations d'avoir une compréhension claire de leur situation financière.",
+    "FAQTitle4": "Puis-je importer des transactions depuis mes comptes bancaires ?",
+    "FAQText4": "Pour l'instant, vous pouvez uniquement importer manuellement vos transactions.",
+    "FAQTitle5": "Comment puis-je contacter si j'ai un problème, une question ou une demande de fonctionnalité ?",
+    "FAQText5": "Vous pouvez <a href='https://github.com/besimgurbuz/mfloww/issues/new' target='_blank' rel='noreferrer' class='text-blue-500 hover:underline'>créer un problème< /a>. Ou vous pouvez envoyer un e-mail à <a href='mailto:contact@mfloww.com?subject=Issue, Question or Feature Request' class='text-blue-500 hover:underline'>contact@mfloww.com</a >.",
+    "FAQTitle6": "Puis-je synchroniser l'application sur plusieurs appareils ?",
+    "FAQText6": "Dans l'application, vous pouvez envoyer les données cryptées d'un appareil spécifique à d'autres appareils. Les données cryptées stockées pour la synchronisation entre les appareils seront effacées du serveur dans les 2 heures..",
+    "FAQTitle7": "Qu'est-ce que la pile technologique ?",
+    "FAQText7": "<a href='https://www.prisma.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Prisma</a>, <a href='https:/ /nestjs.com/' target='_blank' rel='noreferrer' class='text-blue-500'>NestJS</a>, <a href='https://angular.io/' target='_blank ' rel='noreferrer' class='text-blue-500'>Angulaire</a> et <a href='https://www.typescriptlang.org/' target='_blank' rel='noreferrer' class= 'text-blue-500'>TypeScript</a>."
+  },
   "SignIn": {
     "DontHaveAccountQuestion": "Vous n'avez pas de compte ?"
   },
   "SignUp": {
-    "HaveAccountQuestion": "Vous avez déjà un compte ?"
+    "HaveAccountQuestion": "Vous avez déjà un compte?"
   },
   "Settings": {
     "Profile": "Profil",
-    "ProfileDesc": "Votre adresse e-mail est votre identité sur mfloww. Le changement de votre e-mail ou de votre nom d'utilisateur entraînera également l'expiration de votre session.",
-    "EncryptionKey": "Clé de chiffrement",
-    "Save": "Enregistrer",
-    "PasswordDesc": "Le changement de votre mot de passe entraînera également l'expiration de votre session.",
+    "ProfileDesc": "Votre adresse e-mail est votre identité sur mfloww. Si vous modifiez votre adresse e-mail ou votre nom d'utilisateur, votre session expirera également.",
+    "EncryptionKey": "Clé de cryptage",
+    "Save": "Sauver",
+    "PasswordDesc": "Si vous modifiez votre mot de passe, votre session expirera également.",
     "ChangeLanguage": "Changer de langue",
-    "ChangeLanguageDesc": "Modifier la langue de mfloww",
+    "ChangeLanguageDesc": "Changer la langue de mfloww",
     "CurrentPassword": "Mot de passe actuel",
     "NewPassword": "Nouveau mot de passe",
     "ConfirmPassword": "Confirmer le nouveau mot de passe",
     "PasswordsShouldMatch": "Les mots de passe doivent correspondre",
     "ChangeBaseCurrency": "Changer la devise de base",
-    "ChangeBaseCurrencyDesc": "Les calculs seront échangés dans la devise sélectionnée",
+    "ChangeBaseCurrencyDesc": "Les calculs sont convertis dans la devise sélectionnée.",
     "DeleteLocalDB": "Supprimer la base de données locale",
-    "DeleteLocalDBDesc": "Les données de cet appareil seront supprimées. <strong>Avertissement</strong> : la suppression est irréversible.",
+    "DeleteLocalDBDesc": "Les données de cet appareil seront supprimées. <strong>Attention</strong> la suppression est irréversible.",
     "DeleteAccount": "Supprimer le compte",
-    "DeleteAccountDesc": "Votre compte et les données de cet appareil seront supprimés. <strong>Avertissement</strong> : la suppression est irréversible."
+    "DeleteAccountDesc": "Votre compte et vos données sur cet appareil seront supprimés. <strong>Attention</strong> la suppression est irréversible."
   },
   "RevenueExpense": {
     "Balance": "solde",
     "BalanceDate": "solde • {{date}}",
+    "SelectAMonth": "Sélectionnez un mois",
     "Revenues": "revenus",
     "Expenses": "dépenses",
-    "ExchangeRateWarn": "*Les taux de change peuvent ne pas être à jour",
+    "ExchangeRateWarn": "*Les taux de change peuvent ne pas être à jour.",
     "Total": "TOTAL"
   },
   "MonthYearSelection": {
@@ -87,18 +111,18 @@
     "December": "Décembre {{year}}"
   },
   "MonthYearPicker": {
-    "Jan": "Janv",
-    "Feb": "Fév",
-    "Mar": "Mar",
-    "Apr": "Avr",
+    "Jan": "Janv.",
+    "Feb": "Févr.",
+    "Mar": "Mars",
+    "Apr": "Avr.",
     "May": "Mai",
     "Jun": "Juin",
-    "Jul": "Juil",
+    "Jul": "Juil.",
     "Aug": "Août",
-    "Sep": "Sep",
-    "Oct": "Oct",
-    "Nov": "Nov",
-    "Dec": "Déc",
+    "Sep": "Sept.",
+    "Oct": "Oct.",
+    "Nov": "Nov.",
+    "Dec": "Déc.",
     "Ok": "Ok"
   },
   "ValidationMessages": {

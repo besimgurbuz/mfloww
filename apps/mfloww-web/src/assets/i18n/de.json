@@ -1,37 +1,24 @@
 {
   "App": {
-    "MainTitle": "mfloww • sicherer geldfluss",
+    "MainTitle": "mfloww • Geldfluss sichern",
     "Close": "Schließen",
     "Errors": {
-      "triedUnauth": "Oops, es sieht so aus, als hättest du dich noch nicht angemeldet. Bitte melde dich an.",
-      "expiredToken": "Oops, es sieht so aus, als wäre deine Sitzung abgelaufen. Bitte melde dich erneut an.",
-      "newAccount": "Willkommen! Du kannst dich jetzt mit deinem neuen Konto anmelden.",
-      "updatedProfile": "Deine Profilinformationen wurden erfolgreich aktualisiert. Bitte melde dich erneut an.",
-      "updatedPassword": "Dein Passwort wurde erfolgreich aktualisiert. Bitte melde dich erneut an.",
-      "accountDeletion": "Dein Konto wurde erfolgreich gelöscht, tschüss."
+      "triedUnauth": "Hoppla, es sieht so aus, als wären Sie noch nicht eingeloggt. Bitte einloggen.",
+      "expiredToken": "Hoppla, Ihre Sitzung scheint abgelaufen zu sein. Bitte neu anmelden.",
+      "newAccount": "Willkommen! Sie können sich jetzt mit Ihrem neuen Konto anmelden.",
+      "updatedProfile": "Ihre Profilinformationen wurden erfolgreich aktualisiert. Bitte neu anmelden.",
+      "updatedPassword": "Ihr Passwort wurde erfolgreich aktualisiert. Bitte melden Sie sich erneut an.",
+      "accountDeletion": "Ihr Konto wurde erfolgreich gelöscht, auf Wiedersehen."
     }
   },
-  "Landing": {
-    "HeroText": "Machen Sie Ihren Geldfluss <span class='text-mfloww_blue'>sicher</span> sichtbar",
-    "HeroImageAlt": "Screenshots von mfloww's Graph- und Balance-Seiten",
-    "InfluenceHeader1": "Geben Sie Ihre Daten nicht weiter",
-    "InfluenceDesc1": "Jede Daten werden mit Ihrem einzigartigen Schlüssel verschlüsselt und auf Ihrem Gerät gespeichert",
-    "InfluenceHeader2": "28 verschiedene Währungen",
-    "InfluenceDesc2": "Füge dein Einkommen/Ausgaben in jeder beliebigen Währung aus einem großen Währungspool hinzu",
-    "InfluenceHeader3": "Visualisieren Sie Ihren Geldfluss wie nie zuvor",
-    "InfluenceDesc3": "Inspektieren Sie Ihren Geldfluss detailliert auf einem sehr talentierten Diagramm",
-    "InfluenceHeader4": "Open Source",
-    "InfluenceDesc4": "Priorisieren Sie die Sicherheit und den Datenschutz Ihrer Finanzdaten. Der transparente Entwicklungsprozess ermöglicht unabhängige Sicherheitsaudits",
-    "StartUsingNow": "Jetzt starten"
-  },
   "Menu": {
-    "LogOut": "Abmelden"
+    "LogOut": "Ausloggen"
   },
   "Footer": {
-    "Copyright": "© Urheberrecht 2023 mfloww",
-    "TwitterIconTitle": "mfloww's Twitter-Seite",
-    "GithubIconTitle": "mfloww's GitHub-Seite",
-    "About": "Über uns",
+    "Copyright": "© Copyright 2023 mfloww",
+    "TwitterIconTitle": "mflowws Twitter-Seite",
+    "GithubIconTitle": "mflowws Github-Seite",
+    "About": "Über",
     "Team": "Team",
     "FAQ": "FAQ",
     "Changelog": "Änderungsprotokoll",
@@ -39,43 +26,80 @@
     "Documentation": "Dokumentation",
     "Contribute": "Beitragen"
   },
+  "Landing": {
+    "StarOnGitHub": "Stern auf GitHub",
+    "HeroHeader": "Machen Sie Ihren Geldfluss <span class='text-mfloww_blue'>sicher</span> sichtbar.",
+    "HeroText": "Treffen Sie fundierte Entscheidungen über Ihre finanzielle Situation, ohne Ihre Daten preiszugeben.",
+    "HeroImageAlt": "Eine Illustration zur Darstellung der Funktionen von mfloww",
+    "InfluenceHeader1": "Hören Sie auf, Ihre Daten weiterzugeben",
+    "InfluenceDesc1": "Alle Daten werden mit Ihrem einzigartigen Schlüssel verschlüsselt und auf Ihrem Gerät gespeichert",
+    "InfluenceHeader2": "28 verschiedene Währungen",
+    "InfluenceDesc2": "Fügen Sie Ihre Einnahmen/Ausgaben in einer beliebigen Währung aus einem großen Währungspool hinzu",
+    "InfluenceHeader3": "Visualisieren Sie Ihren Geldfluss wie nie zuvor",
+    "InfluenceDesc3": "Untersuchen Sie Ihren Cashflow im Detail mit Hilfe einer sehr talentierten Grafik",
+    "InfluenceHeader4": "Open source",
+    "InfluenceDesc4": "Priorisieren Sie die Sicherheit und den Datenschutz Ihrer Finanzdaten. Transparenter Entwicklungsprozess ermöglicht unabhängige Sicherheitsaudits",
+    "StartUsingNow": "Beginnen Sie jetzt mit der Nutzung"
+  },
+  "Team": {
+    "Title": "Triff das Team",
+    "Contributors": "Mitwirkende"
+  },
+  "FAQ": {
+    "Title": "Häufig gestellte Fragen",
+    "FAQTitle1": "Was ist es?",
+    "FAQText1": "mflow ist eine Open-Source-Anwendung zur Visualisierung von Geldflüssen, die Daten verschlüsselt und auf dem Gerät des Benutzers speichert. Verschlüsselte Daten können nur mit dem eindeutigen Schlüssel des Benutzers verarbeitet werden.",
+    "FAQTitle2": "Für wen ist das?",
+    "FAQText2": "mfloww richtet sich an jede Person oder Organisation, die Wert auf die Vertraulichkeit ihrer Finanzdaten und ihre Freiheit legt. Es bietet aber auch einen Mehrwert für diejenigen, die nur an der Visualisierung von Zahlungsströmen interessiert sind.",
+    "FAQTitle3": "Warum brauche ich das?",
+    "FAQText3": "mfloww bietet ein leistungsstarkes Tool, mit dem Sie die Kontrolle über Ihre Finanzen erlangen, fundierte Entscheidungen treffen und auf Ihre finanziellen Ziele hinarbeiten können. mfloww geht auf das grundlegende Bedürfnis von Einzelpersonen/Organisationen ein, ein klares Verständnis ihrer finanziellen Situation zu haben.",
+    "FAQTitle4": "Kann ich Transaktionen von meinen Bankkonten importieren?",
+    "FAQText4": "Derzeit können Sie Ihre Transaktionen nur manuell importieren.",
+    "FAQTitle5": "How can I contact you if I have a problem, question or feature request?",
+    "FAQText5": "Sie können <a href='https://github.com/besimgurbuz/mfloww/issues/new' target='_blank' rel='noreferrer' class='text-blue-500 hover:underline'>ein Problem erstellen< /a>. Oder Sie können eine E-Mail an <a href='mailto:contact@mfloww.com?subject=Issue, Question or Feature Request' class='text-blue-500 hover:underline'>contact@mfloww.com</a senden >.",
+    "FAQTitle6": "Kann ich die App auf mehreren Geräten synchronisieren?",
+    "FAQText6": "Innerhalb der Anwendung können Sie die verschlüsselten Daten eines bestimmten Geräts an andere Geräte senden. Gespeicherte verschlüsselte Daten zur geräteübergreifenden Synchronisierung werden innerhalb von 2 Stunden vom Server gelöscht.",
+    "FAQTitle7": "Was ist der Tech-Stack?",
+    "FAQText7": "<a href='https://www.prisma.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Prisma</a>, <a href='https:/ /nestjs.com/' target='_blank' rel='noreferrer' class='text-blue-500'>NestJS</a>, <a href='https://angular.io/' target='_blank ' rel='noreferrer' class='text-blue-500'>Angular</a> und <a href='https://www.typescriptlang.org/' target='_blank' rel='noreferrer' class= 'text-blue-500'>TypeScript</a>."
+  },
   "SignIn": {
-    "DontHaveAccountQuestion": "Sie haben noch keinen Account?"
+    "DontHaveAccountQuestion": "Haben Sie noch kein Konto?"
   },
   "SignUp": {
     "HaveAccountQuestion": "Haben Sie bereits ein Konto?"
   },
   "Settings": {
     "Profile": "Profil",
-    "ProfileDesc": "Ihre E-Mail-Adresse ist Ihre Identität bei mfloww. Wenn Sie Ihre E-Mail oder Ihren Benutzernamen ändern, wird auch Ihre Sitzung ablaufen.",
+    "ProfileDesc": "Ihre E-Mail Adresse ist Ihre Identität auf mfloww. Wenn Sie Ihre E-Mail-Adresse oder Ihren Benutzernamen ändern, erlischt auch Ihre Sitzung.",
     "EncryptionKey": "Verschlüsselungsschlüssel",
     "Save": "Speichern",
-    "PasswordDesc": "Wenn Sie Ihr Passwort ändern, wird auch Ihre Sitzung ablaufen.",
+    "PasswordDesc": "Wenn Sie Ihr Passwort ändern, läuft Ihre Sitzung ebenfalls ab.",
     "ChangeLanguage": "Sprache ändern",
-    "ChangeLanguageDesc": "Ändern Sie die Sprache von mfloww",
+    "ChangeLanguageDesc": "Ändern Sie die Sprache von mfloww.",
     "CurrentPassword": "Aktuelles Passwort",
-    "NewPassword": "Neues Passwort",
-    "ConfirmPassword": "Neues Passwort bestätigen",
+    "NewPassword": "Neues Kennwort",
+    "ConfirmPassword": "Bestätige neues Passwort",
     "PasswordsShouldMatch": "Passwörter sollten übereinstimmen",
     "ChangeBaseCurrency": "Basiswährung ändern",
-    "ChangeBaseCurrencyDesc": "Berechnungen werden in die ausgewählte Währung umgerechnet",
+    "ChangeBaseCurrencyDesc": "Berechnungen werden in die ausgewählte Währung umgerechnet.",
     "DeleteLocalDB": "Lokale Datenbank löschen",
-    "DeleteLocalDBDesc": "Daten auf diesem Gerät werden gelöscht. <strong>Warnung</strong>: Die Löschung ist unwiderruflich.",
+    "DeleteLocalDBDesc": "Daten auf diesem Gerät werden gelöscht. <strong>Warnung</strong>: Das Löschen kann nicht rückgängig gemacht werden.",
     "DeleteAccount": "Konto löschen",
-    "DeleteAccountDesc": "Ihr Konto und die Daten auf diesem Gerät werden gelöscht. <strong>Warnung</strong>: Die Löschung ist unwiderruflich."
+    "DeleteAccountDesc": "Ihr Konto und Ihre Daten auf diesem Gerät werden gelöscht. <strong>Warnung</strong>: Das Löschen kann nicht rückgängig gemacht werden."
   },
   "RevenueExpense": {
-    "Balance": "guthaben",
-    "BalanceDate": "guthaben • {{date}}",
-    "Revenues": "einnahmen",
-    "Expenses": "ausgaben",
-    "ExchangeRateWarn": "*Die Wechselkurse sind möglicherweise nicht aktuell",
+    "Balance": "gleichgewicht",
+    "BalanceDate": "gleichgewicht • {{date}}",
+    "SelectAMonth": "Wähle einen Monat",
+    "Revenues": "erlöse",
+    "Expenses": "Kosten",
+    "ExchangeRateWarn": "*Wechselkurse sind möglicherweise nicht aktuell",
     "Total": "GESAMT"
   },
   "MonthYearSelection": {
     "January": "Januar {{year}}",
     "February": "Februar {{year}}",
-    "March": "März {{year}}",
+    "March": "März {{Jahr}}",
     "April": "April {{year}}",
     "May": "Mai {{year}}",
     "June": "Juni {{year}}",
@@ -87,26 +111,26 @@
     "December": "Dezember {{year}}"
   },
   "MonthYearPicker": {
-    "Jan": "Jan",
-    "Feb": "Feb",
-    "Mar": "Mär",
-    "Apr": "Apr",
+    "Jan": "Jan.",
+    "Feb": "Feb.",
+    "Mar": "März",
+    "Apr": "Apr.",
     "May": "Mai",
-    "Jun": "Jun",
-    "Jul": "Jul",
-    "Aug": "Aug",
-    "Sep": "Sep",
-    "Oct": "Okt",
-    "Nov": "Nov",
-    "Dec": "Dez",
+    "Jun": "Juni",
+    "Jul": "Juli",
+    "Aug": "Aug.",
+    "Sep": "Sep.",
+    "Oct": "Okt.",
+    "Nov": "Nov.",
+    "Dec": "Dez.",
     "Ok": "Ok"
   },
   "ValidationMessages": {
     "Required": "{{name}} ist erforderlich",
     "Email": "Dieses Feld sollte im E-Mail-Format sein",
-    "MaxLength": "Dieses Feld darf maximal {{requiredLength}} Zeichen lang sein",
+    "MaxLength": "Dieses Feld kann bis zu {{requiredLength}} Zeichen lang sein",
     "MinLength": "Dieses Feld muss mindestens {{requiredLength}} Zeichen lang sein",
-    "Pattern": "Dieses Feld ist ungültig"
+    "Pattern": "Dieses Feld ist nicht gültig"
   },
   "Input": {
     "Copy": "Kopieren",
@@ -115,11 +139,11 @@
   "Common": {
     "Settings": "Einstellungen",
     "SignIn": "Anmelden",
-    "SignUp": "Registrieren",
-    "Email": "E-Mail",
+    "SignUp": "Anmeldung",
+    "Email": "Email",
     "Or": "oder",
-    "ContinueWithGoogle": "Mit Google fortfahren",
+    "ContinueWithGoogle": "Weiter mit Google",
     "Password": "Passwort",
-    "Username": "Benutzername"
+    "Username": "Nutzername"
   }
 }

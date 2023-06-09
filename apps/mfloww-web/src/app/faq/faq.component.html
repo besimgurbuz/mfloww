@@ -1,0 +1,12 @@
+<section
+  class="lg:px-[300px] md:px-[150px] px-10 pt-20 pb-44 flex flex-col gap-10"
+>
+  <h1 class="text-xl">{{ 'FAQ.Title' | translate }}</h1>
+  <div *mflowwViewRepeat="7; let i">
+    <h3 class="text-md">{{ 'FAQ.FAQTitle' + (i + 1) | translate }}</h3>
+    <p
+      class="text-md font-roboto font-light"
+      [innerHTML]="'FAQ.FAQText' + (i + 1) | translate"
+    ></p>
+  </div>
+</section>

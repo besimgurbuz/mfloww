@@ -7,7 +7,14 @@
     [profileInfo]="_profileInfo$ | async"
     (logOutTriggered)="handleLogOut()"
   ></mfloww-menu>
-  <router-outlet></router-outlet>
+  <main class="mt-16">
+    <router-outlet></router-outlet>
+  </main>
+  <mfloww-footer
+    *ngIf="_shouldDisplayFooter"
+    [initialLanguage]="_initialLanguage"
+    (languageChanged)="handleLanguageChange($event)"
+  ></mfloww-footer>
   <ng-container *ngIf="message$ | async as message">
     <div
       *ngIf="message.text"

@@ -2,12 +2,3 @@
   display: block;
   width: fit-content;
 }
-
-h1 {
-  @media (max-width: 768px) {
-    font-size: 35px;
-  }
-  @media (max-width: 600px) {
-    font-size: 28px;
-  }
-}

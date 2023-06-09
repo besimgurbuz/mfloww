@@ -14,8 +14,16 @@ module.exports = {
         xs: '475px',
       },
       colors: {
-        mfloww_bg: 'var(--app-background)',
-        mfloww_fg: 'var(--app-foreground)',
+        mfloww_bg: {
+          300: '#1A2026',
+          500: 'var(--app-background)',
+          DEFAULT: 'var(--app-background)',
+        },
+        mfloww_fg: {
+          300: 'var(--app-foreground-hover)',
+          500: 'var(--app-foreground)',
+          DEFAULT: 'var(--app-foreground)',
+        },
         mfloww_fg_hover: 'var(--app-foreground-hover)',
         mfloww_blue: 'var(--app-blue)',
         mfloww_white: 'var(--app-white)',
@@ -25,7 +33,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["'Krona One'", ...defaultTheme.fontFamily.sans],
-        google: ['Roboto', ...defaultTheme.fontFamily.sans],
+        roboto: ['Roboto', ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         grow_x: {

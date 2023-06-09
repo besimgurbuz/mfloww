@@ -4,6 +4,7 @@ import { AngularUniversalModule } from './angular-universal/angular-universal.mo
 import { ScheduleModule } from '@nestjs/schedule';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
+import { ContributorsModule } from './contributors/contributors.module';
 import { PrismaService } from './core/prisma.service';
 import { ExchangeModule } from './exchange/exchange.module';
 import { UserModule } from './user/user.module';
@@ -26,6 +27,7 @@ import { loadESModule } from './utils/load-esm-module';
     UserModule,
     AuthModule,
     ExchangeModule,
+    ContributorsModule,
   ],
   controllers: [],
   providers: [PrismaService],

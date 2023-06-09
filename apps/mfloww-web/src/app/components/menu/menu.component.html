@@ -1,21 +1,32 @@
 <nav
-  class="flex items-center justify-between lg:px-28 md:px-18 px-6 pt-10"
+  class="fixed top-0 w-full transition-[background-color] flex items-center justify-between lg:px-28 md:px-18 px-6 py-3 text-sm bg-gradient-to-b from-mfloww_bg-300 to-mfloww_bg"
   mflowwFade="in"
+  [ngClass]="{
+    'backdrop-blur border-b-[1px] border-b-gray-700': _scrollY > 20
+  }"
 >
   <mfloww-banner size="bigger"></mfloww-banner>
   <ng-container *ngIf="!profileInfo; else avatar">
     <div class="flex items-center gap-1">
-      <div class="hidden items-center gap-3 text-mfloww_success md:flex">
+      <div class="hidden items-center text-mfloww_success md:flex gap-2">
         <a
           routerLink="/user/sign-in"
-          class="px-5 py-2 hover:opacity-70 hover:cursor-pointer text-mfloww_white"
+          class="p-2 hover:opacity-70 hover:cursor-pointer text-mfloww_white"
           >{{ 'Common.SignIn' | translate }}</a
         >
         <a
           routerLink="/user/sign-up"
-          class="px-5 py-2 border-2 border-solid border-mfloww_white text-mfloww_white rounded hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
+          class="p-2 text-mfloww_white rounded hover:opacity-70 hover:cursor-pointer"
         >
           {{ 'Common.SignUp' | translate }}
+        </a>
+        <a
+          class="w-6 text-mfloww_white rounded hover:opacity-70 hover:cursor-pointer"
+          href="https://github.com/besimgurbuz/mfloww"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <mfloww-view-icon type="github"></mfloww-view-icon>
         </a>
       </div>
       <mfloww-view-overlay-panel class="md:hidden self-center" #overlayPanel>

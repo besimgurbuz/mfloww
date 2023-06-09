@@ -1,10 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  inject,
-} from '@angular/core';
-import { SupportedLanguage } from '@mfloww/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Icon } from '@mfloww/view';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '../core/local-storage.service';
 
@@ -14,18 +9,14 @@ import { LocalStorageService } from '../core/local-storage.service';
   styleUrls: ['./landing.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent {
   private translateService = inject(TranslateService);
   private localStorageService = inject(LocalStorageService);
 
-  _initialLanguage?: SupportedLanguage | null;
-
-  ngOnInit(): void {
-    this._initialLanguage = this.localStorageService.get('LANG');
-  }
-
-  handleLanguageChange(lang: SupportedLanguage) {
-    this.translateService.use(lang);
-    this.localStorageService.set('LANG', lang);
-  }
+  features: { icon: Icon; textIndex: number }[] = [
+    { icon: 'lock', textIndex: 1 },
+    { icon: 'currency_exchange', textIndex: 2 },
+    { icon: 'graph', textIndex: 3 },
+    { icon: 'code', textIndex: 4 },
+  ];
 }
