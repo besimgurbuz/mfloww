@@ -44,14 +44,15 @@ export class UserController {
       res.status(201).send(result);
     } catch (err) {
       UserController.logger.debug(
-        `failed to create a new user { data: ${userDto}}`
+        `failed to create a new user { data: ${userDto}} ${err}`
       );
       res.status(400).send({
         code: err.code === 'P2002' ? 409 : 400,
         message:
           err.code === 'P2002'
             ? 'Opps, it looks like the email you want to use is taken already.'
-            : 'Failed to create a new user with given credentials.',
+            : err?.message ||
+              'Failed to create a new user with given credentials.',
       });
     }
   }

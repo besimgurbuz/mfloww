@@ -11,6 +11,7 @@ import {
   UserDto,
 } from '../dtos/user.dto';
 import { UserRepository } from '../repositories/user.repository';
+import { createUserSchema } from '../user.schema';
 
 @Injectable()
 export class UserService {
@@ -23,6 +24,7 @@ export class UserService {
   }
 
   async createUser(userDto: UserDto): Promise<UserActionResult> {
+    await createUserSchema.validateAsync(userDto);
     const platformUserRecord = await this.getPlatformUserByEmail(userDto.email);
     if (
       platformUserRecord &&

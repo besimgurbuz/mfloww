@@ -19,13 +19,15 @@ export class SignUpComponent implements OnDestroy {
   signUpForm: FormGroup = new FormGroup({
     username: new FormControl('', [
       Validators.required,
-      Validators.maxLength(40),
+      Validators.minLength(3),
+      Validators.maxLength(30),
       Validators.pattern('[a-zA-Z_.0-9]+'),
     ]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(5),
+      Validators.maxLength(50),
     ]),
   });
   platforms: SupportedPlatform[] = SUPPORTED_PLATFORMS;
