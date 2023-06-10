@@ -57,7 +57,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private _destroy: Subject<void> = new Subject();
 
   ngOnInit(): void {
-    this._initialLanguage = this.localStorage.get('LANG');
     this.router.events
       .pipe(
         tap((e) => {
@@ -117,18 +116,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private handleInitialLanguage() {
-    const browserLanguage: string = convertLocaleToSupportedLanguage(
+    const browserLanguage: SupportedLanguage = convertLocaleToSupportedLanguage(
       navigator.language
     );
-    this._initialLanguage = this.localStorage.get<SupportedLanguage>('LANG');
+    this._initialLanguage =
+      this.localStorage.get<SupportedLanguage>('LANG') || browserLanguage;
 
-    if (browserLanguage && !this._initialLanguage) {
-      this.translateService.use(browserLanguage.toLowerCase());
-    } else if (
-      this._initialLanguage &&
-      this.translateService.currentLang !== this._initialLanguage
-    ) {
-      this.translateService.use(this._initialLanguage);
-    }
+    this.translateService.use(this._initialLanguage);
   }
 }

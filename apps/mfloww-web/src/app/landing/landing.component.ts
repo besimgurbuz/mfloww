@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Icon } from '@mfloww/view';
-import { TranslateService } from '@ngx-translate/core';
-import { LocalStorageService } from '../core/local-storage.service';
 
 @Component({
   selector: 'mfloww-landing',
@@ -10,9 +8,6 @@ import { LocalStorageService } from '../core/local-storage.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingComponent {
-  private translateService = inject(TranslateService);
-  private localStorageService = inject(LocalStorageService);
-
   features: { icon: Icon; textIndex: number }[] = [
     { icon: 'lock', textIndex: 1 },
     { icon: 'currency_exchange', textIndex: 2 },

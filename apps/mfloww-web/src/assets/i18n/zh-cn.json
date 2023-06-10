@@ -43,6 +43,9 @@
   },
   "Team": {
     "Title": "团队介绍",
+    "Member": {
+      "BesimGurbuzTitle": "创始人，工程师和设计师"
+    },
     "Contributors": "贡献者"
   },
   "FAQ": {
@@ -61,6 +64,11 @@
     "FAQText6": "在应用程序中，您可以将特定设备的加密数据发送到其他设备。用于跨设备同步的存储加密数据将在 2 小时内从服务器上删除。",
     "FAQTitle7": "技术栈是什么？",
     "FAQText7": "<a href='https://www.prisma.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Prisma</a>、<a href='https://nestjs.com/' target='_blank' rel='noreferrer' class='text-blue-500'>NestJS</a>、<a href='https://angular.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Angular</a> 和 <a href='https://www.typescriptlang.org/' target='_blank' rel='noreferrer' class='text-blue-500'>TypeScript</a>。"
+  },
+  "Changelog": {
+    "Title": "更新日志",
+    "InfoText": "您也可以关注<a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-blue-500'>mfloww的Twitter页面</a>，以获取最新的变更。",
+    "NotFound": "未找到更新日志。请稍后再试。"
   },
   "SignIn": {
     "DontHaveAccountQuestion": "没有帐号吗？"

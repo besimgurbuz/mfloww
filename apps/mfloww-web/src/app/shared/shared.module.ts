@@ -11,6 +11,7 @@ import { BannerComponent } from './components/banner/banner.component';
 import { FlagIconComponent } from './components/flag-icon/flag-icon.component';
 import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
 import { FadeDirective } from './directives/fade/fade.directive';
+import { TrimPipe } from './pipes/trim.pipe';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import { FadeDirective } from './directives/fade/fade.directive';
     RouterModule,
     FadeDirective,
   ],
-  declarations: [BannerComponent, LanguageSelectorComponent, FlagIconComponent],
+  declarations: [BannerComponent, LanguageSelectorComponent, FlagIconComponent, TrimPipe],
   exports: [
     BannerComponent,
     MflowwIconComponent,
@@ -30,6 +31,7 @@ import { FadeDirective } from './directives/fade/fade.directive';
     TranslateModule,
     LanguageSelectorComponent,
     FlagIconComponent,
+    TrimPipe,
   ],
 })
 export class SharedModule {}

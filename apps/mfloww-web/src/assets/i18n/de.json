@@ -43,6 +43,9 @@
   },
   "Team": {
     "Title": "Lerne das Team kennen",
+    "Member": {
+      "BesimGurbuzTitle": "Gründer, Ingenieur und Designer"
+    },
     "Contributors": "Mitwirkende"
   },
   "FAQ": {
@@ -61,6 +64,11 @@
     "FAQText6": "In der Anwendung kannst du verschlüsselte Daten eines bestimmten Geräts an andere Geräte senden. Die gespeicherten verschlüsselten Daten zur Synchronisierung zwischen Geräten werden innerhalb von 2 Stunden vom Server gelöscht.",
     "FAQTitle7": "Welche Technologien werden verwendet?",
     "FAQText7": "<a href='https://www.prisma.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Prisma</a>, <a href='https://nestjs.com/' target='_blank' rel='noreferrer' class='text-blue-500'>NestJS</a>, <a href='https://angular.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Angular</a> und <a href='https://www.typescriptlang.org/' target='_blank' rel='noreferrer' class='text-blue-500'>TypeScript</a>."
+  },
+  "Changelog": {
+    "Title": "Änderungsprotokoll",
+    "InfoText": "Sie können auch der <a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-blue-500'>Twitter-Seite von mfloww</a> folgen, um über die neuesten Änderungen auf dem Laufenden zu bleiben.",
+    "NotFound": "Kein Änderungsprotokoll gefunden. Versuchen Sie es später erneut."
   },
   "SignIn": {
     "DontHaveAccountQuestion": "Hast du noch keinen Account?"

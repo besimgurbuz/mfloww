@@ -43,6 +43,9 @@
   },
   "Team": {
     "Title": "Rencontrez l'équipe",
+    "Member": {
+      "BesimGurbuzTitle": "Fondateur, Ingénieur et Designer"
+    },
     "Contributors": "Contributeurs"
   },
   "FAQ": {
@@ -61,6 +64,11 @@
     "FAQText6": "Dans l'application, vous pouvez envoyer les données chiffrées d'un appareil spécifique à d'autres appareils. Les données chiffrées stockées pour la synchronisation entre les appareils seront effacées du serveur dans les 2 heures.",
     "FAQTitle7": "Quelle est la pile technologique utilisée ?",
     "FAQText7": "<a href='https://www.prisma.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Prisma</a>, <a href='https://nestjs.com/' target='_blank' rel='noreferrer' class='text-blue-500'>NestJS</a>, <a href='https://angular.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Angular</a> et <a href='https://www.typescriptlang.org/' target='_blank' rel='noreferrer' class='text-blue-500'>TypeScript</a>."
+  },
+  "Changelog": {
+    "Title": "Journal des modifications",
+    "InfoText": "Vous pouvez également suivre la <a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-blue-500'>page Twitter de mfloww</a> pour rester à jour avec les dernières modifications.",
+    "NotFound": "Aucun journal des modifications trouvé. Veuillez réessayer ultérieurement."
   },
   "SignIn": {
     "DontHaveAccountQuestion": "Vous n'avez pas de compte ?"

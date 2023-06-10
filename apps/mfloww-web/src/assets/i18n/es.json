@@ -43,6 +43,9 @@
   },
   "Team": {
     "Title": "Conoce al equipo",
+    "Member": {
+      "BesimGurbuzTitle": "Fundador, Ingeniero y Diseñador"
+    },
     "Contributors": "Contribuyentes"
   },
   "FAQ": {
@@ -61,6 +64,11 @@
     "FAQText6": "En la aplicación puedes enviar los datos encriptados de un dispositivo específico a otros dispositivos. Los datos encriptados almacenados para sincronizar entre dispositivos se borrarán del servidor en un plazo de 2 horas.",
     "FAQTitle7": "¿Cuál es la pila tecnológica?",
     "FAQText7": "<a href='https://www.prisma.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Prisma</a>, <a href='https://nestjs.com/' target='_blank' rel='noreferrer' class='text-blue-500'>NestJS</a>, <a href='https://angular.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Angular</a> y <a href='https://www.typescriptlang.org/' target='_blank' rel='noreferrer' class='text-blue-500'>TypeScript</a>."
+  },
+  "Changelog": {
+    "Title": "Registro de cambios",
+    "InfoText": "También puedes seguir la <a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-blue-500'>página de Twitter de mfloww</a> para mantenerte al día con los últimos cambios.",
+    "NotFound": "No se encontró ningún registro de cambios. Inténtalo de nuevo más tarde."
   },
   "SignIn": {
     "DontHaveAccountQuestion": "¿No tienes una cuenta?"

@@ -43,6 +43,9 @@
   },
   "Team": {
     "Title": "팀과의 만남",
+    "Member": {
+      "BesimGurbuzTitle": "창업자, 엔지니어 및 디자이너"
+    },
     "Contributors": "기여자"
   },
   "FAQ": {
@@ -61,6 +64,11 @@
     "FAQText6": "애플리케이션에서 특정 기기의 암호화된 데이터를 다른 기기로 전송할 수 있습니다. 기기 간 동기화를 위해 저장된 암호화된 데이터는 2시간 내에 서버에서 지워집니다.",
     "FAQTitle7": "기술 스택은 무엇인가요?",
     "FAQText7": "<a href='https://www.prisma.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Prisma</a>, <a href='https://nestjs.com/' target='_blank' rel='noreferrer' class='text-blue-500'>NestJS</a>, <a href='https://angular.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Angular</a> 및 <a href='https://www.typescriptlang.org/' target='_blank' rel='noreferrer' class='text-blue-500'>TypeScript</a>입니다."
+  },
+  "Changelog": {
+    "Title": "변경 사항",
+    "InfoText": "최신 변경 사항을 확인하려면 <a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-blue-500'>mfloww의 Twitter 페이지</a>를 팔로우할 수도 있습니다.",
+    "NotFound": "변경 사항을 찾을 수 없습니다. 나중에 다시 시도해주세요."
   },
   "SignIn": {
     "DontHaveAccountQuestion": "계정이 없으신가요?"

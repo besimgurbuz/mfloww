@@ -56,6 +56,7 @@ const routes: Routes = [
     loadChildren: () => import('./team/team.module').then((m) => m.TeamModule),
   },
   { path: 'faq', loadChildren: () => import('./faq/faq.module').then(m => m.FaqModule) },
+  { path: 'changelog', loadChildren: () => import('./changelog/changelog.module').then(m => m.ChangelogModule) },
   {
     path: '**',
     component: NotFoundComponent,

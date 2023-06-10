@@ -43,6 +43,9 @@
   },
   "Team": {
     "Title": "Познакомьтесь с командой",
+    "Member": {
+      "BesimGurbuzTitle": "Основатель, Инженер и Дизайнер"
+    },
     "Contributors": "Участники"
   },
   "FAQ": {
@@ -61,6 +64,11 @@
     "FAQText6": "В приложении вы можете отправить зашифрованные данные конкретного устройства на другие устройства. Хранящиеся зашифрованные данные для синхронизации между устройствами будут удалены с сервера в течение 2 часов.",
     "FAQTitle7": "Каков технический стек?",
     "FAQText7": "<a href='https://www.prisma.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Prisma</a>, <a href='https://nestjs.com/' target='_blank' rel='noreferrer' class='text-blue-500'>NestJS</a>, <a href='https://angular.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Angular</a> и <a href='https://www.typescriptlang.org/' target='_blank' rel='noreferrer' class='text-blue-500'>TypeScript</a>."
+  },
+  "Changelog": {
+    "Title": "Журнал изменений",
+    "InfoText": "Вы также можете следить за <a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-blue-500'>страницей Twitter mfloww</a>, чтобы быть в курсе последних изменений.",
+    "NotFound": "Журнал изменений не найден. Попробуйте позже."
   },
   "SignIn": {
     "DontHaveAccountQuestion": "У вас нет аккаунта?"

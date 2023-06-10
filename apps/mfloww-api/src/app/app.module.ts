@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { ContributorsModule } from './contributors/contributors.module';
 import { PrismaService } from './core/prisma.service';
 import { ExchangeModule } from './exchange/exchange.module';
+import { ReleasesModule } from './releases/releases.module';
 import { UserModule } from './user/user.module';
 import { loadESModule } from './utils/load-esm-module';
 
@@ -28,6 +29,7 @@ import { loadESModule } from './utils/load-esm-module';
     AuthModule,
     ExchangeModule,
     ContributorsModule,
+    ReleasesModule,
   ],
   controllers: [],
   providers: [PrismaService],

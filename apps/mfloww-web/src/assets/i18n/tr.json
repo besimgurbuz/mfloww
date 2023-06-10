@@ -43,6 +43,9 @@
   },
   "Team": {
     "Title": "Takımla tanışın",
+    "Member": {
+      "BesimGurbuzTitle": "Kurucu, Mühendis ve Tasarımcı"
+    },
     "Contributors": "Katkıda bulunanlar"
   },
   "FAQ": {
@@ -61,6 +64,11 @@
     "FAQText6": "Uygulamada, belirli bir cihazın şifrelenmiş verilerini diğer cihazlara gönderebilirsiniz. Cihazlar arasında senkronizasyon için saklanan şifrelenmiş veriler, 2 saat içinde sunucudan silinecektir.",
     "FAQTitle7": "Kullanılan tech stack nedir?",
     "FAQText7": "<a href='https://www.prisma.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Prisma</a>, <a href='https://nestjs.com/' target='_blank' rel='noreferrer' class='text-blue-500'>NestJS</a>, <a href='https://angular.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Angular</a> ve <a href='https://www.typescriptlang.org/' target='_blank' rel='noreferrer' class='text-blue-500'>TypeScript</a>."
+  },
+  "Changelog": {
+    "Title": "Değişiklik Günlüğü",
+    "InfoText": "En son değişikliklerden haberdar olmak için <a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-blue-500'>mfloww'in Twitter sayfasını</a> takip edebilirsiniz.",
+    "NotFound": "Değişiklik günlüğü bulunamadı. Daha sonra tekrar deneyin."
   },
   "SignIn": {
     "DontHaveAccountQuestion": "Hesabınız yok mu?"

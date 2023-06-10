@@ -22,7 +22,7 @@ export class TeamComponent {
   members: Member[] = [
     {
       fullname: 'Besim Gürbüz',
-      title: 'Creator, Engineer & Designer',
+      title: 'Team.Member.BesimGurbuzTitle',
       photoUrl: 'assets/members/besim-gurbuz.jpeg',
       links: [
         {
