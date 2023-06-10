@@ -19,7 +19,8 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/mfloww-web/src/favicon.ico",
-          "apps/mfloww-web/src/assets"
+          "apps/mfloww-web/src/assets",
+          "apps/mfloww-web/src/manifest.webmanifest"
         ],
         "styles": [
           "apps/mfloww-web/src/styles.scss"
