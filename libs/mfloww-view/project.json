@@ -7,7 +7,9 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/libs/mfloww-view"],
+      "outputs": [
+        "dist/libs/mfloww-view"
+      ],
       "options": {
         "project": "libs/mfloww-view/ng-package.json",
         "tailwindConfig": "libs/mfloww-view/tailwind.config.js"
@@ -24,7 +26,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/mfloww-view"],
+      "outputs": [
+        "coverage/libs/mfloww-view"
+      ],
       "options": {
         "jestConfig": "libs/mfloww-view/jest.config.ts",
         "passWithNoTests": true
@@ -40,5 +44,8 @@
       }
     }
   },
-  "tags": ["view", "lib"]
+  "tags": [
+    "view",
+    "lib"
+  ]
 }

@@ -7,7 +7,9 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/libs/mfloww-db"],
+      "outputs": [
+        "dist/libs/mfloww-db"
+      ],
       "options": {
         "project": "libs/mfloww-db/ng-package.json"
       },
@@ -23,7 +25,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/mfloww-db"],
+      "outputs": [
+        "coverage/libs/mfloww-db"
+      ],
       "options": {
         "jestConfig": "libs/mfloww-db/jest.config.ts",
         "passWithNoTests": true
@@ -39,5 +43,7 @@
       }
     }
   },
-  "tags": ["lib"]
+  "tags": [
+    "lib"
+  ]
 }

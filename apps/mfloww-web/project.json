@@ -7,7 +7,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/mfloww-web/browser",
         "index": "apps/mfloww-web/src/index.html",
@@ -19,8 +21,12 @@
           "apps/mfloww-web/src/favicon.ico",
           "apps/mfloww-web/src/assets"
         ],
-        "styles": ["apps/mfloww-web/src/styles.scss"],
-        "scripts": []
+        "styles": [
+          "apps/mfloww-web/src/styles.scss"
+        ],
+        "scripts": [],
+        "serviceWorker": true,
+        "ngswConfigPath": "apps/mfloww-web/ngsw-config.json"
       },
       "configurations": {
         "production": {
@@ -123,7 +129,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/mfloww-web"],
+      "outputs": [
+        "coverage/apps/mfloww-web"
+      ],
       "options": {
         "jestConfig": "apps/mfloww-web/jest.config.ts",
         "passWithNoTests": true
