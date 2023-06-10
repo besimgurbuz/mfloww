@@ -27,8 +27,9 @@
     ></mfloww-money-table-entry>
     <mfloww-view-button
       *ngIf="!_addingModeActive"
-      (clicked)="_addingModeActive = !_addingModeActive"
+      class="pt-4 md:pt-0"
       [ngClass]="_classMap[type]"
+      (clicked)="_addingModeActive = !_addingModeActive"
     >
       <mfloww-view-icon
         type="plus"
@@ -37,7 +38,7 @@
       ></mfloww-view-icon>
     </mfloww-view-button>
     <div
-      class="relative px-[10px] max-w-[380px] h-fit gap-1 flex items-center flex-col md:flex-row"
+      class="relative px-[10px] pt-4 md:pt-0 max-w-[400px] h-fit gap-1 flex items-center flex-col md:flex-row"
       [ngClass]="_classMap[type]"
       *ngIf="_addingModeActive"
     >
