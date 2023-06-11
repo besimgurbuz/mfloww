@@ -1,5 +1,6 @@
 import { inject, NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
+import { map, tap } from 'rxjs';
 import { AuthService } from './core/auth.service';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
 
@@ -11,14 +12,18 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [
       () => {
-        const isLoggedIn = inject(AuthService).isUserLoggedIn();
+        const isLoggedIn$ = inject(AuthService).isUserLoggedIn$();
         const router = inject(Router);
 
-        if (isLoggedIn) {
-          router.navigate(['/revenue-expense']);
-        }
+        return isLoggedIn$.pipe(
+          map((userLoggedIn) => {
+            if (userLoggedIn) {
+              router.navigate(['/revenue-expense']);
+            }
 
-        return !isLoggedIn;
+            return !userLoggedIn;
+          })
+        );
       },
     ],
   },
@@ -36,18 +41,21 @@ const routes: Routes = [
     canActivate: [
       () => {
         const authService = inject(AuthService);
-        const isLoggedIn = authService.isUserLoggedIn();
+        const isLoggedIn$ = authService.isUserLoggedIn$();
         const router = inject(Router);
         const reason = authService.isTokenExpired()
           ? 'expiredToken'
           : 'triedUnauth';
 
-        if (!isLoggedIn) {
-          router.navigate(['/user/sign-in'], {
-            queryParams: { reason },
-          });
-        }
-        return isLoggedIn;
+        return isLoggedIn$.pipe(
+          tap((userloggedIn) => {
+            if (!userloggedIn) {
+              router.navigate(['/user/sign-in'], {
+                queryParams: { reason },
+              });
+            }
+          })
+        );
       },
     ],
   },
@@ -55,20 +63,25 @@ const routes: Routes = [
     path: 'team',
     loadChildren: () => import('./team/team.module').then((m) => m.TeamModule),
   },
-  { path: 'faq', loadChildren: () => import('./faq/faq.module').then(m => m.FaqModule) },
-  { path: 'changelog', loadChildren: () => import('./changelog/changelog.module').then(m => m.ChangelogModule) },
+  {
+    path: 'faq',
+    loadChildren: () => import('./faq/faq.module').then((m) => m.FaqModule),
+  },
+  {
+    path: 'changelog',
+    loadChildren: () =>
+      import('./changelog/changelog.module').then((m) => m.ChangelogModule),
+  },
   {
     path: '**',
     component: NotFoundComponent,
-    data: {
-      showFooter: true,
-      title: 'App.NotFoundTitle',
-    },
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

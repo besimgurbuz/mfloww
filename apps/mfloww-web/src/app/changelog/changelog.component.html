@@ -2,18 +2,11 @@
   <div
     class="w-full min-h-[150px] lg:px-28 md:px-18 px-6 py-3 flex flex-col justify-center border-b-[1px] border-b-gray-600"
   >
-    <h3 class="text-xl">Changelog</h3>
-    <p class="font-roboto font-light">
-      You can also follow
-      <a
-        href="https://twitter.com/mflowwcom"
-        target="_blank"
-        rel="noreferrer"
-        class="text-blue-500"
-        >mfloww's Twitter page</a
-      >
-      to stay up to date with the latest changes.
-    </p>
+    <h3 class="text-xl">{{ 'Changelog.Title' | translate }}</h3>
+    <p
+      class="font-roboto font-light"
+      [innerHTML]="'Changelog.InfoText' | translate"
+    ></p>
   </div>
   <div
     class="h-full lg:px-28 md:px-18 px-6 py-3"
@@ -47,7 +40,7 @@
     <ng-container *ngIf="!data.loading && !data.changelogs?.length">
       <div class="min-h-[400px]">
         <h3 class="font-roboto font-light">
-          No changelog found. Try again later.
+          {{ 'Changelog.NotFound' | translate }}
         </h3>
       </div>
     </ng-container>

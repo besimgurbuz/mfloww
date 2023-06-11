@@ -1,7 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { CryptoSecretService } from '@mfloww/db';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LocalStorageService } from './local-storage.service';
 import { ProfileInfo } from './models/profile-info';
@@ -28,8 +28,14 @@ export class AuthService {
     );
   }
 
-  isUserLoggedIn(): boolean | Observable<boolean> {
+  isUserLoggedIn(): boolean {
     return !this.hasSessionExpired() && this.profileInfoSubject.value !== null;
+  }
+
+  isUserLoggedIn$(): Observable<boolean> {
+    return this.profileInfoSubject.pipe(
+      map((profileInfo) => !this.hasSessionExpired() && !!profileInfo)
+    );
   }
 
   isTokenExpired(): boolean {

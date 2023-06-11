@@ -1,6 +1,7 @@
 {
   "name": "mfloww",
   "short_name": "mfloww",
+  "description": "mfloww is an open-source money flow visualization application that is extremely secure, user-friendly and capable of exchanging various currencies.",
   "theme_color": "#1A2026",
   "background_color": "#13171c",
   "display": "standalone",
