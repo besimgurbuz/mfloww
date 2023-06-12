@@ -101,7 +101,7 @@
     "SelectAMonth": "Select a month",
     "Revenues": "revenues",
     "Expenses": "expenses",
-    "ExchangeRateWarn": "*Döviz kurları güncel olmayabilir",
+    "ExchangeRateWarn": "*Exchange rates may not be up to date",
     "Total": "TOTAL"
   },
   "MonthYearSelection": {
