@@ -19,6 +19,7 @@ import { LocalStorageService } from './core/local-storage.service';
 import { Message, MessengerService } from './core/messenger.service';
 import { ProfileInfo } from './core/models/profile-info';
 import { ProgressState } from './core/progress.state';
+import { TranslateStateService } from './core/translate.state';
 
 @Component({
   selector: 'mfloww-root',
@@ -34,6 +35,9 @@ export class AppComponent implements OnInit, OnDestroy {
   readonly route = inject(ActivatedRoute);
   readonly authService = inject(AuthService);
   readonly translateService = inject(TranslateService);
+  readonly translateLoadingInProgress$ = inject(
+    TranslateStateService
+  ).isLoading$.pipe(tap(console.log));
   readonly localStorage = inject(LocalStorageService);
   readonly _profileInfo$: Observable<ProfileInfo | null> =
     this.authService.profileInfo$;

@@ -43,7 +43,7 @@ module.exports = {
         },
       },
       animation: {
-        grow_x: 'grow_x 1s ease-in-out',
+        grow_x: 'grow_x 500ms ease-in-out',
       },
     },
   },

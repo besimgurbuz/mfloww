@@ -1,42 +1,47 @@
-<div id="app-container" class="flex flex-col w-full h-full gap-1">
-  <mfloww-view-progress-bar
-    *ngIf="inProgress$ | async"
-    class="absolute left-0 right-0 top-0"
-  ></mfloww-view-progress-bar>
-  <mfloww-menu
-    [profileInfo]="_profileInfo$ | async"
-    (logOutTriggered)="handleLogOut()"
-  ></mfloww-menu>
-  <main class="mt-16">
-    <router-outlet></router-outlet>
-  </main>
-  <mfloww-footer
-    *ngIf="_shouldDisplayFooter"
-    [initialLanguage]="_initialLanguage"
-    (languageChanged)="handleLanguageChange($event)"
-  ></mfloww-footer>
-  <ng-container *ngIf="message$ | async as message">
-    <div
-      *ngIf="message.text"
-      mflowwFade="in"
-      [mflowwFadeDelay]="100"
-      class="fixed bottom-2 md:bottom-10 mx-auto left-0 right-0 min-w-[200px] max-w-[400px] md:max-w-[600px] px-5 py-3 text-xs rounded"
-      [ngClass]="{
-        'bg-mfloww_warn': message?.type === 'warn',
-        'bg-mfloww_fatal': message?.type === 'fatal',
-        'bg-mfloww_success': message?.type === 'info'
-      }"
-      #messageBox
-    >
-      <div class="flex justify-between items-center">
-        <p>{{ message!.text | translate }}</p>
-        <button
-          class="text-[10px] hover:opacity-80 rounded border-2 p-1"
-          (click)="closeMessenger()"
-        >
-          {{ 'App.Close' | translate }}
-        </button>
+<mfloww-splash
+  *ngIf="translateLoadingInProgress$ | async; else content"
+></mfloww-splash>
+<ng-template #content>
+  <div id="app-container" class="flex flex-col w-full h-full gap-1">
+    <mfloww-view-progress-bar
+      *ngIf="inProgress$ | async"
+      class="absolute left-0 right-0 top-0"
+    ></mfloww-view-progress-bar>
+    <mfloww-menu
+      [profileInfo]="_profileInfo$ | async"
+      (logOutTriggered)="handleLogOut()"
+    ></mfloww-menu>
+    <main class="mt-16">
+      <router-outlet></router-outlet>
+    </main>
+    <mfloww-footer
+      *ngIf="_shouldDisplayFooter"
+      [initialLanguage]="_initialLanguage"
+      (languageChanged)="handleLanguageChange($event)"
+    ></mfloww-footer>
+    <ng-container *ngIf="message$ | async as message">
+      <div
+        *ngIf="message.text"
+        mflowwFade="in"
+        [mflowwFadeDelay]="100"
+        class="fixed bottom-2 md:bottom-10 mx-auto left-0 right-0 min-w-[200px] max-w-[400px] md:max-w-[600px] px-5 py-3 text-xs rounded"
+        [ngClass]="{
+          'bg-mfloww_warn': message?.type === 'warn',
+          'bg-mfloww_fatal': message?.type === 'fatal',
+          'bg-mfloww_success': message?.type === 'info'
+        }"
+        #messageBox
+      >
+        <div class="flex justify-between items-center">
+          <p>{{ message!.text | translate }}</p>
+          <button
+            class="text-[10px] hover:opacity-80 rounded border-2 p-1"
+            (click)="closeMessenger()"
+          >
+            {{ 'App.Close' | translate }}
+          </button>
+        </div>
       </div>
-    </div>
-  </ng-container>
-</div>
+    </ng-container>
+  </div>
+</ng-template>

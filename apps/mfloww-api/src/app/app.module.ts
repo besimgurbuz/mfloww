@@ -22,6 +22,7 @@ import { loadESModule } from './utils/load-esm-module';
         bootstrap: angularModule.default.AppServerModule,
         ngExpressEngine: angularModule.default.ngExpressEngine,
         viewsPath: join(process.cwd(), 'dist/apps/mfloww-web/browser'),
+        cache: true,
       };
     }),
     ScheduleModule.forRoot(),
