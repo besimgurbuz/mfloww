@@ -104,7 +104,8 @@
         "development": {
           "optimization": false,
           "sourceMap": true,
-          "extractLicenses": false
+          "extractLicenses": false,
+          "buildOptimizer": false
         }
       },
       "defaultConfiguration": "production",
@@ -130,7 +131,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "apps/mfloww-web/**/*.ts",
@@ -139,7 +140,7 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/mfloww-web"],
       "options": {
         "jestConfig": "apps/mfloww-web/jest.config.ts",
