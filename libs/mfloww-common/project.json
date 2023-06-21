@@ -5,42 +5,30 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/mfloww-common",
         "main": "libs/mfloww-common/src/public-api.ts",
         "tsConfig": "libs/mfloww-common/tsconfig.lib.json",
-        "assets": [
-          "libs/mfloww-common/*.md"
-        ]
+        "assets": ["libs/mfloww-common/*.md"]
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/mfloww-common/**/*.ts"
-        ]
+        "lintFilePatterns": ["libs/mfloww-common/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/mfloww-common"
-      ],
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/mfloww-common"],
       "options": {
         "jestConfig": "libs/mfloww-common/jest.config.ts",
         "passWithNoTests": true
       }
     }
   },
-  "tags": [
-    "common"
-  ]
+  "tags": ["common"]
 }

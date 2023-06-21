@@ -7,9 +7,7 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/mfloww-web/browser",
         "index": "apps/mfloww-web/src/index.html",
@@ -22,9 +20,7 @@
           "apps/mfloww-web/src/assets",
           "apps/mfloww-web/src/manifest.webmanifest"
         ],
-        "styles": [
-          "apps/mfloww-web/src/styles.scss"
-        ],
+        "styles": ["apps/mfloww-web/src/styles.scss"],
         "scripts": [],
         "serviceWorker": true,
         "ngswConfigPath": "apps/mfloww-web/ngsw-config.json"
@@ -108,10 +104,25 @@
         "development": {
           "optimization": false,
           "sourceMap": true,
-          "extractLicenses": false
+          "extractLicenses": false,
+          "buildOptimizer": false
         }
       },
-      "defaultConfiguration": "production"
+      "defaultConfiguration": "production",
+      "production": {
+        "outputHashing": "media",
+        "fileReplacements": [
+          {
+            "replace": "apps/mfloww-web/src/environments/environment.ts",
+            "with": "apps/mfloww-web/src/environments/environment.prod.ts"
+          }
+        ]
+      },
+      "development": {
+        "optimization": false,
+        "sourceMap": true,
+        "extractLicenses": false
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -120,7 +131,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "apps/mfloww-web/**/*.ts",
@@ -129,10 +140,8 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/mfloww-web"
-      ],
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/mfloww-web"],
       "options": {
         "jestConfig": "apps/mfloww-web/jest.config.ts",
         "passWithNoTests": true

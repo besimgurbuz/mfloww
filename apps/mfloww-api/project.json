@@ -6,18 +6,14 @@
   "targets": {
     "build": {
       "executor": "@nrwl/webpack:webpack",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "target": "node",
         "compiler": "tsc",
         "outputPath": "dist/apps/mfloww-api",
         "main": "apps/mfloww-api/src/main.ts",
         "tsConfig": "apps/mfloww-api/tsconfig.app.json",
-        "assets": [
-          "apps/mfloww-api/src/assets"
-        ]
+        "assets": ["apps/mfloww-api/src/assets"]
       },
       "configurations": {
         "production": {
@@ -34,7 +30,7 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/js:node",
+      "executor": "@nx/js:node",
       "options": {
         "buildTarget": "mfloww-api:build"
       },
@@ -45,21 +41,15 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/mfloww-api/**/*.ts"
-        ]
+        "lintFilePatterns": ["apps/mfloww-api/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/mfloww-api"
-      ],
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/mfloww-api"],
       "options": {
         "jestConfig": "apps/mfloww-api/jest.config.ts",
         "passWithNoTests": true
