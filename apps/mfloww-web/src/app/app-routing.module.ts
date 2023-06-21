@@ -3,12 +3,12 @@ import { Router, RouterModule, Routes } from '@angular/router';
 import { map, tap } from 'rxjs';
 import { AuthService } from './core/auth.service';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
+import { LandingComponent } from './landing/landing.component';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./landing/landing.module').then((module) => module.LandingModule),
+    component: LandingComponent,
     pathMatch: 'full',
     canActivate: [
       () => {

@@ -12,14 +12,23 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { LandingImageComponent } from './components/landing-image/landing-image.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { SplashComponent } from './components/splash/splash.component';
 import { CoreModule } from './core/core.module';
 import { ProgressTriggererInterceptorService } from './interceptors/progress-triggerer-interceptor.service';
+import { LandingComponent } from './landing/landing.component';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent, FooterComponent, SplashComponent],
+  declarations: [
+    AppComponent,
+    MenuComponent,
+    FooterComponent,
+    SplashComponent,
+    LandingComponent,
+    LandingImageComponent,
+  ],
   imports: [
     CoreModule,
     BrowserModule.withServerTransition({
