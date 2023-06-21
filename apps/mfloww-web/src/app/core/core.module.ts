@@ -1,17 +1,10 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { TransferState } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { StatefullTranslateLoader } from './translate-loader';
-import { TranslateStateService } from './translate.state';
-
-export function HttpLoaderFactory(
-  http: HttpClient,
-  translateState: TranslateStateService
-) {
-  return new StatefullTranslateLoader(http, translateState);
-}
+import { translateBrowserLoaderFactory } from './translate-browser-loader';
 
 @NgModule({
   providers: [],
@@ -21,8 +14,8 @@ export function HttpLoaderFactory(
       defaultLanguage: 'en',
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient, TranslateStateService],
+        useFactory: translateBrowserLoaderFactory,
+        deps: [HttpClient, TransferState],
       },
     }),
   ],
