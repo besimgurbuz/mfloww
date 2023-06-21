@@ -29,9 +29,7 @@ import { SharedModule } from './shared/shared.module';
   ],
   imports: [
     CoreModule,
-    BrowserModule.withServerTransition({
-      appId: 'mfloww',
-    }),
+    BrowserModule,
     AppRoutingModule,
     SharedModule,
     MflowwOverlayPanelComponent,

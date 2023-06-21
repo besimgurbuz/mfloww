@@ -7,7 +7,6 @@
     "postinstall": "node ./decorate-angular-cli.js && prisma generate",
     "start": "nx serve",
     "build:dev": "nx build",
-    "build:ssr": "ng build mfloww-api --configuration=production && ng build && ng server",
     "test": "nx test"
   },
   "private": true,
