@@ -1,23 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { LocalStorageToken } from './local-storage.token';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
+  private localStorage = inject(LocalStorageToken);
+
   set(key: string, value: string | number | boolean | symbol) {
     if (!value) return;
-    localStorage.setItem(key, value.toString());
+    this.localStorage.setItem(key, value.toString());
   }
 
   get<T>(key: string): T | null {
-    return localStorage.getItem(key) as T;
+    return (this.localStorage.getItem(key) as T) || null;
   }
 
   remove(key: string): void {
-    localStorage.removeItem(key);
+    this.localStorage.removeItem(key);
   }
 
   getNumber(key: string): number {
-    return Number(localStorage.getItem(key));
+    return Number(this.localStorage.getItem(key));
   }
 }

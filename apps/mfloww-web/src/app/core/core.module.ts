@@ -4,10 +4,11 @@ import { TransferState } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { LocalStorageToken } from './local-storage.token';
 import { translateBrowserLoaderFactory } from './translate-browser-loader';
 
 @NgModule({
-  providers: [],
+  providers: [{ provide: LocalStorageToken, useFactory: () => localStorage }],
   imports: [
     RouterModule,
     TranslateModule.forRoot({

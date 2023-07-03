@@ -98,6 +98,70 @@
         "jestConfig": "apps/mfloww-web/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "server": {
+      "dependsOn": [
+        "build"
+      ],
+      "executor": "@angular-devkit/build-angular:server",
+      "options": {
+        "outputPath": "dist/apps/mfloww-web/browser/server",
+        "main": "apps/mfloww-web/server.ts",
+        "tsConfig": "apps/mfloww-web/tsconfig.server.json",
+        "inlineStyleLanguage": "scss"
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "media",
+          "fileReplacements": [
+            {
+              "replace": "apps/mfloww-web/src/environments/environment.ts",
+              "with": "apps/mfloww-web/src/environments/environment.prod.ts"
+            }
+          ]
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false,
+          "vendorChunk": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve-ssr": {
+      "executor": "@nguniversal/builders:ssr-dev-server",
+      "configurations": {
+        "development": {
+          "browserTarget": "mfloww-web:build:development",
+          "serverTarget": "mfloww-web:server:development"
+        },
+        "production": {
+          "browserTarget": "mfloww-web:build:production",
+          "serverTarget": "mfloww-web:server:production"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "prerender": {
+      "executor": "@nguniversal/builders:prerender",
+      "options": {
+        "routes": [
+          "/"
+        ]
+      },
+      "configurations": {
+        "development": {
+          "browserTarget": "mfloww-web:build:development",
+          "serverTarget": "mfloww-web:server:development"
+        },
+        "production": {
+          "browserTarget": "mfloww-web:build:production",
+          "serverTarget": "mfloww-web:server:production"
+        }
+      },
+      "defaultConfiguration": "production"
     }
   },
   "tags": []
