@@ -11,7 +11,7 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/apps/mfloww-web/browser",
+        "outputPath": "dist/mfloww-web/browser",
         "index": "apps/mfloww-web/src/index.html",
         "main": "apps/mfloww-web/src/main.ts",
         "polyfills": "apps/mfloww-web/src/polyfills.ts",
@@ -98,6 +98,45 @@
         "jestConfig": "apps/mfloww-web/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "server": {
+      "executor": "@angular-devkit/build-angular:server",
+      "options": {
+        "outputPath": "dist/mfloww-web/server",
+        "main": "apps/mfloww-web/src/ssr.server.ts",
+        "tsConfig": "apps/mfloww-web/tsconfig.server.json"
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "media",
+          "fileReplacements": [
+            {
+              "replace": "apps/mfloww-web/src/environments/environment.ts",
+              "with": "apps/mfloww-web/src/environments/environment.prod.ts"
+            }
+          ]
+        },
+        "development": {
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve-ssr": {
+      "executor": "@nguniversal/builders:ssr-dev-server",
+      "configurations": {
+        "development": {
+          "browserTarget": "mfloww-web:build:development",
+          "serverTarget": "mfloww-web:server:development"
+        },
+        "production": {
+          "browserTarget": "mfloww-web:build:production",
+          "serverTarget": "mfloww-web:server:production"
+        }
+      },
+      "defaultConfiguration": "development"
     }
   },
   "tags": []
