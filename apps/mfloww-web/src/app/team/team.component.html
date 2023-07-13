@@ -6,9 +6,12 @@
     <div class="flex mt-5 justify-between">
       <div *ngFor="let member of members" class="flex flex-col gap-1 w-40">
         <img
-          [src]="member.photoUrl"
+          [ngSrc]="member.photoUrl"
           [alt]="member.fullname"
-          class="rounded bg-transparent w-full"
+          width="150"
+          height="150"
+          class="rounded bg-transparent"
+          priority
         />
         <h4>{{ member.fullname }}</h4>
         <p class="text-[10px] text-gray-500">{{ member.title | translate }}</p>

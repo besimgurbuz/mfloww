@@ -104,7 +104,8 @@
       "options": {
         "outputPath": "dist/mfloww-web/server",
         "main": "apps/mfloww-web/src/ssr.server.ts",
-        "tsConfig": "apps/mfloww-web/tsconfig.server.json"
+        "tsConfig": "apps/mfloww-web/tsconfig.server.json",
+        "inlineStyleLanguage": "scss"
       },
       "configurations": {
         "production": {
@@ -117,9 +118,11 @@
           ]
         },
         "development": {
+          "buildOptimizer": false,
           "optimization": false,
           "sourceMap": true,
-          "extractLicenses": false
+          "extractLicenses": false,
+          "vendorChunk": true
         }
       },
       "defaultConfiguration": "production"
@@ -137,6 +140,25 @@
         }
       },
       "defaultConfiguration": "development"
+    },
+    "prerender": {
+      "builder": "@nguniversal/builders:prerender",
+      "options": {
+        "routes": [
+          "/"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "mfloww-web:build:production",
+          "serverTarget": "mfloww-web:server:production"
+        },
+        "development": {
+          "browserTarget": "mfloww-web:build:development",
+          "serverTarget": "mfloww-web:server:development"
+        }
+      },
+      "defaultConfiguration": "production"
     }
   },
   "tags": []

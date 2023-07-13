@@ -117,7 +117,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private handleInitialLanguage() {
     const browserLanguage: SupportedLanguage = convertLocaleToSupportedLanguage(
-      navigator.language
+      window.navigator?.language || 'en-US'
     );
     this._initialLanguage =
       this.localStorage.get<SupportedLanguage>('LANG') || browserLanguage;

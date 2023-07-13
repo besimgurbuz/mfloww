@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -14,6 +14,7 @@ import { TeamComponent } from './team.component';
     CommonModule,
     SharedModule,
     TeamRoutingModule,
+    NgOptimizedImage,
     HttpClientModule,
     MflowwRepeatDirective,
     MflowwIconComponent,

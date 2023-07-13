@@ -10,16 +10,13 @@ import { ProfileInfo } from './models/profile-info';
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly http = inject(HttpClient);
+  private readonly localStorageService = inject(LocalStorageService);
   private readonly cryptoSecretService = inject(CryptoSecretService);
 
   private profileInfoPath = '/api/user/profile';
   private profileInfoSubject: BehaviorSubject<ProfileInfo | null> =
     new BehaviorSubject<ProfileInfo | null>(null);
-
-  constructor(
-    private localStorageService: LocalStorageService,
-    private http: HttpClient
-  ) {}
 
   hasSessionExpired(): boolean {
     return (

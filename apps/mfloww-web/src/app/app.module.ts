@@ -1,6 +1,9 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 import { MflowwDbModule } from '@mfloww/db';
 import {
   MflowwOverlayPanelComponent,
@@ -31,6 +34,7 @@ import { SharedModule } from './shared/shared.module';
     CoreModule,
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     SharedModule,
     MflowwOverlayPanelComponent,
     MflowwProgressBarComponent,
@@ -48,6 +52,7 @@ import { SharedModule } from './shared/shared.module';
       useClass: ProgressTriggererInterceptorService,
       multi: true,
     },
+    provideClientHydration(),
   ],
   bootstrap: [AppComponent],
 })
