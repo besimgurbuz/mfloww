@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -19,7 +19,7 @@ import { translateBrowserLoaderFactory } from './translate-browser-loader';
       },
     }),
   ],
-  exports: [HttpClientModule, NotFoundComponent],
+  exports: [NotFoundComponent],
   declarations: [NotFoundComponent],
 })
 export class CoreModule {}

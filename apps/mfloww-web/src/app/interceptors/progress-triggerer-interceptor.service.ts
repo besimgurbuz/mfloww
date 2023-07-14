@@ -5,7 +5,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { finalize, Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { ProgressState } from '../core/progress.state';
 
 @Injectable()

@@ -1,8 +1,4 @@
-import {
-  StateKey,
-  TransferState,
-  makeStateKey,
-} from '@angular/platform-browser';
+import { StateKey, TransferState, makeStateKey } from '@angular/core';
 import { TranslateLoader } from '@ngx-translate/core';
 import { readFileSync } from 'fs';
 import { join } from 'path';

@@ -36,7 +36,7 @@
         >
           <mfloww-view-icon type="menu" class="w-7"></mfloww-view-icon>
         </button>
-        <ng-container mflowwPanelContent>
+        <div mflowwPanelContent>
           <a
             class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"
             routerLink="/user/sign-in"
@@ -49,7 +49,7 @@
             (click)="overlayPanel._opened = false"
             >{{ 'Common.SignUp' | translate }}</a
           >
-        </ng-container>
+        </div>
       </mfloww-view-overlay-panel>
     </div>
   </ng-container>
@@ -62,7 +62,7 @@
         >
           {{ profileInfo?.username }}
         </button>
-        <ng-container mflowwPanelContent>
+        <div mflowwPanelContent class="flex flex-col">
           <a
             class="w-full text-center p-4 text-sm min-w-[120px]"
             routerLink="/user/settings"
@@ -75,7 +75,7 @@
           >
             {{ 'Menu.LogOut' | translate }}
           </button>
-        </ng-container>
+        </div>
       </mfloww-view-overlay-panel>
     </div>
   </ng-template>
