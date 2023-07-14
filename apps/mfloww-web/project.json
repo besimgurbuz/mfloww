@@ -11,7 +11,7 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/mfloww-web/browser",
+        "outputPath": "dist/apps/mfloww-web/browser",
         "index": "apps/mfloww-web/src/index.html",
         "main": "apps/mfloww-web/src/main.ts",
         "polyfills": "apps/mfloww-web/src/polyfills.ts",
@@ -102,7 +102,7 @@
     "server": {
       "executor": "@angular-devkit/build-angular:server",
       "options": {
-        "outputPath": "dist/mfloww-web/server",
+        "outputPath": "dist/apps/mfloww-web/server",
         "main": "apps/mfloww-web/src/ssr.server.ts",
         "tsConfig": "apps/mfloww-web/tsconfig.server.json",
         "inlineStyleLanguage": "scss"

@@ -9,7 +9,7 @@
     "build:dev": "nx build",
     "test": "nx test",
     "dev:ssr": "ng run mfloww-web:serve-ssr",
-    "serve:ssr": "node dist/mfloww-web/server/main.js",
+    "serve:ssr": "node dist/apps/mfloww-web/server/main.js",
     "build:ssr": "ng build && ng run mfloww-web:server",
     "prerender": "ng run mfloww-web:prerender"
   },
