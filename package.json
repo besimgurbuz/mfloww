@@ -10,7 +10,7 @@
     "test": "nx test",
     "dev:ssr": "ng run mfloww-web:serve-ssr",
     "serve:ssr": "node dist/apps/mfloww-web/server/main.js",
-    "build:ssr": "ng build && ng run mfloww-web:server",
+    "build:ssr": "ng build mfloww-api --configuration=production && ng build && ng run mfloww-web:server",
     "prerender": "ng run mfloww-web:prerender"
   },
   "private": true,
