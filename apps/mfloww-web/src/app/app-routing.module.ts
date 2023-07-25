@@ -1,6 +1,6 @@
 import { inject, NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
-import { map, tap } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { AuthService } from './core/auth.service';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
 import { LandingComponent } from './landing/landing.component';
@@ -12,17 +12,21 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [
       () => {
-        const isLoggedIn$ = inject(AuthService).isUserLoggedIn$();
+        const authService = inject(AuthService);
         const router = inject(Router);
 
-        return isLoggedIn$.pipe(
-          map((userLoggedIn) => {
-            if (userLoggedIn) {
+        if (authService.hasSessionExpired()) {
+          return true;
+        }
+
+        return authService.getProfileInfo$().pipe(
+          map((response) => {
+            if (response.ok) {
               router.navigate(['/revenue-expense']);
             }
-
-            return !userLoggedIn;
-          })
+            return !response.ok;
+          }),
+          catchError(() => of(true))
         );
       },
     ],
@@ -41,19 +45,32 @@ const routes: Routes = [
     canActivate: [
       () => {
         const authService = inject(AuthService);
-        const isLoggedIn$ = authService.isUserLoggedIn$();
         const router = inject(Router);
-        const reason = authService.isTokenExpired()
-          ? 'expiredToken'
-          : 'triedUnauth';
 
-        return isLoggedIn$.pipe(
-          tap((userloggedIn) => {
-            if (!userloggedIn) {
+        if (authService.currentProfileInfo !== null) {
+          return true;
+        }
+
+        return authService.getProfileInfo$().pipe(
+          map((response) => {
+            if (!response.ok) {
+              const reason = authService.isTokenExpired()
+                ? 'expiredToken'
+                : 'triedUnauth';
               router.navigate(['/user/sign-in'], {
                 queryParams: { reason },
               });
             }
+            return response.ok;
+          }),
+          catchError(() => {
+            const reason = authService.isTokenExpired()
+              ? 'expiredToken'
+              : 'triedUnauth';
+            router.navigate(['/user/sign-in'], {
+              queryParams: { reason },
+            });
+            return of(false);
           })
         );
       },

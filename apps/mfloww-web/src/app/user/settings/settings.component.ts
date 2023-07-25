@@ -114,11 +114,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
           email: this.profileGroup.value.email as string,
           username: this.profileGroup.value.username as string,
         })
-        .pipe(mergeMap(() => this.authService.getProfileInfo$()))
+        .pipe(mergeMap(() => this.authService.logOut$()))
         .subscribe({
           next: (response) => {
             if (response.ok) {
-              this.authService.clearUserCredentials();
               this.router.navigate(['/user/sign-in'], {
                 queryParams: {
                   reason: 'updatedProfile',
@@ -140,11 +139,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
           currentPassword: this.passwordGroup.value.currentPassword as string,
           newPassword: this.passwordGroup.value.newPassword as string,
         })
-        .pipe(mergeMap(() => this.authService.getProfileInfo$()))
+        .pipe(mergeMap(() => this.authService.logOut$()))
         .subscribe({
           next: (response) => {
             if (response.ok) {
-              this.authService.clearUserCredentials();
               this.router.navigate(['/user/sign-in'], {
                 queryParams: {
                   reason: 'updatedPassword',
@@ -182,20 +180,22 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   handleDeleteUser() {
     if (confirm('Are you sure you want to delete this account?')) {
-      this.userService.deleteUser().subscribe({
-        next: () => {
-          this.authService.clearUserCredentials();
-          this.router.navigate(['/'], {
-            queryParams: { reason: 'accountDeletion' },
-          });
-        },
-        error: () => {
-          this.messengerService.emitMessage({
-            type: 'fatal',
-            text: 'Failed to delete your account. Please try again.',
-          });
-        },
-      });
+      this.userService
+        .deleteUser()
+        .pipe(mergeMap(() => this.authService.logOut$()))
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/'], {
+              queryParams: { reason: 'accountDeletion' },
+            });
+          },
+          error: () => {
+            this.messengerService.emitMessage({
+              type: 'fatal',
+              text: 'Failed to delete your account. Please try again.',
+            });
+          },
+        });
     }
   }
 

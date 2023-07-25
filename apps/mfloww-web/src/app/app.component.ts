@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import {
   ActivatedRoute,
@@ -77,14 +76,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.dbService.openDb('MFLOWW_DB', [
       { name: 'entries', options: { keyPath: ['monthYear', 'userId'] } },
     ]);
-    if (!this.authService.hasSessionExpired()) {
-      this.authService
-        .getProfileInfo$()
-        .pipe(takeUntil(this._destroy))
-        .subscribe({
-          error: (err: HttpErrorResponse) => this.messenger.emitFromError(err),
-        });
-    }
     this.handleInitialLanguage();
   }
 
@@ -94,8 +85,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   handleLogOut() {
-    this.authService.clearUserCredentials();
-    this.router.navigate(['/']);
+    this.authService.logOut$().subscribe(() => {
+      this.router.navigate(['/']);
+    });
   }
 
   closeMessenger() {

@@ -70,7 +70,7 @@ const routes: Routes = [
           router.navigate(['/user/sign-in'], {
             queryParams: { reason: 'expiredToken' },
           });
-          authService.clearUserCredentials();
+          authService.logOut$().subscribe();
         }
         return isLoggedIn;
       },

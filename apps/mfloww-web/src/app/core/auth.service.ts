@@ -15,14 +15,18 @@ export class AuthService {
   private readonly cryptoSecretService = inject(CryptoSecretService);
 
   private profileInfoPath = '/api/user/profile';
+  private logOutPath = '/api/auth/logout';
   private profileInfoSubject: BehaviorSubject<ProfileInfo | null> =
     new BehaviorSubject<ProfileInfo | null>(null);
 
   hasSessionExpired(): boolean {
-    return (
-      new Date().getTime() >
-      this.localStorageService.getNumber(environment.tokenExpKey)
+    const expiresInMs = this.localStorageService.getNumber(
+      environment.tokenExpKey
     );
+
+    if (expiresInMs === null) return true;
+
+    return new Date().getTime() > expiresInMs;
   }
 
   isUserLoggedIn(): boolean {
@@ -56,10 +60,21 @@ export class AuthService {
       );
   }
 
-  clearUserCredentials(): void {
-    this.localStorageService.remove(environment.tokenExpKey);
-    this.profileInfoSubject.next(null);
-    this.cryptoSecretService.secret = '';
+  logOut$(): Observable<HttpResponse<{ message: string }>> {
+    return this.http
+      .post<{ message: string }>(
+        `${environment.apiUrl}${this.logOutPath}`,
+        null,
+        {
+          observe: 'response',
+          withCredentials: true,
+        }
+      )
+      .pipe(
+        tap(() => {
+          this.clearUserCredentials();
+        })
+      );
   }
 
   get profileInfo$(): Observable<ProfileInfo | null> {
@@ -72,5 +87,11 @@ export class AuthService {
 
   get currentEncryptionKey(): string | undefined {
     return this.currentProfileInfo?.key;
+  }
+
+  private clearUserCredentials(): void {
+    this.localStorageService.remove(environment.tokenExpKey);
+    this.profileInfoSubject.next(null);
+    this.cryptoSecretService.secret = '';
   }
 }

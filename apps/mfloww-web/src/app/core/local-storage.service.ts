@@ -17,7 +17,8 @@ export class LocalStorageService {
     localStorage.removeItem(key);
   }
 
-  getNumber(key: string): number {
-    return Number(localStorage.getItem(key));
+  getNumber(key: string): number | null {
+    const found = localStorage.getItem(key);
+    return found ? Number(found) : null;
   }
 }
