@@ -35,9 +35,7 @@ async function bootstrap() {
 
   await prismaService.enableShutdownHooks(app);
   await app.listen(port);
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
-  );
+  Logger.log(`🚀 Application is running on: http://localhost:${port}`);
 
   return app;
 }
