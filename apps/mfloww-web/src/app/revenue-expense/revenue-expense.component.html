@@ -10,6 +10,7 @@
     <div class="flex gap-2" *ngIf="selectData.entryDates?.length">
       <mfloww-view-button
         class="w-10"
+        [class.invisible]="selectedMonthYearIndex <= 0"
         (clicked)="setMonthSelection(-1, selectData.entryDates)"
       >
         <mfloww-view-icon type="arrow_left"></mfloww-view-icon>
@@ -29,6 +30,9 @@
       </select>
       <mfloww-view-button
         class="w-10 h-10 flex"
+        [class.invisible]="
+          selectedMonthYearIndex >= (selectData.entryDates?.length || 0) - 1
+        "
         (clicked)="setMonthSelection(1, selectData.entryDates)"
       >
         <mfloww-view-icon

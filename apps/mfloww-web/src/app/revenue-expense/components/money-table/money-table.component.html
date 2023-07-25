@@ -1,5 +1,5 @@
 <div
-  class="flex flex-col gap-6 w-full items-center"
+  class="flex flex-col gap-6 h-full w-full items-center"
   [ngClass]="{
     'md:items-end': type === 'revenue',
     'md:items-start': type === 'expense'
@@ -38,7 +38,7 @@
       ></mfloww-view-icon>
     </mfloww-view-button>
     <div
-      class="relative px-[10px] pt-4 md:pt-0 max-w-[400px] h-fit gap-1 flex items-center flex-col md:flex-row"
+      class="relative px-[10px] pt-4 md:pt-1 max-w-[400px] h-fit gap-1 flex items-center flex-col md:flex-row"
       [ngClass]="_classMap[type]"
       *ngIf="_addingModeActive"
     >
@@ -81,7 +81,7 @@
     </div>
   </div>
   <div
-    class="total w-full flex gap-4 justify-center md:justify-end"
+    class="total w-full flex gap-4 justify-center md:justify-end mt-auto"
     [ngClass]="{
       'md:pr-10 text-mfloww_success': type === 'revenue',
       'md:pl-10 text-mfloww_fatal flex-row-reverse': type === 'expense'

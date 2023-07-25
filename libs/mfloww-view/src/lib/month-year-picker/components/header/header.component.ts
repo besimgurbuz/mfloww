@@ -15,14 +15,14 @@ import { MflowwIconComponent } from '../../../icon/icon.component';
   template: `
     <div class="flex w-full h-fit justify-between items-center">
       <button
-        class="w-[32px] h-[32px] rotate-90 flex items-center"
+        class="w-[24px] h-[24px] rotate-90 flex items-center"
         (click)="decreaseYear()"
       >
         <mfloww-view-icon type="arrow_down"></mfloww-view-icon>
       </button>
       <h3>{{ year | async }}</h3>
       <button
-        class="w-[32px] h-[32px] -rotate-90 flex items-center"
+        class="w-[24px] h-[24px] -rotate-90 flex items-center"
         (click)="increaseYear()"
       >
         <mfloww-view-icon type="arrow_down"></mfloww-view-icon>

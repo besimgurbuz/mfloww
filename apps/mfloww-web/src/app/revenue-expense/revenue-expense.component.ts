@@ -51,6 +51,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
   overallTotal$: Observable<number> = this.calculatorService.overallTotal$;
   entryPercentageMap$: Observable<Record<number, number>> =
     this.calculatorService.entryValuesPercentageMap$;
+  selectedMonthYearIndex = -1;
 
   monthSelectionControl = new FormControl<string>('');
 
@@ -69,6 +70,8 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
     this.monthSelectionChangeSubs =
       this.monthSelectionControl.valueChanges.subscribe((monthYear) => {
         if (monthYear) {
+          this.selectedMonthYearIndex =
+            this.revenueExpenseFacade.currentEntryDates.indexOf(monthYear);
           this.revenueExpenseFacade.setSelectedEntryByMonthYear(monthYear);
           this.cd.detectChanges();
           this.localStorageService.set(LATEST_MONTH_YEAR_KEY, monthYear);
@@ -115,6 +118,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
       if (movedIndex < 0 || movedIndex >= months.length) {
         return;
       }
+      this.selectedMonthYearIndex = movedIndex;
       this.monthSelectionControl.setValue(months[movedIndex]);
     }
   }
@@ -123,11 +127,11 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
     const latestMonthYear = this.localStorageService.get<string>(
       LATEST_MONTH_YEAR_KEY
     );
-
-    if (
-      latestMonthYear &&
-      this.revenueExpenseFacade.currentEntryDates.includes(latestMonthYear)
-    ) {
+    const indexOfMonthYear = latestMonthYear
+      ? this.revenueExpenseFacade.currentEntryDates.indexOf(latestMonthYear)
+      : -1;
+    if (latestMonthYear && indexOfMonthYear >= 0) {
+      this.selectedMonthYearIndex = indexOfMonthYear;
       this.monthSelectionControl.setValue(latestMonthYear);
       this.revenueExpenseFacade.setSelectedEntryByMonthYear(latestMonthYear);
       this.setBalanceTitle(latestMonthYear);
