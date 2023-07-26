@@ -29,12 +29,22 @@ export class RevenueExpenseFacade {
     this.revenueExpenseState.setSelectedMonth(monthYear);
   }
 
-  insertNewMonthYearEntry(monthYear: string) {
+  insertNewMonthYearEntry$(monthYear: string) {
     return this.revenueExpenseDataService
       .inserNewEntry$([monthYear, this.userId])
       .pipe(
         tap((addedKey: [string, string]) =>
           this.revenueExpenseState.addNewEmptyEntry(addedKey)
+        )
+      );
+  }
+
+  deleteMonthYearEntry$(monthYear: string) {
+    return this.revenueExpenseDataService
+      .deleteEntry$([monthYear, this.userId])
+      .pipe(
+        tap(() =>
+          this.revenueExpenseState.removeEntry([monthYear, this.userId])
         )
       );
   }
@@ -107,7 +117,15 @@ export class RevenueExpenseFacade {
   }
 
   get currentEntryDates(): string[] {
-    return this.revenueExpenseState.currentEntryDates;
+    return this.revenueExpenseState.currentEntryDates.sort((dateA, dateB) => {
+      const [monthA, yearA] = dateA.split('_');
+      const [monthB, yearB] = dateB.split('_');
+
+      if (yearA === yearB) {
+        return Number(monthA) - Number(monthB);
+      }
+      return Number(yearA) - Number(yearB);
+    });
   }
 
   private get userId(): string {

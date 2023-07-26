@@ -88,8 +88,40 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
 
   handleEntryCreation({ month, year }: MonthYearSelection) {
     const monthYear = `${month}_${year}`;
-    this.revenueExpenseFacade.insertNewMonthYearEntry(monthYear).subscribe();
-    this.monthSelectionControl.setValue(monthYear);
+    this.revenueExpenseFacade
+      .insertNewMonthYearEntry$(monthYear)
+      .subscribe(() => {
+        this.monthSelectionControl.setValue(monthYear);
+        this.selectedMonthYearIndex =
+          this.revenueExpenseFacade.currentEntryDates.indexOf(monthYear);
+      });
+  }
+
+  handleDeleteCurrentEntry() {
+    if (this.selectedMonthYearIndex < 0) return;
+
+    const selectedMonthYearEntry = this.monthSelectionControl.value as string;
+    const [, selectedYear] = selectedMonthYearEntry.split('_');
+    const confirmed = confirm(
+      this.translateService.instant('RevenueExpense.EntryDeletionAlert', {
+        entry: this.translateService.instant(
+          convertEntryDate(selectedMonthYearEntry),
+          { year: selectedYear }
+        ),
+      })
+    );
+
+    if (confirmed) {
+      this.revenueExpenseFacade
+        .deleteMonthYearEntry$(selectedMonthYearEntry)
+        .subscribe(() => {
+          const nextItemIndex = Math.max(this.selectedMonthYearIndex - 1, 0);
+          this.selectedMonthYearIndex = nextItemIndex;
+          this.monthSelectionControl.setValue(
+            this.revenueExpenseFacade.currentEntryDates[nextItemIndex]
+          );
+        });
+    }
   }
 
   handleRecordCreation(

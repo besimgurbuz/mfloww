@@ -102,7 +102,8 @@
     "Revenues": "revenues",
     "Expenses": "expenses",
     "ExchangeRateWarn": "*Exchange rates may not be up to date",
-    "Total": "TOTAL"
+    "Total": "TOTAL",
+    "EntryDeletionAlert": "Are you sure you want to delete the {{entry}} entry?"
   },
   "MonthYearSelection": {
     "January": "January {{year}}",

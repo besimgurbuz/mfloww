@@ -102,7 +102,8 @@
     "Revenues": "gelirler",
     "Expenses": "giderler",
     "ExchangeRateWarn": "*Döviz kurları güncel olmayabilir",
-    "Total": "TOPLAM"
+    "Total": "TOPLAM",
+    "EntryDeletionAlert": "{{entry}} girişini silmek istediğine emin misin?"
   },
   "MonthYearSelection": {
     "January": "Ocak {{year}}",

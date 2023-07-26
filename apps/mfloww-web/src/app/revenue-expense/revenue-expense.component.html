@@ -41,21 +41,33 @@
         ></mfloww-view-icon>
       </mfloww-view-button>
     </div>
-
-    <mfloww-view-month-year-picker
-      [value]="$any(monthSelectionControl.value)"
-      (selection)="handleEntryCreation($event)"
-    >
+    <div class="flex gap-2">
+      <mfloww-view-month-year-picker
+        [value]="$any(monthSelectionControl.value)"
+        (selection)="handleEntryCreation($event)"
+      >
+        <button
+          mflowwMonthYearPickerTriggerer
+          class="w-[50px] flex justify-center items-center rounded border-solid border-2 border-mfloww_fg hover:bg-mfloww_fg"
+        >
+          <mfloww-view-icon
+            class="w-[24px] h-[24px]"
+            type="plus"
+          ></mfloww-view-icon>
+        </button>
+      </mfloww-view-month-year-picker>
       <button
         mflowwMonthYearPickerTriggerer
-        class="w-[100px] flex justify-center items-center rounded border-solid border-2 border-mfloww_fg hover:bg-mfloww_fg"
+        class="w-[50px] flex justify-center items-center rounded border-solid border-2 border-mfloww_fg hover:bg-mfloww_fg"
+        *ngIf="selectData.entryDates?.length"
+        (click)="handleDeleteCurrentEntry()"
       >
         <mfloww-view-icon
           class="w-[24px] h-[24px]"
-          type="plus"
+          type="close"
         ></mfloww-view-icon>
       </button>
-    </mfloww-view-month-year-picker>
+    </div>
   </div>
   <div
     *ngIf="monthSelectionControl.value && (hasEntry$ | async)"

@@ -102,7 +102,8 @@
     "Revenues": "ingresos",
     "Expenses": "gastos",
     "ExchangeRateWarn": "*Los tipos de cambio pueden no estar actualizados",
-    "Total": "TOTAL"
+    "Total": "TOTAL",
+    "EntryDeletionAlert": "¿Estás seguro de que quieres eliminar la entrada {{entry}}?"
   },
   "MonthYearSelection": {
     "January": "Enero {{year}}",

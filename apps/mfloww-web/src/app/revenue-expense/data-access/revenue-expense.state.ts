@@ -20,6 +20,14 @@ export class RevenueExpenseState {
     this.entryListSubject.next(currentList);
   }
 
+  removeEntry([entryMonthYear, entryUserId]: [string, string]): void {
+    const currentList = this.entryListSubject.value;
+    const filteredEntryList = currentList.filter(({ userId, monthYear }) => {
+      return !(userId === entryUserId && monthYear === entryMonthYear);
+    });
+    this.entryListSubject.next(filteredEntryList);
+  }
+
   addNewEmptyEntry(key: [string, string]): void {
     const [monthYear, userId] = key;
     this.addNewEntry({
