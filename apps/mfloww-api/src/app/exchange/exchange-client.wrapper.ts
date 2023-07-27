@@ -1,5 +1,6 @@
-import { SupportedCurrencyCode } from '@mfloww/common';
-import { tap } from 'rxjs';
+import { ExchangeRate, SupportedCurrencyCode } from '@mfloww/common';
+import { AxiosResponse } from 'axios';
+import { Observable, tap } from 'rxjs';
 import { ExchangeClient } from './clients/exchange.client';
 
 export class ExchangeClientWrapper {
@@ -23,7 +24,7 @@ export class ExchangeClientWrapper {
   getLatestExchangeRates$(
     source: SupportedCurrencyCode,
     currencies: SupportedCurrencyCode[]
-  ) {
+  ): Observable<AxiosResponse<ExchangeRate>> {
     return this._client.getLatestExchangeRates$(source, currencies).pipe(
       tap((response) => {
         this.updateLastUsage(new Date());

@@ -2,7 +2,7 @@ import { ExchangeRate, SupportedCurrencyCode } from '@mfloww/common';
 import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
 import { Observable, map } from 'rxjs';
-import { ExchangeRateResponse } from '../models/exchange-rate-api.model';
+import { ExchangeRateClientResponse } from '../models/exchange-rate-api.model';
 import { ExchangeClient } from './exchange.client';
 
 export class ExchangeRateClient implements ExchangeClient {
@@ -17,7 +17,7 @@ export class ExchangeRateClient implements ExchangeClient {
     targetCurrencies: SupportedCurrencyCode[]
   ): Observable<AxiosResponse<ExchangeRate>> {
     return this.http
-      .get<ExchangeRateResponse>(`${this.API_URL}/latest`, {
+      .get<ExchangeRateClientResponse>(`${this.API_URL}/latest`, {
         params: { base: sourceCurrency, symbols: targetCurrencies.join(',') },
         headers: {
           apikey: this.API_KEY,
@@ -25,21 +25,18 @@ export class ExchangeRateClient implements ExchangeClient {
       })
       .pipe(
         map((response) => {
-          const result = {
-            ...response,
-            data: {},
-          } as AxiosResponse<ExchangeRate>;
           if (response.status !== 200) {
-            result.data = {
-              message: `Couldn't fetched latest exchanges for ${sourceCurrency}`,
-            };
-          } else {
-            result.data = {
+            throw new Error(
+              `Couldn't fetched latest exchanges for ${sourceCurrency}`
+            );
+          }
+          return {
+            ...response,
+            data: {
               base: response.data.base as SupportedCurrencyCode,
               rates: response.data.rates,
-            };
-          }
-          return result;
+            },
+          };
         })
       );
   }

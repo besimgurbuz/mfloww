@@ -1,6 +1,6 @@
 export * from './contributor';
 export * from './entry-type';
-export * from './latest-exchange-result';
+export * from './exchange-rate';
 export * from './object-values';
 export * from './releases';
 export * from './supported-currency';

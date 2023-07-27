@@ -21,24 +21,24 @@ export class ExchangeService {
   getExchangeRatesFor(
     base: SupportedCurrencyCode
   ): ExchangeRate | Observable<ExchangeRate> {
-    const latestRates = this.exchangeStore.getLatestRatesBaseAs(base);
+    const latestRates = this.exchangeStore.getLatestRatesByBase(base);
     if (latestRates === null) {
       return this.exchangeClientFactory.currrentClient
         .getLatestExchangeRates$(
-          this.storeBaseCurrency as SupportedCurrencyCode,
+          base,
           SUPPORTED_CURRENCY_CODES.filter(
             (currency) => currency !== this.storeBaseCurrency
           )
         )
         .pipe(
           map((response) => {
-            const ratesData = {
+            const ratesData: ExchangeRate = {
               base: response.data.base,
               rates: response.data.rates,
-            } as ExchangeRate;
+            };
             this.exchangeStore.updateLatestRates(ratesData);
 
-            return this.exchangeStore.getLatestRatesBaseAs(base);
+            return ratesData;
           }),
           catchError((err) => {
             this.logger.error(`Failed to fetch exchange rates ERR: ${err}`);

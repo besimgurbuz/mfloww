@@ -32,9 +32,9 @@ export class CurrencyApiClient implements ExchangeClient {
             data: {},
           } as AxiosResponse<ExchangeRate>;
           if (result.status !== 200) {
-            result.data = {
-              message: `Couldn't fetched exchange rates for ${sourceCurrency}`,
-            };
+            throw new Error(
+              `Couldn't fetched exchange rates for ${sourceCurrency}`
+            );
           } else {
             result.data = {
               base: sourceCurrency,

@@ -35,3 +35,10 @@ export const SUPPORTED_CURRENCY_CODES: SupportedCurrencyCode[] = Object.keys(
   SUPPORTED_CURRENCIES
 ) as SupportedCurrencyCode[];
 export const SUPPORTED_CURRENCY_FLAGS = Object.values(SUPPORTED_CURRENCIES);
+
+export function getTargetCurrenciesByBase(
+  base: SupportedCurrencyCode
+): SupportedCurrencyCode[] {
+  const codes = Object.keys(SUPPORTED_CURRENCIES);
+  return codes.filter((code) => code !== base) as SupportedCurrencyCode[];
+}

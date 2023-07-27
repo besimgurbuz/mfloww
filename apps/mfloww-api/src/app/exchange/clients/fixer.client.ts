@@ -26,22 +26,19 @@ export class FixerClient implements ExchangeClient {
       })
       .pipe(
         map((response) => {
-          const result = {
-            ...response,
-            data: {},
-          } as AxiosResponse<ExchangeRate>;
           if (response.status !== 200) {
-            result.data = {
-              message: `Couldn't fetched latest exchanges for ${sourceCurrency}`,
-            };
-          } else {
-            result.data = {
+            throw new Error(
+              `Couldn't fetched latest exchanges for ${sourceCurrency}`
+            );
+          }
+          return {
+            ...response,
+            data: {
               base: response.data.base as SupportedCurrencyCode,
               rates: response.data.rates,
               remaining: response.headers[this.REMANINING_KEY],
-            };
-          }
-          return result;
+            },
+          };
         })
       );
   }
