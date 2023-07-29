@@ -25,6 +25,7 @@ export class ExchangeController {
   getLatestExchangeRates(
     @Query('base') base?: string
   ): ExchangeRate | Observable<ExchangeRate> {
+    console.log('BASE', base);
     if (!SUPPORTED_CURRENCY_CODES.includes(base as SupportedCurrencyCode)) {
       throw new HttpException(
         `Not supported currency has given - ${base}`,

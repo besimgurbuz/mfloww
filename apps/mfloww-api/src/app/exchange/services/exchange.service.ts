@@ -1,7 +1,7 @@
 import {
   ExchangeRate,
-  SUPPORTED_CURRENCY_CODES,
   SupportedCurrencyCode,
+  getTargetCurrenciesByBase,
 } from '@mfloww/common';
 import { Injectable, Logger } from '@nestjs/common';
 import { Observable, catchError, map, of } from 'rxjs';
@@ -22,20 +22,19 @@ export class ExchangeService {
     base: SupportedCurrencyCode
   ): ExchangeRate | Observable<ExchangeRate> {
     const latestRates = this.exchangeStore.getLatestRatesByBase(base);
-    if (latestRates === null) {
+    if (!latestRates) {
+      this.logger.log(`exhange store for ${base} is empty, sending request`);
       return this.exchangeClientFactory.currrentClient
-        .getLatestExchangeRates$(
-          base,
-          SUPPORTED_CURRENCY_CODES.filter(
-            (currency) => currency !== this.storeBaseCurrency
-          )
-        )
+        .getLatestExchangeRates$(base, getTargetCurrenciesByBase(base))
         .pipe(
           map((response) => {
             const ratesData: ExchangeRate = {
               base: response.data.base,
               rates: response.data.rates,
             };
+            this.logger.log(
+              `fetched exchange rates for ${base}, updating store`
+            );
             this.exchangeStore.updateLatestRates(ratesData);
 
             return ratesData;
@@ -50,6 +49,7 @@ export class ExchangeService {
         );
     }
 
+    this.logger.log(`exhange store for ${base} has found using the store`);
     return latestRates;
   }
 }

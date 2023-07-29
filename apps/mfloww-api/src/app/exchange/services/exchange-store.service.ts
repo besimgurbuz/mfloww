@@ -17,6 +17,6 @@ export class ExchangeStoreService {
   }
 
   getLatestRatesByBase(base: SupportedCurrencyCode): ExchangeRate | null {
-    return this._cache.record[base];
+    return this._cache.record[base] || null;
   }
 }
