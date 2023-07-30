@@ -44,7 +44,7 @@ export class SignInComponent implements OnDestroy {
         )
         .subscribe({
           next: () => {
-            this.router.navigate(['/revenue-expense']);
+            this.router.navigate(['/balance']);
           },
           error: (err: HttpErrorResponse) => {
             const message =

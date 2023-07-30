@@ -1,17 +1,9 @@
 <div
-  class="flex flex-col px-6 gap-5 justify-start items-center w-full h-full text-center"
+  class="flex flex-col px-6 pt-16 pb-72 gap-5 justify-start items-center w-full h-full text-center"
 >
   <h1 class="text-4xl md:text-8xl text-mfloww_fatal">404</h1>
-  <p>We couldn't find the page you're looking for...</p>
-  <p>
-    But you can find a
-    <span class="text-mfloww_blue">secure</span> way to visualize your money
-    flow with mfloww!
-  </p>
-  <a
-    class="px-5 py-2 border-2 border-solid rounded text-mfloww_white hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
-    routerLink="/user/sign-up"
-  >
-    Sign up
-  </a>
+  <p>{{ 'App.404.message' | translate }}</p>
+  <h3 class="text-xl rounded bg-mfloww_fg-500 p-2">
+    <code>/{{ route.snapshot.url.join('/') }}</code>
+  </h3>
 </div>

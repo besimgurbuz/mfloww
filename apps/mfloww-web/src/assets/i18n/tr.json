@@ -9,6 +9,9 @@
       "updatedProfile": "Profil bilgileriniz başarıyla güncellendi. Lütfen tekrar giriş yapın.",
       "updatedPassword": "Parolanız başarıyla güncellendi. Lütfen tekrar giriş yapın.",
       "accountDeletion": "Hesabınız başarıyla silindi, hoşça kalın."
+    },
+    "404": {
+      "message": "Aradığınız sayfa bulunamadı"
     }
   },
   "Menu": {
@@ -95,7 +98,7 @@
     "DeleteAccount": "Hesabınızı silin",
     "DeleteAccountDesc": "Hesabınız ve bu cihazdaki verileriniz silinir. <strong>Uyarı</strong> silme işlemi geri alınamaz."
   },
-  "RevenueExpense": {
+  "Balance": {
     "Balance": "bakiye",
     "BalanceDate": "bakiye • {{date}}",
     "SelectAMonth": "Bir ay seçin",

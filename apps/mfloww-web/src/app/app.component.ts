@@ -1,6 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import {
-  ActivatedRoute,
   NavigationEnd,
   RouteConfigLoadEnd,
   RouteConfigLoadStart,
@@ -13,6 +12,7 @@ import {
 import { MflowwDbService } from '@mfloww/db';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, mergeMap, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { ActiveUrlService } from './core/active-url.service';
 import { AuthService } from './core/auth.service';
 import { LocalStorageService } from './core/local-storage.service';
 import { Message, MessengerService } from './core/messenger.service';
@@ -25,19 +25,17 @@ import { ProgressState } from './core/progress.state';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  readonly messenger = inject(MessengerService);
-  readonly progressState = inject(ProgressState);
-  readonly dbService = inject(MflowwDbService);
-  readonly inProgress$ = inject(ProgressState).inProgress$;
-  readonly router = inject(Router);
-  readonly route = inject(ActivatedRoute);
-  readonly authService = inject(AuthService);
-  readonly translateService = inject(TranslateService);
-  readonly localStorage = inject(LocalStorageService);
-  readonly _profileInfo$: Observable<ProfileInfo | null> =
-    this.authService.profileInfo$;
+  private messenger = inject(MessengerService);
+  private progressState = inject(ProgressState);
+  private dbService = inject(MflowwDbService);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private translateService = inject(TranslateService);
+  private localStorage = inject(LocalStorageService);
+  private activeUrlService = inject(ActiveUrlService);
 
-  _initialLanguage?: SupportedLanguage | null;
+  _profileInfo$: Observable<ProfileInfo | null> = this.authService.profileInfo$;
+  inProgress$ = inject(ProgressState).inProgress$;
   _shouldDisplayFooter = true;
   message$ = this.messenger.error$.pipe(
     mergeMap(
@@ -53,6 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
         })
     )
   );
+  _initialLanguage?: SupportedLanguage | null;
   private _destroy: Subject<void> = new Subject();
 
   ngOnInit(): void {
@@ -61,6 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
         tap((e) => {
           if (e instanceof NavigationEnd) {
             this.handleFooterDisplay();
+            this.activeUrlService.emitActiveUrl(e.url);
           }
         }),
         filter(
@@ -97,9 +97,9 @@ export class AppComponent implements OnInit, OnDestroy {
   handleFooterDisplay() {
     const currentUrl = this.router.url;
 
-    this._shouldDisplayFooter =
-      !currentUrl.includes('revenue-expense') &&
-      !currentUrl.includes('settings');
+    this._shouldDisplayFooter = ['balance', 'graph', 'settings'].includes(
+      currentUrl
+    );
   }
 
   handleLanguageChange(lang: SupportedLanguage) {

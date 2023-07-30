@@ -50,7 +50,9 @@ export function app(): express.Express {
   server.set('views', distFolder);
 
   // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
+  server.get('/api/**', (req, res) => {
+    res.status(404).send('data requests are not yet supported');
+  });
   // Serve static files from /browser
   server.get(
     '*.*',

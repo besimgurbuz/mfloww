@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { RevenueExpenseRecordType } from '@mfloww/common';
+import { BalanceRecordType } from '@mfloww/common';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
-import { MonthYearEntry, RevenueExpenseRecord } from '../../models/entry';
+import { BalanceRecord, MonthYearEntry } from '../../models/entry';
 
 @Injectable()
-export class RevenueExpenseState {
+export class BalanceState {
   private readonly entryListSubject: BehaviorSubject<MonthYearEntry[]> =
     new BehaviorSubject<MonthYearEntry[]>([]);
   private readonly selectedMonthSubject: BehaviorSubject<string> =
@@ -38,15 +38,12 @@ export class RevenueExpenseState {
     });
   }
 
-  addRevenueExpenseRecord(
-    record: RevenueExpenseRecord,
-    type: RevenueExpenseRecordType
-  ): void {
+  addBalanceRecord(record: BalanceRecord, type: BalanceRecordType): void {
     const currentEntryMonthYear = this.selectedMonthSubject.value;
     const entryIndex = this.entryListSubject.value.findIndex(
       (entry) => entry.monthYear === currentEntryMonthYear
     );
-    const entryProp: `${RevenueExpenseRecordType}s` =
+    const entryProp: `${BalanceRecordType}s` =
       type === 'revenue' ? 'revenues' : 'expenses';
 
     if (entryIndex >= 0) {
@@ -58,12 +55,9 @@ export class RevenueExpenseState {
     }
   }
 
-  deleteRevenueExpenseRecord(
-    index: number,
-    type: RevenueExpenseRecordType
-  ): void {
+  deleteBalanceRecord(index: number, type: BalanceRecordType): void {
     const currentEntryMonthYear = this.selectedMonthSubject.value;
-    const entryProp: `${RevenueExpenseRecordType}s` =
+    const entryProp: `${BalanceRecordType}s` =
       type === 'revenue' ? 'revenues' : 'expenses';
 
     const entryIndex = this.entryListSubject.value.findIndex(
@@ -106,11 +100,11 @@ export class RevenueExpenseState {
     );
   }
 
-  get selectedRevenues$(): Observable<RevenueExpenseRecord[]> {
+  get selectedRevenues$(): Observable<BalanceRecord[]> {
     return this.selectedEntry$.pipe(map((entry) => entry?.revenues || []));
   }
 
-  get selectedExpenses$(): Observable<RevenueExpenseRecord[]> {
+  get selectedExpenses$(): Observable<BalanceRecord[]> {
     return this.selectedEntry$.pipe(map((entry) => entry?.expenses || []));
   }
 

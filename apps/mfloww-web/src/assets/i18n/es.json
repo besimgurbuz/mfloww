@@ -9,6 +9,9 @@
       "updatedProfile": "Tu información de perfil se ha actualizado correctamente. Por favor, vuelve a iniciar sesión.",
       "updatedPassword": "Tu contraseña se ha actualizado correctamente. Por favor, vuelve a iniciar sesión.",
       "accountDeletion": "Tu cuenta se ha eliminado correctamente, ¡adiós!"
+    },
+    "404": {
+      "message": "No se pudo encontrar la página que estás buscando"
     }
   },
   "Menu": {
@@ -95,7 +98,7 @@
     "DeleteAccount": "Eliminar cuenta",
     "DeleteAccountDesc": "Tu cuenta y los datos en este dispositivo se eliminarán. <strong>Advertencia</strong>: la eliminación es irreversible."
   },
-  "RevenueExpense": {
+  "Balance": {
     "Balance": "saldo",
     "BalanceDate": "saldo • {{date}}",
     "SelectAMonth": "Seleccionar un mes",

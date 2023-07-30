@@ -6,7 +6,9 @@ import {
   HostListener,
   Input,
   Output,
+  inject,
 } from '@angular/core';
+import { ActiveUrlService } from '../../core/active-url.service';
 import { ProfileInfo } from '../../core/models/profile-info';
 
 @Component({
@@ -17,6 +19,7 @@ import { ProfileInfo } from '../../core/models/profile-info';
 })
 export class MenuComponent {
   @Input() profileInfo: ProfileInfo | null = null;
+  activeUrl$ = inject(ActiveUrlService).activeUrl$();
 
   @Output() logOutTriggered = new EventEmitter<void>();
 

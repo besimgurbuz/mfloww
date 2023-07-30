@@ -1,1 +1,1 @@
-export type RevenueExpenseRecordType = 'revenue' | 'expense';
+export type BalanceRecordType = 'revenue' | 'expense';

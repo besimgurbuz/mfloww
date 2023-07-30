@@ -9,6 +9,9 @@
       "updatedProfile": "프로필 정보가 업데이트되었습니다. 다시 로그인해주세요.",
       "updatedPassword": "비밀번호가 성공적으로 업데이트되었습니다. 다시 로그인해주세요.",
       "accountDeletion": "계정이 성공적으로 삭제되었습니다. 이별을 알립니다."
+    },
+    "404": {
+      "message": "찾고 있는 페이지를 찾을 수 없습니다"
     }
   },
   "Menu": {
@@ -95,7 +98,7 @@
     "DeleteAccount": "계정 삭제",
     "DeleteAccountDesc": "계정과 이 기기의 데이터가 삭제됩니다. <strong>경고</strong>: 삭제는 되돌릴 수 없습니다."
   },
-  "RevenueExpense": {
+  "Balance": {
     "Balance": "잔액",
     "BalanceDate": "잔액 • {{date}}",
     "SelectAMonth": "월 선택",

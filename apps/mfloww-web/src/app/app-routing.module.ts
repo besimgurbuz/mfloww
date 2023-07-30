@@ -22,7 +22,7 @@ const routes: Routes = [
         return authService.getProfileInfo$().pipe(
           map((response) => {
             if (response.ok) {
-              router.navigate(['/revenue-expense']);
+              router.navigate(['/balance']);
             }
             return !response.ok;
           }),
@@ -37,11 +37,9 @@ const routes: Routes = [
       import('./user/user.module').then((module) => module.UserModule),
   },
   {
-    path: 'revenue-expense',
+    path: 'balance',
     loadChildren: () =>
-      import('./revenue-expense/revenue-expense.module').then(
-        (module) => module.RevenueExpenseModule
-      ),
+      import('./balance/balance.module').then((module) => module.BalanceModule),
     canActivate: [
       () => {
         const authService = inject(AuthService);
@@ -89,6 +87,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./changelog/changelog.module').then((m) => m.ChangelogModule),
   },
+  { path: 'graph', loadChildren: () => import('./graph/graph.module').then(m => m.GraphModule) },
   {
     path: '**',
     component: NotFoundComponent,

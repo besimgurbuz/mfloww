@@ -1,41 +1,36 @@
 import { inject, Injectable } from '@angular/core';
 import { ExchangeRate, SupportedCurrencyCode } from '@mfloww/common';
 import { combineLatest, map, mergeMap, Observable } from 'rxjs';
-import { RevenueExpenseRecord } from '../../models/entry';
-import { RevenueExpenseFacade } from '../data-access/revenue-expense.facade';
+import { BalanceRecord } from '../../models/entry';
+import { BalanceFacade } from '../data-access/balance.facade';
 import { ExchangeFacade } from '../facades/exchange.facade';
 
 @Injectable()
 export class CalculatorService {
-  private readonly revenueExpenseFacade = inject(RevenueExpenseFacade);
+  private readonly balanceFacade = inject(BalanceFacade);
   private readonly exchangeFacade = inject(ExchangeFacade);
   private readonly sumWithExchangeReducer =
-    (exchangeRate: ExchangeRate) =>
-    (total: number, entry: RevenueExpenseRecord) => {
+    (exchangeRate: ExchangeRate) => (total: number, entry: BalanceRecord) => {
       return total + this.exchange(entry.amount, entry.currency, exchangeRate);
     };
   private readonly absSumWithExchangeReducer =
-    (exchangeRate: ExchangeRate) =>
-    (total: number, entry: RevenueExpenseRecord) => {
+    (exchangeRate: ExchangeRate) => (total: number, entry: BalanceRecord) => {
       return (
         total +
         Math.abs(this.exchange(entry.amount, entry.currency, exchangeRate))
       );
     };
 
-  sumOfEntries(entries: RevenueExpenseRecord[]): number {
+  sumOfEntries(entries: BalanceRecord[]): number {
     return entries.reduce((sum, entry) => sum + entry.amount, 0);
   }
 
-  sumOfTotal(
-    revenues: RevenueExpenseRecord[],
-    expenses: RevenueExpenseRecord[]
-  ): number {
+  sumOfTotal(revenues: BalanceRecord[], expenses: BalanceRecord[]): number {
     return this.sumOfEntries(revenues) + this.sumOfEntries(expenses);
   }
 
   get totalRevenue$(): Observable<number> {
-    return this.revenueExpenseFacade.selectedRevenues$.pipe(
+    return this.balanceFacade.selectedRevenues$.pipe(
       mergeMap((revenues) =>
         this.exchangeFacade.exchangeRate$.pipe(
           map((exchangeRate) =>
@@ -47,7 +42,7 @@ export class CalculatorService {
   }
 
   get totalExpense$(): Observable<number> {
-    return this.revenueExpenseFacade.selectedExpenses$.pipe(
+    return this.balanceFacade.selectedExpenses$.pipe(
       mergeMap((expenses) =>
         this.exchangeFacade.exchangeRate$.pipe(
           map((exchangeRate) =>
@@ -66,8 +61,8 @@ export class CalculatorService {
 
   get entryValuesPercentageMap$(): Observable<Record<number, number>> {
     return combineLatest([
-      this.revenueExpenseFacade.selectedRevenues$,
-      this.revenueExpenseFacade.selectedExpenses$,
+      this.balanceFacade.selectedRevenues$,
+      this.balanceFacade.selectedExpenses$,
     ]).pipe(
       mergeMap(([revenues, expenses]) =>
         this.exchangeFacade.exchangeRate$.pipe(

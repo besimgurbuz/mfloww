@@ -9,6 +9,9 @@
       "updatedProfile": "Deine Profilinformationen wurden erfolgreich aktualisiert. Bitte melde dich erneut an.",
       "updatedPassword": "Dein Passwort wurde erfolgreich aktualisiert. Bitte melde dich erneut an.",
       "accountDeletion": "Dein Konto wurde erfolgreich gelöscht. Auf Wiedersehen."
+    },
+    "404": {
+      "message": "Die von Ihnen gesuchte Seite konnte nicht gefunden werden"
     }
   },
   "Menu": {
@@ -95,7 +98,7 @@
     "DeleteAccount": "Konto löschen",
     "DeleteAccountDesc": "Dein Konto und die Daten auf diesem Gerät werden gelöscht. <strong>Warnung</strong>: Die Löschung ist unwiderruflich."
   },
-  "RevenueExpense": {
+  "Balance": {
     "Balance": "Saldo",
     "BalanceDate": "Saldo • {{date}}",
     "SelectAMonth": "Wähle einen Monat",

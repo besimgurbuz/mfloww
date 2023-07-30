@@ -9,6 +9,9 @@
       "updatedProfile": "Your profile information updated successfully. Please re-login.",
       "updatedPassword": "Your password updated successfully. Please re-login.",
       "accountDeletion": "Your account successfully deleted, farewell."
+    },
+    "404": {
+      "message": "Couldn't find the page you're looking for"
     }
   },
   "Menu": {
@@ -95,7 +98,7 @@
     "DeleteAccount": "Delete account",
     "DeleteAccountDesc": "Your account and data on this device will be deleted. <strong>Warning</strong> deletion is irreversible."
   },
-  "RevenueExpense": {
+  "Balance": {
     "Balance": "balance",
     "BalanceDate": "balance • {{date}}",
     "SelectAMonth": "Select a month",

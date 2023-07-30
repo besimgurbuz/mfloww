@@ -9,6 +9,9 @@
       "updatedProfile": "您的个人资料信息已成功更新。请重新登录。",
       "updatedPassword": "您的密码已成功更新。请重新登录。",
       "accountDeletion": "您的帐户已成功删除，再见。"
+    },
+    "404": {
+      "message": "找不到您要查找的页面"
     }
   },
   "Menu": {
@@ -95,7 +98,7 @@
     "DeleteAccount": "删除帐号",
     "DeleteAccountDesc": "您的帐号和此设备上的数据将被删除。<strong>警告</strong>，删除操作是不可逆的。"
   },
-  "RevenueExpense": {
+  "Balance": {
     "Balance": "余额",
     "BalanceDate": "余额 • {{date}}",
     "SelectAMonth": "选择一个月",

@@ -1,4 +1,5 @@
 export type Icon =
+  | 'avatar'
   | 'twitter'
   | 'lock'
   | 'currency_exchange'

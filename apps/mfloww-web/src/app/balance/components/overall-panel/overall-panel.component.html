@@ -1,0 +1,13 @@
+<div
+  class="sm:fixed bottom-0 rounded-sm px-3 py-2 ml-auto mr-auto left-0 right-0 text-center w-fit flex gap-2 flex-col items-center sm:rounded-t-sm bg-mfloww_fg"
+>
+  <h1 class="text-lg">{{ 'Balance.Total' | translate }}</h1>
+  <p
+    [ngClass]="{
+      'text-mfloww_success': overallTotal > 0,
+      'text-mfloww_fatal': overallTotal < 0
+    }"
+  >
+    {{ overallTotal | currency : currency : 'symbol' : '1.2-4' }}
+  </p>
+</div>

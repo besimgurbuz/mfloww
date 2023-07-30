@@ -8,10 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {
-  RevenueExpenseRecordType,
-  SupportedCurrencyCode,
-} from '@mfloww/common';
+import { BalanceRecordType, SupportedCurrencyCode } from '@mfloww/common';
 
 @Component({
   selector: 'mfloww-money-table-entry',
@@ -20,7 +17,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoneyTableEntryComponent {
-  @Input() type: RevenueExpenseRecordType = 'revenue';
+  @Input() type: BalanceRecordType = 'revenue';
   @Input() currency: SupportedCurrencyCode = 'USD';
   @Input() set sizePercentage(percentage: number) {
     if (!percentage) return;
@@ -44,7 +41,7 @@ export class MoneyTableEntryComponent {
   @ViewChild('entryContainer', { static: true })
   entryContainer!: ElementRef<HTMLDivElement>;
 
-  _barClassMap: Record<RevenueExpenseRecordType, string[]> = {
+  _barClassMap: Record<BalanceRecordType, string[]> = {
     revenue: [
       'bg-mfloww_success',
       'md:rounded-l',

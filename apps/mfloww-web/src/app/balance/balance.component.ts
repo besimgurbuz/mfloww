@@ -7,43 +7,40 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { RevenueExpenseRecordType } from '@mfloww/common';
+import { BalanceRecordType } from '@mfloww/common';
 import { MonthYearSelection } from '@mfloww/view';
 import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, Subscription, tap } from 'rxjs';
 import { LATEST_MONTH_YEAR_KEY } from '../core/core.constants';
 import { LocalStorageService } from '../core/local-storage.service';
-import { RevenueExpenseRecord } from '../models/entry';
+import { BalanceRecord } from '../models/entry';
 import { convertEntryDate } from '../shared/entry-date-converter';
-import { RevenueExpenseFacade } from './data-access/revenue-expense.facade';
+import { BalanceFacade } from './data-access/balance.facade';
 import { ExchangeFacade } from './facades/exchange.facade';
 import { CalculatorService } from './services/calculator.service';
 
 @Component({
-  selector: 'mfloww-revenue-expense',
-  templateUrl: './revenue-expense.component.html',
-  styleUrls: ['./revenue-expense.component.scss'],
+  selector: 'mfloww-balance',
+  templateUrl: './balance.component.html',
+  styleUrls: ['./balance.component.scss'],
 })
-export class RevenueExpenseComponent implements OnInit, OnDestroy {
+export class BalanceComponent implements OnInit, OnDestroy {
   private readonly exchangeFacade = inject(ExchangeFacade);
-  private readonly revenueExpenseFacade = inject(RevenueExpenseFacade);
+  private readonly balanceFacade = inject(BalanceFacade);
   private readonly calculatorService = inject(CalculatorService);
   private readonly cd = inject(ChangeDetectorRef);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly titleService = inject(Title);
   private readonly translateService = inject(TranslateService);
 
-  entryDates$: Observable<string[]> =
-    this.revenueExpenseFacade.entryDates$.pipe(
-      tap(() => this.setInitialMonthYear())
-    );
-  hasEntry$: Observable<boolean> = this.revenueExpenseFacade.entryList$.pipe(
+  entryDates$: Observable<string[]> = this.balanceFacade.entryDates$.pipe(
+    tap(() => this.setInitialMonthYear())
+  );
+  hasEntry$: Observable<boolean> = this.balanceFacade.entryList$.pipe(
     map((entries) => entries && entries.length > 0)
   );
-  revenues$: Observable<RevenueExpenseRecord[]> =
-    this.revenueExpenseFacade.selectedRevenues$;
-  expenses$: Observable<RevenueExpenseRecord[]> =
-    this.revenueExpenseFacade.selectedExpenses$;
+  revenues$: Observable<BalanceRecord[]> = this.balanceFacade.selectedRevenues$;
+  expenses$: Observable<BalanceRecord[]> = this.balanceFacade.selectedExpenses$;
   exchangeRate$ = this.exchangeFacade.exchangeRate$;
   baseCurrency = this.exchangeFacade.baseCurrency;
   totalRevenue$: Observable<number> = this.calculatorService.totalRevenue$;
@@ -61,18 +58,18 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.titleService.setTitle(
-      this.translateService.instant('RevenueExpense.Balance')
+      this.translateService.instant('Balance.Balance')
     );
     this.exchangeRatesUpdateSubs =
       this.exchangeFacade.loadExchangeRateInterval();
-    this.loadEntryListSubs = this.revenueExpenseFacade.loadEntryList();
+    this.loadEntryListSubs = this.balanceFacade.loadEntryList();
     this.setInitialMonthYear();
     this.monthSelectionChangeSubs =
       this.monthSelectionControl.valueChanges.subscribe((monthYear) => {
         if (monthYear) {
           this.selectedMonthYearIndex =
-            this.revenueExpenseFacade.currentEntryDates.indexOf(monthYear);
-          this.revenueExpenseFacade.setSelectedEntryByMonthYear(monthYear);
+            this.balanceFacade.currentEntryDates.indexOf(monthYear);
+          this.balanceFacade.setSelectedEntryByMonthYear(monthYear);
           this.cd.detectChanges();
           this.localStorageService.set(LATEST_MONTH_YEAR_KEY, monthYear);
           this.setBalanceTitle(monthYear);
@@ -88,13 +85,11 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
 
   handleEntryCreation({ month, year }: MonthYearSelection) {
     const monthYear = `${month}_${year}`;
-    this.revenueExpenseFacade
-      .insertNewMonthYearEntry$(monthYear)
-      .subscribe(() => {
-        this.monthSelectionControl.setValue(monthYear);
-        this.selectedMonthYearIndex =
-          this.revenueExpenseFacade.currentEntryDates.indexOf(monthYear);
-      });
+    this.balanceFacade.insertNewMonthYearEntry$(monthYear).subscribe(() => {
+      this.monthSelectionControl.setValue(monthYear);
+      this.selectedMonthYearIndex =
+        this.balanceFacade.currentEntryDates.indexOf(monthYear);
+    });
   }
 
   handleDeleteCurrentEntry() {
@@ -103,7 +98,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
     const selectedMonthYearEntry = this.monthSelectionControl.value as string;
     const [, selectedYear] = selectedMonthYearEntry.split('_');
     const confirmed = confirm(
-      this.translateService.instant('RevenueExpense.EntryDeletionAlert', {
+      this.translateService.instant('Balance.EntryDeletionAlert', {
         entry: this.translateService.instant(
           convertEntryDate(selectedMonthYearEntry),
           { year: selectedYear }
@@ -112,34 +107,27 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
     );
 
     if (confirmed) {
-      this.revenueExpenseFacade
+      this.balanceFacade
         .deleteMonthYearEntry$(selectedMonthYearEntry)
         .subscribe(() => {
           const nextItemIndex = Math.max(this.selectedMonthYearIndex - 1, 0);
           this.selectedMonthYearIndex = nextItemIndex;
           this.monthSelectionControl.setValue(
-            this.revenueExpenseFacade.currentEntryDates[nextItemIndex]
+            this.balanceFacade.currentEntryDates[nextItemIndex]
           );
         });
     }
   }
 
   handleRecordCreation(
-    newEntry: RevenueExpenseRecord,
-    type: RevenueExpenseRecordType = 'revenue'
+    newEntry: BalanceRecord,
+    type: BalanceRecordType = 'revenue'
   ) {
-    this.revenueExpenseFacade
-      .insertNewRevenueExpenseRecord(newEntry, type)
-      .subscribe();
+    this.balanceFacade.insertNewBalanceRecord(newEntry, type).subscribe();
   }
 
-  handleRecordDeletion(
-    index: number,
-    type: RevenueExpenseRecordType = 'revenue'
-  ) {
-    this.revenueExpenseFacade
-      .deleteRevenueExpenseRecord(index, type)
-      .subscribe();
+  handleRecordDeletion(index: number, type: BalanceRecordType = 'revenue') {
+    this.balanceFacade.deleteBalanceRecord(index, type).subscribe();
   }
 
   setMonthSelection(moveStepCount: number, months: string[] | null): void {
@@ -160,12 +148,12 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
       LATEST_MONTH_YEAR_KEY
     );
     const indexOfMonthYear = latestMonthYear
-      ? this.revenueExpenseFacade.currentEntryDates.indexOf(latestMonthYear)
+      ? this.balanceFacade.currentEntryDates.indexOf(latestMonthYear)
       : -1;
     if (latestMonthYear && indexOfMonthYear >= 0) {
       this.selectedMonthYearIndex = indexOfMonthYear;
       this.monthSelectionControl.setValue(latestMonthYear);
-      this.revenueExpenseFacade.setSelectedEntryByMonthYear(latestMonthYear);
+      this.balanceFacade.setSelectedEntryByMonthYear(latestMonthYear);
       this.setBalanceTitle(latestMonthYear);
     } else {
       this.monthSelectionControl.setValue(null);
@@ -178,7 +166,7 @@ export class RevenueExpenseComponent implements OnInit, OnDestroy {
       { year: monthYear.split('_')[1] }
     );
     this.titleService.setTitle(
-      this.translateService.instant('RevenueExpense.BalanceDate', {
+      this.translateService.instant('Balance.BalanceDate', {
         date: translatedDate,
       })
     );

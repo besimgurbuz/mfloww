@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
-  RevenueExpenseRecordType,
+  BalanceRecordType,
   SUPPORTED_CURRENCY_CODES,
   SupportedCurrencyCode,
 } from '@mfloww/common';
-import { RevenueExpenseRecord } from '../../../models/entry';
+import { BalanceRecord } from '../../../models/entry';
 
 @Component({
   selector: 'mfloww-money-table',
@@ -12,28 +12,27 @@ import { RevenueExpenseRecord } from '../../../models/entry';
   styleUrls: ['./money-table.component.scss'],
 })
 export class MoneyTableComponent {
-  @Input() set type(recordType: RevenueExpenseRecordType) {
+  @Input() set type(recordType: BalanceRecordType) {
     this._type = recordType;
   }
   get type() {
     return this._type;
   }
-  _type: RevenueExpenseRecordType = 'revenue';
+  _type: BalanceRecordType = 'revenue';
   @Input() baseCurrency: SupportedCurrencyCode = 'USD';
   @Input() sizePercentageMap: Record<number, number> = {};
-  @Input() entries: RevenueExpenseRecord[] = [];
+  @Input() entries: BalanceRecord[] = [];
   @Input() total = 0;
 
-  @Output() entryCreation: EventEmitter<RevenueExpenseRecord> =
-    new EventEmitter();
+  @Output() entryCreation: EventEmitter<BalanceRecord> = new EventEmitter();
   @Output() entryDeletion: EventEmitter<number> = new EventEmitter();
 
-  _titlesMap: Record<RevenueExpenseRecordType, string> = {
-    revenue: 'RevenueExpense.Revenues',
-    expense: 'RevenueExpense.Expenses',
+  _titlesMap: Record<BalanceRecordType, string> = {
+    revenue: 'Balance.Revenues',
+    expense: 'Balance.Expenses',
   };
   _addingModeActive = false;
-  _classMap: Record<RevenueExpenseRecordType, string> = {
+  _classMap: Record<BalanceRecordType, string> = {
     revenue: 'text-mfloww_success md:pr-6 md:flex-row-reverse',
     expense: 'text-mfloww_fatal md:pl-6',
   };
@@ -42,7 +41,7 @@ export class MoneyTableComponent {
     return SUPPORTED_CURRENCY_CODES;
   }
 
-  handleNewEntry(entry: RevenueExpenseRecord) {
+  handleNewEntry(entry: BalanceRecord) {
     this.entryCreation.emit(entry);
     this._addingModeActive = false;
   }

@@ -1,10 +1,10 @@
-<div class="flex flex-col gap-5 items-center justify-center">
+<div class="flex flex-col gap-5 items-center justify-center pt-10">
   <mfloww-exchange-rates
-    class="md:self-end lg:px-28 md:px-18 px-6"
+    class="md:self-end lg:px-28 md:px-18 px-6 py-12 sm:py-0 order-3 sm:order-1"
     [exchangeRate]="exchangeRate$ | async"
   ></mfloww-exchange-rates>
   <div
-    class="w-[180px] sm:w-[220px] flex flex-col items-center justify-center gap-4"
+    class="w-[180px] sm:w-[220px] flex flex-col items-center justify-center gap-2 order-1 sm:order-2"
     *ngIf="{ entryDates: entryDates$ | async } as selectData"
   >
     <div class="flex gap-2" *ngIf="selectData.entryDates?.length">
@@ -16,7 +16,7 @@
         <mfloww-view-icon type="arrow_left"></mfloww-view-icon>
       </mfloww-view-button>
       <select
-        [attr.placeholder]="'RevenueExpense.SelectAMonth' | translate"
+        [attr.placeholder]="'Balance.SelectAMonth' | translate"
         class="bg-mfloww_bg border-2 border-solid border-mfloww_fg rounded p-1 text-sm"
         [formControl]="monthSelectionControl"
       >
@@ -71,7 +71,7 @@
   </div>
   <div
     *ngIf="monthSelectionControl.value && (hasEntry$ | async)"
-    class="revenue-expense-section pb-44 lg:pb-32 flex flex-wrap justify-center gap-8 md:gap-0 w-full"
+    class="balance-section lg:pb-32 flex flex-wrap justify-center gap-8 md:gap-0 w-full order-1 sm:order-3"
   >
     <ng-container
       *ngIf="{
@@ -85,7 +85,7 @@
     >
       <mfloww-money-table
         type="revenue"
-        class="w-full md:w-1/2"
+        class="w-full md:w-1/2 order-2 sm:order-1"
         [entries]="tableData.revenues"
         [total]="tableData.totalRevenue"
         [sizePercentageMap]="tableData.percentageMap"
@@ -95,7 +95,7 @@
       ></mfloww-money-table>
       <mfloww-money-table
         type="expense"
-        class="w-full md:w-1/2"
+        class="w-full md:w-1/2 order-3 sm:order-2"
         [entries]="tableData.expenses"
         [total]="tableData.totalExpense"
         [sizePercentageMap]="tableData.percentageMap"
@@ -106,6 +106,7 @@
       <mfloww-overall-panel
         [overallTotal]="(overallTotal$ | async) || 0"
         [currency]="baseCurrency"
+        class="order-1 sm:order-3"
       ></mfloww-overall-panel>
     </ng-container>
   </div>

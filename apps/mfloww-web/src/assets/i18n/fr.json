@@ -9,6 +9,9 @@
       "updatedProfile": "Vos informations de profil ont été mises à jour avec succès. Veuillez vous reconnecter.",
       "updatedPassword": "Votre mot de passe a été mis à jour avec succès. Veuillez vous reconnecter.",
       "accountDeletion": "Votre compte a été supprimé avec succès, adieu."
+    },
+    "404": {
+      "message": "La page que vous recherchez est introuvable"
     }
   },
   "Menu": {
@@ -95,7 +98,7 @@
     "DeleteAccount": "Supprimer le compte",
     "DeleteAccountDesc": "Votre compte et les données sur cet appareil seront supprimés. <strong>Avertissement</strong> : la suppression est irréversible."
   },
-  "RevenueExpense": {
+  "Balance": {
     "Balance": "solde",
     "BalanceDate": "solde • {{date}}",
     "SelectAMonth": "Sélectionner un mois",

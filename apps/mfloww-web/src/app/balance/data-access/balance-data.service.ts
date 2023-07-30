@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { RevenueExpenseRecordType } from '@mfloww/common';
+import { BalanceRecordType } from '@mfloww/common';
 import { MflowwDbService } from '@mfloww/db';
 import { catchError, EMPTY, map, mergeMap, Observable, of } from 'rxjs';
-import { MonthYearEntry, RevenueExpenseRecord } from '../../models/entry';
+import { BalanceRecord, MonthYearEntry } from '../../models/entry';
 
 @Injectable()
-export class RevenueExpenseDataService {
+export class BalanceDataService {
   private readonly dbService = inject(MflowwDbService);
 
   getEntryList$(userId: string): Observable<MonthYearEntry[] | undefined> {
@@ -42,10 +42,11 @@ export class RevenueExpenseDataService {
   deleteEntry$(monthAndUserIdKey: [string, string]): Observable<void> {
     return this.dbService.delete('entries', monthAndUserIdKey);
   }
-  insertNewRevenueExpenseRecord$(
+
+  insertNewBalanceRecord$(
     monthAndUserIdKey: [string, string],
-    record: RevenueExpenseRecord,
-    recordType: RevenueExpenseRecordType
+    record: BalanceRecord,
+    recordType: BalanceRecordType
   ) {
     const currentEntry$ = this.dbService.get<MonthYearEntry>(
       'entries',
@@ -71,10 +72,10 @@ export class RevenueExpenseDataService {
     );
   }
 
-  updateRevenueExpenseRecord$(
+  updateBalanceRecord$(
     monthAndUserIdKey: [string, string],
-    newRecord: RevenueExpenseRecord,
-    recordType: RevenueExpenseRecordType,
+    newRecord: BalanceRecord,
+    recordType: BalanceRecordType,
     index: number
   ) {
     const currentEntry$ = this.dbService.get<MonthYearEntry>(
@@ -98,9 +99,9 @@ export class RevenueExpenseDataService {
     );
   }
 
-  deleteRevenueExpenseRecord$(
+  deleteBalanceRecord$(
     monthAndUserIdKey: [string, string],
-    recordType: RevenueExpenseRecordType,
+    recordType: BalanceRecordType,
     index: number
   ) {
     const currentEntry$ = this.dbService.get<MonthYearEntry>(
