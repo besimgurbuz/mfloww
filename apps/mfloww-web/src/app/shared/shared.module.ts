@@ -22,7 +22,12 @@ import { TrimPipe } from './pipes/trim.pipe';
     RouterModule,
     FadeDirective,
   ],
-  declarations: [BannerComponent, LanguageSelectorComponent, FlagIconComponent, TrimPipe],
+  declarations: [
+    BannerComponent,
+    LanguageSelectorComponent,
+    FlagIconComponent,
+    TrimPipe,
+  ],
   exports: [
     BannerComponent,
     MflowwIconComponent,

@@ -103,11 +103,11 @@
         (entryCreation)="handleRecordCreation($event, 'expense')"
         (entryDeletion)="handleRecordDeletion($event, 'expense')"
       ></mfloww-money-table>
-      <mfloww-overall-panel
+      <mfloww-overall
         [overallTotal]="(overallTotal$ | async) || 0"
         [currency]="baseCurrency"
         class="order-1 sm:order-3"
-      ></mfloww-overall-panel>
+      ></mfloww-overall>
     </ng-container>
   </div>
 </div>

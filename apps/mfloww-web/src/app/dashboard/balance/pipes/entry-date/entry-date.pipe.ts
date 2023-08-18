@@ -1,11 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { convertEntryDate } from '../../../shared/entry-date-converter';
+import { convertEntryDate } from '../../../../shared/entry-date-converter';
 
 @Pipe({
   name: 'entryDate',
   pure: false,
+  standalone: true,
 })
 export class EntryDatePipe implements PipeTransform {
   constructor(private translateService: TranslateService) {}

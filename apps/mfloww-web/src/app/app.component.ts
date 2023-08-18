@@ -97,9 +97,11 @@ export class AppComponent implements OnInit, OnDestroy {
   handleFooterDisplay() {
     const currentUrl = this.router.url;
 
-    this._shouldDisplayFooter = ['balance', 'graph', 'settings'].includes(
-      currentUrl
-    );
+    this._shouldDisplayFooter = ![
+      '/dashboard/balance',
+      '/dashboard/graph',
+      '/user/settings',
+    ].includes(currentUrl);
   }
 
   handleLanguageChange(lang: SupportedLanguage) {

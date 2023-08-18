@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
   selector: 'mfloww-graph',
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.scss'],
+  standalone: true,
 })
 export class GraphComponent {}

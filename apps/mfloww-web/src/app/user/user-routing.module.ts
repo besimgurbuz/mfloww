@@ -21,7 +21,7 @@ const routes: Routes = [
         const router = inject(Router);
 
         if (isLoggedIn) {
-          router.navigate(['/balance']);
+          router.navigate(['/dashboard/balance']);
         }
         return !isLoggedIn;
       },
@@ -36,7 +36,7 @@ const routes: Routes = [
         const router = inject(Router);
 
         if (isLoggedIn) {
-          router.navigate(['/balance']);
+          router.navigate(['/dashboard/balance']);
         }
         return !isLoggedIn;
       },
@@ -51,7 +51,7 @@ const routes: Routes = [
         const router = inject(Router);
 
         if (isLoggedIn) {
-          router.navigate(['/balance']);
+          router.navigate(['/dashboard/balance']);
         }
         return !isLoggedIn;
       },

@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ExchangeRate } from '@mfloww/common';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,
   Observable,
@@ -14,6 +16,8 @@ import {
   templateUrl: './exchange-rates.component.html',
   styleUrls: ['./exchange-rates.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, TranslateModule],
 })
 export class ExchangeRatesComponent {
   @Input() set exchangeRate(rate: ExchangeRate | null) {

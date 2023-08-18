@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -9,12 +10,15 @@ import {
   ViewChild,
 } from '@angular/core';
 import { BalanceRecordType, SupportedCurrencyCode } from '@mfloww/common';
+import { MflowwButtonComponent, MflowwIconComponent } from '@mfloww/view';
 
 @Component({
   selector: 'mfloww-money-table-entry',
   templateUrl: './money-table-entry.component.html',
   styleUrls: ['./money-table-entry.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, MflowwButtonComponent, MflowwIconComponent],
 })
 export class MoneyTableEntryComponent {
   @Input() type: BalanceRecordType = 'revenue';

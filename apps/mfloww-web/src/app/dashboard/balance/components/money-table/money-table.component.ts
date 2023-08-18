@@ -1,15 +1,32 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   BalanceRecordType,
   SUPPORTED_CURRENCY_CODES,
   SupportedCurrencyCode,
 } from '@mfloww/common';
-import { BalanceRecord } from '../../../models/entry';
+import {
+  MflowwButtonComponent,
+  MflowwEntryInputModule,
+  MflowwIconComponent,
+} from '@mfloww/view';
+import { TranslateModule } from '@ngx-translate/core';
+import { BalanceRecord } from '../../../../models/entry';
+import { MoneyTableEntryComponent } from '../money-table-entry/money-table-entry.component';
 
 @Component({
   selector: 'mfloww-money-table',
   templateUrl: './money-table.component.html',
   styleUrls: ['./money-table.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    TranslateModule,
+    MoneyTableEntryComponent,
+    MflowwIconComponent,
+    MflowwEntryInputModule,
+    MflowwButtonComponent,
+  ],
 })
 export class MoneyTableComponent {
   @Input() set type(recordType: BalanceRecordType) {

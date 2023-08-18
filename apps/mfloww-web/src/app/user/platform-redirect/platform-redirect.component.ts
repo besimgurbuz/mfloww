@@ -37,7 +37,7 @@ export class PlatformRedirectComponent implements OnInit {
         )
         .subscribe({
           next: () => {
-            this.router.navigate(['/balance']);
+            this.router.navigate(['/dashboard/balance']);
           },
           error: (err: HttpErrorResponse) => {
             const message =

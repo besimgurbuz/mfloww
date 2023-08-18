@@ -67,7 +67,7 @@
   >
     <a
       class="w-1/2 flex py-2 gap-2 items-center justify-center"
-      routerLink="balance"
+      routerLink="dashboard/balance"
       [ngClass]="{
         'border-b-2': urlData.activeUrl === '/balance'
       }"
@@ -89,7 +89,7 @@
     </a>
     <a
       class="w-1/2 flex py-2 gap-2 items-center justify-center"
-      routerLink="graph"
+      routerLink="dashboard/graph"
       [ngClass]="{
         'border-b-2 py-0': urlData.activeUrl === '/graph'
       }"
@@ -104,7 +104,7 @@
     *ngIf="{ activeUrl: activeUrl$ | async } as urlData"
   >
     <a
-      routerLink="balance"
+      routerLink="dashboard/balance"
       class="flex items-center justify-center gap-[5px] hover:text-gray-300"
       [ngClass]="{
         'text-mfloww_blue hover:text-mfloww_blue-300':
@@ -128,7 +128,7 @@
       Balance
     </a>
     <a
-      routerLink="graph"
+      routerLink="dashboard/graph"
       class="flex items-center justify-center gap-[5px] hover:text-gray-300"
       [ngClass]="{
         'text-mfloww_blue hover:text-mfloww_blue-300':
