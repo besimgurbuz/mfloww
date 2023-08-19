@@ -6,6 +6,7 @@ import {
   HostListener,
   Input,
   Output,
+  computed,
   inject,
 } from '@angular/core';
 import { ActiveUrlService } from '../../core/active-url.service';
@@ -19,12 +20,18 @@ import { ProfileInfo } from '../../core/models/profile-info';
 })
 export class MenuComponent {
   @Input() profileInfo: ProfileInfo | null = null;
-  activeUrl$ = inject(ActiveUrlService).activeUrl$();
 
   @Output() logOutTriggered = new EventEmitter<void>();
 
   _isOpen = false;
   _scrollY = 0;
+  _isInBalance = computed(() => this.activeUrl() === '/dashboard/balance');
+  _isInGraph = computed(() => this.activeUrl() === '/dashboard/graph');
+  _shouldDisplayDashboardLinks = computed(
+    () => this._isInBalance() || this._isInGraph()
+  );
+
+  private activeUrl = inject(ActiveUrlService).activeUrl();
 
   constructor(private elementRef: ElementRef) {}
 

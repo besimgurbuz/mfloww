@@ -23,13 +23,9 @@ import { LocalStorageService } from '../../core/local-storage.service';
 import { BalanceRecord } from '../../models/entry';
 import { convertEntryDate } from '../../shared/entry-date-converter';
 import { SharedModule } from '../../shared/shared.module';
-import { BalanceDataService } from '../data-access/balance-data.service';
 import { BalanceFacade } from '../data-access/balance.facade';
-import { BalanceState } from '../data-access/balance.state';
 import { ExchangeFacade } from '../facades/exchange.facade';
 import { CalculatorService } from '../services/calculator.service';
-import { ExchangeService } from '../services/exchange.service';
-import { ExchangeState } from '../states/exchange.state';
 import { ExchangeRatesComponent } from './components/exchange-rates/exchange-rates.component';
 import { MoneyTableComponent } from './components/money-table/money-table.component';
 import { OverallComponent } from './components/overall-panel/overall-panel.component';
@@ -52,15 +48,6 @@ import { EntryDatePipe } from './pipes/entry-date/entry-date.pipe';
     MflowwSelectModule,
     MflowwOverlayPanelComponent,
     MflowwMonthYearPickerComponent,
-  ],
-  providers: [
-    BalanceFacade,
-    BalanceDataService,
-    BalanceState,
-    CalculatorService,
-    ExchangeFacade,
-    ExchangeState,
-    ExchangeService,
   ],
 })
 export class BalanceComponent implements OnInit, OnDestroy {

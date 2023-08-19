@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, WritableSignal, signal } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -6,10 +6,10 @@ import { Subject } from 'rxjs';
 })
 export class ActiveUrlService {
   private activeUrlSubject: Subject<string> = new Subject();
-  private _activeUrl = '';
+  private _activeUrl: WritableSignal<string> = signal<string>('');
 
   emitActiveUrl(url: string) {
-    this._activeUrl = url;
+    this._activeUrl.set(url);
     this.activeUrlSubject.next(url);
   }
 

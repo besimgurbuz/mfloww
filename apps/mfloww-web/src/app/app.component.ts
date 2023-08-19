@@ -61,6 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
           if (e instanceof NavigationEnd) {
             this.handleFooterDisplay();
             this.activeUrlService.emitActiveUrl(e.url);
+            this.scrollToTop();
           }
         }),
         filter(
@@ -102,6 +103,13 @@ export class AppComponent implements OnInit, OnDestroy {
       '/dashboard/graph',
       '/user/settings',
     ].includes(currentUrl);
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
 
   handleLanguageChange(lang: SupportedLanguage) {
