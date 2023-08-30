@@ -42,6 +42,7 @@
     "cookie-parser": "^1.4.6",
     "crypto-js": "^4.1.1",
     "domino": "^2.1.6",
+    "echarts": "^5.4.3",
     "joi": "^17.9.2",
     "marked": "^5.1.0",
     "passport": "^0.6.0",
