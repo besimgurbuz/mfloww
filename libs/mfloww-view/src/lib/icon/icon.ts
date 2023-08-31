@@ -22,4 +22,5 @@ export type Icon =
   | 'menu'
   | 'close'
   | 'trash'
-  | 'tick';
+  | 'tick'
+  | 'calendar';

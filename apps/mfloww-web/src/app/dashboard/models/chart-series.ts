@@ -1,6 +1,14 @@
+export const CHART_TYPES_MAP = {
+  line: 'Line',
+  bar: 'Bar',
+  pie: 'Pie',
+} as const;
+
+export type ChartType = keyof typeof CHART_TYPES_MAP;
+
 export interface ChartSeries {
   name: string;
-  type: 'line' | 'bar';
+  type: ChartType;
   itemStyle: {
     color: string;
   };

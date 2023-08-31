@@ -1,10 +1,11 @@
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
-  inject,
+  DestroyRef,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -17,7 +18,7 @@ import {
   MonthYearSelection,
 } from '@mfloww/view';
 import { TranslateService } from '@ngx-translate/core';
-import { map, Observable, Subscription, tap } from 'rxjs';
+import { Observable, Subscription, map, tap } from 'rxjs';
 import { LATEST_MONTH_YEAR_KEY } from '../../core/core.constants';
 import { LocalStorageService } from '../../core/local-storage.service';
 import { BalanceRecord } from '../../models/entry';
@@ -37,7 +38,9 @@ import { EntryDatePipe } from './pipes/entry-date/entry-date.pipe';
   styleUrls: ['./balance.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
+    AsyncPipe,
+    NgIf,
+    NgForOf,
     SharedModule,
     ReactiveFormsModule,
     ExchangeRatesComponent,
@@ -51,13 +54,14 @@ import { EntryDatePipe } from './pipes/entry-date/entry-date.pipe';
   ],
 })
 export class BalanceComponent implements OnInit, OnDestroy {
-  private readonly exchangeFacade = inject(ExchangeFacade);
-  private readonly balanceFacade = inject(BalanceFacade);
-  private readonly calculatorService = inject(CalculatorService);
-  private readonly cd = inject(ChangeDetectorRef);
-  private readonly localStorageService = inject(LocalStorageService);
-  private readonly titleService = inject(Title);
-  private readonly translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
+  private exchangeFacade = inject(ExchangeFacade);
+  private balanceFacade = inject(BalanceFacade);
+  private calculatorService = inject(CalculatorService);
+  private cd = inject(ChangeDetectorRef);
+  private localStorageService = inject(LocalStorageService);
+  private titleService = inject(Title);
+  private translateService = inject(TranslateService);
 
   entryDates$: Observable<string[]> = this.balanceFacade.entryDates$.pipe(
     tap(() => this.setInitialMonthYear())
@@ -88,7 +92,7 @@ export class BalanceComponent implements OnInit, OnDestroy {
     );
     this.exchangeRatesUpdateSubs =
       this.exchangeFacade.loadExchangeRateInterval();
-    this.loadEntryListSubs = this.balanceFacade.loadEntryList();
+    this.balanceFacade.loadEntryList(this.destroyRef);
     this.setInitialMonthYear();
     this.monthSelectionChangeSubs =
       this.monthSelectionControl.valueChanges.subscribe((monthYear) => {

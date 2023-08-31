@@ -31,7 +31,7 @@ export class ChartComponent implements AfterViewInit {
   get chartType() {
     return this._type;
   }
-  private _type: 'line' | 'bar' = 'line';
+  private _type: ChartSeries['type'] = 'line';
   private revenueSeries = signal<ChartSeries>(DefaultRevenueSeries);
   private expenseSeries = signal<ChartSeries>(DefaultExpenseSeries);
 

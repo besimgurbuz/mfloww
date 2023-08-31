@@ -1,4 +1,5 @@
-import { inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BalanceRecordType } from '@mfloww/common';
 import { map, Observable, Subscription, tap } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
@@ -12,10 +13,13 @@ export class BalanceFacade {
   private readonly balanceDataService = inject(BalanceDataService);
   private readonly balanceState = inject(BalanceState);
 
-  loadEntryList(): Subscription {
+  loadEntryList(destroyRef: DestroyRef): Subscription {
     return this.balanceDataService
       .getEntryList$(this.userId)
-      .pipe(tap((entryList) => this.balanceState.setEntryList(entryList || [])))
+      .pipe(
+        tap((entryList) => this.balanceState.setEntryList(entryList || [])),
+        takeUntilDestroyed(destroyRef)
+      )
       .subscribe();
   }
 
