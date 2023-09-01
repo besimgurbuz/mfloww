@@ -1,13 +1,18 @@
-<div class="flex flex-col w-full h-full lg:px-28 md:px-18 px-6 pt-10">
+<div
+  class="flex flex-col w-full h-full lg:px-28 md:px-18 px-6 pt-10"
+  *ngIf="{ entryDates: _entryDates$ | async } as graphData"
+>
   <div
     class="flex flex-col sm:flex-row gap-y-3 sm:gap-x-3 w-full items-center justify-between"
   >
-    <mfloww-dates-selection-group
-      class="h-12 w-full sm:w-1/2"
-      [entryDates]="$any(_entryDates$ | async)"
-      (changed)="setSelectedEntryDates($event)"
-    />
-    <mfloww-chart-types-toggle (changed)="_selectedChartType = $event" />
+    <ng-container *ngIf="graphData.entryDates && graphData.entryDates.length">
+      <mfloww-dates-selection-group
+        class="h-12 w-full sm:w-1/2"
+        [entryDates]="graphData.entryDates"
+        (changed)="setSelectedEntryDates($event)"
+      />
+      <mfloww-chart-types-toggle (changed)="_selectedChartType = $event" />
+    </ng-container>
   </div>
   <div class="w-full min-h-[500px]">
     <mfloww-chart [chartType]="_selectedChartType"></mfloww-chart>

@@ -1,4 +1,10 @@
-import { AsyncPipe, KeyValuePipe, NgClass, NgForOf } from '@angular/common';
+import {
+  AsyncPipe,
+  KeyValuePipe,
+  NgClass,
+  NgForOf,
+  NgIf,
+} from '@angular/common';
 import {
   Component,
   DestroyRef,
@@ -25,6 +31,7 @@ import { DatesSelectionGroupComponent } from './components/dates-selection-group
   styleUrls: ['./graph.component.scss'],
   standalone: true,
   imports: [
+    NgIf,
     NgForOf,
     NgClass,
     KeyValuePipe,
