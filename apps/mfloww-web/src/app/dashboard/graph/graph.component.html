@@ -2,29 +2,12 @@
   <div
     class="flex flex-col sm:flex-row gap-y-3 sm:gap-x-3 w-full items-center justify-between"
   >
-    <mfloww-dates-toggle-group
+    <mfloww-dates-selection-group
       class="h-12 w-full sm:w-1/2"
       [entryDates]="$any(_entryDates$ | async)"
+      (changed)="setSelectedEntryDates($event)"
     />
-    <div
-      class="h-8 font-roboto border-[1px] border-solid border-mfloww_fg rounded-md overflow-hidden"
-    >
-      <button
-        *ngFor="
-          let chartType of _chartTypesMap | keyvalue;
-          let first = first;
-          let last = last
-        "
-        class="h-full w-1/3 text-sm px-4 text-center"
-        [ngClass]="{
-          'bg-mfloww_fg': _selectedChartType === chartType.key,
-          'border-r-[1px] border-mfloww_fg-300': !last
-        }"
-        (click)="_selectedChartType = $any(chartType.key)"
-      >
-        {{ chartType.value }}
-      </button>
-    </div>
+    <mfloww-chart-types-toggle (changed)="_selectedChartType = $event" />
   </div>
   <div class="w-full min-h-[500px]">
     <mfloww-chart [chartType]="_selectedChartType"></mfloww-chart>

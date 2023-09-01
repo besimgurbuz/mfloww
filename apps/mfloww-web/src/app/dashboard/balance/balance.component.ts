@@ -24,7 +24,7 @@ import { LocalStorageService } from '../../core/local-storage.service';
 import { BalanceRecord } from '../../models/entry';
 import { convertEntryDate } from '../../shared/entry-date-converter';
 import { SharedModule } from '../../shared/shared.module';
-import { BalanceFacade } from '../data-access/balance.facade';
+import { BalanceFacade } from '../facades/balance.facade';
 import { ExchangeFacade } from '../facades/exchange.facade';
 import { CalculatorService } from '../services/calculator.service';
 import { ExchangeRatesComponent } from './components/exchange-rates/exchange-rates.component';

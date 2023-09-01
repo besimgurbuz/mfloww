@@ -4,8 +4,8 @@ import { BalanceRecordType } from '@mfloww/common';
 import { map, Observable, Subscription, tap } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
 import { BalanceRecord, MonthYearEntry } from '../../models/entry';
-import { BalanceDataService } from './balance-data.service';
-import { BalanceState } from './balance.state';
+import { BalanceDataService } from '../data-access/balance-data.service';
+import { BalanceState } from '../data-access/balance.state';
 
 @Injectable()
 export class BalanceFacade {

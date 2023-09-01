@@ -21,7 +21,7 @@ import { MflowwIconComponent } from '../icon/icon.component';
   selector: 'ng-template[mflowwViewPinnedTab]',
   standalone: true,
 })
-export class MflowwViewPinnedTabDirective {
+export class MflowwPinnedTabDirective {
   templateRef = inject(TemplateRef);
 }
 
@@ -29,7 +29,7 @@ export class MflowwViewPinnedTabDirective {
   selector: 'ng-template[mflowwViewTab]',
   standalone: true,
 })
-export class MflowwViewTabDirective {
+export class MflowwTabDirective {
   templateRef = inject(TemplateRef);
 }
 
@@ -44,11 +44,11 @@ export class MflowwViewTabDirective {
     NgClass,
     NgIf,
     MflowwIconComponent,
-    MflowwViewPinnedTabDirective,
-    MflowwViewTabDirective,
+    MflowwPinnedTabDirective,
+    MflowwTabDirective,
   ],
 })
-export class MflowwViewTabGroupComponent implements AfterViewInit {
+export class MflowwTabGroupComponent implements AfterViewInit {
   _showPrevButton = signal(false);
   _showNextButton = signal(false);
 
@@ -57,11 +57,11 @@ export class MflowwViewTabGroupComponent implements AfterViewInit {
   @ViewChild('tabsContainer', { read: ElementRef })
   tabsContainer!: ElementRef;
 
-  @ContentChild(MflowwViewPinnedTabDirective)
-  pinnedTab!: MflowwViewPinnedTabDirective;
+  @ContentChild(MflowwPinnedTabDirective)
+  pinnedTab?: MflowwPinnedTabDirective;
 
-  @ContentChildren(MflowwViewTabDirective)
-  tabs!: QueryList<MflowwViewTabDirective>;
+  @ContentChildren(MflowwTabDirective)
+  tabs!: QueryList<MflowwTabDirective>;
 
   ngAfterViewInit(): void {
     const tabsContainerDiv = this.tabsContainer.nativeElement as HTMLDivElement;
@@ -84,7 +84,7 @@ export class MflowwViewTabGroupComponent implements AfterViewInit {
     this._showNextButton.set(
       tabsContainerDiv.clientWidth < tabsContainerDiv.scrollWidth
     );
-    this._showPrevButton.set(tabsContainerDiv.scrollWidth > 0);
+    this._showPrevButton.set(tabsContainerDiv.scrollLeft > 0);
   }
 
   handlePrevBtnClick() {

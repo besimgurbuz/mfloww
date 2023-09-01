@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { BalanceComponent } from './balance/balance.component';
 import { BalanceDataService } from './data-access/balance-data.service';
-import { BalanceFacade } from './data-access/balance.facade';
 import { BalanceState } from './data-access/balance.state';
+import { BalanceFacade } from './facades/balance.facade';
 import { ExchangeFacade } from './facades/exchange.facade';
 import { GraphComponent } from './graph/graph.component';
 import { CalculatorService } from './services/calculator.service';

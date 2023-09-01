@@ -2,14 +2,14 @@ import { AsyncPipe, NgClass, NgFor } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MflowwViewPinnedTabDirective,
-  MflowwViewTabDirective,
-  MflowwViewTabGroupComponent,
+  MflowwPinnedTabDirective,
+  MflowwTabDirective,
+  MflowwTabGroupComponent,
 } from '@mfloww/view';
 import { EntryDatePipe } from '../../balance/pipes/entry-date/entry-date.pipe';
 
 @Component({
-  selector: 'mfloww-dates-toggle-group',
+  selector: 'mfloww-dates-selection-group',
   template: `
     <mfloww-view-tab-group class="h-full w-full">
       <ng-template mflowwViewPinnedTab>
@@ -45,13 +45,13 @@ import { EntryDatePipe } from '../../balance/pipes/entry-date/entry-date.pipe';
     NgFor,
     AsyncPipe,
     EntryDatePipe,
-    MflowwViewTabGroupComponent,
-    MflowwViewPinnedTabDirective,
-    MflowwViewTabDirective,
+    MflowwTabGroupComponent,
+    MflowwPinnedTabDirective,
+    MflowwTabDirective,
     ReactiveFormsModule,
   ],
 })
-export class DatesToggleGroupComponent {
+export class DatesSelectionGroupComponent {
   @Input()
   entryDates: string[] = [];
 
@@ -72,8 +72,7 @@ export class DatesToggleGroupComponent {
       } else {
         selectedEntryDates.push(toggledDate);
       }
-
-      this.changed.emit(selectedEntryDates);
     });
+    this.changed.emit(this._selectedEntryDates());
   }
 }

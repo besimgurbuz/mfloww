@@ -1,10 +1,23 @@
 import { AsyncPipe, KeyValuePipe, NgClass, NgForOf } from '@angular/common';
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { MflowwButtonComponent, MflowwIconComponent } from '@mfloww/view';
+import {
+  Component,
+  DestroyRef,
+  OnInit,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
+import {
+  MflowwButtonComponent,
+  MflowwIconComponent,
+  MflowwTabDirective,
+  MflowwTabGroupComponent,
+} from '@mfloww/view';
 import { ChartComponent } from '../chart/chart.component';
-import { BalanceFacade } from '../data-access/balance.facade';
-import { CHART_TYPES_MAP, ChartType } from '../models/chart-series';
-import { DatesToggleGroupComponent } from './components/dates-toggle-group.component';
+import { BalanceFacade } from '../facades/balance.facade';
+import { ChartType } from '../models/chart-series';
+import { ChartTypesToggleComponent } from './components/chart-types-toggle.component';
+import { DatesSelectionGroupComponent } from './components/dates-selection-group.component';
 
 @Component({
   selector: 'mfloww-graph',
@@ -18,20 +31,34 @@ import { DatesToggleGroupComponent } from './components/dates-toggle-group.compo
     AsyncPipe,
     MflowwIconComponent,
     MflowwButtonComponent,
-    DatesToggleGroupComponent,
+    MflowwTabGroupComponent,
+    MflowwTabDirective,
+    DatesSelectionGroupComponent,
+    ChartTypesToggleComponent,
     ChartComponent,
   ],
 })
 export class GraphComponent implements OnInit {
-  _selectedChartType: ChartType = 'line';
-  _chartTypesMap: Record<ChartType, string> = CHART_TYPES_MAP;
-
-  private destroyRef = inject(DestroyRef);
-  private dashboardDataFacade = inject(BalanceFacade);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly dashboardDataFacade = inject(BalanceFacade);
 
   _entryDates$ = this.dashboardDataFacade.entryDates$;
+  _selectedChartType: ChartType = 'line';
+  _selectedEntryDates = signal<string[]>([]);
+
+  constructor() {
+    effect(() => {
+      const selectedEntryDates = this._selectedEntryDates();
+
+      console.log(selectedEntryDates);
+    });
+  }
 
   ngOnInit(): void {
     this.dashboardDataFacade.loadEntryList(this.destroyRef);
+  }
+
+  setSelectedEntryDates(entryDates: string[]): void {
+    this._selectedEntryDates.set(entryDates);
   }
 }

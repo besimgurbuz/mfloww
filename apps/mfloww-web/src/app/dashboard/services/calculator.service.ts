@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ExchangeRate, SupportedCurrencyCode } from '@mfloww/common';
 import { combineLatest, map, mergeMap, Observable } from 'rxjs';
 import { BalanceRecord } from '../../models/entry';
-import { BalanceFacade } from '../data-access/balance.facade';
+import { BalanceFacade } from '../facades/balance.facade';
 import { ExchangeFacade } from '../facades/exchange.facade';
 
 @Injectable()

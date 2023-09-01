@@ -5,7 +5,7 @@
   (scroll)="handleTabsContainerScroll()"
 >
   <div class="sticky left-0 flex justify-center">
-    <div class="border-r-[1px] border-mfloww_fg-300">
+    <div *ngIf="pinnedTab" class="border-r-[1px] border-mfloww_fg-300">
       <ng-container *ngTemplateOutlet="pinnedTab.templateRef"></ng-container>
     </div>
     <button
