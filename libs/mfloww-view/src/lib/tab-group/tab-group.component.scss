@@ -1,0 +1,10 @@
+.tabs-container {
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    visibility: hidden;
+  }
+}

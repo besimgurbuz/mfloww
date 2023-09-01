@@ -12,3 +12,4 @@ export * from './lib/repeat/repeat.directive';
 export * from './lib/select/directives/select-option.directive';
 export * from './lib/select/select.component';
 export * from './lib/select/select.module';
+export * from './lib/tab-group/tab-group.component';

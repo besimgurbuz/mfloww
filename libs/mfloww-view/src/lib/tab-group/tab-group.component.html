@@ -1,0 +1,50 @@
+<div
+  class="flex h-full font-roboto w-full text-sm"
+  (window:resize)="handleResize()"
+>
+  <div class="border-[1px] border-solid border-mfloww_fg rounded-l-md">
+    <ng-container *ngTemplateOutlet="pinnedTab.templateRef"></ng-container>
+  </div>
+  <button
+    *ngIf="_showPrevButton()"
+    class="flex items-center justify-center bg-mfloww_fg-300 w-8"
+    (click)="handlePrevBtnClick()"
+  >
+    <mfloww-view-icon
+      type="arrow_left"
+      class="w-[24px] h-[24px]"
+    ></mfloww-view-icon>
+  </button>
+  <div
+    #tabsContainer
+    class="tabs-container flex overflow-x-auto overflow-y-hidden"
+    [ngClass]="{
+      'rounded-r-md': !_showNextButton()
+    }"
+    (scroll)="handleTabsContainerScroll()"
+  >
+    <ng-container
+      *ngFor="
+        let tab of tabs;
+        let index = index;
+        let first = first;
+        let last = last
+      "
+    >
+      <ng-container
+        *ngTemplateOutlet="tab.templateRef; context: { index, first, last }"
+      >
+      </ng-container>
+    </ng-container>
+  </div>
+  <button
+    *ngIf="_showNextButton()"
+    class="flex items-center justify-center bg-mfloww_fg-300 w-8 rounded-r-md"
+    (click)="handleNextBtnClick()"
+  >
+    <mfloww-view-icon
+      type="arrow_right"
+      class="w-[24px] h-[24px]"
+    ></mfloww-view-icon>
+  </button>
+</div>
