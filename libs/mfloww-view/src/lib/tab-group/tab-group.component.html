@@ -1,45 +1,44 @@
 <div
-  class="flex h-full font-roboto w-full text-sm"
+  #tabsContainer
+  class="flex h-full w-full font-roboto border-[1px] border-solid border-mfloww_fg text-sm tabs-container overflow-x-auto overflow-y-hidden rounded-md"
   (window:resize)="handleResize()"
+  (scroll)="handleTabsContainerScroll()"
 >
-  <div class="border-[1px] border-solid border-mfloww_fg rounded-l-md">
-    <ng-container *ngTemplateOutlet="pinnedTab.templateRef"></ng-container>
+  <div class="sticky left-0 flex justify-center">
+    <div class="border-r-[1px] border-mfloww_fg-300">
+      <ng-container *ngTemplateOutlet="pinnedTab.templateRef"></ng-container>
+    </div>
+    <button
+      *ngIf="_showPrevButton()"
+      class="flex items-center justify-center bg-mfloww_fg-300 w-6"
+      (click)="handlePrevBtnClick()"
+    >
+      <mfloww-view-icon
+        type="arrow_left"
+        class="w-[24px] h-[24px]"
+      ></mfloww-view-icon>
+    </button>
   </div>
-  <button
-    *ngIf="_showPrevButton()"
-    class="flex items-center justify-center bg-mfloww_fg-300 w-8"
-    (click)="handlePrevBtnClick()"
-  >
-    <mfloww-view-icon
-      type="arrow_left"
-      class="w-[24px] h-[24px]"
-    ></mfloww-view-icon>
-  </button>
   <div
-    #tabsContainer
-    class="tabs-container flex overflow-x-auto overflow-y-hidden"
+    *ngFor="
+      let tab of tabs;
+      let index = index;
+      let first = first;
+      let last = last
+    "
+    class="flex h-full w-full"
     [ngClass]="{
-      'rounded-r-md': !_showNextButton()
+      'border-r-[1px] border-mfloww_fg-300': !last
     }"
-    (scroll)="handleTabsContainerScroll()"
   >
     <ng-container
-      *ngFor="
-        let tab of tabs;
-        let index = index;
-        let first = first;
-        let last = last
-      "
+      *ngTemplateOutlet="tab.templateRef; context: { index, first, last }"
     >
-      <ng-container
-        *ngTemplateOutlet="tab.templateRef; context: { index, first, last }"
-      >
-      </ng-container>
     </ng-container>
   </div>
   <button
     *ngIf="_showNextButton()"
-    class="flex items-center justify-center bg-mfloww_fg-300 w-8 rounded-r-md"
+    class="flex items-center justify-center bg-mfloww_fg-300 w-8 sticky -right-[1px]"
     (click)="handleNextBtnClick()"
   >
     <mfloww-view-icon

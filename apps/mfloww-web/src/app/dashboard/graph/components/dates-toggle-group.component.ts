@@ -1,6 +1,6 @@
 import { AsyncPipe, NgClass, NgFor } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import {
   MflowwViewPinnedTabDirective,
   MflowwViewTabDirective,
@@ -14,23 +14,21 @@ import { EntryDatePipe } from '../../balance/pipes/entry-date/entry-date.pipe';
     <mfloww-view-tab-group class="h-full w-full">
       <ng-template mflowwViewPinnedTab>
         <button
-          class="px-4 w-full h-full"
+          class="px-2 w-16 h-full bg-mfloww_bg hover:bg-mfloww_bg-300"
           [ngClass]="{
-            'bg-mfloww_fg border-solid border-mfloww_fg-300':
-              _allDatesSelected()
+            'bg-mfloww_fg  hover:bg-mfloww_fg-300': _allDatesSelected()
           }"
           (click)="_allDatesSelected.set(!_allDatesSelected())"
         >
-          Select all
+          All
         </button>
       </ng-template>
       <ng-container *ngFor="let entryDate of entryDates; let last = last">
         <ng-template mflowwViewTab>
           <button
-            class="border-[1px] border-solid border-mfloww_fg px-4"
+            class="px-4 hover:bg-mfloww_bg-300 min-w-[80px]"
             [ngClass]="{
-              'rounded-r-md': last,
-              'bg-mfloww_fg':
+              'bg-mfloww_fg hover:bg-mfloww_fg-300':
                 _allDatesSelected() || _selectedEntryDates().includes(entryDate)
             }"
             (click)="toggleSelectedDate(entryDate)"
@@ -60,8 +58,7 @@ export class DatesToggleGroupComponent {
   @Output() changed = new EventEmitter<string[]>();
 
   _selectedEntryDates = signal<string[]>([]);
-  _allDatesSelected = signal<boolean>(true);
-  _selectAllControl = new FormControl<boolean>(true);
+  _allDatesSelected = signal<boolean>(false);
 
   toggleSelectedDate(toggledDate: string): void {
     if (this._allDatesSelected()) {
