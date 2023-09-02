@@ -11,10 +11,10 @@
         [entryDates]="graphData.entryDates"
         (changed)="setSelectedEntryDates($event)"
       />
-      <mfloww-chart-types-toggle (changed)="_selectedChartType = $event" />
+      <mfloww-chart-types-toggle (changed)="setSelectedChartType($event)" />
     </ng-container>
   </div>
   <div class="w-full min-h-[500px]">
-    <mfloww-chart [chartType]="_selectedChartType"></mfloww-chart>
+    <mfloww-chart [chartType]="_selectedChartType.value"></mfloww-chart>
   </div>
 </div>

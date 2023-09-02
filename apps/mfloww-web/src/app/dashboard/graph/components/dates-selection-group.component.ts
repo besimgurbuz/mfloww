@@ -18,7 +18,7 @@ import { EntryDatePipe } from '../../balance/pipes/entry-date/entry-date.pipe';
           [ngClass]="{
             'bg-mfloww_fg  hover:bg-mfloww_fg-300': _allDatesSelected()
           }"
-          (click)="_allDatesSelected.set(!_allDatesSelected())"
+          (click)="toggleAll()"
         >
           All
         </button>
@@ -59,6 +59,17 @@ export class DatesSelectionGroupComponent {
 
   _selectedEntryDates = signal<string[]>([]);
   _allDatesSelected = signal<boolean>(false);
+
+  toggleAll(): void {
+    const toggled = !this._allDatesSelected();
+    this._allDatesSelected.set(toggled);
+
+    if (toggled) {
+      this.changed.emit(this.entryDates);
+    } else {
+      this.changed.emit(this._selectedEntryDates());
+    }
+  }
 
   toggleSelectedDate(toggledDate: string): void {
     if (this._allDatesSelected()) {

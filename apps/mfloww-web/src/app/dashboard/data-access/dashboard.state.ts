@@ -4,7 +4,7 @@ import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { BalanceRecord, MonthYearEntry } from '../../models/entry';
 
 @Injectable()
-export class BalanceState {
+export class DashboardState {
   private readonly entryListSubject: BehaviorSubject<MonthYearEntry[]> =
     new BehaviorSubject<MonthYearEntry[]>([]);
   private readonly selectedMonthSubject: BehaviorSubject<string> =

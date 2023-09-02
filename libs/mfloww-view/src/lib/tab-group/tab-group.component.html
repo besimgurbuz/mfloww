@@ -1,11 +1,11 @@
 <div
   #tabsContainer
-  class="flex h-full w-full font-roboto border-[1px] border-solid border-mfloww_fg text-sm tabs-container overflow-x-auto overflow-y-hidden rounded-md"
+  class="flex h-full w-fit max-w-full font-roboto border-2 border-solid border-mfloww_fg text-sm tabs-container overflow-x-auto overflow-y-hidden rounded-md"
   (window:resize)="handleResize()"
   (scroll)="handleTabsContainerScroll()"
 >
   <div class="sticky left-0 flex justify-center">
-    <div *ngIf="pinnedTab" class="border-r-[1px] border-mfloww_fg-300">
+    <div *ngIf="pinnedTab" class="border-r-2 border-mfloww_fg-300">
       <ng-container *ngTemplateOutlet="pinnedTab.templateRef"></ng-container>
     </div>
     <button
@@ -26,9 +26,9 @@
       let first = first;
       let last = last
     "
-    class="flex h-full w-full"
+    class="flex h-full w-fit"
     [ngClass]="{
-      'border-r-[1px] border-mfloww_fg-300': !last
+      'border-r-2 border-mfloww_fg-300': !last
     }"
   >
     <ng-container

@@ -5,7 +5,7 @@ import { catchError, EMPTY, map, mergeMap, Observable, of } from 'rxjs';
 import { BalanceRecord, MonthYearEntry } from '../../models/entry';
 
 @Injectable()
-export class BalanceDataService {
+export class DashboardDataService {
   private readonly dbService = inject(MflowwDbService);
 
   getEntryList$(userId: string): Observable<MonthYearEntry[] | undefined> {

@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { BalanceComponent } from './balance/balance.component';
-import { BalanceDataService } from './data-access/balance-data.service';
-import { BalanceState } from './data-access/balance.state';
-import { BalanceFacade } from './facades/balance.facade';
+import { DashboardDataService } from './data-access/dashboard-data.service';
+import { DashboardState } from './data-access/dashboard.state';
+import { DashbaordFacade } from './facades/dashboard.facade';
 import { ExchangeFacade } from './facades/exchange.facade';
 import { GraphComponent } from './graph/graph.component';
 import { CalculatorService } from './services/calculator.service';
@@ -14,9 +14,9 @@ export const DASHBOARD_ROUTES: Routes = [
     path: '',
     pathMatch: 'prefix',
     providers: [
-      BalanceFacade,
-      BalanceDataService,
-      BalanceState,
+      DashbaordFacade,
+      DashboardDataService,
+      DashboardState,
       CalculatorService,
       ExchangeFacade,
       ExchangeState,

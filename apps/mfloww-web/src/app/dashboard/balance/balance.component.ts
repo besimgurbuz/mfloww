@@ -24,7 +24,7 @@ import { LocalStorageService } from '../../core/local-storage.service';
 import { BalanceRecord } from '../../models/entry';
 import { convertEntryDate } from '../../shared/entry-date-converter';
 import { SharedModule } from '../../shared/shared.module';
-import { BalanceFacade } from '../facades/balance.facade';
+import { DashbaordFacade } from '../facades/dashboard.facade';
 import { ExchangeFacade } from '../facades/exchange.facade';
 import { CalculatorService } from '../services/calculator.service';
 import { ExchangeRatesComponent } from './components/exchange-rates/exchange-rates.component';
@@ -56,21 +56,23 @@ import { EntryDatePipe } from './pipes/entry-date/entry-date.pipe';
 export class BalanceComponent implements OnInit, OnDestroy {
   private destroyRef = inject(DestroyRef);
   private exchangeFacade = inject(ExchangeFacade);
-  private balanceFacade = inject(BalanceFacade);
+  private dashboardFacade = inject(DashbaordFacade);
   private calculatorService = inject(CalculatorService);
   private cd = inject(ChangeDetectorRef);
   private localStorageService = inject(LocalStorageService);
   private titleService = inject(Title);
   private translateService = inject(TranslateService);
 
-  entryDates$: Observable<string[]> = this.balanceFacade.entryDates$.pipe(
+  entryDates$: Observable<string[]> = this.dashboardFacade.entryDates$.pipe(
     tap(() => this.setInitialMonthYear())
   );
-  hasEntry$: Observable<boolean> = this.balanceFacade.entryList$.pipe(
+  hasEntry$: Observable<boolean> = this.dashboardFacade.entryList$.pipe(
     map((entries) => entries && entries.length > 0)
   );
-  revenues$: Observable<BalanceRecord[]> = this.balanceFacade.selectedRevenues$;
-  expenses$: Observable<BalanceRecord[]> = this.balanceFacade.selectedExpenses$;
+  revenues$: Observable<BalanceRecord[]> =
+    this.dashboardFacade.selectedRevenues$;
+  expenses$: Observable<BalanceRecord[]> =
+    this.dashboardFacade.selectedExpenses$;
   exchangeRate$ = this.exchangeFacade.exchangeRate$;
   baseCurrency = this.exchangeFacade.baseCurrency;
   totalRevenue$: Observable<number> = this.calculatorService.totalRevenue$;
@@ -92,14 +94,14 @@ export class BalanceComponent implements OnInit, OnDestroy {
     );
     this.exchangeRatesUpdateSubs =
       this.exchangeFacade.loadExchangeRateInterval();
-    this.balanceFacade.loadEntryList(this.destroyRef);
+    this.dashboardFacade.loadEntryList(this.destroyRef);
     this.setInitialMonthYear();
     this.monthSelectionChangeSubs =
       this.monthSelectionControl.valueChanges.subscribe((monthYear) => {
         if (monthYear) {
           this.selectedMonthYearIndex =
-            this.balanceFacade.currentEntryDates.indexOf(monthYear);
-          this.balanceFacade.setSelectedEntryByMonthYear(monthYear);
+            this.dashboardFacade.currentEntryDates.indexOf(monthYear);
+          this.dashboardFacade.setSelectedEntryByMonthYear(monthYear);
           this.cd.detectChanges();
           this.localStorageService.set(LATEST_MONTH_YEAR_KEY, monthYear);
           this.setBalanceTitle(monthYear);
@@ -115,10 +117,10 @@ export class BalanceComponent implements OnInit, OnDestroy {
 
   handleEntryCreation({ month, year }: MonthYearSelection) {
     const monthYear = `${month}_${year}`;
-    this.balanceFacade.insertNewMonthYearEntry$(monthYear).subscribe(() => {
+    this.dashboardFacade.insertNewMonthYearEntry$(monthYear).subscribe(() => {
       this.monthSelectionControl.setValue(monthYear);
       this.selectedMonthYearIndex =
-        this.balanceFacade.currentEntryDates.indexOf(monthYear);
+        this.dashboardFacade.currentEntryDates.indexOf(monthYear);
     });
   }
 
@@ -137,13 +139,13 @@ export class BalanceComponent implements OnInit, OnDestroy {
     );
 
     if (confirmed) {
-      this.balanceFacade
+      this.dashboardFacade
         .deleteMonthYearEntry$(selectedMonthYearEntry)
         .subscribe(() => {
           const nextItemIndex = Math.max(this.selectedMonthYearIndex - 1, 0);
           this.selectedMonthYearIndex = nextItemIndex;
           this.monthSelectionControl.setValue(
-            this.balanceFacade.currentEntryDates[nextItemIndex]
+            this.dashboardFacade.currentEntryDates[nextItemIndex]
           );
         });
     }
@@ -153,11 +155,11 @@ export class BalanceComponent implements OnInit, OnDestroy {
     newEntry: BalanceRecord,
     type: BalanceRecordType = 'revenue'
   ) {
-    this.balanceFacade.insertNewBalanceRecord(newEntry, type).subscribe();
+    this.dashboardFacade.insertNewBalanceRecord(newEntry, type).subscribe();
   }
 
   handleRecordDeletion(index: number, type: BalanceRecordType = 'revenue') {
-    this.balanceFacade.deleteBalanceRecord(index, type).subscribe();
+    this.dashboardFacade.deleteBalanceRecord(index, type).subscribe();
   }
 
   setMonthSelection(moveStepCount: number, months: string[] | null): void {
@@ -178,12 +180,12 @@ export class BalanceComponent implements OnInit, OnDestroy {
       LATEST_MONTH_YEAR_KEY
     );
     const indexOfMonthYear = latestMonthYear
-      ? this.balanceFacade.currentEntryDates.indexOf(latestMonthYear)
+      ? this.dashboardFacade.currentEntryDates.indexOf(latestMonthYear)
       : -1;
     if (latestMonthYear && indexOfMonthYear >= 0) {
       this.selectedMonthYearIndex = indexOfMonthYear;
       this.monthSelectionControl.setValue(latestMonthYear);
-      this.balanceFacade.setSelectedEntryByMonthYear(latestMonthYear);
+      this.dashboardFacade.setSelectedEntryByMonthYear(latestMonthYear);
       this.setBalanceTitle(latestMonthYear);
     } else {
       this.monthSelectionControl.setValue(null);

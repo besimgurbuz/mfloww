@@ -4,14 +4,14 @@ import { BalanceRecordType } from '@mfloww/common';
 import { map, Observable, Subscription, tap } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
 import { BalanceRecord, MonthYearEntry } from '../../models/entry';
-import { BalanceDataService } from '../data-access/balance-data.service';
-import { BalanceState } from '../data-access/balance.state';
+import { DashboardDataService } from '../data-access/dashboard-data.service';
+import { DashboardState } from '../data-access/dashboard.state';
 
 @Injectable()
-export class BalanceFacade {
+export class DashbaordFacade {
   private readonly authService = inject(AuthService);
-  private readonly balanceDataService = inject(BalanceDataService);
-  private readonly balanceState = inject(BalanceState);
+  private readonly balanceDataService = inject(DashboardDataService);
+  private readonly balanceState = inject(DashboardState);
 
   loadEntryList(destroyRef: DestroyRef): Subscription {
     return this.balanceDataService

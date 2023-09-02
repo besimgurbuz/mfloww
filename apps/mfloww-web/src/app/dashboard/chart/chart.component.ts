@@ -15,6 +15,16 @@ import {
   DefaultRevenueSeries,
 } from '../models/chart-series';
 
+export interface ChartEntry {
+  value: number;
+  date: string;
+}
+
+export interface ChartSeriesData {
+  revenues: ChartEntry[];
+  expenses: ChartEntry[];
+}
+
 @Component({
   selector: 'mfloww-chart',
   standalone: true,
@@ -22,6 +32,7 @@ import {
   templateUrl: './chart.component.html',
 })
 export class ChartComponent implements AfterViewInit {
+  @Input() data: unknown;
   @Input() set chartType(chartType: ChartSeries['type']) {
     this._type = chartType;
 

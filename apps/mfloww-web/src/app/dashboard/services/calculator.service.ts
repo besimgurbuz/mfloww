@@ -2,12 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { ExchangeRate, SupportedCurrencyCode } from '@mfloww/common';
 import { combineLatest, map, mergeMap, Observable } from 'rxjs';
 import { BalanceRecord } from '../../models/entry';
-import { BalanceFacade } from '../facades/balance.facade';
+import { DashbaordFacade } from '../facades/dashboard.facade';
 import { ExchangeFacade } from '../facades/exchange.facade';
 
 @Injectable()
 export class CalculatorService {
-  private readonly balanceFacade = inject(BalanceFacade);
+  private readonly balanceFacade = inject(DashbaordFacade);
   private readonly exchangeFacade = inject(ExchangeFacade);
   private readonly sumWithExchangeReducer =
     (exchangeRate: ExchangeRate) => (total: number, entry: BalanceRecord) => {
@@ -29,27 +29,30 @@ export class CalculatorService {
     return this.sumOfEntries(revenues) + this.sumOfEntries(expenses);
   }
 
+  calculateTotalOfRecordsByExchangeRate(
+    records: BalanceRecord[],
+    exchangeRate: ExchangeRate
+  ) {
+    return records.reduce(this.sumWithExchangeReducer(exchangeRate), 0);
+  }
+
+  calculateTotalOfRecords$(records: BalanceRecord[]) {
+    return this.exchangeFacade.exchangeRate$.pipe(
+      map((exchangeRate) =>
+        this.calculateTotalOfRecordsByExchangeRate(records, exchangeRate)
+      )
+    );
+  }
+
   get totalRevenue$(): Observable<number> {
     return this.balanceFacade.selectedRevenues$.pipe(
-      mergeMap((revenues) =>
-        this.exchangeFacade.exchangeRate$.pipe(
-          map((exchangeRate) =>
-            revenues.reduce(this.sumWithExchangeReducer(exchangeRate), 0)
-          )
-        )
-      )
+      mergeMap((revenues) => this.calculateTotalOfRecords$(revenues))
     );
   }
 
   get totalExpense$(): Observable<number> {
     return this.balanceFacade.selectedExpenses$.pipe(
-      mergeMap((expenses) =>
-        this.exchangeFacade.exchangeRate$.pipe(
-          map((exchangeRate) =>
-            expenses.reduce(this.sumWithExchangeReducer(exchangeRate), 0)
-          )
-        )
-      )
+      mergeMap((expenses) => this.calculateTotalOfRecords$(expenses))
     );
   }
 
