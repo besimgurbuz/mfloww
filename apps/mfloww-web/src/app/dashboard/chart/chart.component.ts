@@ -22,6 +22,11 @@ export interface ChartSeriesData {
   expenses: number[];
 }
 
+export interface PieChartData {
+  totalRevenue: number;
+  totalExpense: number;
+}
+
 @Component({
   selector: 'mfloww-chart',
   standalone: true,
@@ -29,7 +34,8 @@ export interface ChartSeriesData {
   templateUrl: './chart.component.html',
 })
 export class ChartComponent implements AfterViewInit {
-  @Input() set data(seriesData: ChartSeriesData) {
+  @Input() set data(seriesData: ChartSeriesData | undefined) {
+    if (!seriesData) return;
     this._chartInstance.setOption({
       xAxis: {
         data: seriesData.dates,
@@ -39,12 +45,40 @@ export class ChartComponent implements AfterViewInit {
     this.revenueSeries.mutate((series) => (series.data = seriesData.revenues));
     this.expenseSeries.mutate((series) => (series.data = seriesData.expenses));
   }
+  @Input() set pieData(pieData: PieChartData | undefined) {
+    if (!pieData) return;
+    this._chartInstance.setOption({
+      series: [
+        {
+          name: 'Overall Total',
+          type: 'pie',
+          radius: '50%',
+          data: [
+            {
+              value: pieData.totalRevenue,
+              name: 'Revenue',
+              itemStyle: { color: '#82db73' },
+            },
+            {
+              value: Math.abs(pieData.totalExpense),
+              name: 'Expense',
+              itemStyle: { color: '#f44336' },
+            },
+          ],
+        },
+        {
+          data: [],
+        },
+      ],
+    });
+  }
   @Input() set chartType(chartType: ChartSeries['type']) {
     this._type = chartType;
 
-    this.revenueSeries.mutate((series) => (series.type = chartType));
+    this.revenueSeries.mutate((series) => {
+      series.type = chartType;
+    });
     this.expenseSeries.mutate((series) => (series.type = chartType));
-
     this._chartInstance.setOption({
       xAxis: {
         show: chartType !== 'pie',
@@ -70,9 +104,11 @@ export class ChartComponent implements AfterViewInit {
       const revenueSeries = this.revenueSeries();
       const expenseSeries = this.expenseSeries();
 
-      this._chartInstance?.setOption({
-        series: [revenueSeries, expenseSeries],
-      });
+      if (this.chartType !== 'pie') {
+        this._chartInstance?.setOption({
+          series: [revenueSeries, expenseSeries],
+        });
+      }
     });
   }
 

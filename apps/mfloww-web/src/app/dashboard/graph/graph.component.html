@@ -16,8 +16,9 @@
   </div>
   <div class="w-full min-h-[600px]">
     <mfloww-chart
-      [data]="$any(_chartData())"
-      [chartType]="_selectedChartType.value"
+      [data]="_chartData()"
+      [pieData]="_chartPieData()"
+      [chartType]="_selectedChartType()"
       [baseCurrency]="baseCurrency"
     />
   </div>

@@ -6,6 +6,7 @@ import {
   NgIf,
 } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   OnInit,
@@ -22,9 +23,12 @@ import {
   MflowwTabGroupComponent,
 } from '@mfloww/view';
 import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject } from 'rxjs';
 import { translateEntryDate } from '../balance/pipes/entry-date/entry-date.pipe';
-import { ChartComponent, ChartSeriesData } from '../chart/chart.component';
+import {
+  ChartComponent,
+  ChartSeriesData,
+  PieChartData,
+} from '../chart/chart.component';
 import { DashbaordFacade } from '../facades/dashboard.facade';
 import { ExchangeFacade } from '../facades/exchange.facade';
 import { ChartType } from '../models/chart-series';
@@ -52,6 +56,7 @@ import { DatesSelectionGroupComponent } from './components/dates-selection-group
     ChartTypesToggleComponent,
     ChartComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GraphComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
@@ -64,12 +69,11 @@ export class GraphComponent implements OnInit {
 
   _entryDates$ = this.dashboardFacade.entryDates$;
   _entryList$ = this.dashboardFacade.entryList$;
-  _selectedChartType: BehaviorSubject<ChartType> =
-    new BehaviorSubject<ChartType>('line');
+  _selectedChartType = signal<ChartType>('line');
   _selectedEntryDates = signal<string[]>([]);
   _entryList = toSignal(this.dashboardFacade.entryList$);
 
-  _chartData = computed(() => {
+  private _data = computed(() => {
     const selectedEntryDates = this._selectedEntryDates();
     const selectedEntries = this._entryList()?.filter((entry) =>
       selectedEntryDates.includes(entry.monthYear)
@@ -102,6 +106,27 @@ export class GraphComponent implements OnInit {
     );
   });
 
+  _chartData = computed<ChartSeriesData | undefined>(() => {
+    if (this._selectedChartType() === 'pie') {
+      return undefined;
+    }
+    return this._data();
+  });
+
+  _chartPieData = computed<PieChartData | undefined>(() => {
+    if (this._selectedChartType() !== 'pie') {
+      return undefined;
+    }
+    const chartData = this._data();
+
+    return {
+      totalRevenue:
+        chartData?.revenues.reduce((total, revenue) => total + revenue, 0) ?? 0,
+      totalExpense:
+        chartData?.expenses.reduce((total, expense) => total + expense, 0) ?? 0,
+    };
+  });
+
   ngOnInit(): void {
     this.dashboardFacade.loadEntryList(this.destroyRef);
   }
@@ -111,6 +136,6 @@ export class GraphComponent implements OnInit {
   }
 
   setSelectedChartType(type: ChartType): void {
-    this._selectedChartType.next(type);
+    this._selectedChartType.set(type);
   }
 }
