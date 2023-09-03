@@ -14,10 +14,11 @@
       <mfloww-chart-types-toggle (changed)="setSelectedChartType($event)" />
     </ng-container>
   </div>
-  <div class="w-full min-h-[500px]">
+  <div class="w-full min-h-[600px]">
     <mfloww-chart
       [data]="$any(_chartData())"
       [chartType]="_selectedChartType.value"
-    ></mfloww-chart>
+      [baseCurrency]="baseCurrency"
+    />
   </div>
 </div>

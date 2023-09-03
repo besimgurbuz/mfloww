@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatNumber } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -8,6 +8,7 @@ import {
   effect,
   signal,
 } from '@angular/core';
+import { SupportedCurrencyCode } from '@mfloww/common';
 import * as echarts from 'echarts';
 import {
   ChartSeries,
@@ -34,6 +35,7 @@ export class ChartComponent implements AfterViewInit {
         data: seriesData.dates,
       },
     });
+
     this.revenueSeries.mutate((series) => (series.data = seriesData.revenues));
     this.expenseSeries.mutate((series) => (series.data = seriesData.expenses));
   }
@@ -42,10 +44,18 @@ export class ChartComponent implements AfterViewInit {
 
     this.revenueSeries.mutate((series) => (series.type = chartType));
     this.expenseSeries.mutate((series) => (series.type = chartType));
+
+    this._chartInstance.setOption({
+      xAxis: {
+        show: chartType !== 'pie',
+      },
+    });
   }
   get chartType() {
     return this._type;
   }
+  @Input() baseCurrency!: SupportedCurrencyCode;
+
   private _type: ChartSeries['type'] = 'line';
   private revenueSeries = signal<ChartSeries>(DefaultRevenueSeries);
   private expenseSeries = signal<ChartSeries>(DefaultExpenseSeries);
@@ -73,20 +83,29 @@ export class ChartComponent implements AfterViewInit {
     );
 
     this._chartInstance.setOption({
-      tooltip: {},
+      tooltip: {
+        textStyle: {
+          fontFamily: 'Roboto',
+        },
+        formatter: (params: { marker: string; name: string; value: number }) =>
+          `${params.marker}${
+            params.name
+          }<br/>&nbsp;&nbsp;&nbsp;&nbsp;<b>${formatNumber(
+            params.value,
+            'en_us'
+          )} ${this.baseCurrency}</b>`,
+      },
       backgroundColor: 'transparent',
       textStyle: {
         fontFamily: 'Krona One',
-      },
-      grid: {
-        x: 0,
-        x2: 0,
       },
       xAxis: {
         type: 'category',
         data: [],
       },
-      yAxis: {},
+      yAxis: {
+        type: 'value',
+      },
       series: [],
     });
   }

@@ -10,20 +10,23 @@ import {
   DestroyRef,
   OnInit,
   computed,
-  effect,
   inject,
   signal,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { SupportedCurrencyCode } from '@mfloww/common';
 import {
   MflowwButtonComponent,
   MflowwIconComponent,
   MflowwTabDirective,
   MflowwTabGroupComponent,
 } from '@mfloww/view';
+import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
+import { translateEntryDate } from '../balance/pipes/entry-date/entry-date.pipe';
 import { ChartComponent, ChartSeriesData } from '../chart/chart.component';
 import { DashbaordFacade } from '../facades/dashboard.facade';
+import { ExchangeFacade } from '../facades/exchange.facade';
 import { ChartType } from '../models/chart-series';
 import { CalculatorService } from '../services/calculator.service';
 import { ExchangeState } from '../states/exchange.state';
@@ -54,7 +57,10 @@ export class GraphComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly dashboardFacade = inject(DashbaordFacade);
   private readonly calculatorService = inject(CalculatorService);
+  private readonly translateService = inject(TranslateService);
   private readonly exchangeRates = inject(ExchangeState).exchangeRates;
+  readonly baseCurrency: SupportedCurrencyCode =
+    inject(ExchangeFacade).baseCurrency;
 
   _entryDates$ = this.dashboardFacade.entryDates$;
   _entryList$ = this.dashboardFacade.entryList$;
@@ -87,18 +93,14 @@ export class GraphComponent implements OnInit {
         return chartData;
       },
       {
-        dates: selectedEntries.map((entry) => entry.monthYear),
+        dates: selectedEntries.map((entry) =>
+          translateEntryDate(entry.monthYear, this.translateService)
+        ),
         expenses: [],
         revenues: [],
       }
     );
   });
-
-  constructor() {
-    effect(() => {
-      console.log(this._chartData());
-    });
-  }
 
   ngOnInit(): void {
     this.dashboardFacade.loadEntryList(this.destroyRef);
