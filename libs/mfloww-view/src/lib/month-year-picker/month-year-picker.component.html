@@ -7,7 +7,10 @@
     mflowwOverlayTriggerer
     select="[mflowwMonthYearPickerTriggerer]"
   ></ng-content>
-  <div mflowwPanelContent class="min-w-[300px] flex flex-col gap-4 p-3">
+  <div
+    mflowwPanelContent
+    class="min-w-[300px] flex flex-col gap-4 p-3 font-roboto"
+  >
     <mfloww-view-month-year-header
       [dateFilter]="_dateFilter"
       [startYear]="_displayedYear"

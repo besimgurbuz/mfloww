@@ -121,6 +121,7 @@ export class ChartComponent implements OnInit {
     this._chartInstance.setOption({
       tooltip: {
         textStyle: {
+          color: 'var(--app-white)',
           fontFamily: 'Roboto',
         },
         formatter: (params: { marker: string; name: string; value: number }) =>
@@ -130,6 +131,11 @@ export class ChartComponent implements OnInit {
             params.value,
             'en_us'
           )} ${this.baseCurrency}</b>`,
+        backgroundColor: 'var(--app-foreground)',
+      },
+      grid: {
+        x: 100,
+        x2: 50,
       },
       backgroundColor: 'transparent',
       textStyle: {
