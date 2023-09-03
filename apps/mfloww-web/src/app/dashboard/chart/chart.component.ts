@@ -1,9 +1,9 @@
 import { CommonModule, formatNumber } from '@angular/common';
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   Input,
+  OnInit,
   ViewChild,
   effect,
   signal,
@@ -33,10 +33,10 @@ export interface PieChartData {
   imports: [CommonModule],
   templateUrl: './chart.component.html',
 })
-export class ChartComponent implements AfterViewInit {
+export class ChartComponent implements OnInit {
   @Input() set data(seriesData: ChartSeriesData | undefined) {
     if (!seriesData) return;
-    this._chartInstance.setOption({
+    this._chartInstance?.setOption({
       xAxis: {
         data: seriesData.dates,
       },
@@ -47,7 +47,7 @@ export class ChartComponent implements AfterViewInit {
   }
   @Input() set pieData(pieData: PieChartData | undefined) {
     if (!pieData) return;
-    this._chartInstance.setOption({
+    this._chartInstance?.setOption({
       series: [
         {
           name: 'Overall Total',
@@ -79,7 +79,7 @@ export class ChartComponent implements AfterViewInit {
       series.type = chartType;
     });
     this.expenseSeries.mutate((series) => (series.type = chartType));
-    this._chartInstance.setOption({
+    this._chartInstance?.setOption({
       xAxis: {
         show: chartType !== 'pie',
       },
@@ -94,7 +94,7 @@ export class ChartComponent implements AfterViewInit {
   private revenueSeries = signal<ChartSeries>(DefaultRevenueSeries);
   private expenseSeries = signal<ChartSeries>(DefaultExpenseSeries);
 
-  @ViewChild('chartContainer', { read: ElementRef })
+  @ViewChild('chartContainer', { read: ElementRef, static: true })
   chartContainerElementRef!: ElementRef<HTMLDivElement>;
 
   private _chartInstance!: echarts.ECharts;
@@ -112,7 +112,7 @@ export class ChartComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this._chartInstance = echarts.init(
       this.chartContainerElementRef.nativeElement,
       'dark'
