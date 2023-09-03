@@ -15,6 +15,9 @@
     </ng-container>
   </div>
   <div class="w-full min-h-[500px]">
-    <mfloww-chart [chartType]="_selectedChartType.value"></mfloww-chart>
+    <mfloww-chart
+      [data]="$any(_chartData())"
+      [chartType]="_selectedChartType.value"
+    ></mfloww-chart>
   </div>
 </div>

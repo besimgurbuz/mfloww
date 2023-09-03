@@ -72,23 +72,22 @@ export class GraphComponent implements OnInit {
 
     return selectedEntries?.reduce<ChartSeriesData>(
       (chartData, entry) => {
-        chartData.revenues.push({
-          value: this.calculatorService.calculateTotalOfRecordsByExchangeRate(
+        chartData.revenues.push(
+          this.calculatorService.calculateTotalOfRecordsByExchangeRate(
             entry.revenues,
             exchangeRates
-          ),
-          date: entry.monthYear,
-        });
-        chartData.expenses.push({
-          value: this.calculatorService.calculateTotalOfRecordsByExchangeRate(
+          )
+        );
+        chartData.expenses.push(
+          this.calculatorService.calculateTotalOfRecordsByExchangeRate(
             entry.expenses,
             exchangeRates
-          ),
-          date: entry.monthYear,
-        });
+          )
+        );
         return chartData;
       },
       {
+        dates: selectedEntries.map((entry) => entry.monthYear),
         expenses: [],
         revenues: [],
       }

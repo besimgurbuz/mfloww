@@ -15,14 +15,10 @@ import {
   DefaultRevenueSeries,
 } from '../models/chart-series';
 
-export interface ChartEntry {
-  value: number;
-  date: string;
-}
-
 export interface ChartSeriesData {
-  revenues: ChartEntry[];
-  expenses: ChartEntry[];
+  dates: string[];
+  revenues: number[];
+  expenses: number[];
 }
 
 @Component({
@@ -32,7 +28,15 @@ export interface ChartSeriesData {
   templateUrl: './chart.component.html',
 })
 export class ChartComponent implements AfterViewInit {
-  @Input() data: unknown;
+  @Input() set data(seriesData: ChartSeriesData) {
+    this._chartInstance.setOption({
+      xAxis: {
+        data: seriesData.dates,
+      },
+    });
+    this.revenueSeries.mutate((series) => (series.data = seriesData.revenues));
+    this.expenseSeries.mutate((series) => (series.data = seriesData.expenses));
+  }
   @Input() set chartType(chartType: ChartSeries['type']) {
     this._type = chartType;
 
@@ -79,6 +83,7 @@ export class ChartComponent implements AfterViewInit {
         x2: 0,
       },
       xAxis: {
+        type: 'category',
         data: [],
       },
       yAxis: {},
