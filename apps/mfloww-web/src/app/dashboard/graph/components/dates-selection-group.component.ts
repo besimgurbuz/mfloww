@@ -6,6 +6,7 @@ import {
   MflowwTabDirective,
   MflowwTabGroupComponent,
 } from '@mfloww/view';
+import { TranslateModule } from '@ngx-translate/core';
 import { EntryDatePipe } from '../../balance/pipes/entry-date/entry-date.pipe';
 
 @Component({
@@ -20,7 +21,7 @@ import { EntryDatePipe } from '../../balance/pipes/entry-date/entry-date.pipe';
           }"
           (click)="toggleAll()"
         >
-          All
+          {{ 'Graph.All' | translate }}
         </button>
       </ng-template>
       <ng-container *ngFor="let entryDate of entryDates; let last = last">
@@ -49,6 +50,7 @@ import { EntryDatePipe } from '../../balance/pipes/entry-date/entry-date.pipe';
     MflowwPinnedTabDirective,
     MflowwTabDirective,
     ReactiveFormsModule,
+    TranslateModule,
   ],
 })
 export class DatesSelectionGroupComponent {

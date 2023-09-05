@@ -105,7 +105,11 @@
     "EntryDeletionAlert": "Bist du sicher, dass du den Eintrag {{entry}} löschen möchtest?"
   },
   "Graph": {
-    "Title": "Grafik"
+    "Title": "Grafik",
+    "All": "Alle",
+    "Bar": "Bar",
+    "Line": "Linien",
+    "Pie": "Kreis"
   },
   "MonthYearSelection": {
     "January": "Januar {{year}}",

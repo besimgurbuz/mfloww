@@ -1,6 +1,7 @@
 import { NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ContentChild,
   ContentChildren,
@@ -11,7 +12,6 @@ import {
   TemplateRef,
   ViewChild,
   inject,
-  signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { delay } from 'rxjs';
@@ -49,12 +49,12 @@ export class MflowwTabDirective {
   ],
 })
 export class MflowwTabGroupComponent implements AfterViewInit {
-  _showPrevButton = signal(false);
-  _showNextButton = signal(false);
+  _showPrevButton = false;
+  _showNextButton = false;
 
   private readonly destroyRef = inject(DestroyRef);
 
-  @ViewChild('tabsContainer', { read: ElementRef })
+  @ViewChild('tabsContainer', { read: ElementRef, static: true })
   tabsContainer!: ElementRef;
 
   @ContentChild(MflowwPinnedTabDirective)
@@ -63,17 +63,20 @@ export class MflowwTabGroupComponent implements AfterViewInit {
   @ContentChildren(MflowwTabDirective)
   tabs!: QueryList<MflowwTabDirective>;
 
+  private readonly cd = inject(ChangeDetectorRef);
+
   ngAfterViewInit(): void {
     const tabsContainerDiv = this.tabsContainer.nativeElement as HTMLDivElement;
     if (tabsContainerDiv.scrollWidth > tabsContainerDiv.clientWidth) {
-      this._showNextButton.set(true);
+      this._showNextButton = true;
+      this.cd.detectChanges();
     }
 
     this.tabs.changes
       .pipe(delay(100), takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         if (tabsContainerDiv.scrollWidth > tabsContainerDiv.clientWidth) {
-          this._showNextButton.set(true);
+          this._showNextButton = true;
         }
       });
   }
@@ -81,10 +84,9 @@ export class MflowwTabGroupComponent implements AfterViewInit {
   handleResize() {
     const tabsContainerDiv = this.tabsContainer.nativeElement as HTMLDivElement;
 
-    this._showNextButton.set(
-      tabsContainerDiv.clientWidth < tabsContainerDiv.scrollWidth
-    );
-    this._showPrevButton.set(tabsContainerDiv.scrollLeft > 0);
+    this._showNextButton =
+      tabsContainerDiv.clientWidth < tabsContainerDiv.scrollWidth;
+    this._showPrevButton = tabsContainerDiv.scrollLeft > 0;
   }
 
   handlePrevBtnClick() {
@@ -105,9 +107,8 @@ export class MflowwTabGroupComponent implements AfterViewInit {
     const target = this.tabsContainer.nativeElement as HTMLDivElement;
 
     await Promise.resolve();
-    this._showPrevButton.set(target.scrollLeft - 5 > 0);
-    this._showNextButton.set(
-      target.scrollLeft + 5 < target.scrollWidth - target.clientWidth
-    );
+    this._showPrevButton = target.scrollLeft - 5 > 0;
+    this._showNextButton =
+      target.scrollLeft + 5 < target.scrollWidth - target.clientWidth;
   }
 }

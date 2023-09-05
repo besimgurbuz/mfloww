@@ -1,6 +1,7 @@
 import { KeyValuePipe, NgClass, NgFor } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MflowwTabDirective, MflowwTabGroupComponent } from '@mfloww/view';
+import { TranslateModule } from '@ngx-translate/core';
 import { CHART_TYPES_MAP, ChartType } from '../../models/chart-series';
 
 @Component({
@@ -22,7 +23,7 @@ import { CHART_TYPES_MAP, ChartType } from '../../models/chart-series';
             }"
             (click)="setType(chartType.key)"
           >
-            {{ chartType.value }}
+            {{ 'Graph.' + chartType.value | translate }}
           </button>
         </ng-template>
       </ng-container>
@@ -35,6 +36,7 @@ import { CHART_TYPES_MAP, ChartType } from '../../models/chart-series';
     KeyValuePipe,
     MflowwTabGroupComponent,
     MflowwTabDirective,
+    TranslateModule,
   ],
 })
 export class ChartTypesToggleComponent implements OnInit {

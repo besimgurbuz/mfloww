@@ -105,7 +105,11 @@
     "EntryDeletionAlert": "Are you sure you want to delete the {{entry}} entry?"
   },
   "Graph": {
-    "Title": "Graph"
+    "Title": "Graph",
+    "All": "All",
+    "Bar": "Bar",
+    "Line": "Line",
+    "Pie": "Pie"
   },
   "MonthYearSelection": {
     "January": "January {{year}}",

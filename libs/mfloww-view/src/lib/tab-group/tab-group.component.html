@@ -9,7 +9,7 @@
       <ng-container *ngTemplateOutlet="pinnedTab.templateRef"></ng-container>
     </div>
     <button
-      *ngIf="_showPrevButton()"
+      *ngIf="_showPrevButton"
       class="flex items-center justify-center bg-mfloww_fg-300 w-6"
       (click)="handlePrevBtnClick()"
     >
@@ -37,7 +37,7 @@
     </ng-container>
   </div>
   <button
-    *ngIf="_showNextButton()"
+    *ngIf="_showNextButton"
     class="flex items-center justify-center bg-mfloww_fg-300 w-8 sticky -right-[1px]"
     (click)="handleNextBtnClick()"
   >

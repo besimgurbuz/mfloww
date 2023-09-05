@@ -119,6 +119,33 @@ export class ChartComponent implements OnInit {
     );
 
     this._chartInstance.setOption({
+      toolbox: {
+        right: 50,
+        itemSize: 20,
+        feature: {
+          dataZoom: {},
+        },
+        iconStyle: {
+          borderWidth: 1.5,
+        },
+        emphasis: {
+          iconStyle: {
+            borderColor: '#008eff',
+          },
+        },
+        showTitle: false,
+        tooltip: {
+          show: true,
+          formatter: function (param: { title: string }) {
+            return '<div>' + param.title + '</div>'; // user-defined DOM structure
+          },
+          backgroundColor: 'var(--app-foreground)',
+          textStyle: {
+            fontSize: 12,
+          },
+          extraCssText: 'overflow: hidden',
+        },
+      },
       tooltip: {
         textStyle: {
           color: 'var(--app-white)',

@@ -105,7 +105,11 @@
     "EntryDeletionAlert": "{{entry}} girişini silmek istediğine emin misin?"
   },
   "Graph": {
-    "Title": "Grafik"
+    "Title": "Grafik",
+    "All": "Hepsi",
+    "Bar": "Sütun",
+    "Line": "Çizgi",
+    "Pie": "Pasta"
   },
   "MonthYearSelection": {
     "January": "Ocak {{year}}",

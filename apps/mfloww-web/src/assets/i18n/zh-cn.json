@@ -105,7 +105,11 @@
     "EntryDeletionAlert": "您确定要删除{{entry}}条目吗？"
   },
   "Graph": {
-    "Title": "图表"
+    "Title": "图表",
+    "All": "全部",
+    "Bar": "条形图",
+    "Line": "折线图",
+    "Pie": "饼形图"
   },
   "MonthYearSelection": {
     "January": "{{year}} 年 1 月",

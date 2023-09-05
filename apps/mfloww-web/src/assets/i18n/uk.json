@@ -105,7 +105,11 @@
     "EntryDeletionAlert": "Ви впевнені, що хочете видалити запис {{entry}}?"
   },
   "Graph": {
-    "Title": "Графік"
+    "Title": "Графік",
+    "All": "Усе.",
+    "Bar": "Бар",
+    "Line": "Лінійна",
+    "Pie": "Кругова"
   },
   "MonthYearSelection": {
     "January": "Січень {{year}}",
