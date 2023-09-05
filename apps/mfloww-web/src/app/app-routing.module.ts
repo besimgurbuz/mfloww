@@ -1,5 +1,6 @@
 import { inject, NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { catchError, map, of } from 'rxjs';
 import { AuthService } from './core/auth.service';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
@@ -30,6 +31,9 @@ const routes: Routes = [
         );
       },
     ],
+    title: () => {
+      return inject(TranslateService).get('App.MainTitle');
+    },
   },
   {
     path: 'user',
@@ -79,19 +83,35 @@ const routes: Routes = [
   {
     path: 'team',
     loadChildren: () => import('./team/team.module').then((m) => m.TeamModule),
+    title: () => {
+      return inject(TranslateService)
+        .get('Common.Team')
+        .pipe(map((title: string) => `${title} | mfloww`));
+    },
   },
   {
     path: 'faq',
     loadChildren: () => import('./faq/faq.module').then((m) => m.FaqModule),
+    title: () => {
+      return inject(TranslateService)
+        .get('Common.FAQ')
+        .pipe(map((title: string) => `${title} | mfloww`));
+    },
   },
   {
     path: 'changelog',
     loadChildren: () =>
       import('./changelog/changelog.module').then((m) => m.ChangelogModule),
+    title: () => {
+      return inject(TranslateService)
+        .get('Common.Changelog')
+        .pipe(map((title: string) => `${title} | mfloww`));
+    },
   },
   {
     path: '**',
     component: NotFoundComponent,
+    title: 'mfloww  404',
   },
 ];
 

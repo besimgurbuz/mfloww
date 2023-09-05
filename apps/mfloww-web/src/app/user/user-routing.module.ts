@@ -1,5 +1,7 @@
 import { inject, NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { map } from 'rxjs';
 import { AuthService } from '../core/auth.service';
 import { PlatformRedirectComponent } from './platform-redirect/platform-redirect.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -26,6 +28,11 @@ const routes: Routes = [
         return !isLoggedIn;
       },
     ],
+    title: () => {
+      return inject(TranslateService)
+        .get('Common.SignIn')
+        .pipe(map((title: string) => `${title} | mfloww`));
+    },
   },
   {
     path: 'sign-up',
@@ -41,6 +48,11 @@ const routes: Routes = [
         return !isLoggedIn;
       },
     ],
+    title: () => {
+      return inject(TranslateService)
+        .get('Common.SignUp')
+        .pipe(map((title: string) => `${title} | mfloww`));
+    },
   },
   {
     path: 'platform-redirect',
@@ -75,6 +87,11 @@ const routes: Routes = [
         return isLoggedIn;
       },
     ],
+    title: () => {
+      return inject(TranslateService)
+        .get('Common.Settings')
+        .pipe(map((title) => `${title} | mfloww`));
+    },
   },
 ];
 

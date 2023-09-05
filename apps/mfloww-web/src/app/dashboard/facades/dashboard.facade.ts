@@ -11,20 +11,20 @@ import { DashboardState } from '../data-access/dashboard.state';
 export class DashbaordFacade {
   private readonly authService = inject(AuthService);
   private readonly balanceDataService = inject(DashboardDataService);
-  private readonly balanceState = inject(DashboardState);
+  private readonly dasboardState = inject(DashboardState);
 
   loadEntryList(destroyRef: DestroyRef): Subscription {
     return this.balanceDataService
       .getEntryList$(this.userId)
       .pipe(
-        tap((entryList) => this.balanceState.setEntryList(entryList || [])),
+        tap((entryList) => this.dasboardState.setEntryList(entryList || [])),
         takeUntilDestroyed(destroyRef)
       )
       .subscribe();
   }
 
   setSelectedEntryByMonthYear(monthYear: string): void {
-    this.balanceState.setSelectedMonth(monthYear);
+    this.dasboardState.setSelectedMonth(monthYear);
   }
 
   insertNewMonthYearEntry$(monthYear: string) {
@@ -32,7 +32,7 @@ export class DashbaordFacade {
       .inserNewEntry$([monthYear, this.userId])
       .pipe(
         tap((addedKey: [string, string]) =>
-          this.balanceState.addNewEmptyEntry(addedKey)
+          this.dasboardState.addNewEmptyEntry(addedKey)
         )
       );
   }
@@ -40,31 +40,33 @@ export class DashbaordFacade {
   deleteMonthYearEntry$(monthYear: string) {
     return this.balanceDataService
       .deleteEntry$([monthYear, this.userId])
-      .pipe(tap(() => this.balanceState.removeEntry([monthYear, this.userId])));
+      .pipe(
+        tap(() => this.dasboardState.removeEntry([monthYear, this.userId]))
+      );
   }
 
   insertNewBalanceRecord(record: BalanceRecord, type: BalanceRecordType) {
     return this.balanceDataService
       .insertNewBalanceRecord$(
-        [this.balanceState.selectedMonthYear, this.userId],
+        [this.dasboardState.selectedMonthYear, this.userId],
         record,
         type
       )
-      .pipe(tap(() => this.balanceState.addBalanceRecord(record, type)));
+      .pipe(tap(() => this.dasboardState.addBalanceRecord(record, type)));
   }
 
   deleteBalanceRecord(index: number, type: BalanceRecordType) {
     return this.balanceDataService
       .deleteBalanceRecord$(
-        [this.balanceState.selectedMonthYear, this.userId],
+        [this.dasboardState.selectedMonthYear, this.userId],
         type,
         index
       )
-      .pipe(tap(() => this.balanceState.deleteBalanceRecord(index, type)));
+      .pipe(tap(() => this.dasboardState.deleteBalanceRecord(index, type)));
   }
 
   get entryDates$(): Observable<string[]> {
-    return this.balanceState.entryDates$.pipe(
+    return this.dasboardState.entryDates$.pipe(
       map((entryDates) =>
         entryDates.sort((dateA, dateB) => {
           const [monthA, yearA] = dateA.split('_');
@@ -80,27 +82,27 @@ export class DashbaordFacade {
   }
 
   get entryList$(): Observable<MonthYearEntry[]> {
-    return this.balanceState.entryList$;
+    return this.dasboardState.entryList$;
   }
 
   get selectedMonthYear$(): Observable<string> {
-    return this.balanceState.selectedMonthYear$;
+    return this.dasboardState.selectedMonthYear$;
   }
 
   get selectedEntry$(): Observable<MonthYearEntry | null> {
-    return this.balanceState.selectedEntry$;
+    return this.dasboardState.selectedEntry$;
   }
 
   get selectedRevenues$(): Observable<BalanceRecord[]> {
-    return this.balanceState.selectedRevenues$;
+    return this.dasboardState.selectedRevenues$;
   }
 
   get selectedExpenses$(): Observable<BalanceRecord[]> {
-    return this.balanceState.selectedExpenses$;
+    return this.dasboardState.selectedExpenses$;
   }
 
   get currentEntryDates(): string[] {
-    return this.balanceState.currentEntryDates.sort((dateA, dateB) => {
+    return this.dasboardState.currentEntryDates.sort((dateA, dateB) => {
       const [monthA, yearA] = dateA.split('_');
       const [monthB, yearB] = dateB.split('_');
 

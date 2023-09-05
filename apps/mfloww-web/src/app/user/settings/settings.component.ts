@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { mergeMap, Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../core/auth.service';
-import { LATEST_MONTH_YEAR_KEY } from '../../core/core.constants';
+import { LATEST_DATE_KEY } from '../../core/core.constants';
 import { LocalStorageService } from '../../core/local-storage.service';
 import { MessengerService } from '../../core/messenger.service';
 import { ProfileInfo } from '../../core/models/profile-info';
@@ -174,7 +174,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
           disappearDuration: 2500,
         });
       });
-      this.localStorageService.remove(LATEST_MONTH_YEAR_KEY);
+      this.localStorageService.remove(LATEST_DATE_KEY);
     }
   }
 

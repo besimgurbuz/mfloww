@@ -137,6 +137,17 @@ export class ChartComponent implements OnInit {
         x: 100,
         x2: 50,
       },
+      dataZoom: [
+        {
+          type: 'inside',
+          yAxisIndex: 0,
+          minSpan: 50,
+        },
+        {
+          type: 'inside',
+          xAxisIndex: 0,
+        },
+      ],
       backgroundColor: 'transparent',
       textStyle: {
         fontFamily: 'Krona One',

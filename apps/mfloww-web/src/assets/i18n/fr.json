@@ -22,9 +22,6 @@
     "TwitterIconTitle": "Page Twitter de mfloww",
     "GithubIconTitle": "Page GitHub de mfloww",
     "About": "À propos",
-    "Team": "Équipe",
-    "FAQ": "FAQ",
-    "Changelog": "Journal des modifications",
     "Developers": "Développeurs",
     "Documentation": "Documentation",
     "Contribute": "Contribuer"
@@ -99,14 +96,16 @@
     "DeleteAccountDesc": "Votre compte et les données sur cet appareil seront supprimés. <strong>Avertissement</strong> : la suppression est irréversible."
   },
   "Balance": {
-    "Balance": "solde",
-    "BalanceDate": "solde • {{date}}",
+    "Title": "Solde",
     "SelectAMonth": "Sélectionner un mois",
     "Revenues": "revenus",
     "Expenses": "dépenses",
     "ExchangeRateWarn": "*Les taux de change peuvent ne pas être à jour",
     "Total": "TOTAL",
     "EntryDeletionAlert": "Êtes-vous sûr de vouloir supprimer l'entrée {{entry}} ?"
+  },
+  "Graph": {
+    "Title": "Graphique"
   },
   "MonthYearSelection": {
     "January": "Janvier {{year}}",
@@ -149,6 +148,9 @@
     "Copied": "Copié"
   },
   "Common": {
+    "Team": "Équipe",
+    "FAQ": "FAQ",
+    "Changelog": "Journal des modifications",
     "Settings": "Paramètres",
     "SignIn": "Se connecter",
     "SignUp": "S'inscrire",

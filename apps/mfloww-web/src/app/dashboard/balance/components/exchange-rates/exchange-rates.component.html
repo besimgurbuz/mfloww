@@ -1,6 +1,6 @@
 <button
   *ngIf="_displayedRate$ && _displayedRate$ | async as rate"
-  class="text-sm text-center md:text-right"
+  class="text-sm text-center"
   (click)="handleClick()"
   (mouseenter)="_hovered = true"
   (mouseleave)="_hovered = false"

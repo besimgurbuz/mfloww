@@ -22,9 +22,6 @@
     "TwitterIconTitle": "Страница mfloww в Twitter",
     "GithubIconTitle": "Страница mfloww в GitHub",
     "About": "О нас",
-    "Team": "Команда",
-    "FAQ": "Часто задаваемые вопросы",
-    "Changelog": "История изменений",
     "Developers": "Разработчики",
     "Documentation": "Документация",
     "Contribute": "Сотрудничество"
@@ -99,14 +96,16 @@
     "DeleteAccountDesc": "Ваш аккаунт и данные на этом устройстве будут удалены. <strong>Предупреждение:</strong> удаление является необратимым."
   },
   "Balance": {
-    "Balance": "баланс",
-    "BalanceDate": "баланс • {{date}}",
+    "Title": "баланс",
     "SelectAMonth": "Выберите месяц",
     "Revenues": "доходы",
     "Expenses": "расходы",
     "ExchangeRateWarn": "*Курсы валют могут быть неактуальными",
     "Total": "ИТОГО",
     "EntryDeletionAlert": "Вы уверены, что хотите удалить запись {{entry}}?"
+  },
+  "Graph": {
+    "Title": "График"
   },
   "MonthYearSelection": {
     "January": "Январь {{year}}",
@@ -149,6 +148,9 @@
     "Copied": "Скопировано"
   },
   "Common": {
+    "Team": "Команда",
+    "FAQ": "Часто задаваемые вопросы",
+    "Changelog": "История изменений",
     "Settings": "Настройки",
     "SignIn": "Войти",
     "SignUp": "Зарегистрироваться",

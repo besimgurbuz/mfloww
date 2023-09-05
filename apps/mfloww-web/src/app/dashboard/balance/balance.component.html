@@ -1,51 +1,16 @@
 <div class="flex flex-col gap-5 items-center justify-center pt-10">
-  <mfloww-exchange-rates
-    class="md:self-end lg:px-28 md:px-18 px-6 py-12 sm:py-0 order-3 sm:order-1"
-    [exchangeRate]="exchangeRate$ | async"
-  ></mfloww-exchange-rates>
   <div
-    class="w-[180px] sm:w-[220px] flex flex-col items-center justify-center gap-2 order-1 sm:order-2"
+    class="w-[180px] sm:w-[220px] flex flex-col items-center justify-center gap-2"
     *ngIf="{ entryDates: entryDates$ | async } as selectData"
   >
-    <div class="flex gap-2" *ngIf="selectData.entryDates?.length">
-      <mfloww-view-button
-        class="w-10"
-        [class.invisible]="selectedMonthYearIndex <= 0"
-        (clicked)="setMonthSelection(-1, selectData.entryDates)"
-      >
-        <mfloww-view-icon type="arrow_left"></mfloww-view-icon>
-      </mfloww-view-button>
-      <select
-        [attr.placeholder]="'Balance.SelectAMonth' | translate"
-        class="bg-mfloww_bg font-roboto border-2 border-solid border-mfloww_fg rounded p-1 text-sm"
-        [formControl]="monthSelectionControl"
-      >
-        <option value disabled selected>Select a date</option>
-        <option
-          *ngFor="let entryDate of selectData.entryDates"
-          [value]="entryDate"
-        >
-          {{ entryDate | entryDate | async }}
-        </option>
-      </select>
-      <mfloww-view-button
-        class="w-10 h-10 flex"
-        [class.invisible]="
-          selectedMonthYearIndex >= (selectData.entryDates?.length || 0) - 1
-        "
-        (clicked)="setMonthSelection(1, selectData.entryDates)"
-      >
-        <mfloww-view-icon
-          type="arrow_left"
-          class="-rotate-180"
-        ></mfloww-view-icon>
-      </mfloww-view-button>
-    </div>
+    <mfloww-date-selector
+      *ngIf="selectData.entryDates?.length"
+      [dates]="selectData.entryDates"
+      [latestCreatedDate]="_latestCreatedEntryDate"
+      (changed)="handleDateSelection($event)"
+    />
     <div class="flex gap-2">
-      <mfloww-view-month-year-picker
-        [value]="$any(monthSelectionControl.value)"
-        (selection)="handleEntryCreation($event)"
-      >
+      <mfloww-view-month-year-picker (selection)="handleEntryCreation($event)">
         <button
           mflowwMonthYearPickerTriggerer
           class="w-[50px] flex justify-center items-center rounded border-solid border-2 border-mfloww_fg hover:bg-mfloww_fg"
@@ -57,7 +22,6 @@
         </button>
       </mfloww-view-month-year-picker>
       <button
-        mflowwMonthYearPickerTriggerer
         class="w-[50px] flex justify-center items-center rounded border-solid border-2 border-mfloww_fg hover:bg-mfloww_fg"
         *ngIf="selectData.entryDates?.length"
         (click)="handleDeleteCurrentEntry()"
@@ -69,45 +33,49 @@
       </button>
     </div>
   </div>
-  <div
-    *ngIf="monthSelectionControl.value && (hasEntry$ | async)"
-    class="balance-section lg:pb-32 flex flex-wrap justify-center gap-8 md:gap-0 w-full order-1 sm:order-3"
-  >
-    <ng-container
-      *ngIf="{
-        revenues: (revenues$ | async) || [],
-        totalRevenue: (totalRevenue$ | async) || 0,
-        expenses: (expenses$ | async) || [],
-        totalExpense: (totalExpense$ | async) || 0,
-        overallTotal: (overallTotal$ | async) || 0,
-        percentageMap: (entryPercentageMap$ | async) || {}
-      } as tableData"
+  <ng-container *ngIf="selectedDate && (hasEntry$ | async)">
+    <mfloww-overall
+      [overallTotal]="(overallTotal$ | async) || 0"
+      [currency]="baseCurrency"
+    ></mfloww-overall>
+    <div
+      class="balance-section lg:pb-32 flex flex-wrap justify-center gap-8 md:gap-0 w-full order-1 sm:order-3"
     >
-      <mfloww-money-table
-        type="revenue"
-        class="w-full md:w-1/2 order-2 sm:order-1"
-        [entries]="tableData.revenues"
-        [total]="tableData.totalRevenue"
-        [sizePercentageMap]="tableData.percentageMap"
-        [baseCurrency]="baseCurrency"
-        (entryCreation)="handleRecordCreation($event)"
-        (entryDeletion)="handleRecordDeletion($event)"
-      ></mfloww-money-table>
-      <mfloww-money-table
-        type="expense"
-        class="w-full md:w-1/2 order-3 sm:order-2"
-        [entries]="tableData.expenses"
-        [total]="tableData.totalExpense"
-        [sizePercentageMap]="tableData.percentageMap"
-        [baseCurrency]="baseCurrency"
-        (entryCreation)="handleRecordCreation($event, 'expense')"
-        (entryDeletion)="handleRecordDeletion($event, 'expense')"
-      ></mfloww-money-table>
-      <mfloww-overall
-        [overallTotal]="(overallTotal$ | async) || 0"
-        [currency]="baseCurrency"
-        class="order-1 sm:order-3"
-      ></mfloww-overall>
-    </ng-container>
-  </div>
+      <ng-container
+        *ngIf="{
+          revenues: (revenues$ | async) || [],
+          totalRevenue: (totalRevenue$ | async) || 0,
+          expenses: (expenses$ | async) || [],
+          totalExpense: (totalExpense$ | async) || 0,
+          overallTotal: (overallTotal$ | async) || 0,
+          percentageMap: (entryPercentageMap$ | async) || {}
+        } as tableData"
+      >
+        <mfloww-money-table
+          type="revenue"
+          class="w-full md:w-1/2 order-2 sm:order-1"
+          [entries]="tableData.revenues"
+          [total]="tableData.totalRevenue"
+          [sizePercentageMap]="tableData.percentageMap"
+          [baseCurrency]="baseCurrency"
+          (entryCreation)="handleRecordCreation($event)"
+          (entryDeletion)="handleRecordDeletion($event)"
+        ></mfloww-money-table>
+        <mfloww-money-table
+          type="expense"
+          class="w-full md:w-1/2 order-3 sm:order-2"
+          [entries]="tableData.expenses"
+          [total]="tableData.totalExpense"
+          [sizePercentageMap]="tableData.percentageMap"
+          [baseCurrency]="baseCurrency"
+          (entryCreation)="handleRecordCreation($event, 'expense')"
+          (entryDeletion)="handleRecordDeletion($event, 'expense')"
+        ></mfloww-money-table>
+      </ng-container>
+    </div>
+  </ng-container>
+  <mfloww-exchange-rates
+    class="lg:px-28 md:px-18 px-6 py-12 sm:py-0 order-3"
+    [exchangeRate]="exchangeRate$ | async"
+  ></mfloww-exchange-rates>
 </div>

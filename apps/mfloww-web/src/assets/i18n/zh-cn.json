@@ -22,9 +22,6 @@
     "TwitterIconTitle": "mfloww 的 Twitter 页面",
     "GithubIconTitle": "mfloww 的 GitHub 页面",
     "About": "关于",
-    "Team": "团队",
-    "FAQ": "常见问题",
-    "Changelog": "更新日志",
     "Developers": "开发者",
     "Documentation": "文档",
     "Contribute": "贡献"
@@ -99,14 +96,16 @@
     "DeleteAccountDesc": "您的帐号和此设备上的数据将被删除。<strong>警告</strong>，删除操作是不可逆的。"
   },
   "Balance": {
-    "Balance": "余额",
-    "BalanceDate": "余额 • {{date}}",
+    "Title": "余额",
     "SelectAMonth": "选择一个月",
     "Revenues": "收入",
     "Expenses": "支出",
     "ExchangeRateWarn": "*汇率可能不是最新的",
     "Total": "总计",
     "EntryDeletionAlert": "您确定要删除{{entry}}条目吗？"
+  },
+  "Graph": {
+    "Title": "图表"
   },
   "MonthYearSelection": {
     "January": "{{year}} 年 1 月",
@@ -149,6 +148,9 @@
     "Copied": "已复制"
   },
   "Common": {
+    "Team": "团队",
+    "FAQ": "常见问题",
+    "Changelog": "更新日志",
     "Settings": "设置",
     "SignIn": "登录",
     "SignUp": "注册",

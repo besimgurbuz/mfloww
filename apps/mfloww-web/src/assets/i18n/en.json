@@ -22,9 +22,6 @@
     "TwitterIconTitle": "mfloww's Twitter page",
     "GithubIconTitle": "mfloww's GitHub page",
     "About": "About",
-    "Team": "Team",
-    "FAQ": "FAQ",
-    "Changelog": "Changelog",
     "Developers": "Developers",
     "Documentation": "Documentation",
     "Contribute": "Contribute"
@@ -99,14 +96,16 @@
     "DeleteAccountDesc": "Your account and data on this device will be deleted. <strong>Warning</strong> deletion is irreversible."
   },
   "Balance": {
-    "Balance": "balance",
-    "BalanceDate": "balance • {{date}}",
+    "Title": "Balance",
     "SelectAMonth": "Select a month",
     "Revenues": "revenues",
     "Expenses": "expenses",
     "ExchangeRateWarn": "*Exchange rates may not be up to date",
     "Total": "TOTAL",
     "EntryDeletionAlert": "Are you sure you want to delete the {{entry}} entry?"
+  },
+  "Graph": {
+    "Title": "Graph"
   },
   "MonthYearSelection": {
     "January": "January {{year}}",
@@ -150,6 +149,9 @@
   },
   "Common": {
     "Settings": "Settings",
+    "Team": "Team",
+    "FAQ": "FAQ",
+    "Changelog": "Changelog",
     "SignIn": "Sign in",
     "SignUp": "Sign up",
     "Email": "Email",

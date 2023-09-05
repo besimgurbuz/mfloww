@@ -22,9 +22,6 @@
     "TwitterIconTitle": "mfloww의 Twitter 페이지",
     "GithubIconTitle": "mfloww의 GitHub 페이지",
     "About": "소개",
-    "Team": "팀",
-    "FAQ": "자주 묻는 질문",
-    "Changelog": "변경 내역",
     "Developers": "개발자",
     "Documentation": "문서",
     "Contribute": "기여"
@@ -99,14 +96,16 @@
     "DeleteAccountDesc": "계정과 이 기기의 데이터가 삭제됩니다. <strong>경고</strong>: 삭제는 되돌릴 수 없습니다."
   },
   "Balance": {
-    "Balance": "잔액",
-    "BalanceDate": "잔액 • {{date}}",
+    "Title": "잔액",
     "SelectAMonth": "월 선택",
     "Revenues": "수입",
     "Expenses": "지출",
     "ExchangeRateWarn": "*환율 정보가 최신이 아닐 수 있습니다",
     "Total": "총계",
     "EntryDeletionAlert": "{{entry}} 항목을 삭제하시겠습니까?"
+  },
+  "Graph": {
+    "Title": "그래프"
   },
   "MonthYearSelection": {
     "January": "1월 {{year}}",
@@ -149,6 +148,9 @@
     "Copied": "복사됨"
   },
   "Common": {
+    "Team": "팀",
+    "FAQ": "자주 묻는 질문",
+    "Changelog": "변경 내역",
     "Settings": "설정",
     "SignIn": "로그인",
     "SignUp": "가입하기",

@@ -38,10 +38,10 @@ import { ChartTypesToggleComponent } from './components/chart-types-toggle.compo
 import { DatesSelectionGroupComponent } from './components/dates-selection-group.component';
 
 @Component({
+  standalone: true,
   selector: 'mfloww-graph',
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.scss'],
-  standalone: true,
   imports: [
     NgIf,
     NgForOf,

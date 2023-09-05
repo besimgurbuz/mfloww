@@ -84,7 +84,7 @@
     class="total w-full flex gap-4 justify-center md:justify-end mt-auto"
     [ngClass]="{
       'md:pr-10 text-mfloww_success': type === 'revenue',
-      'md:pl-10 text-mfloww_fatal flex-row-reverse': type === 'expense'
+      'md:pl-10 text-mfloww_fatal md:flex-row-reverse': type === 'expense'
     }"
   >
     <h3>{{ 'Balance.Total' | translate }}</h3>

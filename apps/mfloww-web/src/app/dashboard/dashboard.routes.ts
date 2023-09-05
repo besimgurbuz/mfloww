@@ -1,4 +1,7 @@
+import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { map } from 'rxjs';
 import { BalanceComponent } from './balance/balance.component';
 import { DashboardDataService } from './data-access/dashboard-data.service';
 import { DashboardState } from './data-access/dashboard.state';
@@ -26,10 +29,18 @@ export const DASHBOARD_ROUTES: Routes = [
       {
         path: 'balance',
         component: BalanceComponent,
+        title: () =>
+          inject(TranslateService)
+            .get('Balance.Title')
+            .pipe(map((title) => `${title} | mfloww`)),
       },
       {
         path: 'graph',
         component: GraphComponent,
+        title: () =>
+          inject(TranslateService)
+            .get('Graph.Title')
+            .pipe(map((title) => `${title} | mfloww`)),
       },
     ],
   },

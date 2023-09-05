@@ -22,9 +22,6 @@
     "TwitterIconTitle": "mfloww Twitter sayfası",
     "GithubIconTitle": "mfloww GitHub sayfası",
     "About": "Hakkımızda",
-    "Team": "Takım",
-    "FAQ": "SSS",
-    "Changelog": "Değişiklik günlüğü",
     "Developers": "Geliştiriciler",
     "Documentation": "Dökümantasyon",
     "Contribute": "Katkıda bulun"
@@ -99,14 +96,16 @@
     "DeleteAccountDesc": "Hesabınız ve bu cihazdaki verileriniz silinir. <strong>Uyarı</strong> silme işlemi geri alınamaz."
   },
   "Balance": {
-    "Balance": "bakiye",
-    "BalanceDate": "bakiye • {{date}}",
+    "Title": "Bilanço",
     "SelectAMonth": "Bir ay seçin",
     "Revenues": "gelirler",
     "Expenses": "giderler",
     "ExchangeRateWarn": "*Döviz kurları güncel olmayabilir",
     "Total": "TOPLAM",
     "EntryDeletionAlert": "{{entry}} girişini silmek istediğine emin misin?"
+  },
+  "Graph": {
+    "Title": "Grafik"
   },
   "MonthYearSelection": {
     "January": "Ocak {{year}}",
@@ -149,6 +148,9 @@
     "Copied": "Kopyalandı"
   },
   "Common": {
+    "Team": "Takım",
+    "FAQ": "SSS",
+    "Changelog": "Değişiklik günlüğü",
     "Settings": "Ayarlar",
     "SignIn": "Giriş yap",
     "SignUp": "Kayıt ol",

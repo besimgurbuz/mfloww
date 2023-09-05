@@ -22,9 +22,6 @@
     "TwitterIconTitle": "Сторінка mfloww в Twitter",
     "GithubIconTitle": "Сторінка mfloww в GitHub",
     "About": "Про нас",
-    "Team": "Команда",
-    "FAQ": "Часті питання",
-    "Changelog": "Зміни",
     "Developers": "Розробники",
     "Documentation": "Документація",
     "Contribute": "Сприяти"
@@ -99,14 +96,16 @@
     "DeleteAccountDesc": "Ваш обліковий запис та дані на цьому пристрої будуть видалені. <strong>Увага</strong>! Видалення є незворотнім."
   },
   "Balance": {
-    "Balance": "Баланс",
-    "BalanceDate": "Баланс • {{date}}",
+    "Title": "Баланс",
     "SelectAMonth": "Виберіть місяць",
     "Revenues": "Доходи",
     "Expenses": "Витрати",
     "ExchangeRateWarn": "*Курси обміну валют можуть бути неактуальними",
     "Total": "ВСЬОГО",
     "EntryDeletionAlert": "Ви впевнені, що хочете видалити запис {{entry}}?"
+  },
+  "Graph": {
+    "Title": "Графік"
   },
   "MonthYearSelection": {
     "January": "Січень {{year}}",
@@ -149,6 +148,9 @@
     "Copied": "Скопійовано"
   },
   "Common": {
+    "Team": "Команда",
+    "FAQ": "Часті питання",
+    "Changelog": "Зміни",
     "Settings": "Налаштування",
     "SignIn": "Увійти",
     "SignUp": "Зареєструватися",

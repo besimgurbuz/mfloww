@@ -1,4 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import {
   NavigationEnd,
   RouteConfigLoadEnd,
@@ -33,6 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService);
   private localStorage = inject(LocalStorageService);
   private activeUrlService = inject(ActiveUrlService);
+  private title = inject(Title);
 
   _profileInfo$: Observable<ProfileInfo | null> = this.authService.profileInfo$;
   inProgress$ = inject(ProgressState).inProgress$;
