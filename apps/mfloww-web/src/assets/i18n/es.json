@@ -109,7 +109,9 @@
     "All": "Todos",
     "Bar": "Bar",
     "Line": "Linea",
-    "Pie": "Circular"
+    "Pie": "Circular",
+    "Revenue": "Ingreso",
+    "Expense": "Gasto"
   },
   "MonthYearSelection": {
     "January": "Enero {{year}}",

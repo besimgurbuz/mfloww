@@ -54,8 +54,16 @@ import { EntryDatePipe } from '../../balance/pipes/entry-date/entry-date.pipe';
   ],
 })
 export class DatesSelectionGroupComponent {
-  @Input()
+  @Input({ required: true })
   entryDates: string[] = [];
+
+  @Input() set initialValue(selection: string[] | undefined) {
+    if (selection && selection.length) {
+      this._allDatesSelected.set(selection.length === this.entryDates.length);
+      this._selectedEntryDates.set(selection);
+      this.changed.emit(selection);
+    }
+  }
 
   @Output() changed = new EventEmitter<string[]>();
 
@@ -65,18 +73,13 @@ export class DatesSelectionGroupComponent {
   toggleAll(): void {
     const toggled = !this._allDatesSelected();
     this._allDatesSelected.set(toggled);
+    const toggledDates = toggled ? this.entryDates : [];
 
-    if (toggled) {
-      this.changed.emit(this.entryDates);
-    } else {
-      this.changed.emit(this._selectedEntryDates());
-    }
+    this.changed.emit(toggledDates);
+    this._selectedEntryDates.set(toggledDates);
   }
 
   toggleSelectedDate(toggledDate: string): void {
-    if (this._allDatesSelected()) {
-      this._allDatesSelected.set(false);
-    }
     this._selectedEntryDates.mutate((selectedEntryDates) => {
       const indexOfToggledDate = selectedEntryDates.indexOf(toggledDate);
 
@@ -86,6 +89,15 @@ export class DatesSelectionGroupComponent {
         selectedEntryDates.push(toggledDate);
       }
     });
-    this.changed.emit(this._selectedEntryDates());
+    const updatedSelection = this._selectedEntryDates();
+    const isReacedMaxSelection =
+      updatedSelection.length === this.entryDates.length;
+
+    if (isReacedMaxSelection) {
+      this._allDatesSelected.set(true);
+    } else if (this._allDatesSelected()) {
+      this._allDatesSelected.set(false);
+    }
+    this.changed.emit(updatedSelection);
   }
 }

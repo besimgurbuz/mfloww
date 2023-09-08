@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { DestroyRef, Injectable, WritableSignal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ExchangeRate, SupportedCurrencyCode } from '@mfloww/common';
 import { Observable, Subscription, switchMap, tap, timer } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -16,9 +17,10 @@ export class ExchangeFacade {
     private localStorageService: LocalStorageService
   ) {}
 
-  loadExchangeRateInterval(): Subscription {
+  loadExchangeRateInterval(destroyRef: DestroyRef): Subscription {
     return timer(0, this.tenMinutesAsMS)
       .pipe(
+        takeUntilDestroyed(destroyRef),
         tap(() => console.log('refreshing exchange rates')),
         switchMap(() =>
           this.exchangeService.getLatestExchangeRates$(this.baseCurrency)
@@ -36,6 +38,10 @@ export class ExchangeFacade {
 
   get exchangeRate$(): Observable<ExchangeRate> {
     return this.exchangeState.exchangeRate$;
+  }
+
+  get exchangeRate(): WritableSignal<ExchangeRate> {
+    return this.exchangeState.exchangeRate;
   }
 
   get baseCurrency(): SupportedCurrencyCode {

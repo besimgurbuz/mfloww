@@ -90,7 +90,7 @@ export class DateSelectorComponent implements OnInit {
   _showNextBtn = computed(
     () => this._selectedIndex() >= (this.dates?.length || 0) - 1
   );
-  private _localStorageService = inject(LocalStorageService);
+  private _localStorage = inject(LocalStorageService);
   private _destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
@@ -104,7 +104,7 @@ export class DateSelectorComponent implements OnInit {
     if (date && this.dates) {
       this._selectedIndex.set(this.dates.indexOf(date));
       this.changed.emit(date);
-      this._localStorageService.set(LATEST_DATE_KEY, date);
+      this._localStorage.set(LATEST_DATE_KEY, date);
     }
   }
 
@@ -133,7 +133,7 @@ export class DateSelectorComponent implements OnInit {
   }
 
   setInitialDateIfExists() {
-    const initialDate = this._localStorageService.get<string>(LATEST_DATE_KEY);
+    const initialDate = this._localStorage.get<string>(LATEST_DATE_KEY);
 
     if (!initialDate || !this.dates) return;
 

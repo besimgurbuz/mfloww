@@ -109,7 +109,9 @@
     "All": "Hepsi",
     "Bar": "Sütun",
     "Line": "Çizgi",
-    "Pie": "Pasta"
+    "Pie": "Pasta",
+    "Revenue": "Gelir",
+    "Expense": "Gider"
   },
   "MonthYearSelection": {
     "January": "Ocak {{year}}",

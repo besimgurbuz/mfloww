@@ -109,7 +109,9 @@
     "All": "全部",
     "Bar": "条形图",
     "Line": "折线图",
-    "Pie": "饼形图"
+    "Pie": "饼形图",
+    "Revenues": "收入",
+    "Expenses": "支出"
   },
   "MonthYearSelection": {
     "January": "{{year}} 年 1 月",

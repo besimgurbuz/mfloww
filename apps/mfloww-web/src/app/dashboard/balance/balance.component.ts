@@ -80,8 +80,7 @@ export class BalanceComponent implements OnInit, OnDestroy {
   exchangeRatesUpdateSubs?: Subscription;
 
   ngOnInit(): void {
-    this.exchangeRatesUpdateSubs =
-      this.exchangeFacade.loadExchangeRateInterval();
+    this.exchangeFacade.loadExchangeRateInterval(this.destroyRef);
     this.dashboardFacade.loadEntryList(this.destroyRef);
   }
 

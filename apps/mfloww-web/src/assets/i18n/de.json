@@ -109,7 +109,9 @@
     "All": "Alle",
     "Bar": "Bar",
     "Line": "Linien",
-    "Pie": "Kreis"
+    "Pie": "Kreis",
+    "Revenue": "Einnahmen",
+    "Expense": "Ausgaben"
   },
   "MonthYearSelection": {
     "January": "Januar {{year}}",

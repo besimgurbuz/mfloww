@@ -109,7 +109,9 @@
     "All": "Усе.",
     "Bar": "Бар",
     "Line": "Лінійна",
-    "Pie": "Кругова"
+    "Pie": "Кругова",
+    "Revenues": "Доход",
+    "Expenses": "Вартість"
   },
   "MonthYearSelection": {
     "January": "Січень {{year}}",

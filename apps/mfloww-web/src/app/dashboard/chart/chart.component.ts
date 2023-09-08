@@ -5,27 +5,17 @@ import {
   Input,
   OnInit,
   ViewChild,
-  effect,
-  signal,
+  inject,
 } from '@angular/core';
 import { SupportedCurrencyCode } from '@mfloww/common';
+import { TranslateService } from '@ngx-translate/core';
 import * as echarts from 'echarts';
+import { ChartSeriesData, PieChartData } from '../models/chart-data';
 import {
   ChartSeries,
   DefaultExpenseSeries,
   DefaultRevenueSeries,
 } from '../models/chart-series';
-
-export interface ChartSeriesData {
-  dates: string[];
-  revenues: number[];
-  expenses: number[];
-}
-
-export interface PieChartData {
-  totalRevenue: number;
-  totalExpense: number;
-}
 
 @Component({
   selector: 'mfloww-chart',
@@ -34,83 +24,44 @@ export interface PieChartData {
   templateUrl: './chart.component.html',
 })
 export class ChartComponent implements OnInit {
-  @Input() set data(seriesData: ChartSeriesData | undefined) {
-    if (!seriesData) return;
-    this._chartInstance?.setOption({
-      xAxis: {
-        data: seriesData.dates,
-      },
-    });
+  @Input() set data(seriesData: ChartSeriesData | null) {
+    this._data = seriesData;
 
-    this.revenueSeries.mutate((series) => (series.data = seriesData.revenues));
-    this.expenseSeries.mutate((series) => (series.data = seriesData.expenses));
+    if (this.chartType === 'pie') {
+      this.setOptionsForPieChart();
+      return;
+    }
+    this.setOptionsForChart();
   }
-  @Input() set pieData(pieData: PieChartData | undefined) {
+  get data() {
+    return this._data;
+  }
+  private _data: ChartSeriesData | null = null;
+
+  @Input() set pieData(pieData: PieChartData | null) {
     if (!pieData) return;
-    this._chartInstance?.setOption({
-      series: [
-        {
-          name: 'Overall Total',
-          type: 'pie',
-          radius: '50%',
-          data: [
-            {
-              value: pieData.totalRevenue,
-              name: 'Revenue',
-              itemStyle: { color: '#82db73' },
-            },
-            {
-              value: Math.abs(pieData.totalExpense),
-              name: 'Expense',
-              itemStyle: { color: '#f44336' },
-            },
-          ],
-        },
-        {
-          data: [],
-        },
-      ],
-    });
   }
   @Input() set chartType(chartType: ChartSeries['type']) {
     this._type = chartType;
 
-    this.revenueSeries.mutate((series) => {
-      series.type = chartType;
-    });
-    this.expenseSeries.mutate((series) => (series.type = chartType));
-    this._chartInstance?.setOption({
-      xAxis: {
-        show: chartType !== 'pie',
-      },
-    });
+    if (chartType === 'pie') {
+      this.setOptionsForPieChart();
+      return;
+    }
+    this.setOptionsForChart();
   }
   get chartType() {
     return this._type;
   }
-  @Input() baseCurrency!: SupportedCurrencyCode;
-
   private _type: ChartSeries['type'] = 'line';
-  private revenueSeries = signal<ChartSeries>(DefaultRevenueSeries);
-  private expenseSeries = signal<ChartSeries>(DefaultExpenseSeries);
+
+  @Input() baseCurrency!: SupportedCurrencyCode;
 
   @ViewChild('chartContainer', { read: ElementRef, static: true })
   chartContainerElementRef!: ElementRef<HTMLDivElement>;
 
+  private translateService = inject(TranslateService);
   private _chartInstance!: echarts.ECharts;
-
-  constructor() {
-    effect(() => {
-      const revenueSeries = this.revenueSeries();
-      const expenseSeries = this.expenseSeries();
-
-      if (this.chartType !== 'pie') {
-        this._chartInstance?.setOption({
-          series: [revenueSeries, expenseSeries],
-        });
-      }
-    });
-  }
 
   ngOnInit(): void {
     this._chartInstance = echarts.init(
@@ -192,5 +143,61 @@ export class ChartComponent implements OnInit {
 
   resizeChart() {
     this._chartInstance.resize();
+  }
+
+  private setOptionsForChart(): void {
+    this._chartInstance?.setOption({
+      xAxis: {
+        show: true,
+        data: this.data?.dates,
+      },
+      series: [
+        {
+          ...DefaultRevenueSeries,
+          type: this.chartType,
+          data: this.data?.revenues,
+        },
+        {
+          ...DefaultExpenseSeries,
+          type: this.chartType,
+          data: this.data?.expenses,
+        },
+      ],
+    });
+  }
+
+  private setOptionsForPieChart() {
+    const totalRevenue =
+      this.data?.revenues.reduce((total, revenue) => total + revenue, 0) ?? 0;
+    const totalExpense =
+      this.data?.expenses.reduce((total, expense) => total + expense, 0) ?? 0;
+
+    this._chartInstance?.setOption({
+      xAxis: {
+        show: false,
+        data: this.data?.dates,
+      },
+      series: [
+        {
+          type: 'pie',
+          radius: '50%',
+          data: [
+            {
+              value: totalRevenue,
+              name: this.translateService.instant('Graph.Revenue'),
+              itemStyle: { color: '#82db73' },
+            },
+            {
+              value: Math.abs(totalExpense),
+              name: this.translateService.instant('Graph.Expense'),
+              itemStyle: { color: '#f44336' },
+            },
+          ],
+        },
+        {
+          data: [],
+        },
+      ],
+    });
   }
 }

@@ -9,15 +9,18 @@
       <mfloww-dates-selection-group
         class="h-12 w-full sm:w-1/2"
         [entryDates]="graphData.entryDates"
+        [initialValue]="_latestDatesSelection"
         (changed)="setSelectedEntryDates($event)"
       />
-      <mfloww-chart-types-toggle (changed)="setSelectedChartType($event)" />
+      <mfloww-chart-types-toggle
+        [initialType]="_latestChartType"
+        (changed)="setSelectedChartType($event)"
+      />
     </ng-container>
   </div>
   <div class="w-full min-h-[600px]">
     <mfloww-chart
-      [data]="_chartData()"
-      [pieData]="_chartPieData()"
+      [data]="_data$ | async"
       [chartType]="_selectedChartType()"
       [baseCurrency]="baseCurrency"
     />

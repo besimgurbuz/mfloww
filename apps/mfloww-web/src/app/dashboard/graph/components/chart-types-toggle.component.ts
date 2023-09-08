@@ -2,7 +2,7 @@ import { KeyValuePipe, NgClass, NgFor } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MflowwTabDirective, MflowwTabGroupComponent } from '@mfloww/view';
 import { TranslateModule } from '@ngx-translate/core';
-import { CHART_TYPES_MAP, ChartType } from '../../models/chart-series';
+import { CHART_TYPES_MAP, ChartType } from '../../models/chart-type';
 
 @Component({
   selector: 'mfloww-chart-types-toggle',
@@ -40,7 +40,7 @@ import { CHART_TYPES_MAP, ChartType } from '../../models/chart-series';
   ],
 })
 export class ChartTypesToggleComponent implements OnInit {
-  @Input({ required: false }) initialType!: ChartType;
+  @Input({ required: false }) initialType?: ChartType;
 
   @Output() changed = new EventEmitter<ChartType>();
 

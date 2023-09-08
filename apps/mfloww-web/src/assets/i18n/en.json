@@ -109,7 +109,9 @@
     "All": "All",
     "Bar": "Bar",
     "Line": "Line",
-    "Pie": "Pie"
+    "Pie": "Pie",
+    "Revenue": "Revenue",
+    "Expense": "Expense"
   },
   "MonthYearSelection": {
     "January": "January {{year}}",

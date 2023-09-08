@@ -98,8 +98,8 @@
   "Balance": {
     "Title": "잔액",
     "SelectAMonth": "월 선택",
-    "Revenues": "수입",
-    "Expenses": "지출",
+    "Revenues": "수익",
+    "Expenses": "비용",
     "ExchangeRateWarn": "*환율 정보가 최신이 아닐 수 있습니다",
     "Total": "총계",
     "EntryDeletionAlert": "{{entry}} 항목을 삭제하시겠습니까?"
@@ -109,7 +109,9 @@
     "All": "모두",
     "Bar": "막대",
     "Line": "선",
-    "Pie": "파이"
+    "Pie": "파이",
+    "Revenue": "수익",
+    "Expense": "비용"
   },
   "MonthYearSelection": {
     "January": "1월 {{year}}",
