@@ -9,10 +9,10 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { BalanceRecordType } from '@mfloww/common';
 import {
-  MflowwEntryInputModule,
+  MflowwEntryInputComponent,
   MflowwMonthYearPickerComponent,
   MflowwOverlayPanelComponent,
-  MflowwSelectModule,
+  MflowwSelectComponent,
   MonthYearSelection,
 } from '@mfloww/view';
 import { TranslateService } from '@ngx-translate/core';
@@ -45,8 +45,8 @@ import { EntryDatePipe } from './pipes/entry-date/entry-date.pipe';
     MoneyTableComponent,
     OverallComponent,
     EntryDatePipe,
-    MflowwEntryInputModule,
-    MflowwSelectModule,
+    MflowwEntryInputComponent,
+    MflowwSelectComponent,
     MflowwOverlayPanelComponent,
     MflowwMonthYearPickerComponent,
   ],

@@ -1,0 +1,94 @@
+<div
+  class="flex flex-col gap-6 h-full w-full items-center"
+  [ngClass]="{
+    'md:items-end': type === 'revenue',
+    'md:items-start': type === 'expense'
+  }"
+  *transloco="let t"
+>
+  <h1 class="text-2xl lg:text-3xl w-fit" [ngClass]="_classMap[type]">
+    {{ t(_titlesMap[_type]) }}
+  </h1>
+  <div
+    class="entries w-full flex flex-col gap-2 items-center"
+    [ngClass]="{
+      'md:items-end': type === 'revenue',
+      'md:items-start': type === 'expense'
+    }"
+  >
+    <mfloww-money-table-entry
+      *ngFor="let entry of entries; let i = index"
+      [label]="entry.label"
+      [type]="type"
+      [amount]="entry.amount"
+      [sizePercentage]="sizePercentageMap[entry.amount]"
+      [currency]="entry.currency"
+      [deletable]="true"
+      (deletionTriggered)="handleDeletion(i)"
+    ></mfloww-money-table-entry>
+    <mfloww-view-button
+      *ngIf="!_addingModeActive"
+      class="pt-4 md:pt-0"
+      [ngClass]="_classMap[type]"
+      (clicked)="_addingModeActive = !_addingModeActive"
+    >
+      <mfloww-view-icon
+        type="plus"
+        class="w-[35px]"
+        color="currentColor"
+      ></mfloww-view-icon>
+    </mfloww-view-button>
+    <div
+      class="relative px-[10px] pt-4 md:pt-1 max-w-[400px] h-fit gap-1 flex items-center flex-col md:flex-row"
+      [ngClass]="_classMap[type]"
+      *ngIf="_addingModeActive"
+    >
+      <mfloww-view-entry-input
+        [selectedCurrency]="baseCurrency"
+        [entryType]="type"
+        (entryCreated)="handleNewEntry($event)"
+        class="h-full"
+        #entryInput
+      ></mfloww-view-entry-input>
+      <div
+        class="flex gap-2 m-auto items-center"
+        [ngClass]="{
+          'md:-left-[82px] md:flex-row-reverse': type === 'revenue',
+          'md:-right-[82px]': type === 'expense'
+        }"
+      >
+        <mfloww-view-button
+          class="flex flex-grow-0 w-[28px] h-[28px] md:w-[35px] md:h-[35px]"
+          (clicked)="
+            entryInput._entryFormGroup.valid &&
+              handleNewEntry(entryInput._entryFormGroup.value)
+          "
+        >
+          <mfloww-view-icon
+            type="tick"
+            class="text-mfloww_white"
+          ></mfloww-view-icon>
+        </mfloww-view-button>
+        <mfloww-view-button
+          class="flex flex-grow-0 w-[28px] h-[28px] md:w-[35px] md:h-[35px]"
+          (clicked)="_addingModeActive = false"
+        >
+          <mfloww-view-icon
+            type="close"
+            class="text-mfloww_white"
+          ></mfloww-view-icon>
+        </mfloww-view-button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="total w-full flex gap-4 justify-center md:justify-end mt-auto"
+    [ngClass]="{
+      'md:pr-10 text-mfloww_success': type === 'revenue',
+      'md:pl-10 text-mfloww_fatal md:flex-row-reverse': type === 'expense'
+    }"
+  >
+    <h3>{{ t('Balance.Total') }}</h3>
+    <h3>{{ total | currency : baseCurrency : 'symbol' : '1.2-4' }}</h3>
+  </div>
+</div>

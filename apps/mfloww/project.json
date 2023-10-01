@@ -1,0 +1,79 @@
+{
+  "name": "mfloww",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/mfloww/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": [
+        "{options.outputPath}",
+        "{workspaceRoot}/dist/apps/mfloww/.nitro",
+        "{workspaceRoot}/dist/apps/mfloww/ssr",
+        "{workspaceRoot}/dist/apps/mfloww/analog"
+      ],
+      "options": {
+        "main": "apps/mfloww/src/main.ts",
+        "configFile": "apps/mfloww/vite.config.ts",
+        "outputPath": "dist/apps/mfloww/client"
+      },
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production",
+          "fileReplacements": [
+            {
+              "replace": "apps/mfloww/src/environments/environment.ts",
+              "with": "apps/mfloww/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "mfloww:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mfloww:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "mfloww:build:production"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "mfloww:build"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/mfloww/**/*.{ts,html}"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

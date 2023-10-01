@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -8,16 +9,30 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import {
   BalanceRecordType,
   SUPPORTED_CURRENCIES,
   SupportedCurrencyCode,
 } from '@mfloww/common';
 import { filter } from 'rxjs';
+import { MflowwIconComponent } from '../icon/icon.component';
+import { MflowwSelectComponent } from '../select/select.component';
 
 @Component({
   selector: 'mfloww-view-entry-input',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MflowwSelectComponent,
+    MflowwIconComponent,
+  ],
   templateUrl: './entry-input.component.html',
   styleUrls: ['./entry-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

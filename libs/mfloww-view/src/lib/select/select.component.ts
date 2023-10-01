@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -14,12 +15,24 @@ import {
   QueryList,
   TemplateRef,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { MflowwIconComponent } from '../icon/icon.component';
 import { MflowwSelectOptionDirective } from './directives/select-option.directive';
 
 @Component({
   selector: 'mfloww-view-select',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MflowwIconComponent,
+    MflowwSelectOptionDirective,
+    ReactiveFormsModule,
+  ],
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

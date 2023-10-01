@@ -1,4 +1,4 @@
-<div class="relative w-full">
+<div class="relative w-full" *transloco="let t">
   <p
     class="input-label text-xs text-mfloww_fg pb-1"
     [style.opacity]="_value ? 100 : 0"
@@ -29,7 +29,7 @@
       [mflowwViewCopyClipboard]="_value"
       (copied)="informCopyEvent()"
     >
-      {{ _copied ? ('Input.Copied' | translate) : ('Input.Copy' | translate) }}
+      {{ t(_copied ? 'Input.Copied' : 'Input.Copy') }}
     </button>
   </div>
   <ng-container *ngIf="_dirty && _control.errors">
@@ -38,12 +38,10 @@
       class="absolute text-mfloww_fatal text-[10px]"
     >
       {{
-        errorMessages[firstError.key]
-          | translate
-            : {
-                name: name || label || placeholder,
-                requiredLength: firstError.value?.requiredLength
-              }
+        t(errorMessages[firstError.key], {
+          name: label || placeholder || name,
+          requiredLength: firstError.value?.requiredLength
+        })
       }}
     </p>
   </ng-container>

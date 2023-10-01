@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslocoDirective } from '@ngneat/transloco';
 import { MflowwOverlayPanelComponent } from '../overlay-panel/overlay-panel.component';
 import { MflowwMonthYearHeaderComponent } from './components/header/header.component';
 
@@ -33,7 +33,7 @@ const dateFilter = (date: Date) => {
     CommonModule,
     MflowwOverlayPanelComponent,
     MflowwMonthYearHeaderComponent,
-    TranslateModule,
+    TranslocoDirective,
   ],
   templateUrl: './month-year-picker.component.html',
   styles: [

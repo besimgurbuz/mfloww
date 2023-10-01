@@ -1,0 +1,208 @@
+<nav
+  *transloco="let t"
+  class="fixed top-0 w-full transition-[background-color] flex flex-col text-sm bg-gradient-to-b from-mfloww_bg-300 to-mfloww_bg"
+  mflowwFade="in"
+  [ngClass]="{
+    'backdrop-blur border-b-[1px] border-b-gray-700': _scrollY > 20
+  }"
+>
+  <div
+    class="w-full flex lg:px-28 md:px-18 px-6 pt-2 items-center justify-between"
+  >
+    <mfloww-banner
+      size="bigger"
+      [link]="(_isUserLoggedIn$ | async) ? '/dashboard/balance' : ''"
+    ></mfloww-banner>
+    <ng-container
+      *ngIf="profileInfo && _shouldDisplayDashboardLinks()"
+      [ngTemplateOutlet]="featureLinks"
+    ></ng-container>
+    <ng-container *ngIf="!profileInfo; else avatar">
+      <div class="flex items-center gap-1">
+        <div class="hidden items-center text-mfloww_success md:flex gap-2">
+          <a
+            routerLink="/sign-in"
+            class="p-2 hover:opacity-70 hover:cursor-pointer text-mfloww_white"
+            >{{ t('Common.SignIn') }}</a
+          >
+          <a
+            routerLink="/sign-up"
+            class="p-2 text-mfloww_white rounded hover:opacity-70 hover:cursor-pointer"
+          >
+            {{ t('Common.SignUp') }}
+          </a>
+          <a
+            class="w-6 text-mfloww_white rounded hover:opacity-70 hover:cursor-pointer"
+            href="https://github.com/besimgurbuz/mfloww"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <mfloww-view-icon type="github"></mfloww-view-icon>
+          </a>
+        </div>
+        <mfloww-view-overlay-panel class="md:hidden self-center" #overlayPanel>
+          <button
+            class="self-center w-[30px] p-[2px] focus:p-0 focus:border-solid focus:border-mfloww_blue focus:border-2 focus:rounded"
+            mflowwOverlayTriggerer
+          >
+            <mfloww-view-icon type="menu" class="w-7"></mfloww-view-icon>
+          </button>
+          <div mflowwPanelContent class="flex flex-col">
+            <a
+              class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"
+              routerLink="/sign-in"
+              (click)="overlayPanel._opened = false"
+              >{{ t('Common.SignIn') }}</a
+            >
+            <a
+              class="px-6 py-3 text-sm whitespace-nowrap w-full text-center"
+              routerLink="/sign-up"
+              (click)="overlayPanel._opened = false"
+              >{{ t('Common.SignUp') }}</a
+            >
+          </div>
+        </mfloww-view-overlay-panel>
+      </div>
+    </ng-container>
+  </div>
+  <div
+    class="flex sm:hidden w-full text-xs"
+    *ngIf="profileInfo && _shouldDisplayDashboardLinks()"
+  >
+    <a
+      class="w-1/2 flex py-2 gap-2 items-center justify-center"
+      routerLink="dashboard/balance"
+      [ngClass]="{
+        'border-b-2': _isInBalance()
+      }"
+    >
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect x="1" y="8" width="12" height="2" rx="0.2" fill="currentColor" />
+        <rect x="3" y="14" width="10" height="2" rx="0.2" fill="currentColor" />
+        <rect x="14" y="11" width="8" height="2" rx="0.2" fill="currentColor" />
+        <rect x="14" y="8" width="6" height="2" rx="0.2" fill="currentColor" />
+        <rect x="7" y="11" width="6" height="2" rx="0.2" fill="currentColor" />
+        <rect x="14" y="14" width="6" height="2" rx="0.2" fill="currentColor" />
+      </svg>
+    </a>
+    <a
+      class="w-1/2 flex py-2 gap-2 items-center justify-center"
+      routerLink="dashboard/graph"
+      [ngClass]="{
+        'border-b-2 py-0': _isInGraph()
+      }"
+    >
+      <mfloww-view-icon class="w-[24px]" type="graph"></mfloww-view-icon>
+    </a>
+  </div>
+  <ng-template #featureLinks>
+    <div
+      class="hidden sm:flex gap-4 h-full items-center justify-center pr-[5rem]"
+    >
+      <a
+        routerLink="dashboard/balance"
+        class="flex items-center justify-center gap-[5px] hover:text-gray-300"
+        [ngClass]="{
+          'text-mfloww_blue hover:text-mfloww_blue-300': _isInBalance()
+        }"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="1"
+            y="8"
+            width="12"
+            height="2"
+            rx="0.2"
+            fill="currentColor"
+          />
+          <rect
+            x="3"
+            y="14"
+            width="10"
+            height="2"
+            rx="0.2"
+            fill="currentColor"
+          />
+          <rect
+            x="14"
+            y="11"
+            width="8"
+            height="2"
+            rx="0.2"
+            fill="currentColor"
+          />
+          <rect
+            x="14"
+            y="8"
+            width="6"
+            height="2"
+            rx="0.2"
+            fill="currentColor"
+          />
+          <rect
+            x="7"
+            y="11"
+            width="6"
+            height="2"
+            rx="0.2"
+            fill="currentColor"
+          />
+          <rect
+            x="14"
+            y="14"
+            width="6"
+            height="2"
+            rx="0.2"
+            fill="currentColor"
+          />
+        </svg>
+        {{ t('Balance.Title') }}
+      </a>
+      <a
+        routerLink="dashboard/graph"
+        class="flex items-center justify-center gap-[5px] hover:text-gray-300"
+        [ngClass]="{
+          'text-mfloww_blue hover:text-mfloww_blue-300': _isInGraph()
+        }"
+      >
+        <mfloww-view-icon class="w-[24px]" type="graph"></mfloww-view-icon>
+        {{ t('Graph.Title') }}
+      </a>
+    </div>
+  </ng-template>
+  <ng-template #avatar>
+    <div class="flex items-center gap-3">
+      <mfloww-view-overlay-panel #overlayPanel>
+        <button mflowwOverlayTriggerer>
+          <mfloww-view-icon type="avatar" class="w-[28px]"></mfloww-view-icon>
+        </button>
+        <div mflowwPanelContent class="flex flex-col">
+          <a
+            class="w-full text-center p-4 text-sm min-w-[120px]"
+            routerLink="/user/settings"
+            (click)="overlayPanel._opened = false"
+            >{{ t('Common.Settings') }}</a
+          >
+          <button
+            class="w-full text-center p-4 text-sm min-w-[120px]"
+            (click)="logOutTriggered.emit(); overlayPanel._opened = false"
+          >
+            {{ t('Menu.LogOut') }}
+          </button>
+        </div>
+      </mfloww-view-overlay-panel>
+    </div>
+  </ng-template>
+</nav>

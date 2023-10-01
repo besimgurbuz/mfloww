@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -16,11 +17,22 @@ import {
   FormGroupDirective,
   NG_VALUE_ACCESSOR,
   NgControl,
+  ReactiveFormsModule,
 } from '@angular/forms';
+import { TranslocoDirective } from '@ngneat/transloco';
 import { map, of } from 'rxjs';
+
+import { MflowwCopyClipboardDirective } from '../copy-clipboard/copy-clipboard.directive';
 import { ERROR_MESSAGES } from './input-errors';
 
 @Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MflowwCopyClipboardDirective,
+    TranslocoDirective,
+  ],
   selector: 'mfloww-view-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],

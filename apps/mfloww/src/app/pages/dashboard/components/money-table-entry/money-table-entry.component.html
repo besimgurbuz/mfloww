@@ -1,0 +1,76 @@
+<div
+  class="flex flex-row-reverse md:flex-row items-center gap-2 group overflow-hidden text-sm"
+  [ngClass]="{
+    'justify-end': type === 'revenue',
+    'justify-start': type === 'expense'
+  }"
+  #entryContainer
+>
+  <div
+    *ngIf="_shouldShowLabelOutside"
+    [ngClass]="{
+      'text-mfloww_success': type === 'revenue',
+      'text-mfloww_fatal order-3': type === 'expense'
+    }"
+    class="order-2 truncate"
+  >
+    <h3>{{ label }}</h3>
+  </div>
+  <div
+    *ngIf="_shouldShowAmountOutside"
+    [ngClass]="{
+      'text-mfloww_success': type === 'revenue',
+      'text-mfloww_fatal': type === 'expense'
+    }"
+    class="order-2 truncate"
+  >
+    <h3>{{ amount | currency : currency : 'symbol' : '1.2-4' }}</h3>
+  </div>
+  <div
+    [ngClass]="_barClassMap[type]"
+    [style.width.%]="sizePercentage"
+    class="animate-grow_x transition-[width] duration-1000 flex h-[35px] items-center justify-between overflow-hidden"
+  >
+    <div
+      *ngIf="!_shouldShowLabelOutside"
+      [ngClass]="{
+        'order-1': type === 'expense',
+        'order-2': type === 'revenue'
+      }"
+      class="truncate"
+    >
+      <h3>{{ label }}</h3>
+    </div>
+    <div
+      *ngIf="!_shouldShowAmountOutside"
+      class="w-fit h-fit truncate"
+      [ngClass]="{
+        'order-1': type === 'revenue',
+        'order-2': type === 'expense'
+      }"
+    >
+      <h3 class="text-white">
+        {{ amount | currency : currency : 'symbol' : '1.2-4' }}
+      </h3>
+    </div>
+  </div>
+  <div
+    class="hidden group-hover:flex"
+    [ngClass]="{
+      'order-1': type === 'revenue',
+      'order-3': type === 'expense'
+    }"
+  >
+    <div *ngIf="deletable">
+      <mfloww-view-button
+        class="flex flex-grow-0 w-[28px] h-[28px] md:w-[35px] md:h-[35px]"
+        (clicked)="deletionTriggered.emit()"
+      >
+        <mfloww-view-icon
+          type="close"
+          class="text-mfloww_white"
+        ></mfloww-view-icon>
+      </mfloww-view-button>
+    </div>
+  </div>
+</div>

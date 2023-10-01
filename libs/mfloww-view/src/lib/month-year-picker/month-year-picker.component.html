@@ -1,4 +1,5 @@
 <mfloww-view-overlay-panel
+  *transloco="let t"
   #overlayPanel
   [centerContent]="true"
   (panelClosed)="resetSelection()"
@@ -29,7 +30,7 @@
         (click)="changeSelection(i, 'month')"
       >
         <h4 class="text-sm">
-          {{ 'MonthYearPicker.' + monthAbbr | translate }}
+          {{ t('MonthYearPicker.' + monthAbbr) }}
         </h4>
       </button>
     </div>
@@ -37,7 +38,7 @@
       class="self-end rounded px-4 py-1 border-2 border-solid border-mfloww_success hover:bg-mfloww_success"
       (click)="completeSelection(); overlayPanel._opened = false"
     >
-      <p class="text-xs">{{ 'MonthYearPicker.Ok' | translate }}</p>
+      <p class="text-xs">{{ t('MonthYearPicker.Ok') }}</p>
     </button>
   </div>
 </mfloww-view-overlay-panel>

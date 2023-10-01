@@ -1,0 +1,177 @@
+{
+  "App": {
+    "MainTitle": "mfloww • 안전한 자금 흐름 시각화",
+    "Close": "닫기",
+    "404": {
+      "message": "찾고 있는 페이지를 찾을 수 없습니다"
+    }
+  },
+  "Errors": {
+    "triedUnauth": "아직 로그인하지 않은 것 같습니다. 로그인해주세요.",
+    "expiredToken": "세션이 만료되었습니다. 다시 로그인해주세요.",
+    "newAccount": "환영합니다! 새 계정으로 로그인할 수 있습니다.",
+    "updatedProfile": "프로필 정보가 업데이트되었습니다. 다시 로그인해주세요.",
+    "updatedPassword": "비밀번호가 성공적으로 업데이트되었습니다. 다시 로그인해주세요.",
+    "accountDeletion": "계정이 성공적으로 삭제되었습니다. 이별을 알립니다.",
+    "NonUniqueEmail": "이 이메일 주소는 이미 등록되어 있습니다. 다른 이메일 주소를 사용하거나 로그인을 시도해주세요.",
+    "Validation": {
+      "Min": "{{name}}는 최소 {{minimum}}자 이상이어야 합니다.",
+      "Max": "{{name}}는 {{maximum}}자를 초과할 수 없습니다.",
+      "Email": "유효한 이메일 주소를 입력하세요."
+    }
+  },
+  "FormFields": {
+    "username": "사용자 이름",
+    "email": "이메일",
+    "password": "비밀번호"
+  },
+  "Menu": {
+    "LogOut": "로그아웃"
+  },
+  "Footer": {
+    "Copyright": "© 저작권 2023 mfloww",
+    "TwitterIconTitle": "mfloww의 Twitter 페이지",
+    "GithubIconTitle": "mfloww의 GitHub 페이지",
+    "About": "소개",
+    "Developers": "개발자",
+    "Documentation": "문서",
+    "Contribute": "기여"
+  },
+  "Landing": {
+    "StarOnGitHub": "GitHub에서 스타 지금 바로",
+    "HeroHeader": "자금 흐름을 <span class='text-mfloww_blue'>안전하게</span> 시각화하세요",
+    "HeroText": "데이터를 제공하지 않고도 재정 상황에 대한 판단을 내릴 수 있습니다.",
+    "HeroImageAlt": "mfloww의 기능을 나타내는 일러스트레이션",
+    "InfluenceHeader1": "데이터 제공 중지",
+    "InfluenceDesc1": "모든 데이터는 고유한 키로 암호화되어 당신의 장치에 저장됩니다.",
+    "InfluenceHeader2": "28가지 다른 통화",
+    "InfluenceDesc2": "다양한 통화 풀에서 원하는 통화로 소득/지출을 추가하세요.",
+    "InfluenceHeader3": "전례 없이 자금 흐름 시각화",
+    "InfluenceDesc3": "매우 훌륭한 그래프로 자금 흐름을 자세히 검토하세요.",
+    "InfluenceHeader4": "오픈 소스",
+    "InfluenceDesc4": "금융 데이터의 보안과 개인 정보를 우선시합니다. 투명한 개발 과정으로 독립적인 보안 감사를 가능하게 합니다.",
+    "StartUsingNow": "지금 사용하기"
+  },
+  "Team": {
+    "Title": "팀과의 만남",
+    "Member": {
+      "BesimGurbuzTitle": "창업자, 엔지니어 및 디자이너"
+    },
+    "Contributors": "기여자"
+  },
+  "FAQ": {
+    "Title": "자주 묻는 질문",
+    "FAQTitle1": "이것은 무엇인가요?",
+    "FAQText1": "mfloww는 데이터를 암호화하여 사용자 장치에 저장하는 오픈 소스 자금 흐름 시각화 애플리케이션입니다. 암호화된 데이터는 사용자의 고유한 키로만 처리할 수 있습니다.",
+    "FAQTitle2": "누구를 위한 것인가요?",
+    "FAQText2": "mfloww는 금융 데이터의 개인 정보 보호와 자유를 우선시하는 모든 개인 및 조직을 위해 만들어졌습니다. 그러나 돈의 흐름 시각화에만 관심이 있는 사람들에게도 가치를 제공합니다.",
+    "FAQTitle3": "왜 이것이 필요한가요?",
+    "FAQText3": "mfloww는 재무 상황을 효과적으로 통제하고, 정보를 기반으로 한 결정을 내리며, 재무 목표에 도달하기 위한 강력한 도구를 제공합니다. mfloww는 개인 및 조직이 재정 상황을 명확하게 이해할 필요성을 해결합니다.",
+    "FAQTitle4": "은행 계좌에서 거래 내역을 가져올 수 있나요?",
+    "FAQText4": "현재는 거래 내역을 수동으로만 가져올 수 있습니다.",
+    "FAQTitle5": "문제, 질문 또는 기능 요청이 있을 경우 어떻게 연락해야 하나요?",
+    "FAQText5": "<a href='https://github.com/besimgurbuz/mfloww/issues/new' target='_blank' rel='noreferrer' class='text-blue-500 hover:underline'>이슈를 생성</a>할 수 있습니다. 또는 <a href='mailto:contact@mfloww.com?subject=Issue, Question or Feature Request' class='text-blue-500 hover:underline'>contact@mfloww.com</a>으로 이메일을 보낼 수 있습니다.",
+    "FAQTitle6": "앱을 여러 기기에서 동기화할 수 있나요?",
+    "FAQText6": "애플리케이션에서 특정 기기의 암호화된 데이터를 다른 기기로 전송할 수 있습니다. 기기 간 동기화를 위해 저장된 암호화된 데이터는 2시간 내에 서버에서 지워집니다.",
+    "FAQTitle7": "기술 스택은 무엇인가요?",
+    "FAQText7": "<a href='https://www.prisma.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Prisma</a>, <a href='https://analogjs.org/' target='_blank' rel='noreferrer' class='text-blue-500'>Analog</a>, <a href='https://angular.io/' target='_blank' rel='noreferrer' class='text-blue-500'>Angular</a> 및 <a href='https://www.typescriptlang.org/' target='_blank' rel='noreferrer' class='text-blue-500'>TypeScript</a>입니다."
+  },
+  "Changelog": {
+    "Title": "변경 사항",
+    "InfoText": "최신 변경 사항을 확인하려면 <a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-blue-500'>mfloww의 Twitter 페이지</a>를 팔로우할 수도 있습니다.",
+    "NotFound": "변경 사항을 찾을 수 없습니다. 나중에 다시 시도해주세요."
+  },
+  "SignIn": {
+    "DontHaveAccountQuestion": "계정이 없으신가요?"
+  },
+  "SignUp": {
+    "HaveAccountQuestion": "계정이 이미 있으신가요?"
+  },
+  "Settings": {
+    "Profile": "프로필",
+    "ProfileDesc": "이메일 주소는 mfloww에서의 식별자입니다. 이메일 주소나 사용자 이름을 변경하면 세션이 만료됩니다.",
+    "EncryptionKey": "암호화 키",
+    "Save": "저장",
+    "PasswordDesc": "비밀번호를 변경하면 세션이 만료됩니다.",
+    "ChangeLanguage": "언어 변경",
+    "ChangeLanguageDesc": "mfloww의 언어 변경",
+    "CurrentPassword": "현재 비밀번호",
+    "NewPassword": "새 비밀번호",
+    "ConfirmPassword": "새 비밀번호 확인",
+    "PasswordsShouldMatch": "비밀번호가 일치해야 합니다.",
+    "ChangeBaseCurrency": "기본 통화 변경",
+    "ChangeBaseCurrencyDesc": "계산은 선택한 통화로 변환됩니다.",
+    "DeleteLocalDB": "로컬 데이터베이스 삭제",
+    "DeleteLocalDBDesc": "이 기기의 데이터가 삭제됩니다. <strong>경고</strong>: 삭제는 되돌릴 수 없습니다.",
+    "DeleteAccount": "계정 삭제",
+    "DeleteAccountDesc": "계정과 이 기기의 데이터가 삭제됩니다. <strong>경고</strong>: 삭제는 되돌릴 수 없습니다."
+  },
+  "Balance": {
+    "Title": "잔액",
+    "SelectAMonth": "월 선택",
+    "Revenues": "수익",
+    "Expenses": "비용",
+    "ExchangeRateWarn": "*환율 정보가 최신이 아닐 수 있습니다",
+    "Total": "총계",
+    "EntryDeletionAlert": "{{entry}} 항목을 삭제하시겠습니까?"
+  },
+  "Graph": {
+    "Title": "그래프",
+    "All": "모두",
+    "Bar": "막대",
+    "Line": "선",
+    "Pie": "파이",
+    "Revenue": "수익",
+    "Expense": "비용"
+  },
+  "MonthYearSelection": {
+    "January": "1월 {{year}}",
+    "February": "2월 {{year}}",
+    "March": "3월 {{year}}",
+    "April": "4월 {{year}}",
+    "May": "5월 {{year}}",
+    "June": "6월 {{year}}",
+    "July": "7월 {{year}}",
+    "August": "8월 {{year}}",
+    "September": "9월 {{year}}",
+    "October": "10월 {{year}}",
+    "November": "11월 {{year}}",
+    "December": "12월 {{year}}"
+  },
+  "MonthYearPicker": {
+    "Jan": "1월",
+    "Feb": "2월",
+    "Mar": "3월",
+    "Apr": "4월",
+    "May": "5월",
+    "Jun": "6월",
+    "Jul": "7월",
+    "Aug": "8월",
+    "Sep": "9월",
+    "Oct": "10월",
+    "Nov": "11월",
+    "Dec": "12월",
+    "Ok": "확인"
+  },
+  "ValidationMessages": {
+    "Required": "{{name}}은(는) 필수입니다.",
+    "Email": "이 필드는 이메일 형식이어야 합니다.",
+    "MaxLength": "이 필드는 최대 {{requiredLength}}자까지 입력할 수 있습니다.",
+    "MinLength": "이 필드는 최소 {{requiredLength}}자 이상이어야 합니다.",
+    "Pattern": "이 필드는 유효하지 않습니다."
+  },
+  "Input": {
+    "Copy": "복사",
+    "Copied": "복사됨"
+  },
+  "Common": {
+    "Team": "팀",
+    "FAQ": "자주 묻는 질문",
+    "Changelog": "변경 내역",
+    "Settings": "설정",
+    "SignIn": "로그인",
+    "SignUp": "가입하기",
+    "Or": "또는",
+    "ContinueWithGoogle": "Google 계정으로 계속"
+  }
+}

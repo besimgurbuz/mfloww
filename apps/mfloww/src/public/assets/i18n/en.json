@@ -1,0 +1,178 @@
+{
+  "App": {
+    "MainTitle": "mfloww • secure money flow visualization",
+    "Close": "Close",
+    "404": {
+      "message": "Couldn't find the page you're looking for"
+    }
+  },
+  "Errors": {
+    "triedUnauth": "It look like you haven't logged in yet. Please sign in.",
+    "expiredToken": "It look like your session has expired. Please sign in again.",
+    "UserDeletionFailed": "Deletion of user did not succeed",
+    "newAccount": "Welcome! You can now sign in with your new account.",
+    "updatedProfile": "Your profile information updated successfully. Please re-login.",
+    "updatedPassword": "Your password updated successfully. Please re-login.",
+    "accountDeletion": "Your account successfully deleted, farewell.",
+    "NonUniqueEmail": "This email address is already registered. Please use a different email address or try to log in.",
+    "Validation": {
+      "Min": "{{name}} must be at least {{minimum}} characters long.",
+      "Max": "{{name}} cannot exceed {{maximum}} characters.",
+      "Email": "Please enter a valid email address."
+    }
+  },
+  "FormFields": {
+    "username": "Username",
+    "email": "Email",
+    "password": "Password"
+  },
+  "Menu": {
+    "LogOut": "Log out"
+  },
+  "Footer": {
+    "Copyright": "© Copyright 2023 mfloww",
+    "TwitterIconTitle": "mfloww's Twitter page",
+    "GithubIconTitle": "mfloww's GitHub page",
+    "About": "About",
+    "Developers": "Developers",
+    "Documentation": "Documentation",
+    "Contribute": "Contribute"
+  },
+  "Landing": {
+    "StarOnGitHub": "Star on GitHub",
+    "HeroHeader": "Make your money flow <span class='text-mfloww_blue'>securely</span> visible",
+    "HeroText": "Take informed decisions about your financial situation without handing over your data.",
+    "HeroImageAlt": "An illustration for representing mfloww's features",
+    "InfluenceHeader1": "Stop handing over your data",
+    "InfluenceDesc1": "Every data is encrypted with your unique key and stored on your device.",
+    "InfluenceHeader2": "28 different currencies",
+    "InfluenceDesc2": "Add your income/expense in any currency you want from a large currency pool.",
+    "InfluenceHeader3": "Visualize your money flow like never before",
+    "InfluenceDesc3": "Detailly inspect your money flow on a very talented graph.",
+    "InfluenceHeader4": "Open source",
+    "InfluenceDesc4": "Prioritize the security and privacy of your financial data. Transparent development process enables independent security audits.",
+    "StartUsingNow": "Start using it now"
+  },
+  "Team": {
+    "Title": "Meet the team",
+    "Member": {
+      "BesimGurbuzTitle": "Founder, Engineer & Designer"
+    },
+    "Contributors": "Contributors"
+  },
+  "FAQ": {
+    "Title": "Frequently Asked Questions",
+    "FAQTitle1": "What is it?",
+    "FAQText1": "mfloww is an open source money flow visualization application that encrypts data and stores it on the user's device. Encrypted data can only be processed with the user's unique key.",
+    "FAQTitle2": "Who is this for?",
+    "FAQText2": "mfloww was created for any person or organization that prioritizes privacy for their financial data and freedom. But it also provides value to those who only care about money flow visualizations.",
+    "FAQTitle3": "Why do I need this?",
+    "FAQText3": "mfloww provides a powerful tool to gain control over your finances, make informed decisions, and work towards your financial goals. mfloww addresses a fundamental need for individuals/organizations to have a clear understanding of their financial situation.",
+    "FAQTitle4": "Can I import transactions from my bank accounts?",
+    "FAQText4": "For now, you can only manually import your transactions.",
+    "FAQTitle5": "How do I contact if I have an issue, question or feature request?",
+    "FAQText5": "You can <a href='https://github.com/besimgurbuz/mfloww/issues/new' target='_blank' rel='noreferrer' class='text-mfloww_blue hover:underline'>create an issue</a>. Or you can send an email to <a href='mailto:contact@mfloww.com?subject=Issue, Question or Feature Request' class='text-mfloww_blue hover:underline'>contact@mfloww.com</a>.",
+    "FAQTitle6": "Can I sync the app across multiple devices?",
+    "FAQText6": "In the application you can send a specific device’ encrypted data to other devices. Stored encrypted data for sync across devices will be erased from server within 2 hours.",
+    "FAQTitle7": "What is the tech stack?",
+    "FAQText7": "<a href='https://www.prisma.io/' target='_blank' rel='noreferrer' class='text-mfloww_blue'>Prisma</a>, <a href='https://analogjs.org/' target='_blank' rel='noreferrer' class='text-mfloww_blue'>Analog</a>, <a href='https://angular.io/' target='_blank' rel='noreferrer' class='text-mfloww_blue'>Angular</a> and <a href='https://www.typescriptlang.org/' target='_blank' rel='noreferrer' class='text-mfloww_blue'>TypeScript</a>."
+  },
+  "Changelog": {
+    "Title": "Changelog",
+    "InfoText": "You can also follow <a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-mfloww_blue'>mfloww's Twitter page</a> to stay up to date with the latest changes.",
+    "NotFound": "No changelog found. Try again later."
+  },
+  "SignIn": {
+    "DontHaveAccountQuestion": "Don't have an account?"
+  },
+  "SignUp": {
+    "HaveAccountQuestion": "Already have an account?"
+  },
+  "Settings": {
+    "Profile": "Profile",
+    "ProfileDesc": "Your email address is your identity on mfloww. If you change your email address or username, your session will also expire.",
+    "EncryptionKey": "Encryption Key",
+    "Save": "Save",
+    "PasswordDesc": "If you change your password, your session will also expire.",
+    "ChangeLanguage": "Change language",
+    "ChangeLanguageDesc": "Change the language of mfloww",
+    "CurrentPassword": "Current password",
+    "NewPassword": "New password",
+    "ConfirmPassword": "Confirm new password",
+    "PasswordsShouldMatch": "Passwords should match",
+    "ChangeBaseCurrency": "Change base currency",
+    "ChangeBaseCurrencyDesc": "Calculations are converted to the selected currency.",
+    "DeleteLocalDB": "Delete local database",
+    "DeleteLocalDBDesc": "Data on this device will be deleted. <strong>Warning</strong> deletion is irreversible.",
+    "DeleteAccount": "Delete account",
+    "DeleteAccountDesc": "Your account and data on this device will be deleted. <strong>Warning</strong> deletion is irreversible."
+  },
+  "Balance": {
+    "Title": "Balance",
+    "SelectAMonth": "Select a month",
+    "Revenues": "revenues",
+    "Expenses": "expenses",
+    "ExchangeRateWarn": "*Exchange rates may not be up to date",
+    "Total": "TOTAL",
+    "EntryDeletionAlert": "Are you sure you want to delete the {{entry}} entry?"
+  },
+  "Graph": {
+    "Title": "Graph",
+    "All": "All",
+    "Bar": "Bar",
+    "Line": "Line",
+    "Pie": "Pie",
+    "Revenue": "Revenue",
+    "Expense": "Expense"
+  },
+  "MonthYearSelection": {
+    "January": "January {{year}}",
+    "February": "February {{year}}",
+    "March": "March {{year}}",
+    "April": "April {{year}}",
+    "May": "May {{year}}",
+    "June": "June {{year}}",
+    "July": "July {{year}}",
+    "August": "August {{year}}",
+    "September": "September {{year}}",
+    "October": "October {{year}}",
+    "November": "November {{year}}",
+    "December": "December {{year}}"
+  },
+  "MonthYearPicker": {
+    "Jan": "JAN",
+    "Feb": "FEB",
+    "Mar": "MAR",
+    "Apr": "APR",
+    "May": "MAY",
+    "Jun": "JUN",
+    "Jul": "JUL",
+    "Aug": "AUG",
+    "Sep": "SEP",
+    "Oct": "OCT",
+    "Nov": "NOV",
+    "Dec": "DEC",
+    "Ok": "Ok"
+  },
+  "ValidationMessages": {
+    "Required": "{{name}} is required",
+    "Email": "This field should be in email format",
+    "MaxLength": "This field can be up to {{requiredLength}} characters long",
+    "MinLength": "This field must be at least {{requiredLength}} characters long",
+    "Pattern": "This field is not valid"
+  },
+  "Input": {
+    "Copy": "Copy",
+    "Copied": "Copied"
+  },
+  "Common": {
+    "Settings": "Settings",
+    "Team": "Team",
+    "FAQ": "FAQ",
+    "Changelog": "Changelog",
+    "SignIn": "Sign in",
+    "SignUp": "Sign up",
+    "Or": "or",
+    "ContinueWithGoogle": "Continue with Google"
+  }
+}
