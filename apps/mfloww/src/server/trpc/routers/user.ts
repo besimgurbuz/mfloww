@@ -57,8 +57,15 @@ export const userRoute = router({
     .input(
       validateInputOrThrow(
         z.object({
-          email: z.string().email().optional(),
-          username: z.string().optional(),
+          email: z
+            .string()
+            .email({ message: 'Errors.Validation.Email' })
+            .optional(),
+          username: z
+            .string()
+            .min(3, 'Errors.Validation.Min')
+            .max(30, 'Errors.Validation.Max')
+            .optional(),
         })
       )
     )

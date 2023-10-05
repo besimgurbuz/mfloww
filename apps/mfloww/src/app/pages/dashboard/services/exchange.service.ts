@@ -12,8 +12,7 @@ export class ExchangeService {
     base: SupportedCurrencyCode
   ): Observable<ExchangeRate> {
     return this.http.get<ExchangeRate>(
-      `${environment.apiUrl}/api/exchange/latest?base=${base}`,
-      { withCredentials: true }
+      `${environment.apiUrl}/api/v1/exchange-rates/latest?base=${base}`
     );
   }
 }
