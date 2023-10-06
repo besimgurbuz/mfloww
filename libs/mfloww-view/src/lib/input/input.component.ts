@@ -110,6 +110,7 @@ export class MflowwInputComponent implements ControlValueAccessor, OnInit {
 
   informCopyEvent() {
     this._copied = true;
+    this.cd.detectChanges();
     setTimeout(() => {
       this._copied = false;
       this.cd.detectChanges();

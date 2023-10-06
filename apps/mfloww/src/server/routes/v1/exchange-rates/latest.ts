@@ -8,7 +8,7 @@ import {
 
 const exchangeRateProvider = exchangeRates();
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const { base } = getQuery(event);
   const baseCurrency = base?.toString().toUpperCase() as SupportedCurrencyCode;
 
@@ -25,5 +25,5 @@ export default defineEventHandler((event) => {
     );
   }
 
-  return exchangeRateProvider(baseCurrency);
+  return await exchangeRateProvider(baseCurrency);
 });

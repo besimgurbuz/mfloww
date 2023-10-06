@@ -138,12 +138,6 @@ export class AppComponent implements OnInit {
     this.dbService.openDb('MFLOWW_DB', [
       { name: 'entries', options: { keyPath: ['monthYear', 'userId'] } },
     ]);
-    this.trpcClient.auth.hasSession
-      .query()
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe((user) => {
-        this.authService.setProfileInfo(user);
-      });
     this.handleInitialLanguage();
   }
 
