@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Release } from '../../../types/release';
+import { Release } from '../../types/release';
 
 @Injectable()
 export class GitHubReleaseService {
