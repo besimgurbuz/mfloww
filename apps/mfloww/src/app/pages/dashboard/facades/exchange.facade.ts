@@ -2,7 +2,6 @@ import { DestroyRef, Injectable, WritableSignal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ExchangeRate, SupportedCurrencyCode } from '@mfloww/common';
 import { Observable, Subscription, switchMap, tap, timer } from 'rxjs';
-import { environment } from '../../../../environments/environment';
 import { LocalStorageService } from '../../../core/local-storage.service';
 import { ExchangeService } from '../services/exchange.service';
 import { ExchangeState } from '../states/exchange.state';
@@ -45,6 +44,9 @@ export class ExchangeFacade {
   }
 
   get baseCurrency(): SupportedCurrencyCode {
-    return this.localStorageService.get(environment.baseCurrencyKey) || 'USD';
+    return (
+      this.localStorageService.get(import.meta.env['VITE_BASE_CURRENCY_KEY']) ||
+      'USD'
+    );
   }
 }

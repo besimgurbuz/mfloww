@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Translation, TranslocoLoader } from '@ngneat/transloco';
-import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {
@@ -9,7 +8,9 @@ export class TranslocoHttpLoader implements TranslocoLoader {
 
   getTranslation(lang: string) {
     return this.http.get<Translation>(
-      `${environment.baseUrl}/assets/i18n/${lang}.json`
+      `${
+        import.meta.env['VITE_ANALOG_PUBLIC_BASE_URL']
+      }/assets/i18n/${lang}.json`
     );
   }
 }

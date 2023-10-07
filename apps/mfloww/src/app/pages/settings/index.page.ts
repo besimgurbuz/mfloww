@@ -20,7 +20,6 @@ import { MflowwDbService } from '@mfloww/db';
 import { MflowwInputComponent } from '@mfloww/view';
 import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
 import { mergeMap } from 'rxjs';
-import { environment } from '../../../environments/environment';
 import { injectTrpcClient } from '../../../trpc-client';
 import { LanguageSelectorComponent } from '../../components/language-selector/language-selector.component';
 import { AuthService } from '../../core/auth.service';
@@ -207,13 +206,17 @@ export default class SettingsComponent implements OnInit {
 
   handleBaseCurrencySelection() {
     const selectedCurrency: SupportedCurrencyCode =
-      this.localStorageService.get(environment.baseCurrencyKey) || 'USD';
+      this.localStorageService.get(import.meta.env['VITE_BASE_CURRENCY_KEY']) ||
+      'USD';
 
     this.baseCurrencyControl.setValue(selectedCurrency);
     this.baseCurrencyControl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((selection: SupportedCurrencyCode) =>
-        this.localStorageService.set(environment.baseCurrencyKey, selection)
+        this.localStorageService.set(
+          import.meta.env['VITE_BASE_CURRENCY_KEY'],
+          selection
+        )
       );
   }
 }

@@ -21,7 +21,7 @@ export const shouldDisplayWhenLoggedIn = () => {
     catchError(() => {
       router.navigate(['/sign-in'], {
         queryParams: {
-          reason: authService.isTokenExpired() ? 'expiredToken' : 'triedUnauth',
+          reason: 'triedUnauth',
         },
       });
       return of(false);

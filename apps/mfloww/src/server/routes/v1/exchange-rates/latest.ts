@@ -1,5 +1,4 @@
 import { createError, defineEventHandler, getQuery, sendError } from 'h3';
-import { environment } from '../../../../environments/environment';
 import { exchangeRates } from './exchange-rates';
 import {
   SUPPORTED_CURRENCY_CODES,
@@ -21,7 +20,7 @@ export default defineEventHandler(async (event) => {
         statusCode: 400,
         statusMessage: `${base} is not a supported currency`,
       }),
-      !environment.production
+      process.env['VITE_PRODUCTION'] === 'false'
     );
   }
 

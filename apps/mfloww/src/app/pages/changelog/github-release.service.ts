@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
 import { Release } from '../../types/release';
 
 @Injectable()
@@ -17,7 +16,7 @@ export class GitHubReleaseService {
   loadReleases$(): Observable<Release[]> {
     this._releasesLoadingSubject.next(true);
     return this.http
-      .get<Release[]>(`${environment.apiUrl}/api/v1/releases`)
+      .get<Release[]>(`${import.meta.env['VITE_API_URL']}/releases`)
       .pipe(
         tap(() => this._releasesLoadingSubject.next(false)),
         catchError((err) => {

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
 import { Contributor } from '../../types/contributor';
 
 @Injectable()
@@ -15,7 +14,7 @@ export class ContributorsService {
   fetchContributors$(): Observable<Contributor[]> {
     this._contributorsLoading.next(true);
     return this.http
-      .get<Contributor[]>(`${environment.apiUrl}/api/v1/contributors`)
+      .get<Contributor[]>(`${import.meta.env['VITE_API_URL']}/contributors`)
       .pipe(
         tap(() => this._contributorsLoading.next(false)),
         catchError((err) => {

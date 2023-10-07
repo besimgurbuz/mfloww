@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { CryptoSecretService } from '@mfloww/db';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { injectTrpcClient } from '../../trpc-client';
 import { LocalStorageService } from './local-storage.service';
 import { ProfileInfo } from './models/profile-info';
@@ -23,10 +22,6 @@ export class AuthService {
 
   isUserLoggedIn$(): Observable<boolean> {
     return this.profileInfoSubject.pipe(map((profileInfo) => !!profileInfo));
-  }
-
-  isTokenExpired(): boolean {
-    return !!this.localStorageService.get(environment.tokenExpKey);
   }
 
   setProfileInfo(profileInfo: ProfileInfo): void {
@@ -55,7 +50,6 @@ export class AuthService {
   }
 
   private clearUserCredentials(): void {
-    this.localStorageService.remove(environment.tokenExpKey);
     this.profileInfoSubject.next(null);
     this.cryptoSecretService.secret = '';
   }
