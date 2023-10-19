@@ -9,16 +9,18 @@
   "Errors": {
     "triedUnauth": "看起来您还没有登录。请登录。",
     "expiredToken": "看起来您的会话已过期。请重新登录。",
-    "newAccount": "欢迎！您现在可以使用您的新帐户登录。",
-    "updatedProfile": "您的个人资料信息已成功更新。请重新登录。",
-    "updatedPassword": "您的密码已成功更新。请重新登录。",
-    "accountDeletion": "您的帐户已成功删除，再见。",
     "NonUniqueEmail": "此电子邮件地址已经被注册。请使用不同的电子邮件地址或尝试登录。",
     "Validation": {
       "Min": "{{name}}必须至少{{minimum}}个字符长。",
       "Max": "{{name}}不能超过{{maximum}}个字符。",
       "Email": "请输入有效的电子邮件地址。"
     }
+  },
+  "Info": {
+    "newAccount": "欢迎！您现在可以使用您的新帐户登录。",
+    "updatedProfile": "您的个人资料信息已成功更新。请重新登录。",
+    "updatedPassword": "您的密码已成功更新。请重新登录。",
+    "accountDeletion": "您的帐户已成功删除，再见。"
   },
   "FormFields": {
     "username": "用户名",

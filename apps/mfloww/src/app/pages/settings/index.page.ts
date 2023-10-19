@@ -127,11 +127,12 @@ export default class SettingsComponent implements OnInit {
         .pipe(mergeMap(() => this.authService.logOut$()))
         .subscribe({
           next: () => {
-            this.router.navigate(['/sign-in'], {
-              queryParams: {
-                reason: 'updatedProfile',
-              },
+            this.snackBarService.emitMessage({
+              type: 'info',
+              text: 'Info.updatedProfile',
+              disappearDuration: 3000,
             });
+            this.router.navigate(['/sign-in']);
           },
           error: (err) => {
             this.snackBarService.emitFromTRPCClientError(err);
@@ -150,11 +151,12 @@ export default class SettingsComponent implements OnInit {
         .pipe(mergeMap(() => this.authService.logOut$()))
         .subscribe({
           next: () => {
-            this.router.navigate(['/sign-in'], {
-              queryParams: {
-                reason: 'updatedPassword',
-              },
+            this.snackBarService.emitMessage({
+              type: 'info',
+              text: 'Info.updatedPassword',
+              disappearDuration: 3000,
             });
+            this.router.navigate(['/sign-in']);
           },
           error: (err) => {
             this.snackBarService.emitFromTRPCClientError(err);
@@ -190,9 +192,12 @@ export default class SettingsComponent implements OnInit {
         .pipe(mergeMap(() => this.authService.logOut$()))
         .subscribe({
           next: () => {
-            this.router.navigate(['/'], {
-              queryParams: { reason: 'accountDeletion' },
+            this.snackBarService.emitMessage({
+              type: 'info',
+              text: 'Info.accountDeletion',
+              disappearDuration: 3000,
             });
+            this.router.navigate(['/']);
           },
           error: () => {
             this.snackBarService.emitMessage({

@@ -58,7 +58,7 @@ export const routeMeta: RouteMeta = {
         <div class="providers">
           <ng-container *ngFor="let platform of platforms">
             <mfloww-platform-button
-              [platfrom]="platform"
+              [platform]="platform"
             ></mfloww-platform-button>
           </ng-container>
         </div>
@@ -145,9 +145,12 @@ export default class SignUpComponent {
       .subscribe({
         next: (ok) => {
           if (ok) {
-            this.router.navigate(['/sign-in'], {
-              queryParams: { reason: 'newAccount' },
+            this.snackBar.emitMessage({
+              type: 'info',
+              text: 'Info.NewAccount',
+              disappearDuration: 3000,
             });
+            this.router.navigate(['/sign-in']);
           }
         },
         error: (error) => {

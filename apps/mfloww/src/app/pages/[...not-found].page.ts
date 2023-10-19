@@ -1,6 +1,11 @@
+import { RouteMeta } from '@analogjs/router';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslocoPipe } from '@ngneat/transloco';
+
+export const routeMeta: RouteMeta = {
+  title: () => '404 | mfloww',
+};
 
 @Component({
   standalone: true,

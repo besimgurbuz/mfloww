@@ -3,13 +3,14 @@ import { provideHttpClient } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
 import { provideClientHydration } from '@angular/platform-browser';
 
+import { withComponentInputBinding } from '@angular/router';
 import { provideTransloco } from '@ngneat/transloco';
 import { provideTrpcClient } from '../trpc-client';
 import { TranslocoHttpLoader } from './core/transloco-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideFileRouter(),
+    provideFileRouter(withComponentInputBinding()),
     provideClientHydration(),
     provideHttpClient(),
     provideTrpcClient(),

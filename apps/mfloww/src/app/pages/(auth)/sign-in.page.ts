@@ -59,7 +59,7 @@ export const routeMeta: RouteMeta = {
         <div class="providers">
           <ng-container *ngFor="let platform of platforms">
             <mfloww-platform-button
-              [platfrom]="platform"
+              [platform]="platform"
             ></mfloww-platform-button>
           </ng-container>
         </div>
@@ -83,12 +83,6 @@ export const routeMeta: RouteMeta = {
             name="Password"
             autocomplete="current-password"
           ></mfloww-view-input>
-          <button
-            class="border-solid border-2 rounded px-10 py-2 hover:bg-mfloww_white hover:text-mfloww_bg"
-            type="submit"
-          >
-            {{ t('Common.SignIn') }}
-          </button>
         </form>
       </main>
     </div>

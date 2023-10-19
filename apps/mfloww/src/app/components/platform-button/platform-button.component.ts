@@ -18,7 +18,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlatformButtonComponent {
-  @Input() platfrom!: SupportedPlatform;
+  @Input() platform!: SupportedPlatform;
 
   @Output() platformSelected = new EventEmitter<SupportedPlatform>();
 
@@ -26,8 +26,17 @@ export class PlatformButtonComponent {
     GOOGLE:
       'bg-white rounded w-[280px] h-[40px] flex justify-center items-center gap-[24px] px-[12px] hover:border-[2px] hover:border-solid focus:border-[2px] focus:border-solid focus:border-[#C6DAFC] active:bg-[#ecf3fe]',
   };
+  platformUrls: Record<SupportedPlatform, string> = {
+    GOOGLE: `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&redirect_uri=${encodeURIComponent(
+      `${
+        import.meta.env['VITE_ANALOG_PUBLIC_BASE_URL']
+      }/platform-redirect/google`
+    )}&scope=email%20profile&client_id=${
+      import.meta.env['VITE_GOOGLE_CLIENT_ID']
+    }`,
+  };
 
   handleButtonClick(): void {
-    this.platformSelected.emit(this.platfrom);
+    this.platformSelected.emit(this.platform);
   }
 }

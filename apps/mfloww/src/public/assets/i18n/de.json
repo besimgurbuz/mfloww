@@ -9,16 +9,18 @@
   "Errors": {
     "triedUnauth": "Es scheint, als hättest du dich noch nicht angemeldet. Bitte melde dich an.",
     "expiredToken": "Es scheint, als wäre deine Sitzung abgelaufen. Bitte melde dich erneut an.",
-    "newAccount": "Willkommen! Du kannst dich jetzt mit deinem neuen Konto anmelden.",
-    "updatedProfile": "Deine Profilinformationen wurden erfolgreich aktualisiert. Bitte melde dich erneut an.",
-    "updatedPassword": "Dein Passwort wurde erfolgreich aktualisiert. Bitte melde dich erneut an.",
-    "accountDeletion": "Dein Konto wurde erfolgreich gelöscht. Auf Wiedersehen.",
     "NonUniqueEmail": "Diese E-Mail-Adresse ist bereits registriert. Bitte verwenden Sie eine andere E-Mail-Adresse oder versuchen Sie sich einzuloggen.",
     "Validation": {
       "Min": "{{name}} muss mindestens {{minimum}} Zeichen lang sein.",
       "Max": "{{name}} darf nicht mehr als {{maximum}} Zeichen haben.",
       "Email": "Bitte geben Sie eine gültige E-Mail-Adresse ein."
     }
+  },
+  "Info": {
+    "newAccount": "Willkommen! Du kannst dich jetzt mit deinem neuen Konto anmelden.",
+    "updatedProfile": "Deine Profilinformationen wurden erfolgreich aktualisiert. Bitte melde dich erneut an.",
+    "updatedPassword": "Dein Passwort wurde erfolgreich aktualisiert. Bitte melde dich erneut an.",
+    "accountDeletion": "Dein Konto wurde erfolgreich gelöscht. Auf Wiedersehen."
   },
   "FormFields": {
     "username": "Benutzername",

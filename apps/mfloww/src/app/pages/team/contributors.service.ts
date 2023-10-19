@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
-import { Contributor } from '../../types/contributor';
+import { Contributor } from '../../../types/contributor';
 
 @Injectable()
 export class ContributorsService {

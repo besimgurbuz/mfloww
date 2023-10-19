@@ -1,7 +1,7 @@
 <a
-  [ngClass]="platformButtonClasses[platfrom]"
-  [ngSwitch]="platfrom"
-  href="/api/{{ platfrom.toLowerCase() }}"
+  [ngClass]="platformButtonClasses[platform]"
+  [ngSwitch]="platform"
+  [href]="platformUrls[platform]"
   (click)="handleButtonClick()"
 >
   <ng-container *ngSwitchCase="'GOOGLE'">

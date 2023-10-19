@@ -10,16 +10,20 @@
     "triedUnauth": "It look like you haven't logged in yet. Please sign in.",
     "expiredToken": "It look like your session has expired. Please sign in again.",
     "UserDeletionFailed": "Deletion of user did not succeed",
-    "newAccount": "Welcome! You can now sign in with your new account.",
-    "updatedProfile": "Your profile information updated successfully. Please re-login.",
-    "updatedPassword": "Your password updated successfully. Please re-login.",
-    "accountDeletion": "Your account successfully deleted, farewell.",
     "NonUniqueEmail": "This email address is already registered. Please use a different email address or try to log in.",
+    "SignInWithGoogle": "An error occurred while trying to sign in with Google. Please try again.",
+    "PlatformLoginInvalidRequest": "Platform login request is invalid.",
     "Validation": {
       "Min": "{{name}} must be at least {{minimum}} characters long.",
       "Max": "{{name}} cannot exceed {{maximum}} characters.",
       "Email": "Please enter a valid email address."
     }
+  },
+  "Info": {
+    "newAccount": "Welcome! You can now sign in with your new account.",
+    "updatedProfile": "Your profile information updated successfully. Please re-login.",
+    "updatedPassword": "Your password updated successfully. Please re-login.",
+    "accountDeletion": "Your account successfully deleted, farewell."
   },
   "FormFields": {
     "username": "Username",
@@ -173,6 +177,7 @@
     "SignIn": "Sign in",
     "SignUp": "Sign up",
     "Or": "or",
-    "ContinueWithGoogle": "Continue with Google"
+    "ContinueWithGoogle": "Continue with Google",
+    "ContinueAnonymously": "Continue Anonymously"
   }
 }

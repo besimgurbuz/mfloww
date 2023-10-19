@@ -9,16 +9,18 @@
   "Errors": {
     "triedUnauth": "Görünüşe göre henüz giriş yapmamışsınız. Lütfen giriş yapın.",
     "expiredToken": "Oturumunuzun süresi dolmuş gibi görünüyor. Lütfen tekrar giriş yapın.",
-    "newAccount": "Hoş geldiniz! Artık yeni hesabınızla oturum açabilirsiniz.",
-    "updatedProfile": "Profil bilgileriniz başarıyla güncellendi. Lütfen tekrar giriş yapın.",
-    "updatedPassword": "Parolanız başarıyla güncellendi. Lütfen tekrar giriş yapın.",
-    "accountDeletion": "Hesabınız başarıyla silindi, hoşça kalın.",
     "NonUniqueEmail": "Bu e-posta adresi zaten kayıtlı. Lütfen farklı bir e-posta adresi kullanın veya giriş yapmayı deneyin.",
     "Validation": {
       "Min": "{{name}}, en az {{minimum}} karakter uzunluğunda olmalıdır.",
       "Max": "{{name}}, {{maximum}} karakteri aşmamalıdır.",
       "Email": "Lütfen geçerli bir e-posta adresi girin."
     }
+  },
+  "Info": {
+    "newAccount": "Hoş geldiniz! Artık yeni hesabınızla oturum açabilirsiniz.",
+    "updatedProfile": "Profil bilgileriniz başarıyla güncellendi. Lütfen tekrar giriş yapın.",
+    "updatedPassword": "Parolanız başarıyla güncellendi. Lütfen tekrar giriş yapın.",
+    "accountDeletion": "Hesabınız başarıyla silindi, hoşça kalın."
   },
   "FormFields": {
     "username": "Kullanıcı adı",

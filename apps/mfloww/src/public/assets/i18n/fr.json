@@ -9,16 +9,18 @@
   "Errors": {
     "triedUnauth": "Il semble que vous ne soyez pas encore connecté. Veuillez vous connecter.",
     "expiredToken": "Il semble que votre session ait expiré. Veuillez vous connecter à nouveau.",
-    "newAccount": "Bienvenue ! Vous pouvez maintenant vous connecter avec votre nouveau compte.",
-    "updatedProfile": "Vos informations de profil ont été mises à jour avec succès. Veuillez vous reconnecter.",
-    "updatedPassword": "Votre mot de passe a été mis à jour avec succès. Veuillez vous reconnecter.",
-    "accountDeletion": "Votre compte a été supprimé avec succès, adieu.",
     "NonUniqueEmail": "Cette adresse e-mail est déjà enregistrée. Veuillez utiliser une adresse e-mail différente ou essayez de vous connecter.",
     "Validation": {
       "Min": "{{name}} doit comporter au moins {{minimum}} caractères.",
       "Max": "{{name}} ne peut pas dépasser {{maximum}} caractères.",
       "Email": "Veuillez saisir une adresse e-mail valide."
     }
+  },
+  "Info": {
+    "newAccount": "Bienvenue ! Vous pouvez maintenant vous connecter avec votre nouveau compte.",
+    "updatedProfile": "Vos informations de profil ont été mises à jour avec succès. Veuillez vous reconnecter.",
+    "updatedPassword": "Votre mot de passe a été mis à jour avec succès. Veuillez vous reconnecter.",
+    "accountDeletion": "Votre compte a été supprimé avec succès, adieu."
   },
   "FormFields": {
     "username": "Nom d'utilisateur",

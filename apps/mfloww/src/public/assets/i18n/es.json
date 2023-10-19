@@ -9,16 +9,18 @@
   "Errors": {
     "triedUnauth": "Parece que aún no has iniciado sesión. Por favor, inicia sesión.",
     "expiredToken": "Parece que tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
-    "newAccount": "¡Bienvenido! Ahora puedes iniciar sesión con tu nueva cuenta.",
-    "updatedProfile": "Tu información de perfil se ha actualizado correctamente. Por favor, vuelve a iniciar sesión.",
-    "updatedPassword": "Tu contraseña se ha actualizado correctamente. Por favor, vuelve a iniciar sesión.",
-    "accountDeletion": "Tu cuenta se ha eliminado correctamente, ¡adiós!",
     "NonUniqueEmail": "Esta dirección de correo electrónico ya está registrada. Por favor, utilice una dirección de correo electrónico diferente o intente iniciar sesión.",
     "Validation": {
       "Min": "{{name}} debe tener al menos {{minimum}} caracteres de longitud.",
       "Max": "{{name}} no puede exceder {{maximum}} caracteres.",
       "Email": "Por favor, ingrese una dirección de correo electrónico válida."
     }
+  },
+  "Info": {
+    "newAccount": "¡Bienvenido! Ahora puedes iniciar sesión con tu nueva cuenta.",
+    "updatedProfile": "Tu información de perfil se ha actualizado correctamente. Por favor, vuelve a iniciar sesión.",
+    "updatedPassword": "Tu contraseña se ha actualizado correctamente. Por favor, vuelve a iniciar sesión.",
+    "accountDeletion": "Tu cuenta se ha eliminado correctamente, ¡adiós!"
   },
   "FormFields": {
     "username": "Nombre de usuario",

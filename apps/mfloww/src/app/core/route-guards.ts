@@ -19,11 +19,7 @@ export const shouldDisplayWhenLoggedIn = () => {
       return true;
     }),
     catchError(() => {
-      router.navigate(['/sign-in'], {
-        queryParams: {
-          reason: 'triedUnauth',
-        },
-      });
+      router.navigate(['/sign-in']);
       return of(false);
     })
   );
