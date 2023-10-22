@@ -1,13 +1,11 @@
 import { AsyncPipe, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
   HostListener,
   Input,
   Output,
-  computed,
   inject,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -23,7 +21,6 @@ import { BannerComponent } from '../banner/banner.component';
   selector: 'mfloww-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgIf,
     NgClass,
@@ -43,14 +40,9 @@ export class MenuComponent {
 
   _isOpen = false;
   _scrollY = 0;
-  _isInBalance = computed(() => this.activeUrl() === '/dashboard/balance');
-  _isInGraph = computed(() => this.activeUrl() === '/dashboard/graph');
-  _shouldDisplayDashboardLinks = computed(
-    () => this._isInBalance() || this._isInGraph()
-  );
   _isUserLoggedIn$ = inject(AuthService).isUserLoggedIn$();
 
-  private activeUrl = inject(ActiveUrlService).activeUrl();
+  activeUrl$ = inject(ActiveUrlService).activeUrl$();
 
   constructor(private elementRef: ElementRef) {}
 

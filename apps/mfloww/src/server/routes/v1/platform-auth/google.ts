@@ -1,4 +1,4 @@
-import { PlatformUser } from '@prisma/client';
+import { User } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import {
   H3Event,
@@ -10,6 +10,7 @@ import {
 } from 'h3';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../../../prisma';
+import type { GoogleTokenResponse, GoogleUserInfo } from './models';
 
 async function authWithGoogle(event: H3Event) {
   const body = await readBody(event);
@@ -26,7 +27,7 @@ async function authWithGoogle(event: H3Event) {
     return null;
   }
 
-  const userData = await getPlatformUserDataFromGoogle(event, body.code);
+  const userData = await getUserDataFromGoogle(event, body.code);
   if (!userData) {
     sendError(
       event,
@@ -39,40 +40,40 @@ async function authWithGoogle(event: H3Event) {
     return null;
   }
 
-  const savedPlatformUser = await prisma.platformUser.findUnique({
+  const savedUser = await prisma.user.findUnique({
     where: { email: userData.email },
   });
 
-  if (savedPlatformUser) {
-    await prisma.platformUser.update({
-      where: {
-        email: userData.email,
-      },
-      data: {
-        accessToken: userData.accessToken,
-      },
-    });
-    const token = jwt.sign(
-      savedPlatformUser,
-      process.env['JWT_SECRET'] as string
-    );
+  if (savedUser) {
+    if (savedUser.platform === 'NONE') {
+      await prisma.user.update({
+        where: {
+          email: userData.email,
+        },
+        data: {
+          platform: 'GOOGLE',
+        },
+      });
+      savedUser.platform = 'GOOGLE';
+    }
+    const token = jwt.sign(savedUser, process.env['JWT_SECRET'] as string);
     setCookie(event, 'TOKEN', token, { httpOnly: true, sameSite: 'strict' });
-    return savedPlatformUser;
+    return savedUser;
   }
 
   userData.key = randomBytes(64).toString('hex');
-  const newPlatformUser = await prisma.platformUser.create({
-    data: userData as PlatformUser,
+  const newPlatformUser = await prisma.user.create({
+    data: userData as User,
   });
   const token = jwt.sign(newPlatformUser, process.env['JWT_SECRET'] as string);
   setCookie(event, 'TOKEN', token, { httpOnly: true, sameSite: 'strict' });
   return newPlatformUser;
 }
 
-async function getPlatformUserDataFromGoogle(
+async function getUserDataFromGoogle(
   event: H3Event,
   code: string
-): Promise<Partial<PlatformUser> | undefined> {
+): Promise<Partial<User> | undefined> {
   const tokenBody = await exchangeGoogleAuthCodeWithAccessToken(code);
   const res = await fetch('https://www.googleapis.com/oauth2/v1/userinfo', {
     headers: {
@@ -98,7 +99,6 @@ async function getPlatformUserDataFromGoogle(
       0,
       googleUserInfo.email.indexOf('@')
     ),
-    accessToken: tokenBody.access_token,
   };
 }
 
@@ -127,26 +127,7 @@ async function exchangeGoogleAuthCodeWithAccessToken(code: string) {
   });
   const body = await res.json();
 
-  return body as TokenResponse;
+  return body as GoogleTokenResponse;
 }
-
-type TokenResponse = {
-  access_token: string;
-  expires_in: number;
-  scope: string;
-  token_type: string;
-  id_token: string;
-};
-
-type GoogleUserInfo = {
-  id: string;
-  email: string;
-  verified_email: boolean;
-  name: string;
-  given_name: string;
-  family_name: string;
-  picture: string;
-  locale: string;
-};
 
 export default eventHandler(authWithGoogle);

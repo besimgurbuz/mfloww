@@ -87,9 +87,9 @@ export const routeMeta: RouteMeta = {
           </h1>
           <a
             class="px-5 py-2 border-2 border-solid rounded text-mfloww_white hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
-            routerLink="/user/sign-up"
+            routerLink="/user/sign-in"
           >
-            {{ t('Common.SignUp') }}
+            {{ t('Common.SignIn') }}
           </a>
         </div>
       </section>

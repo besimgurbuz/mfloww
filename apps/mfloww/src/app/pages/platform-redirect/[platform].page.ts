@@ -3,8 +3,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, Input, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SupportedPlatform } from '@mfloww/common';
-import { PlatformUser } from '@prisma/client';
+import { User } from '@prisma/client';
 import { AuthService } from '../../core/auth.service';
+import { ProfileInfo } from '../../core/models/profile-info';
 import { SnackBarService } from '../../core/snack-bar.service';
 
 @Component({
@@ -56,15 +57,12 @@ export default class PlatformRedirectComponent implements OnInit {
     }
 
     this.http
-      .post<PlatformUser>(`/api/v1/platform-auth/${this.platform}`, requestBody)
+      .post<User>(`/api/v1/platform-auth/${this.platform}`, requestBody)
       .subscribe({
         next: (user) => {
           this.inProgress.set(false);
-          this.authService.setProfileInfo({
-            ...user,
-            platform: user.platform.toUpperCase() as SupportedPlatform,
-          });
-          this.router.navigate(['/dashboard']);
+          this.authService.setProfileInfo(user as ProfileInfo);
+          this.router.navigate(['/dashboard/balance']);
         },
         error: (err) => {
           this.inProgress.set(false);

@@ -15,18 +15,10 @@ model User {
   email String @unique
   key String @unique
   username String
-  password String
-}
-
-model PlatformUser {
-  id String @id @default(auto())  @map("_id") @db.ObjectId
-  email String @unique
-  accessToken String
-  key String
-  username String
-  platform Platform
+  platform Platform @default(NONE)
 }
 
 enum Platform {
   GOOGLE
+  NONE
 }

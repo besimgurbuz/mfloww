@@ -86,12 +86,6 @@
     "InfoText": "You can also follow <a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-mfloww_blue'>mfloww's Twitter page</a> to stay up to date with the latest changes.",
     "NotFound": "No changelog found. Try again later."
   },
-  "SignIn": {
-    "DontHaveAccountQuestion": "Don't have an account?"
-  },
-  "SignUp": {
-    "HaveAccountQuestion": "Already have an account?"
-  },
   "Settings": {
     "Profile": "Profile",
     "ProfileDesc": "Your email address is your identity on mfloww. If you change your email address or username, your session will also expire.",
@@ -175,7 +169,6 @@
     "FAQ": "FAQ",
     "Changelog": "Changelog",
     "SignIn": "Sign in",
-    "SignUp": "Sign up",
     "Or": "or",
     "ContinueWithGoogle": "Continue with Google",
     "ContinueAnonymously": "Continue Anonymously"

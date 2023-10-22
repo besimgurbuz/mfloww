@@ -58,7 +58,6 @@ export class ExchangeRatesComponent {
   }
 
   handleClick() {
-    this._currentIndex++;
     this._clicked$.next(null);
   }
 }
