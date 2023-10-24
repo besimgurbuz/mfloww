@@ -18,7 +18,12 @@ export default defineConfig(({ mode }) => {
       target: ['es2020'],
     },
     plugins: [
-      analog({ ssr: true }),
+      analog({
+        nitro: {
+          preset: 'vercel',
+        },
+        ssr: true,
+      }),
       tsConfigPaths({
         root: '../../',
       }),
