@@ -8,19 +8,17 @@ import tsConfigPaths from 'vite-tsconfig-paths';
 export default defineConfig(({ mode }) => {
   return {
     publicDir: 'src/public',
-
     server: {
       host: '127.0.0.1',
     },
     ssr: {
       noExternal: '@analogjs/trpc/**',
     },
-
     build: {
       target: ['es2020'],
     },
     plugins: [
-      analog(),
+      analog({ ssr: true }),
       tsConfigPaths({
         root: '../../',
       }),

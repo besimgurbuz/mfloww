@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { lib } from 'crypto-js';
+import crypto from 'crypto-js';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CryptoSecretService {
-  private CRYPTO_SECRET = lib.WordArray.random(16).toString();
+  private CRYPTO_SECRET = crypto.lib.WordArray.random(16).toString();
 
   set secret(secret: string) {
     this.CRYPTO_SECRET = secret;

@@ -31,6 +31,9 @@ export const appConfig: ApplicationConfig = {
         fallbackLang: 'en',
         reRenderOnLangChange: true,
         prodMode: import.meta.env['VITE_PRODUCTION'] === 'true',
+        flatten: {
+          aot: import.meta.env['VITE_PRODUCTION'] === 'true',
+        },
       },
       loader: TranslocoHttpLoader,
     }),
