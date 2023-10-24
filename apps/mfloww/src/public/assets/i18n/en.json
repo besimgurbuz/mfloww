@@ -22,7 +22,6 @@
   "Info": {
     "newAccount": "Welcome! You can now sign in with your new account.",
     "updatedProfile": "Your profile information updated successfully. Please re-login.",
-    "updatedPassword": "Your password updated successfully. Please re-login.",
     "accountDeletion": "Your account successfully deleted, farewell."
   },
   "FormFields": {
@@ -93,13 +92,8 @@
     "ConsiderSignInDesc": "Get the advantages of having an account: secure your data and enjoy seamless syncing across all your devices",
     "EncryptionKey": "Encryption Key",
     "Save": "Save",
-    "PasswordDesc": "If you change your password, your session will also expire.",
     "ChangeLanguage": "Change language",
     "ChangeLanguageDesc": "Change the language of mfloww",
-    "CurrentPassword": "Current password",
-    "NewPassword": "New password",
-    "ConfirmPassword": "Confirm new password",
-    "PasswordsShouldMatch": "Passwords should match",
     "ChangeBaseCurrency": "Change base currency",
     "ChangeBaseCurrencyDesc": "Calculations are converted to the selected currency.",
     "DeleteLocalDB": "Delete local database",

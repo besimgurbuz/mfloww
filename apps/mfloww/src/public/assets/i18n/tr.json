@@ -9,7 +9,10 @@
   "Errors": {
     "triedUnauth": "Görünüşe göre henüz giriş yapmamışsınız. Lütfen giriş yapın.",
     "expiredToken": "Oturumunuzun süresi dolmuş gibi görünüyor. Lütfen tekrar giriş yapın.",
+    "UserDeletionFailed": "Kullanıcının silinmesi başarısız oldu.",
     "NonUniqueEmail": "Bu e-posta adresi zaten kayıtlı. Lütfen farklı bir e-posta adresi kullanın veya giriş yapmayı deneyin.",
+    "SignInWithGoogle": "Google ile giriş yapma denemesi sırasında bir hata oluştu. Lütfen tekrar deneyin.",
+    "PlatformLoginInvalidRequest": "Platform giriş isteği geçersiz.",
     "Validation": {
       "Min": "{{name}}, en az {{minimum}} karakter uzunluğunda olmalıdır.",
       "Max": "{{name}}, {{maximum}} karakteri aşmamalıdır.",
@@ -19,7 +22,6 @@
   "Info": {
     "newAccount": "Hoş geldiniz! Artık yeni hesabınızla oturum açabilirsiniz.",
     "updatedProfile": "Profil bilgileriniz başarıyla güncellendi. Lütfen tekrar giriş yapın.",
-    "updatedPassword": "Parolanız başarıyla güncellendi. Lütfen tekrar giriş yapın.",
     "accountDeletion": "Hesabınız başarıyla silindi, hoşça kalın."
   },
   "FormFields": {
@@ -83,12 +85,6 @@
     "InfoText": "En son değişikliklerden haberdar olmak için <a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-blue-500'>mfloww'in Twitter sayfasını</a> takip edebilirsiniz.",
     "NotFound": "Değişiklik günlüğü bulunamadı. Daha sonra tekrar deneyin."
   },
-  "SignIn": {
-    "DontHaveAccountQuestion": "Hesabınız yok mu?"
-  },
-  "SignUp": {
-    "HaveAccountQuestion": "Zaten bir hesabınız var mı?"
-  },
   "Settings": {
     "Profile": "Profil",
     "ProfileDesc": "E-posta adresiniz mfloww'daki kimliğinizdir. E-posta adresinizi veya kullanıcı adınızı değiştirirseniz, oturumunuz da sona erecektir.",
@@ -96,13 +92,8 @@
     "ConsiderSignInDesc": "Bir hesap sahibi olmanın avantajlarını elde edin: Verilerinizi güvence altına alın ve tüm cihazlarınızda sorunsuz senkronizasyonun tadını çıkarın.",
     "EncryptionKey": "Şifreleme anahtarı",
     "Save": "Kaydet",
-    "PasswordDesc": "Şifrenizi değiştirirseniz, oturumunuz da sona erecektir.",
     "ChangeLanguage": "Dili değiştirin",
     "ChangeLanguageDesc": "mfloww'un dilini değiştirin",
-    "CurrentPassword": "Şu anki şifre",
-    "NewPassword": "Yeni şifre",
-    "ConfirmPassword": "Yeni şifrenizi doğrulayın",
-    "PasswordsShouldMatch": "Şifreler aynı olmalıdır",
     "ChangeBaseCurrency": "Varsayılan para birimini değiştirin",
     "ChangeBaseCurrencyDesc": "Hesaplamalar seçilen para birimine dönüştürülür.",
     "DeleteLocalDB": "Yerel veritabanını silin",
@@ -174,8 +165,8 @@
     "Changelog": "Değişiklik günlüğü",
     "Settings": "Ayarlar",
     "SignIn": "Giriş yap",
-    "SignUp": "Kayıt ol",
     "Or": "veya",
-    "ContinueWithGoogle": "Google ile devam edin"
+    "ContinueWithGoogle": "Google ile devam edin",
+    "ContinueAnonymously": "Anonim olarak devam edin"
   }
 }

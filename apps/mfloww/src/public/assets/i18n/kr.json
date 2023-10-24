@@ -9,7 +9,10 @@
   "Errors": {
     "triedUnauth": "아직 로그인하지 않은 것 같습니다. 로그인해주세요.",
     "expiredToken": "세션이 만료되었습니다. 다시 로그인해주세요.",
+    "UserDeletionFailed": "사용자 삭제에 실패했습니다.",
     "NonUniqueEmail": "이 이메일 주소는 이미 등록되어 있습니다. 다른 이메일 주소를 사용하거나 로그인을 시도해주세요.",
+    "SignInWithGoogle": "Google로 로그인을 시도하는 중 오류가 발생했습니다. 다시 시도해주세요.",
+    "PlatformLoginInvalidRequest": "플랫폼 로그인 요청이 유효하지 않습니다.",
     "Validation": {
       "Min": "{{name}}는 최소 {{minimum}}자 이상이어야 합니다.",
       "Max": "{{name}}는 {{maximum}}자를 초과할 수 없습니다.",
@@ -19,7 +22,6 @@
   "Info": {
     "newAccount": "환영합니다! 새 계정으로 로그인할 수 있습니다.",
     "updatedProfile": "프로필 정보가 업데이트되었습니다. 다시 로그인해주세요.",
-    "updatedPassword": "비밀번호가 성공적으로 업데이트되었습니다. 다시 로그인해주세요.",
     "accountDeletion": "계정이 성공적으로 삭제되었습니다. 이별을 알립니다."
   },
   "FormFields": {
@@ -83,12 +85,6 @@
     "InfoText": "최신 변경 사항을 확인하려면 <a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-blue-500'>mfloww의 Twitter 페이지</a>를 팔로우할 수도 있습니다.",
     "NotFound": "변경 사항을 찾을 수 없습니다. 나중에 다시 시도해주세요."
   },
-  "SignIn": {
-    "DontHaveAccountQuestion": "계정이 없으신가요?"
-  },
-  "SignUp": {
-    "HaveAccountQuestion": "계정이 이미 있으신가요?"
-  },
   "Settings": {
     "Profile": "프로필",
     "ProfileDesc": "이메일 주소는 mfloww에서의 식별자입니다. 이메일 주소나 사용자 이름을 변경하면 세션이 만료됩니다.",
@@ -96,13 +92,8 @@
     "ConsiderSignInDesc": "계정 보유의 이점을 누려보세요: 데이터를 안전하게 보호하고 모든 기기에서 원활한 동기화를 즐기십시오.",
     "EncryptionKey": "암호화 키",
     "Save": "저장",
-    "PasswordDesc": "비밀번호를 변경하면 세션이 만료됩니다.",
     "ChangeLanguage": "언어 변경",
     "ChangeLanguageDesc": "mfloww의 언어 변경",
-    "CurrentPassword": "현재 비밀번호",
-    "NewPassword": "새 비밀번호",
-    "ConfirmPassword": "새 비밀번호 확인",
-    "PasswordsShouldMatch": "비밀번호가 일치해야 합니다.",
     "ChangeBaseCurrency": "기본 통화 변경",
     "ChangeBaseCurrencyDesc": "계산은 선택한 통화로 변환됩니다.",
     "DeleteLocalDB": "로컬 데이터베이스 삭제",
@@ -174,8 +165,8 @@
     "Changelog": "변경 내역",
     "Settings": "설정",
     "SignIn": "로그인",
-    "SignUp": "가입하기",
     "Or": "또는",
-    "ContinueWithGoogle": "Google 계정으로 계속"
+    "ContinueWithGoogle": "Google 계정으로 계속",
+    "ContinueAnonymously": "익명으로 계속"
   }
 }

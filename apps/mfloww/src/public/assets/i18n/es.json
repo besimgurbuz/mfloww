@@ -9,7 +9,10 @@
   "Errors": {
     "triedUnauth": "Parece que aún no has iniciado sesión. Por favor, inicia sesión.",
     "expiredToken": "Parece que tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
+    "UserDeletionFailed": "La eliminación del usuario no tuvo éxito.",
     "NonUniqueEmail": "Esta dirección de correo electrónico ya está registrada. Por favor, utilice una dirección de correo electrónico diferente o intente iniciar sesión.",
+    "SignInWithGoogle": "Se produjo un error al intentar iniciar sesión con Google. Por favor, inténtelo de nuevo.",
+    "PlatformLoginInvalidRequest": "La solicitud de inicio de sesión en la plataforma no es válida.",
     "Validation": {
       "Min": "{{name}} debe tener al menos {{minimum}} caracteres de longitud.",
       "Max": "{{name}} no puede exceder {{maximum}} caracteres.",
@@ -19,7 +22,6 @@
   "Info": {
     "newAccount": "¡Bienvenido! Ahora puedes iniciar sesión con tu nueva cuenta.",
     "updatedProfile": "Tu información de perfil se ha actualizado correctamente. Por favor, vuelve a iniciar sesión.",
-    "updatedPassword": "Tu contraseña se ha actualizado correctamente. Por favor, vuelve a iniciar sesión.",
     "accountDeletion": "Tu cuenta se ha eliminado correctamente, ¡adiós!"
   },
   "FormFields": {
@@ -83,12 +85,6 @@
     "InfoText": "También puedes seguir la <a href='https://twitter.com/mflowwcom' target='_blank' rel='noreferrer' class='text-blue-500'>página de Twitter de mfloww</a> para mantenerte al día con los últimos cambios.",
     "NotFound": "No se encontró ningún registro de cambios. Inténtalo de nuevo más tarde."
   },
-  "SignIn": {
-    "DontHaveAccountQuestion": "¿No tienes una cuenta?"
-  },
-  "SignUp": {
-    "HaveAccountQuestion": "¿Ya tienes una cuenta?"
-  },
   "Settings": {
     "Profile": "Perfil",
     "ProfileDesc": "Tu dirección de correo electrónico es tu identidad en mfloww. Si cambias tu dirección de correo electrónico o nombre de usuario, tu sesión también expirará.",
@@ -96,13 +92,8 @@
     "ConsiderSignInDesc": "Obtén las ventajas de tener una cuenta: protege tus datos y disfruta de la sincronización perfecta en todos tus dispositivos.",
     "EncryptionKey": "Clave de encriptación",
     "Save": "Guardar",
-    "PasswordDesc": "Si cambias tu contraseña, tu sesión también expirará.",
     "ChangeLanguage": "Cambiar idioma",
     "ChangeLanguageDesc": "Cambiar el idioma de mfloww",
-    "CurrentPassword": "Contraseña actual",
-    "NewPassword": "Nueva contraseña",
-    "ConfirmPassword": "Confirmar nueva contraseña",
-    "PasswordsShouldMatch": "Las contraseñas deben coincidir",
     "ChangeBaseCurrency": "Cambiar moneda base",
     "ChangeBaseCurrencyDesc": "Las operaciones se convertirán a la moneda seleccionada.",
     "DeleteLocalDB": "Eliminar base de datos local",
@@ -174,8 +165,8 @@
     "Changelog": "Registro de cambios",
     "Settings": "Configuración",
     "SignIn": "Iniciar sesión",
-    "SignUp": "Registrarse",
     "Or": "o",
-    "ContinueWithGoogle": "Continuar con Google"
+    "ContinueWithGoogle": "Continuar con Google",
+    "ContinueAnonymously": "Continuar como anónimo"
   }
 }

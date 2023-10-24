@@ -1,9 +1,9 @@
-import { AppRouter } from './server/trpc/routers';
 import { createTrpcClient } from '@analogjs/trpc';
 import { inject } from '@angular/core';
+import { AppRouter } from './server/trpc/routers';
 
 export const { provideTrpcClient, TrpcClient } = createTrpcClient<AppRouter>({
-  url: 'http://127.0.0.1:4200/api/trpc',
+  url: `${process.env['VITE_ANALOG_PUBLIC_BASE_URL']}/api/trpc`,
 });
 
 export function injectTrpcClient() {

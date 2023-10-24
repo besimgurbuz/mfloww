@@ -3,11 +3,9 @@ import { KeyValuePipe, NgForOf, NgIf } from '@angular/common';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -72,20 +70,6 @@ export default class SettingsComponent implements OnInit {
     username: new FormControl('', [Validators.required]),
     key: new FormControl({ value: '', disabled: true }),
   });
-  readonly passwordGroup = new FormGroup(
-    {
-      currentPassword: new FormControl('', [Validators.required]),
-      newPassword: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-      ]),
-      confirmNewPassword: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-      ]),
-    },
-    PasswordMatchValidator('newPassword', 'confirmNewPassword')
-  );
   readonly baseCurrencyControl = new FormControl();
   readonly currencyOptions = SUPPORTED_CURRENCIES;
 
@@ -104,14 +88,6 @@ export default class SettingsComponent implements OnInit {
     }
     this.profileGroup.get('key')?.setValue(this._profileInfo.key);
     this.handleBaseCurrencySelection();
-  }
-
-  isPasswordFormValid(): boolean {
-    return (
-      this.passwordGroup.valid &&
-      this.passwordGroup.value.currentPassword ===
-        this.passwordGroup.value.confirmNewPassword
-    );
   }
 
   updateProfile() {
@@ -200,15 +176,4 @@ export default class SettingsComponent implements OnInit {
         )
       );
   }
-}
-
-function PasswordMatchValidator(
-  passwordControlName: string,
-  confirmPasswordControlName: string
-): ValidatorFn {
-  return (formGroup: AbstractControl) =>
-    formGroup.get(passwordControlName)?.value ===
-    formGroup.get(confirmPasswordControlName)?.value
-      ? null
-      : { mismatch: true };
 }
