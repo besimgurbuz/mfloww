@@ -45,7 +45,7 @@ async function authWithGoogle(event: H3Event) {
   });
 
   if (savedUser) {
-    if (savedUser.platform === 'NONE') {
+    if (savedUser.platform !== 'GOOGLE') {
       await prisma.user.update({
         where: {
           email: userData.email,

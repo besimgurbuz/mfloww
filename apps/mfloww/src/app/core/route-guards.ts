@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 import { injectTrpcClient } from '../../trpc-client';
 import { AuthService } from './auth.service';
+import { UserInfo } from './models/profile-info';
 
 export const shouldDisplayWhenLoggedIn = () => {
   const authService = inject(AuthService);
@@ -15,7 +16,7 @@ export const shouldDisplayWhenLoggedIn = () => {
 
   return trpcClient.auth.hasSession.query().pipe(
     map((profileInfo) => {
-      authService.setProfileInfo(profileInfo);
+      authService.setProfileInfo(profileInfo as UserInfo);
       return true;
     }),
     catchError(() => {

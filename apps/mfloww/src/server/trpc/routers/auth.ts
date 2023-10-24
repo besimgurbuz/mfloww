@@ -52,6 +52,7 @@ export const authRoute = router({
         })
         .or(
           z.object({
+            id: z.string(),
             key: z.string(),
             username: z.string(),
             isAnonymous: z.boolean(),
@@ -61,6 +62,6 @@ export const authRoute = router({
     .query(({ ctx }) => {
       return ctx.user as
         | User
-        | { key: string; username: string; isAnonymous: boolean };
+        | { id: string; key: string; username: string; isAnonymous: boolean };
     }),
 });

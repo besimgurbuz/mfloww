@@ -23,6 +23,7 @@ export class PlatformButtonComponent {
       if (value === 'GOOGLE') {
         return SupportedPlatform.GOOGLE;
       }
+      return null;
     },
   })
   platform!: SupportedPlatform;
