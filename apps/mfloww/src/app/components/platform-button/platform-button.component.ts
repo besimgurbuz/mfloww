@@ -18,7 +18,14 @@ import { TranslocoPipe } from '@ngneat/transloco';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlatformButtonComponent {
-  @Input() platform!: SupportedPlatform;
+  @Input({
+    transform: (value: string) => {
+      if (value === 'GOOGLE') {
+        return SupportedPlatform.GOOGLE;
+      }
+    },
+  })
+  platform!: SupportedPlatform;
 
   @Output() platformSelected = new EventEmitter<SupportedPlatform>();
 

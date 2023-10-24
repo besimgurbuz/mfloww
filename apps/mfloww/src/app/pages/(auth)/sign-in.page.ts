@@ -2,11 +2,14 @@ import { RouteMeta } from '@analogjs/router';
 import { NgForOf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SupportedPlatform } from '@mfloww/common';
 import { MflowwInputComponent } from '@mfloww/view';
 import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
+import { injectTrpcClient } from '../../../trpc-client';
 import { PlatformButtonComponent } from '../../components/platform-button/platform-button.component';
+import { AuthService } from '../../core/auth.service';
+import { UserInfo } from '../../core/models/profile-info';
 import { shouldDisplayWhenLoggedOut } from '../../core/route-guards';
 
 export const routeMeta: RouteMeta = {
@@ -48,6 +51,7 @@ export const routeMeta: RouteMeta = {
         <span class="text-sm">{{ t('Common.Or') }}</span>
         <button
           class="border-solid border-2 rounded border-mfloww_white px-10 py-2 hover:bg-mfloww_white hover:text-mfloww_bg text-sm"
+          (click)="loginAnonymously()"
         >
           {{ t('Common.ContinueAnonymously') }}
         </button>
@@ -56,5 +60,16 @@ export const routeMeta: RouteMeta = {
   `,
 })
 export default class SignInComponent {
+  private trpClient = injectTrpcClient();
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
   platforms: SupportedPlatform[] = Object.values(SupportedPlatform);
+
+  loginAnonymously() {
+    this.trpClient.auth.loginAnonymously.mutate().subscribe((anonymousUser) => {
+      this.authService.setProfileInfo(anonymousUser as UserInfo);
+      this.router.navigate(['/dashboard/balance']);
+    });
+  }
 }

@@ -15,10 +15,9 @@ model User {
   email String @unique
   key String @unique
   username String
-  platform Platform @default(NONE)
+  platform Platform
 }
 
 enum Platform {
   GOOGLE
-  NONE
 }

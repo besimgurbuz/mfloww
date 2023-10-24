@@ -23,7 +23,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { ActiveUrlService } from './core/active-url.service';
 import { AuthService } from './core/auth.service';
 import { LocalStorageService } from './core/local-storage.service';
-import { ProfileInfo } from './core/models/profile-info';
+import { UserInfo } from './core/models/profile-info';
 import { Message, SnackBarService } from './core/snack-bar.service';
 import { FadeDirective } from './directives/fade/fade.directive';
 
@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
   private translateService = inject(TranslocoService);
   private _destroyRef = inject(DestroyRef);
 
-  _profileInfo$: Observable<ProfileInfo | null> = this.authService.profileInfo$;
+  _profileInfo$: Observable<UserInfo | null> = this.authService.profileInfo$;
   _shouldDisplayFooter = true;
   message$ = this.snackBar.error$.pipe(
     mergeMap(

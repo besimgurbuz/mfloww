@@ -92,6 +92,8 @@
   "Settings": {
     "Profile": "Profil",
     "ProfileDesc": "Votre adresse e-mail est votre identité sur mfloww. Si vous changez votre adresse e-mail ou votre nom d'utilisateur, votre session expirera également.",
+    "ConsiderSignIn": "Créez votre compte",
+    "ConsiderSignInDesc": "Profitez des avantages d'avoir un compte : sécurisez vos données et profitez de la synchronisation transparente sur tous vos appareils.",
     "EncryptionKey": "Clé de chiffrement",
     "Save": "Enregistrer",
     "PasswordDesc": "Si vous changez votre mot de passe, votre session expirera également.",

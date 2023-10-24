@@ -92,6 +92,8 @@
   "Settings": {
     "Profile": "个人资料",
     "ProfileDesc": "您的电子邮件地址是您在 mfloww 上的身份标识。如果您更改电子邮件地址或用户名，您的会话也将过期。",
+    "ConsiderSignIn": "创建您的帐户",
+    "ConsiderSignInDesc": "享受拥有帐户的优势：保护您的数据并在所有设备上享受无缝同步。",
     "EncryptionKey": "加密密钥",
     "Save": "保存",
     "PasswordDesc": "如果您更改密码，您的会话也将过期。",

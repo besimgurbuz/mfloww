@@ -1,5 +1,5 @@
 <div
-  class="flex flex-col w-full h-full items-center gap-10 lg:px-40 md:px-18 px-6 pb-24"
+  class="flex flex-col w-full h-full items-center gap-10 pt-12 lg:pt-0 lg:px-40 md:px-18 px-6 pb-24"
   *transloco="let t"
 >
   <h1 class="text-2xl sm:text-4xl text-mfloww_success">
@@ -8,97 +8,62 @@
   <div
     class="flex flex-wrap gap-4 w-full items-center justify-center md:justify-around"
   >
-    <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
-      <h3 class="text-sm sm:text-lg">{{ t('Settings.Profile') }}</h3>
-      <p class="text-[10px] sm:text-xs opacity-50 font-roboto">
-        {{ t('Settings.ProfileDesc') }}
-      </p>
-    </div>
-    <form
-      [formGroup]="profileGroup"
-      class="flex flex-col gap-6 relative flex-grow max-w-[450px]"
-      (ngSubmit)="updateProfile()"
-    >
-      <mfloww-view-input
-        formControlName="email"
-        [placeholder]="t('FormFields.email')"
-        [label]="t('FormFields.email')"
-        type="email"
-      ></mfloww-view-input>
-      <mfloww-view-input
-        formControlName="username"
-        [placeholder]="t('FormFields.username')"
-        [label]="t('FormFields.username')"
-      ></mfloww-view-input>
-      <mfloww-view-input
-        formControlName="key"
-        [placeholder]="t('Settings.EncryptionKey')"
-        [label]="t('Settings.EncryptionKey')"
-        [copyable]="true"
-      ></mfloww-view-input>
-      <button
-        class="border-2 border-solid rounded px-5 py-2 hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer w-fit text-sm"
-        [style.visibility]="
-          profileGroup.touched && profileGroup.valid && isFormValueDifferent()
+    <ng-container *ngIf="!_profileInfo?.isAnonymous; else linkAccount">
+      <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
+        <h3 class="text-sm sm:text-lg">{{ t('Settings.Profile') }}</h3>
+        <p class="text-[10px] sm:text-xs opacity-50 font-roboto">
+          {{ t('Settings.ProfileDesc') }}
+        </p>
+      </div>
+      <form
+        class="flex flex-col gap-6 relative flex-grow max-w-[450px]"
+        [formGroup]="profileGroup"
+        (ngSubmit)="updateProfile()"
+      >
+        <mfloww-view-input
+          formControlName="email"
+          [placeholder]="t('FormFields.email')"
+          [label]="t('FormFields.email')"
+          type="email"
+        ></mfloww-view-input>
+        <mfloww-view-input
+          formControlName="username"
+          [placeholder]="t('FormFields.username')"
+          [label]="t('FormFields.username')"
+        ></mfloww-view-input>
+        <mfloww-view-input
+          formControlName="key"
+          [placeholder]="t('Settings.EncryptionKey')"
+          [label]="t('Settings.EncryptionKey')"
+          [copyable]="true"
+        ></mfloww-view-input>
+        <button
+          class="border-2 border-solid rounded px-5 py-2 hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer w-fit text-sm"
+          [style.visibility]="
+          profileGroup.touched && profileGroup.valid && profileGroup.value.username !== $any(_profileInfo)['username']
             ? 'visible'
             : 'hidden'
         "
-        type="submit"
-      >
-        {{ t('Settings.Save') }}
-      </button>
-    </form>
-  </div>
-  <div
-    class="flex flex-wrap gap-4 w-full items-center justify-center md:justify-around"
-    *ngIf="!_profileInfo?.platform"
-  >
-    <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
-      <h3 class="text-sm sm:text-lg">{{ t('FormFields.password') }}</h3>
-      <p class="text-[10px] sm:text-xs opacity-50 font-roboto">
-        {{ t('Settings.PasswordDesc') }}
-      </p>
-    </div>
-    <form
-      [formGroup]="passwordGroup"
-      class="flex flex-col gap-6 flex-grow max-w-[450px] relative"
-      (ngSubmit)="updatePassword()"
-    >
-      <mfloww-view-input
-        formControlName="currentPassword"
-        [placeholder]="t('Settings.CurrentPassword')"
-        [label]="t('Settings.CurrentPassword')"
-        type="password"
-      ></mfloww-view-input>
-      <mfloww-view-input
-        formControlName="newPassword"
-        [placeholder]="t('Settings.NewPassword')"
-        [label]="t('Settings.NewPassword')"
-        type="password"
-      ></mfloww-view-input>
-      <mfloww-view-input
-        formControlName="confirmNewPassword"
-        [placeholder]="t('Settings.ConfirmPassword')"
-        [label]="t('Settings.ConfirmPassword')"
-        type="password"
-      ></mfloww-view-input>
-      <ng-container
-        *ngIf="passwordGroup.errors?.['mismatch'] && passwordGroup.get('newPassword')?.dirty && passwordGroup.get('confirmNewPassword')?.dirty"
-      >
-        <p class="absolute text-mfloww_fatal text-[10px] bottom-[30px]">
-          {{ t('Settings.PasswordsShouldMatch') }}
+          type="submit"
+        >
+          {{ t('Settings.Save') }}
+        </button>
+      </form>
+    </ng-container>
+    <ng-template #linkAccount>
+      <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
+        <h3 class="text-sm sm:text-lg">{{ t('Settings.ConsiderSignIn') }}</h3>
+        <p class="text-[10px] sm:text-xs opacity-50 font-roboto">
+          {{ t('Settings.ConsiderSignInDesc') }}
         </p>
-      </ng-container>
-      <button
-        class="border-2 border-solid rounded px-5 py-2 hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer w-fit text-sm"
-        [style.visibility]="
-          passwordGroup.touched && passwordGroup.valid ? 'visible' : 'hidden'
-        "
-        type="submit"
-      >
-        {{ t('Settings.Save') }}
-      </button>
-    </form>
+      </div>
+      <div class="flex flex-col gap-6 relative flex-grow max-w-[450px]">
+        <mfloww-platform-button
+          *ngFor="let platform of _supportedPlatforms"
+          [platform]="platform"
+        ></mfloww-platform-button>
+      </div>
+    </ng-template>
   </div>
   <div class="flex flex-wrap gap-4 w-full items-center md:justify-around">
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
@@ -154,7 +119,10 @@
       </button>
     </div>
   </div>
-  <div class="flex flex-wrap gap-4 w-full items-center md:justify-around">
+  <div
+    *ngIf="!_profileInfo?.isAnonymous"
+    class="flex flex-wrap gap-4 w-full items-center md:justify-around"
+  >
     <div class="flex flex-col gap-2 md:w-1/2 max-w-[450px] w-full">
       <h3 class="text-sm sm:text-lg">{{ t('Settings.DeleteAccount') }}</h3>
       <p

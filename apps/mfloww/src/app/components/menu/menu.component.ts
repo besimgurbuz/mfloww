@@ -13,7 +13,7 @@ import { MflowwIconComponent, MflowwOverlayPanelComponent } from '@mfloww/view';
 import { TranslocoDirective } from '@ngneat/transloco';
 import { ActiveUrlService } from '../../core/active-url.service';
 import { AuthService } from '../../core/auth.service';
-import { ProfileInfo } from '../../core/models/profile-info';
+import { UserInfo } from '../../core/models/profile-info';
 import { BannerComponent } from '../banner/banner.component';
 
 @Component({
@@ -34,7 +34,7 @@ import { BannerComponent } from '../banner/banner.component';
   ],
 })
 export class MenuComponent {
-  @Input() profileInfo: ProfileInfo | null = null;
+  @Input() profileInfo: UserInfo | null = null;
 
   @Output() logOutTriggered = new EventEmitter<void>();
 

@@ -1,7 +1,4 @@
-import {
-  SUPPORTED_CURRENCIES,
-  SupportedCurrencyCode,
-} from '../supported-currency';
+import { SUPPORTED_CURRENCIES, SupportedCurrency } from '../supported-currency';
 
 export abstract class ExchangeClient {
   abstract readonly name?: string;
@@ -9,15 +6,15 @@ export abstract class ExchangeClient {
   abstract readonly apiKey: string;
   abstract readonly remainingQuotesKey?: string;
 
-  protected readonly supportedCurrencyKeys = Object.keys(SUPPORTED_CURRENCIES);
+  protected readonly supportedCurrencyKeys = SUPPORTED_CURRENCIES;
 
   abstract getExchangeRates(
-    baseCurrency: SupportedCurrencyCode
+    baseCurrency: SupportedCurrency
   ): Promise<ExchangeRate>;
 }
 
 export interface ExchangeRate {
-  base: SupportedCurrencyCode;
-  rates: Record<SupportedCurrencyCode, number>;
+  base: SupportedCurrency;
+  rates: Record<SupportedCurrency, number>;
   remaining?: number;
 }

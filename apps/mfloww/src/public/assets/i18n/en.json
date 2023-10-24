@@ -89,6 +89,8 @@
   "Settings": {
     "Profile": "Profile",
     "ProfileDesc": "Your email address is your identity on mfloww. If you change your email address or username, your session will also expire.",
+    "ConsiderSignIn": "Create your account",
+    "ConsiderSignInDesc": "Get the advantages of having an account: secure your data and enjoy seamless syncing across all your devices",
     "EncryptionKey": "Encryption Key",
     "Save": "Save",
     "PasswordDesc": "If you change your password, your session will also expire.",

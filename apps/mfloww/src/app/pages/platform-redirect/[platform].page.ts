@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SupportedPlatform } from '@mfloww/common';
 import { User } from '@prisma/client';
 import { AuthService } from '../../core/auth.service';
-import { ProfileInfo } from '../../core/models/profile-info';
+import { UserInfo } from '../../core/models/profile-info';
 import { SnackBarService } from '../../core/snack-bar.service';
 
 @Component({
@@ -61,7 +61,7 @@ export default class PlatformRedirectComponent implements OnInit {
       .subscribe({
         next: (user) => {
           this.inProgress.set(false);
-          this.authService.setProfileInfo(user as ProfileInfo);
+          this.authService.setProfileInfo(user as UserInfo);
           this.router.navigate(['/dashboard/balance']);
         },
         error: (err) => {

@@ -1,4 +1,4 @@
-import { SupportedCurrencyCode } from '../supported-currency';
+import { SupportedCurrency } from '../supported-currency';
 import { ExchangeClient, ExchangeRate } from './exchange-client.interface';
 
 interface CurrencyLayerResponse {
@@ -10,12 +10,12 @@ interface CurrencyLayerResponse {
 
 export class CurrencyLayerClient extends ExchangeClient {
   name = 'Currency Layer';
-  readonly apiUrl = process.env.CURRENCY_LAYER_API_URL as string;
-  readonly apiKey = process.env.CURRENCY_LAYER_API_KEY as string;
+  readonly apiUrl = process.env['CURRENCY_LAYER_API_URL'] as string;
+  readonly apiKey = process.env['CURRENCY_LAYER_API_KEY'] as string;
   readonly remainingQuotesKey = 'X-RateLimit-Remaining-Month';
 
   async getExchangeRates(
-    baseCurrency: SupportedCurrencyCode
+    baseCurrency: SupportedCurrency
   ): Promise<ExchangeRate> {
     const url = new URL(`${this.apiUrl}/live`);
     url.searchParams.append('source', baseCurrency);

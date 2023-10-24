@@ -1,4 +1,4 @@
-import { SupportedCurrencyCode } from '../supported-currency';
+import { SupportedCurrency } from '../supported-currency';
 import { ExchangeClient, ExchangeRate } from './exchange-client.interface';
 
 interface CurrencyApiResponse {
@@ -12,12 +12,12 @@ interface CurrencyApiCurrentRate {
 
 export class CurrencyApiClient extends ExchangeClient {
   readonly name = 'Currency API';
-  readonly apiUrl = process.env.CURRENCY_API_URL as string;
-  readonly apiKey = process.env.CURRENCY_API_KEY as string;
+  readonly apiUrl = process.env['CURRENCY_API_URL'] as string;
+  readonly apiKey = process.env['CURRENCY_API_KEY'] as string;
   readonly remainingQuotesKey = 'x-ratelimit-remaining-quota-month';
 
   async getExchangeRates(
-    baseCurrency: SupportedCurrencyCode
+    baseCurrency: SupportedCurrency
   ): Promise<ExchangeRate> {
     const url = new URL(`${this.apiUrl}/latest`);
     url.searchParams.append('apiKey', this.apiKey);

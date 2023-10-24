@@ -3,7 +3,7 @@ import { CurrencyLayerClient } from './clients/currency-layer.client';
 import { ExchangeRate } from './clients/exchange-client.interface';
 import { ExchangeRateClient } from './clients/exchange-rate.client';
 import { FixerClient } from './clients/fixer.client';
-import { SupportedCurrencyCode } from './supported-currency';
+import { SupportedCurrency } from './supported-currency';
 
 export const exchangeRates = () => {
   const clients = [
@@ -13,12 +13,18 @@ export const exchangeRates = () => {
     new FixerClient(),
   ] as const;
   let currentClient = 0;
-  const cache: Partial<Record<SupportedCurrencyCode, ExchangeRate>> = {};
-  const lastFetchMap: Partial<Record<SupportedCurrencyCode, Date>> = {};
+  const cache: Partial<Record<SupportedCurrency, ExchangeRate>> = {};
+  const lastFetchMap: Partial<Record<SupportedCurrency, Date>> = {};
 
-  async function fetchLatestRates(baseCurrency: SupportedCurrencyCode) {
+  async function fetchLatestRates(
+    baseCurrency: SupportedCurrency
+  ): Promise<ExchangeRate> {
     try {
-      return await clients[currentClient].getExchangeRates(baseCurrency);
+      const exchangeRates = await clients[currentClient].getExchangeRates(
+        baseCurrency
+      );
+      delete exchangeRates.rates[baseCurrency];
+      return exchangeRates as ExchangeRate;
     } catch (error) {
       if (currentClient < clients.length - 1) {
         currentClient++;
@@ -28,7 +34,7 @@ export const exchangeRates = () => {
     }
   }
 
-  function shouldRefresh(baseCurrency: SupportedCurrencyCode) {
+  function shouldRefresh(baseCurrency: SupportedCurrency) {
     if (!lastFetchMap[baseCurrency]) {
       return true;
     }
@@ -38,7 +44,7 @@ export const exchangeRates = () => {
     );
   }
 
-  return async (baseCurrency: SupportedCurrencyCode): Promise<ExchangeRate> => {
+  return async (baseCurrency: SupportedCurrency): Promise<ExchangeRate> => {
     if (cache[baseCurrency] && !shouldRefresh(baseCurrency)) {
       return cache[baseCurrency] as ExchangeRate;
     }

@@ -17,34 +17,21 @@ export const createContext = async ({
   res: ServerResponse;
 }) => {
   async function getUserFromCookie() {
-    async function findUserOrPlatformUserOrThrow(
-      userId: string,
-      userKey: string
-    ) {
-      const user = await prisma.user.findFirst({
-        where: { id: userId, key: userKey },
-      });
-
-      if (!user) {
-        return await prisma.platformUser.findFirstOrThrow({
-          where: { id: userId, key: userKey },
-        });
-      }
-
-      return user;
-    }
-
     try {
       const cookies = parseCookie(req.headers.cookie);
-      const token = cookies['TOKEN'] || cookies['XSRF_TOKEN'];
+      const token = cookies['TOKEN'];
       const decoded = jwt.verify(
         token,
         env['JWT_SECRET'] as string
       ) as JwtPayload;
-      const user = await findUserOrPlatformUserOrThrow(
-        decoded['id'],
-        decoded['key']
-      );
+
+      if (decoded['isAnonymous']) {
+        return decoded;
+      }
+
+      const user = await prisma.user.findFirstOrThrow({
+        where: { id: decoded['id'], key: decoded['key'] },
+      });
 
       return user;
     } catch (err) {

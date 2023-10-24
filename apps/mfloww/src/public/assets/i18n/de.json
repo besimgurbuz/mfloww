@@ -92,6 +92,8 @@
   "Settings": {
     "Profile": "Profil",
     "ProfileDesc": "Deine E-Mail-Adresse ist deine Identität bei mfloww. Wenn du deine E-Mail-Adresse oder deinen Benutzernamen änderst, läuft auch deine Sitzung ab.",
+    "ConsiderSignIn": "Erstellen Sie Ihr Konto",
+    "ConsiderSignInDesc": "Erhalten Sie die Vorteile eines Kontos: Schützen Sie Ihre Daten und genießen Sie nahtlose Synchronisierung auf all Ihren Geräten.",
     "EncryptionKey": "Verschlüsselungsschlüssel",
     "Save": "Speichern",
     "PasswordDesc": "Wenn du dein Passwort änderst, läuft auch deine Sitzung ab.",
@@ -172,7 +174,6 @@
     "Changelog": "Änderungsprotokoll",
     "Settings": "Einstellungen",
     "SignIn": "Anmelden",
-    "SignUp": "Registrieren",
     "Or": "oder",
     "ContinueWithGoogle": "Mit Google fortfahren"
   }

@@ -73,7 +73,7 @@ export class DatesSelectionGroupComponent {
   toggleAll(): void {
     const toggled = !this._allDatesSelected();
     this._allDatesSelected.set(toggled);
-    const toggledDates = toggled ? this.entryDates : [];
+    const toggledDates = toggled ? [...this.entryDates] : [];
 
     this.changed.emit(toggledDates);
     this._selectedEntryDates.set(toggledDates);

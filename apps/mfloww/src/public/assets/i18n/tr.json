@@ -92,6 +92,8 @@
   "Settings": {
     "Profile": "Profil",
     "ProfileDesc": "E-posta adresiniz mfloww'daki kimliğinizdir. E-posta adresinizi veya kullanıcı adınızı değiştirirseniz, oturumunuz da sona erecektir.",
+    "ConsiderSignIn": "Hesap Oluşturun",
+    "ConsiderSignInDesc": "Bir hesap sahibi olmanın avantajlarını elde edin: Verilerinizi güvence altına alın ve tüm cihazlarınızda sorunsuz senkronizasyonun tadını çıkarın.",
     "EncryptionKey": "Şifreleme anahtarı",
     "Save": "Kaydet",
     "PasswordDesc": "Şifrenizi değiştirirseniz, oturumunuz da sona erecektir.",

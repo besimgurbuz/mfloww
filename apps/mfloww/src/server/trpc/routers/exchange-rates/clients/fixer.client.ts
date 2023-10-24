@@ -1,4 +1,4 @@
-import { SupportedCurrencyCode } from '../supported-currency';
+import { SupportedCurrency } from '../supported-currency';
 import { ExchangeClient, ExchangeRate } from './exchange-client.interface';
 
 export interface FixerResponse {
@@ -11,12 +11,12 @@ export interface FixerResponse {
 
 export class FixerClient extends ExchangeClient {
   name = 'Fixer';
-  readonly apiUrl = process.env.FIXER_API_URL as string;
-  readonly apiKey = process.env.FIXER_API_KEY as string;
+  readonly apiUrl = process.env['FIXER_API_URL'] as string;
+  readonly apiKey = process.env['FIXER_API_KEY'] as string;
   remainingQuotesKey = 'x-ratelimit-remaining-month';
 
   async getExchangeRates(
-    baseCurrency: SupportedCurrencyCode
+    baseCurrency: SupportedCurrency
   ): Promise<ExchangeRate> {
     const url = new URL(`${this.apiUrl}/latest`);
     url.searchParams.append('base', baseCurrency);
@@ -29,7 +29,7 @@ export class FixerClient extends ExchangeClient {
     return {
       base: baseCurrency,
       rates: jsonBody.rates,
-      remaining: response.headers[this.remainingQuotesKey],
+      remaining: Number(response.headers.get(this.remainingQuotesKey)),
     };
   }
 }

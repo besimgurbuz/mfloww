@@ -1,9 +1,16 @@
 import { SupportedPlatform } from '@mfloww/common';
 
-export interface ProfileInfo {
+export type UserInfo = {
   id: string;
-  username: string;
-  email: string;
   key: string;
-  platform?: SupportedPlatform;
-}
+} & (
+  | {
+      username: string;
+      email: string;
+      platform: SupportedPlatform;
+      isAnonymous: never | false;
+    }
+  | {
+      isAnonymous: true;
+    }
+);

@@ -2,19 +2,17 @@ import { Injectable, inject } from '@angular/core';
 import { CryptoSecretService } from '@mfloww/db';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { injectTrpcClient } from '../../trpc-client';
-import { LocalStorageService } from './local-storage.service';
-import { ProfileInfo } from './models/profile-info';
+import { UserInfo } from './models/profile-info';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly trpcClient = injectTrpcClient();
-  private readonly localStorageService = inject(LocalStorageService);
   private readonly cryptoSecretService = inject(CryptoSecretService);
 
-  private profileInfoSubject: BehaviorSubject<ProfileInfo | null> =
-    new BehaviorSubject<ProfileInfo | null>(null);
+  private profileInfoSubject: BehaviorSubject<UserInfo | null> =
+    new BehaviorSubject<UserInfo | null>(null);
 
   isUserLoggedIn(): boolean {
     return this.profileInfoSubject.value !== null;
@@ -24,7 +22,7 @@ export class AuthService {
     return this.profileInfoSubject.pipe(map((profileInfo) => !!profileInfo));
   }
 
-  setProfileInfo(profileInfo: ProfileInfo): void {
+  setProfileInfo(profileInfo: UserInfo): void {
     this.profileInfoSubject.next(profileInfo);
     this.cryptoSecretService.secret = profileInfo.key;
   }
@@ -37,11 +35,11 @@ export class AuthService {
     );
   }
 
-  get profileInfo$(): Observable<ProfileInfo | null> {
+  get profileInfo$(): Observable<UserInfo | null> {
     return this.profileInfoSubject.asObservable();
   }
 
-  get currentProfileInfo(): ProfileInfo | null {
+  get currentProfileInfo(): UserInfo | null {
     return this.profileInfoSubject.value;
   }
 
