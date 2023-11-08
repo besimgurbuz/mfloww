@@ -41,3 +41,5 @@ Thumbs.db
 .angular
 
 .env
+.nx/cache
+.vercel

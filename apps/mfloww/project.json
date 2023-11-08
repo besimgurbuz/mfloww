@@ -53,19 +53,13 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": [
-        "{projectRoot}/coverage"
-      ]
+      "outputs": ["{projectRoot}/coverage"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/mfloww/**/*.{ts,html}"
-        ]
+        "lintFilePatterns": ["apps/mfloww/**/*.{ts,html}"]
       }
     }
   },
