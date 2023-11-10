@@ -6,6 +6,7 @@
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && prisma generate",
     "start": "nx serve",
+    "build": "nx run mfloww:build:production",
     "build:dev": "nx build",
     "test": "nx test",
     "serve:ssr": "node dist/apps/mfloww/ssr/main.server.mjs"
