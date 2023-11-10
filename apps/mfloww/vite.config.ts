@@ -20,9 +20,11 @@ export default defineConfig(({ mode }) => {
     plugins: [
       analog({
         nitro: {
-          preset: 'vercel',
+          output: {
+            dir: './dist/apps/mfloww',
+            serverDir: '{{ rootDir }}/.netlify/functions-internal',
+          },
         },
-        ssr: true,
       }),
       tsConfigPaths({
         root: '../../',

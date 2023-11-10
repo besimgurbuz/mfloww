@@ -61,6 +61,7 @@
     "@angular/compiler-cli": "16.2.12",
     "@angular/language-service": "16.2.12",
     "@nx/cypress": "17.0.3",
+    "@nx/eslint": "17.0.3",
     "@nx/eslint-plugin": "17.0.3",
     "@nx/jest": "17.0.3",
     "@nx/js": "17.0.3",
@@ -99,7 +100,6 @@
     "url": "^0.11.1",
     "vite": "^4.3.9",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.32.2",
-    "@nx/eslint": "17.0.3"
+    "vitest": "^0.32.2"
   }
 }
