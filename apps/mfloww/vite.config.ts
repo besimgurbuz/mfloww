@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
   return {
     publicDir: 'src/public',
     server: {
-      host: '127.0.0.1',
+      host: process.env['HOST'],
     },
     ssr: {
       noExternal: '@analogjs/trpc/**',
