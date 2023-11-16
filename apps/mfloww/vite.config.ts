@@ -9,13 +9,13 @@ export default defineConfig(({ mode }) => {
   return {
     publicDir: 'src/public',
     server: {
-      host: process.env['SERVER_HOST'],
+      host: process.env['HOST'],
     },
     ssr: {
       noExternal: '@analogjs/trpc/**',
     },
     build: {
-      target: ['es2020'],
+      target: ['esnext'],
     },
     plugins: [
       analog({
