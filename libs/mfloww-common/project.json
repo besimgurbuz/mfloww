@@ -25,8 +25,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/mfloww-common"],
       "options": {
-        "jestConfig": "libs/mfloww-common/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/mfloww-common/jest.config.ts"
       }
     }
   },
