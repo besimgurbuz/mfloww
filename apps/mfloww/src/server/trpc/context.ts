@@ -20,10 +20,12 @@ export const createContext = async ({
     try {
       const cookies = parseCookie(req.headers.cookie);
       const token = cookies['TOKEN'];
+      console.log('cookie control', token);
       const decoded = jwt.verify(
         token,
         env['JWT_SECRET'] as string
       ) as JwtPayload;
+      console.log('decoded', decoded);
 
       if (decoded['isAnonymous']) {
         return decoded;
