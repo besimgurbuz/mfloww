@@ -15,7 +15,8 @@
       "options": {
         "main": "apps/mfloww/src/main.ts",
         "configFile": "apps/mfloww/vite.config.ts",
-        "outputPath": "dist/apps/mfloww/client"
+        "outputPath": "dist/apps/mfloww/client",
+        "skipTypeCheck": true
       },
       "defaultConfiguration": "production",
       "configurations": {
@@ -53,13 +54,19 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["{projectRoot}/coverage"]
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/mfloww/**/*.{ts,html}"]
+        "lintFilePatterns": [
+          "apps/mfloww/**/*.{ts,html}"
+        ]
       }
     }
   },

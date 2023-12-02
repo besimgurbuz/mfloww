@@ -80,16 +80,14 @@ export class DatesSelectionGroupComponent {
   }
 
   toggleSelectedDate(toggledDate: string): void {
-    this._selectedEntryDates.mutate((selectedEntryDates) => {
-      const indexOfToggledDate = selectedEntryDates.indexOf(toggledDate);
+    const updatedSelection = [...this._selectedEntryDates()];
+    const indexOfToggledDate = updatedSelection.indexOf(toggledDate);
 
-      if (indexOfToggledDate >= 0) {
-        selectedEntryDates.splice(indexOfToggledDate, 1);
-      } else {
-        selectedEntryDates.push(toggledDate);
-      }
-    });
-    const updatedSelection = this._selectedEntryDates();
+    if (indexOfToggledDate >= 0) {
+      updatedSelection.splice(indexOfToggledDate, 1);
+    } else {
+      updatedSelection.push(toggledDate);
+    }
     const isReacedMaxSelection =
       updatedSelection.length === this.entryDates.length;
 
@@ -98,6 +96,7 @@ export class DatesSelectionGroupComponent {
     } else if (this._allDatesSelected()) {
       this._allDatesSelected.set(false);
     }
+    this._selectedEntryDates.set(updatedSelection);
     this.changed.emit(updatedSelection);
   }
 }
