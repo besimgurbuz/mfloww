@@ -28,15 +28,21 @@ export const shouldDisplayWhenLoggedIn = () => {
 
 export const shouldDisplayWhenLoggedOut = () => {
   const authService = inject(AuthService);
+  const trpcClient = injectTrpcClient();
   const router = inject(Router);
 
-  return authService.isUserLoggedIn$().pipe(
-    map((isUserLoggedIn) => {
-      if (isUserLoggedIn) {
-        router.navigate(['/dashboard']);
-      }
+  if (authService.isUserLoggedIn()) {
+    return false;
+  }
 
-      return !isUserLoggedIn;
+  return trpcClient.auth.hasSession.query().pipe(
+    map((profileInfo) => {
+      authService.setProfileInfo(profileInfo as UserInfo);
+      router.navigate(['/dashboard/balance']);
+      return false;
+    }),
+    catchError(() => {
+      return of(true);
     })
   );
 };
