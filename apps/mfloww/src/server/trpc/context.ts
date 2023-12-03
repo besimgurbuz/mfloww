@@ -18,15 +18,13 @@ export const createContext = async ({
 }) => {
   async function getUserFromCookie() {
     try {
+      console.log('trpc headers', req.headers);
       const cookies = parseCookie(req.headers.cookie);
-      console.log('cookies', req.headers.cookie);
       const token = cookies['TOKEN'];
-      console.log('token', token);
       const decoded = jwt.verify(
         token,
         env['JWT_SECRET'] as string
       ) as JwtPayload;
-      console.log('decoded', decoded);
 
       if (decoded['isAnonymous']) {
         return decoded;
