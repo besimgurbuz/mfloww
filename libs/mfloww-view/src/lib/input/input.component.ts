@@ -4,9 +4,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
-  Inject,
-  Injector,
+  inject,
   INJECTOR,
   Input,
   OnInit,
@@ -58,6 +56,10 @@ export class MflowwInputComponent implements ControlValueAccessor, OnInit {
   @Input() label?: string;
   @Input() copyable?: boolean;
 
+  private injector = inject(INJECTOR);
+  private formGroup = inject(FormGroupDirective);
+  private cd = inject(ChangeDetectorRef);
+
   _control!: FormControl;
   errorMessages = ERROR_MESSAGES;
   _value = '';
@@ -73,13 +75,6 @@ export class MflowwInputComponent implements ControlValueAccessor, OnInit {
       ?.pipe(map(() => this.formGroup.invalid)) || of(false);
   _onTouched: () => void = () => {};
   _onChange: (value: string) => void = () => {};
-
-  constructor(
-    @Inject(INJECTOR) private injector: Injector,
-    private formGroup: FormGroupDirective,
-    private elementRef: ElementRef,
-    private cd: ChangeDetectorRef
-  ) {}
 
   ngOnInit(): void {
     this._control = this.injector.get(NgControl) as unknown as FormControl;

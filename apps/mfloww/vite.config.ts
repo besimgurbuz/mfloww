@@ -15,6 +15,9 @@ export default defineConfig(({ mode }) => {
       noExternal: '@analogjs/trpc/**',
     },
     build: {
+      outDir: '../../dist/apps/mfloww/client',
+      reportCompressedSize: true,
+      commonjsOptions: { transformMixedEsModules: true },
       target: ['esnext'],
     },
     plugins: [
@@ -30,6 +33,11 @@ export default defineConfig(({ mode }) => {
       splitVendorChunkPlugin(),
     ],
     test: {
+      reporters: ['default'],
+      coverage: {
+        reportsDirectory: '../../coverage/apps/mfloww',
+        provider: 'v8',
+      },
       globals: true,
       environment: 'jsdom',
       setupFiles: ['src/test-setup.ts'],
