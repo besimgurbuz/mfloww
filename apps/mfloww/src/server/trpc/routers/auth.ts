@@ -1,6 +1,6 @@
 import { User } from '@prisma/client';
 import { TRPCClientError } from '@trpc/client';
-import { randomBytes } from 'crypto';
+import { randomBytes, randomInt } from 'crypto';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { protectedProcedure, publicProcedure, router } from '../trpc';
@@ -22,7 +22,7 @@ export const authRoute = router({
         );
       }
       const anonymousUser = {
-        id: '0',
+        id: randomInt(9999).toString(),
         key: randomBytes(64).toString('hex'),
         username: 'anonymous',
         isAnonymous: true,

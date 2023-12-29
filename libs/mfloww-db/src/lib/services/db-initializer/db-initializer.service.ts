@@ -24,7 +24,6 @@ export class MflowwDbInitializerService {
     new ReplaySubject<DbConnectionResult>(1);
   protected _dbRequest!: IDBOpenDBRequest;
 
-  // callbacks
   private readonly _onConnectionErr = () => {
     console.error(
       `MflowwDb(InitializerService): ${this._dbRequest.error?.message}`

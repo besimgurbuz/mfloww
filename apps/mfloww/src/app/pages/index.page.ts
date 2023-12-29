@@ -1,6 +1,7 @@
 import { RouteMeta } from '@analogjs/router';
 import { NgForOf } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Icon, MflowwIconComponent } from '@mfloww/view';
 import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
 import { LandingImageComponent } from '../components/landing-image/landing-image.component';
@@ -21,6 +22,7 @@ export const routeMeta: RouteMeta = {
     MflowwIconComponent,
     LandingImageComponent,
     TranslocoDirective,
+    RouterLink,
   ],
   template: `
     <ng-container *transloco="let t">
@@ -87,7 +89,7 @@ export const routeMeta: RouteMeta = {
           </h1>
           <a
             class="px-5 py-2 border-2 border-solid rounded text-mfloww_white hover:bg-mfloww_white hover:text-mfloww_bg hover:cursor-pointer"
-            routerLink="/user/sign-in"
+            routerLink="/sign-in"
           >
             {{ t('Common.SignIn') }}
           </a>
