@@ -3,29 +3,23 @@
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import { useFormState } from "react-dom"
 
-import {
-  authenticateAnonymously,
-  authenticateWithGitHub,
-  authenticateWithGoogle,
-} from "@/lib/actions"
+import { authenticate } from "@/lib/actions"
+import { useServerAction } from "@/lib/hooks"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 
 import { Icons } from "../icons"
 
 export function Authentication() {
-  const [anonymousSignInError, dispatchAnonymousSignIn] = useFormState(
-    authenticateAnonymously,
+  const [state, dispatch] = useFormState(
+    async (previousState: unknown, formData: FormData) => {
+      const provider = formData.get("provider")?.toString()
+
+      return await authenticate(provider)
+    },
     undefined
   )
-  const [gitHubSignInError, dispatchGitHubSignIn] = useFormState(
-    authenticateWithGitHub,
-    undefined
-  )
-  const [googleSignInError, dispatchGoogleSignIn] = useFormState(
-    authenticateWithGoogle,
-    undefined
-  )
+  const [action, isPending] = useServerAction(dispatch as any)
 
   return (
     <div className="flex flex-col flex-grow justify-center gap-4 md:gap-8">
@@ -37,10 +31,15 @@ export function Authentication() {
             choose.
           </p>
         </div>
-        <div className="grid gap-6">
-          <form action={dispatchAnonymousSignIn} className="w-full">
-            <Button className="w-full">Sign in Anonymously</Button>
-          </form>
+        <form action={action} className="grid gap-6 w-full">
+          <Button
+            className="w-full"
+            name="provider"
+            value="credentials"
+            disabled={isPending}
+          >
+            Sign in Anonymously
+          </Button>
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t"></span>
@@ -51,29 +50,31 @@ export function Authentication() {
               </span>
             </div>
           </div>
-          <form action={dispatchGitHubSignIn} className="w-full">
-            <Button
-              variant="outline"
-              className="flex gap-2 font-semibold w-full"
-            >
-              <Icons.gitHub className="w-6 h-6" /> GitHub
-            </Button>
-          </form>
-          <form action={dispatchGoogleSignIn} className="w-full">
-            <Button
-              variant="outline"
-              className="flex gap-2 font-semibold w-full"
-            >
-              <Icons.google className="w-6 h-6" /> Google
-            </Button>
-          </form>
-        </div>
+          <Button
+            variant="outline"
+            className="flex gap-2 font-semibold w-full"
+            name="provider"
+            value="github"
+            disabled={isPending}
+          >
+            <Icons.gitHub className="w-6 h-6" /> GitHub
+          </Button>
+          <Button
+            variant="outline"
+            className="flex gap-2 font-semibold w-full"
+            name="provider"
+            value="google"
+            disabled={isPending}
+          >
+            <Icons.google className="w-6 h-6" /> Google
+          </Button>
+        </form>
       </div>
-      {(anonymousSignInError || gitHubSignInError || googleSignInError) && (
+      {state?.message && (
         <Alert variant="destructive" className="overflow-hidden">
           <ExclamationTriangleIcon className="h-4 w-w" />
           <AlertTitle>Sign in error</AlertTitle>
-          <AlertDescription>{anonymousSignInError}</AlertDescription>
+          <AlertDescription>{state.message}</AlertDescription>
         </Alert>
       )}
     </div>

@@ -3,8 +3,6 @@ import { Inter } from "next/font/google"
 import { SessionProvider } from "next-auth/react"
 
 import { Header } from "@/components/header"
-import { LoadıngProgress } from "@/components/loading-progress"
-import { LoadingProgressProvider } from "@/components/loading-progress-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 
 import "./globals.css"
@@ -34,11 +32,8 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <LoadingProgressProvider>
-              <LoadıngProgress />
-              <Header />
-              {children}
-            </LoadingProgressProvider>
+            <Header />
+            {children}
             <footer className="py-6 md:px-8 md:py-0">
               <div className="container flex flex-col items-center text-center gap-1 md:h-24 md:flex-row">
                 <p className="text-sm text-muted-foreground">

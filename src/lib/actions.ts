@@ -3,34 +3,16 @@
 import { signIn, signOut as signOutFn } from "@/auth"
 import { AuthError } from "next-auth"
 
-export async function authenticateAnonymously() {
+export async function authenticate(provider: string | undefined) {
   try {
-    await signIn("credentials")
+    await signIn(provider)
   } catch (error) {
     if (error instanceof AuthError) {
-      return "Something went wrong while trying to sign in as anonymous"
-    }
-    throw error
-  }
-}
-
-export async function authenticateWithGitHub() {
-  try {
-    await signIn("github")
-  } catch (error) {
-    if (error instanceof AuthError) {
-      return "Something went wrong while trying to sign in with github"
-    }
-    throw error
-  }
-}
-
-export async function authenticateWithGoogle() {
-  try {
-    await signIn("google")
-  } catch (error) {
-    if (error instanceof AuthError) {
-      return "Something went wrong while trying to sign in with github"
+      return {
+        message: `Something went wrong while trying to sign in ${
+          provider === "credentials" ? "as anonymously" : `with ${provider}`
+        }`,
+      }
     }
     throw error
   }

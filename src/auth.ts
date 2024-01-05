@@ -1,29 +1,39 @@
 import { randomBytes } from "crypto"
-import { AdapterUser } from "@auth/core/adapters"
-import PostgresAdapter from "@auth/pg-adapter"
+import { Adapter } from "@auth/core/adapters"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { PrismaClient, User } from "@prisma/client"
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import GitHub from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
-import { Pool } from "pg"
 
 import { authConfig } from "./auth.config"
 
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL + "?sslmode=require",
-})
+const prisma = new PrismaClient()
 
-export const dbAdapter = PostgresAdapter(pool)
-dbAdapter.createUser = async (user: AdapterUser) => {
+export const dbAdapter = PrismaAdapter(prisma)
+dbAdapter.createUser = (async (user: User) => {
   if (user.email) {
-    const savedUser = await pool.query<AdapterUser>(
-      'INSERT INTO users(key, name, email, "emailVerified", image) VALUES($1, $2, $3, $4, $5) RETURNING *',
-      [generateUserKey(), user.name, user.email, user.emailVerified, user.image]
-    )
-    return savedUser.rows[0]
+    const foundUser = await prisma.user.findUnique({
+      where: { email: user.email },
+    })
+    if (foundUser) {
+      return foundUser
+    }
+
+    const savedUser = await prisma.user.create({
+      data: {
+        key: generateUserKey(),
+        name: user.name,
+        email: user.email,
+        emailVerified: user.emailVerified,
+        image: user.image,
+      },
+    })
+    return savedUser
   }
   return user
-}
+}) as Adapter["createUser"]
 
 export const {
   auth,
@@ -32,7 +42,7 @@ export const {
   handlers: { GET, POST },
 } = NextAuth({
   ...authConfig,
-  adapter: dbAdapter as any,
+  adapter: dbAdapter,
   providers: [
     Credentials({
       name: "anonymous",
