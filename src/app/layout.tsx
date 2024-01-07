@@ -35,7 +35,7 @@ export default function RootLayout({
             <Header />
             {children}
             <footer className="py-6 md:px-8 md:py-0">
-              <div className="container flex flex-col items-center text-center gap-1 md:h-24 md:flex-row">
+              <div className="custom-container flex flex-col items-center text-center gap-1 md:h-24 md:flex-row">
                 <p className="text-sm text-muted-foreground">
                   Built by{" "}
                   <a

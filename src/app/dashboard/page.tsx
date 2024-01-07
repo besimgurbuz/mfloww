@@ -1,7 +1,7 @@
 export default function Dashboard() {
   return (
-    <div className="min-h-[calc(100vh-192px)]">
-      <h2>dashboard</h2>
+    <div className="custom-container custom-min-h">
+      <h2>overview</h2>
     </div>
   )
 }
