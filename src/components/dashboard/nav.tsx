@@ -10,7 +10,8 @@ import { MonthSelectionCommand } from "./month-selection-command"
 export function DashboardNav() {
   const pathname = usePathname()
   const routes: { path: string; name: string }[] = [
-    { path: "/dashboard", name: "Balance" },
+    { path: "/dashboard", name: "Overview" },
+    { path: "/dashboard/balance", name: "Balance" },
     { path: "/dashboard/graphics", name: "Graphics" },
   ]
 

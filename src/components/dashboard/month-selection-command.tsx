@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { DialogTrigger } from "@radix-ui/react-dialog"
 import {
   CaretSortIcon,
@@ -17,6 +17,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandShortcut,
 } from "@/components/ui/command"
 import {
   Dialog,
@@ -44,6 +45,17 @@ export function MonthSelectionCommand() {
   }>()
   const [showNewEntryDialog, setShowNewEntryDialog] = useState(false)
 
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "/") {
+        e.preventDefault()
+        setOpen((open) => !open)
+      }
+    }
+    document.addEventListener("keydown", down)
+    return () => document.removeEventListener("keydown", down)
+  }, [])
+
   return (
     <Dialog open={showNewEntryDialog} onOpenChange={setShowNewEntryDialog}>
       <Popover open={open} onOpenChange={setOpen}>
@@ -52,9 +64,10 @@ export function MonthSelectionCommand() {
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="justify-between w-[200px]"
+            className="justify-between w-[300px]"
           >
-            {selectedEntry ? selectedEntry : "Select an entry..."}
+            {selectedEntry ? selectedEntry : "Select an entry"}
+            <CommandShortcut>/</CommandShortcut>
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
