@@ -7,8 +7,8 @@ import { Icons } from "@/components/icons"
 
 export default function Home() {
   return (
-    <div className="flex flex-col relative min-h-[calc(100vh-192px)]">
-      <main className="container flex-1">
+    <div className="flex flex-col relative custom-min-h">
+      <main className="custom-container flex-1">
         <section className="mx-auto py-6 max-w-[980px] flex flex-col items-center w-full">
           <LandingIllustration className="w-[280px] md:w-[500px] lg:w-[600px] my-2" />
           <h1 className="text-center text-3xl md:text-5xl lg:text-6xl text-foreground font-bold font-sans">

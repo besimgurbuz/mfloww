@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { User } from "next-auth"
 import { useFormState } from "react-dom"
 
@@ -10,11 +11,27 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
 export function UserDropdown({ user }: { user?: User }) {
   const [, dispatchSignOut] = useFormState(signOut, undefined)
+
+  useEffect(() => {
+    const down = async (e: KeyboardEvent) => {
+      if (e.key === "s" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        console.log("settings clicked")
+      } else if (e.key === "o" && e.shiftKey && (e.metaKey || e.ctrlKey)) {
+        console.log("sign out")
+        await signOut()
+      }
+    }
+
+    document.addEventListener("keydown", down)
+    return () => document.removeEventListener("keydown", down)
+  }, [])
 
   if (!user) {
     return <></>
@@ -43,13 +60,13 @@ export function UserDropdown({ user }: { user?: User }) {
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           Settings
-          {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
+          <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <form action={dispatchSignOut} className="w-full">
             <button className="w-full text-start">Log out</button>
           </form>
-          {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
+          <DropdownMenuShortcut>⇧⌘O</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

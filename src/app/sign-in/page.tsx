@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function SignIn() {
   return (
-    <div className="container relative flex flex-col min-h-[calc(100vh-192px)] w-[350px] md:w-[500px]">
+    <div className="custom-container relative flex flex-col custom-min-h w-[350px] md:w-[500px]">
       <Authentication />
     </div>
   )

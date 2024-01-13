@@ -106,4 +106,90 @@ export const Icons = {
       <path fill="none" d="M0 0h48v48H0z"></path>
     </svg>
   ),
+  dollar: (props: IconProps) => (
+    <svg
+      stroke="currentColor"
+      fill="none"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      height="24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2"></path>
+      <path d="M12 3v3m0 12v3"></path>
+    </svg>
+  ),
+  category: (props: IconProps) => (
+    <svg
+      stroke="currentColor"
+      fill="currentColor"
+      strokeWidth="0"
+      viewBox="0 0 24 24"
+      height="24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path d="M4 11h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1zm10 0h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1zM4 21h6a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1zm13 0c2.206 0 4-1.794 4-4s-1.794-4-4-4-4 1.794-4 4 1.794 4 4 4z"></path>
+    </svg>
+  ),
+  repeat: (props: IconProps) => (
+    <svg viewBox="0 0 16 16" {...props}>
+      <path
+        d="M0 4.75A3.75 3.75 0 0 1 3.75 1h8.5A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25h-8.5A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5z"
+        fill="currentColor"
+      ></path>
+    </svg>
+  ),
+  balanceTogether: (props: IconProps) => (
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 15 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M14 5.5C14 6.05228 13.5522 6.5 12.9999 6.5L1 6.5L1.0001 4L13 4C13.5523 4 14 4.44772 14 5V5.5Z"
+        fill="currentColor"
+      />
+      <path
+        d="M8.99984 9C8.99984 9.55228 8.55213 10 7.99984 10L0.999838 10L1 7.5L8 7.5C8.55229 7.5 9 7.94772 9 8.5L8.99984 9Z"
+        fill="currentColor"
+      />
+    </svg>
+  ),
+  balanceGrouped: (props: IconProps) => (
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 15 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M1 5C1 4.44772 1.44772 4 2.00001 4H7.00001L7 6.5H2C1.44771 6.5 1 6.05228 1 5.5L1 5Z"
+        fill="currentColor"
+      />
+      <path
+        d="M14 5.5C14 6.05228 13.5523 6.5 13 6.5H8L7.99999 4H13C13.5523 4 14 4.44772 14 5L14 5.5Z"
+        fill="currentColor"
+      />
+      <path
+        d="M12.0001 9C12.0001 9.55228 11.5524 10 11.0001 10H8L7.99989 7.5H11C11.5523 7.5 12 7.94772 12 8.5L12.0001 9Z"
+        fill="currentColor"
+      />
+      <path
+        d="M3.5 8.5C3.5 7.94772 3.94771 7.5 4.5 7.5H7.00001V10H4.5C3.94771 10 3.5 9.55228 3.5 9V8.5Z"
+        fill="currentColor"
+      />
+    </svg>
+  ),
 }

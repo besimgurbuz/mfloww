@@ -81,4 +81,12 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .custom-container {
+    @apply container max-w-screen-2xl;
+  }
+
+  .custom-min-h {
+    @apply min-h-[calc(100vh-192px)];
+  }
 }

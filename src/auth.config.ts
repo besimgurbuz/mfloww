@@ -1,7 +1,5 @@
 import type { NextAuthConfig } from "next-auth"
 
-import { User } from "@/lib/definitions"
-
 export const authConfig = {
   pages: {
     signIn: "/sign-in",
@@ -18,24 +16,23 @@ export const authConfig = {
       }
       return true
     },
-    jwt({ token, user, profile }) {
-      if ((user as User)?.key && user?.id) {
-        token.user = user
+    jwt({ token, user }) {
+      if (user?.key && user?.id) {
+        token.id = user.id
+        token.key = user.key
       }
       return token
     },
     session({ session, token }) {
-      if (token.user) {
-        session.user = token.user as User
+      if (token.key && token.id) {
+        session.user.id = token.id as string
+        session.user.key = token.key as string
       }
       return session
-    },
-    async signIn({ user }) {
-      return true
     },
   },
   session: {
     strategy: "jwt",
   },
-  providers: [], // Add providers with an empty array for now
+  providers: [],
 } satisfies NextAuthConfig
