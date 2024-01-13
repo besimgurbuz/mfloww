@@ -1,8 +1,11 @@
+export type EntryType = "income" | "expense"
+
 export interface Entry {
   amount: number
   name: string
-  type: "revenue" | "expense"
+  type: EntryType
   isRegular: boolean
+  category?: string
   currency: SupportedCurrencyCode
   createdAt: string
 }

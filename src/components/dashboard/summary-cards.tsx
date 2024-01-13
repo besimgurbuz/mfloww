@@ -10,11 +10,11 @@ import { Icons } from "@/components/icons"
 type Props = {
   data: {
     balance: number
-    totalRevenues: number
-    totalExpenses: number
-    revenueAvgDiffOfYear: number
+    totalIncome: number
+    totalExpense: number
+    incomeAvgDiffOfYear: number
     expenseAvgDiffOfYear: number
-    revenueCount: number
+    incomeCount: number
     expenseCount: number
     mostSpentCategory: string
     mostSpentCategoryCount: number
@@ -25,11 +25,11 @@ type Props = {
 export function SummaryCards({
   data: {
     balance,
-    totalRevenues,
-    totalExpenses,
-    revenueAvgDiffOfYear,
+    totalIncome,
+    totalExpense: totalExpenses,
+    incomeAvgDiffOfYear,
     expenseAvgDiffOfYear,
-    revenueCount,
+    incomeCount,
     expenseCount,
     mostSpentCategory,
     mostSpentCategoryCount,
@@ -48,22 +48,22 @@ export function SummaryCards({
             {formatMoney(balance, currency)}
           </h2>
           <p className="text-sm text-muted-foreground">
-            {revenueCount} revenues, {expenseCount} expenses
+            {incomeCount} incomes, {expenseCount} expenses
           </p>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-          <CardTitle>Total Revenues</CardTitle>
+          <CardTitle>Total incomes</CardTitle>
           <TriangleUpIcon className="w-6 h-6 text-green ml-auto" />
         </CardHeader>
         <CardContent>
           <h2 className="text-xl md:text-2xl font-bold">
-            {formatMoney(totalRevenues, currency)}
+            {formatMoney(totalIncome, currency)}
           </h2>
           <p className="text-sm text-muted-foreground">
-            {`${revenueAvgDiffOfYear > 0 ? "+" : ""}${revenueAvgDiffOfYear}`}{" "}
-            from average of this year
+            {`${incomeAvgDiffOfYear > 0 ? "+" : ""}${incomeAvgDiffOfYear}`} from
+            average of this year
           </p>
         </CardContent>
       </Card>

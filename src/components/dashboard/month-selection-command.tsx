@@ -64,7 +64,7 @@ export function MonthSelectionCommand() {
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="justify-between w-[300px]"
+            className="justify-between w-[220px]"
           >
             {selectedEntry ? selectedEntry : "Select an entry"}
             <CommandShortcut>/</CommandShortcut>

@@ -1,5 +1,4 @@
 import { randomBytes } from "crypto"
-import { Adapter } from "@auth/core/adapters"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { PrismaClient, User } from "@prisma/client"
 import NextAuth from "next-auth"
@@ -33,7 +32,7 @@ dbAdapter.createUser = (async (user: User) => {
     return savedUser
   }
   return user
-}) as Adapter["createUser"]
+}) as any
 
 export const {
   auth,
@@ -42,7 +41,7 @@ export const {
   handlers: { GET, POST },
 } = NextAuth({
   ...authConfig,
-  adapter: dbAdapter,
+  adapter: dbAdapter as any,
   providers: [
     Credentials({
       name: "anonymous",

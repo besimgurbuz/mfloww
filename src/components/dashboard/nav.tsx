@@ -16,7 +16,7 @@ export function DashboardNav() {
   ]
 
   return (
-    <nav className="custom-container flex items-center w-full h-14 sticky top-14 space-x-4 lg:space-x-8">
+    <nav className="custom-container flex items-center w-full h-14 sticky top-14 space-x-4 lg:space-x-8 bg-white">
       <MonthSelectionCommand />
       {routes.map((route) => (
         <Link
@@ -24,7 +24,7 @@ export function DashboardNav() {
           href={route.path}
           className={cn(
             "font-medium transition-colors hover:text-primary text-muted-foreground",
-            pathname === route.path && "text-white"
+            pathname === route.path && "text-text"
           )}
         >
           {route.name}

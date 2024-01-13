@@ -1,11 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-import { Entry } from "@/lib/definitions"
+import { Entry, EntryType } from "@/lib/definitions"
 import { cn, formatMoney } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Icons } from "@/components/icons"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+
+import { RepeatingEntryIndicator } from "./repating-entry-indicator"
 
 const data: Entry[] = [
   {
@@ -13,7 +15,7 @@ const data: Entry[] = [
     name: "income #1",
     currency: "USD",
     isRegular: true,
-    type: "revenue",
+    type: "income",
     createdAt: new Date().toLocaleTimeString(),
   },
   {
@@ -37,7 +39,7 @@ const data: Entry[] = [
     name: "income #2",
     currency: "USD",
     isRegular: false,
-    type: "revenue",
+    type: "income",
     createdAt: new Date().toLocaleTimeString(),
   },
   {
@@ -52,38 +54,59 @@ const data: Entry[] = [
 
 type Props = {
   data: {
-    revenuesCount: number
+    incomeCount: number
     expenseCount: number
   }
 }
 
-type DataTableFilter = "revenues" | "expenses" | null
+type DataTableFilter = EntryType | "all"
 
-export function DataTableCard({
-  data: { revenuesCount, expenseCount },
-}: Props) {
-  const [filter, setFilter] = useState<DataTableFilter>(null)
+export function DataTableCard({ data: { incomeCount, expenseCount } }: Props) {
+  const [filter, setFilter] = useState<DataTableFilter>("all")
+  const [displayedEntries, setDisplayedEntries] = useState<Entry[]>([...data])
+
+  useEffect(() => {
+    if (filter === "all") {
+      setDisplayedEntries([...data])
+    } else {
+      setDisplayedEntries(data.filter((item) => item.type === filter))
+    }
+  }, [filter])
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Revenues and expenses</CardTitle>
-        <p className="text-sm text-muted-foreground">
-          You have {revenuesCount} incomes and {expenseCount} expenses this
-          month.
-        </p>
+      <CardHeader className="flex flex-row">
+        <div>
+          <CardTitle>Incomes and expenses</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            You have {incomeCount} incomes and {expenseCount} expenses this
+            month.
+          </p>
+        </div>
+        <ToggleGroup
+          type="single"
+          defaultValue="all"
+          value={filter}
+          className="ml-auto"
+          onValueChange={(value: DataTableFilter) => {
+            setFilter(value || filter)
+          }}
+        >
+          <ToggleGroupItem value="income">Incomes</ToggleGroupItem>
+          <ToggleGroupItem value="expense">Expenses</ToggleGroupItem>
+          <ToggleGroupItem value="all">All</ToggleGroupItem>
+        </ToggleGroup>
       </CardHeader>
-      <CardContent className="grid w-full">
-        {data.map((item, i) => (
+      <CardContent className="grid w-full relative">
+        {displayedEntries.map((item, i) => (
           <div key={i} className="flex items-center w-full py-2">
             <div
               className={cn(
                 "text-muted-foreground w-12",
                 item.isRegular ? "opacity-0" : "opacity-100"
               )}
-              title="Regular"
             >
-              <Icons.repeat className="w-5 h-5" />
+              <RepeatingEntryIndicator type={item.type} />
             </div>
             <div className="flex flex-col">
               <h2>{item.name}</h2>
