@@ -16,7 +16,7 @@ export function DashboardNav() {
   ]
 
   return (
-    <nav className="custom-container flex items-center w-full h-14 sticky top-14 space-x-4 lg:space-x-8 bg-white">
+    <nav className="custom-container flex items-center w-full h-14 sticky top-14 space-x-4 lg:space-x-8">
       <MonthSelectionCommand />
       {routes.map((route) => (
         <Link
