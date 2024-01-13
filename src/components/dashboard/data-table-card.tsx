@@ -7,7 +7,7 @@ import { cn, formatMoney } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-import { RepeatingEntryIndicator } from "./repating-entry-indicator"
+import { RegularEntryIndicator } from "./regular-entry-indicator"
 
 const data: Entry[] = [
   {
@@ -106,7 +106,7 @@ export function DataTableCard({ data: { incomeCount, expenseCount } }: Props) {
                 item.isRegular ? "opacity-0" : "opacity-100"
               )}
             >
-              <RepeatingEntryIndicator type={item.type} />
+              <RegularEntryIndicator type={item.type} />
             </div>
             <div className="flex flex-col">
               <h2>{item.name}</h2>

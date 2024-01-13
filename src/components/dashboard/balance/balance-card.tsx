@@ -20,7 +20,7 @@ const incomes: Entry[] = [
   },
   {
     amount: 45,
-    name: "income #2",
+    name: "income #2income #2income #2income #2income #2income #2income #2",
     currency: "USD",
     category: "app revenue",
     isRegular: false,
@@ -74,7 +74,7 @@ export function BalanceCard() {
   const [displayMode, setDisplayMode] = useState<DisplayMode>("together")
   return (
     <Card>
-      <CardHeader className="flex items-center flex-row w-full">
+      <CardHeader className="flex sm:items-center sm:flex-row gap-2 w-full">
         <div>
           <CardTitle>Incomes and expenses</CardTitle>
           <p className="text-sm text-muted-foreground">
@@ -91,19 +91,28 @@ export function BalanceCard() {
           }
         >
           <ToggleGroupItem value="together">
-            <Icons.balanceTogether className="w-4 h-4 text-muted-foreground" />
+            <Icons.balanceTogether className="w-4 h-4 sm:w-6 sm:h-6 text-muted-foreground" />
           </ToggleGroupItem>
           <ToggleGroupItem value="grouped">
-            <Icons.balanceGrouped className="w-4 h-4 text-muted-foreground" />
+            <Icons.balanceGrouped className="w-4 h-4 sm:w-6 sm:h-6 text-muted-foreground" />
           </ToggleGroupItem>
         </ToggleGroup>
       </CardHeader>
       <CardContent className="flex flex-col w-full gap-4">
         <div className="flex w-full">
           {displayMode === "grouped" ? (
-            <div className="flex w-full gap-4">
-              <EntryRowList data={incomes} currency="USD" direction="rtl" />
-              <EntryRowList data={expenses} currency="USD" />
+            <div className="flex w-full gap-4 flex-wrap sm:flex-nowrap">
+              <EntryRowList
+                data={expenses}
+                currency="USD"
+                direction="rtl"
+                className="order-2 sm:order-1"
+              />
+              <EntryRowList
+                data={incomes}
+                currency="USD"
+                className="order-1 sm:order-2"
+              />
             </div>
           ) : (
             <EntryRowList

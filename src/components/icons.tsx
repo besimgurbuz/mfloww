@@ -148,48 +148,67 @@ export const Icons = {
   ),
   balanceTogether: (props: IconProps) => (
     <svg
-      width="15"
-      height="15"
-      viewBox="0 0 15 15"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M14 5.5C14 6.05228 13.5522 6.5 12.9999 6.5L1 6.5L1.0001 4L13 4C13.5523 4 14 4.44772 14 5V5.5Z"
-        fill="currentColor"
-      />
-      <path
-        d="M8.99984 9C8.99984 9.55228 8.55213 10 7.99984 10L0.999838 10L1 7.5L8 7.5C8.55229 7.5 9 7.94772 9 8.5L8.99984 9Z"
+        d="M15.7436 12.3846V14.3077H2.92307V12.3846H15.7436ZM13.1795 15.0769V17H2.92307V15.0769L13.1795 15.0769ZM21 7V8.92308L2.92308 8.92308V7L21 7ZM19.4615 9.69231V11.6154H11.1943H2.92307V9.69231H11.1943H19.4615Z"
         fill="currentColor"
       />
     </svg>
   ),
   balanceGrouped: (props: IconProps) => (
     <svg
-      width="15"
-      height="15"
-      viewBox="0 0 15 15"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M1 5C1 4.44772 1.44772 4 2.00001 4H7.00001L7 6.5H2C1.44771 6.5 1 6.05228 1 5.5L1 5Z"
+        d="M21 12.3846V14.3077H8V12.3846H21ZM21 15.0769V17H14V15.0769H21ZM16 7V8.92308L2.92308 8.92308V7L16 7ZM15 9.69231V11.6154H11.1943H2.92307V9.69231H11.1943H15Z"
         fill="currentColor"
       />
+    </svg>
+  ),
+  menu: (props: IconProps) => (
+    <svg
+      stroke="currentColor"
+      fill="none"
+      strokeWidth="0"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <path
-        d="M14 5.5C14 6.05228 13.5523 6.5 13 6.5H8L7.99999 4H13C13.5523 4 14 4.44772 14 5L14 5.5Z"
+        d="M4 6C4 5.44772 4.44772 5 5 5H19C19.5523 5 20 5.44772 20 6C20 6.55228 19.5523 7 19 7H5C4.44772 7 4 6.55228 4 6Z"
         fill="currentColor"
-      />
+      ></path>
       <path
-        d="M12.0001 9C12.0001 9.55228 11.5524 10 11.0001 10H8L7.99989 7.5H11C11.5523 7.5 12 7.94772 12 8.5L12.0001 9Z"
+        d="M4 18C4 17.4477 4.44772 17 5 17H19C19.5523 17 20 17.4477 20 18C20 18.5523 19.5523 19 19 19H5C4.44772 19 4 18.5523 4 18Z"
         fill="currentColor"
-      />
+      ></path>
       <path
-        d="M3.5 8.5C3.5 7.94772 3.94771 7.5 4.5 7.5H7.00001V10H4.5C3.94771 10 3.5 9.55228 3.5 9V8.5Z"
+        d="M11 11C10.4477 11 10 11.4477 10 12C10 12.5523 10.4477 13 11 13H19C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11H11Z"
         fill="currentColor"
-      />
+      ></path>
+    </svg>
+  ),
+  thrashBin: (props: IconProps) => (
+    <svg
+      stroke="currentColor"
+      fill="currentColor"
+      strokeWidth="0"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 4V6H15V4H9Z"></path>
     </svg>
   ),
 }

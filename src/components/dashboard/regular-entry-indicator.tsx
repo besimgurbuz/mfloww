@@ -8,7 +8,7 @@ import {
 
 import { Icons } from "../icons"
 
-export function RepeatingEntryIndicator({
+export function RegularEntryIndicator({
   type,
   className,
 }: {
