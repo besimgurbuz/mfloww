@@ -66,7 +66,7 @@ export function MonthSelectionCommand() {
             aria-expanded={open}
             className="justify-between w-[220px]"
           >
-            {selectedEntry ? selectedEntry : "Select an entry"}
+            {selectedEntry ? selectedEntry : "Select a month"}
             <CommandShortcut>/</CommandShortcut>
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -107,7 +107,7 @@ export function MonthSelectionCommand() {
                   }}
                 >
                   <PlusCircledIcon />
-                  Create entry
+                  Create month
                 </CommandItem>
               </DialogTrigger>
             </CommandGroup>

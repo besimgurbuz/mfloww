@@ -3,9 +3,9 @@
 import { useState } from "react"
 
 import { Entry } from "@/lib/definitions"
+import { formatMoney } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { Icons } from "@/components/icons"
 
 import { EntryRowList } from "./entry-row-list"
 
@@ -73,13 +73,15 @@ type DisplayMode = "together" | "grouped"
 export function BalanceCard() {
   const [displayMode, setDisplayMode] = useState<DisplayMode>("together")
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader className="flex sm:items-center sm:flex-row gap-2 w-full">
         <div>
-          <CardTitle>Incomes and expenses</CardTitle>
-          <p className="text-sm text-muted-foreground">
-            You have {incomes.length} incomes and {expenses.length} expenses
-            this month.
+          <CardTitle className="uppercase">
+            {formatMoney(2000, "USD")}
+          </CardTitle>
+          <p className="text-sm pt-2 text-muted-foreground">
+            With {incomes.length} different incomes and {expenses.length}{" "}
+            expenses.
           </p>
         </div>
         <ToggleGroup
@@ -90,39 +92,35 @@ export function BalanceCard() {
             setDisplayMode(value || displayMode)
           }
         >
-          <ToggleGroupItem value="together">
-            <Icons.balanceTogether className="w-4 h-4 sm:w-6 sm:h-6 text-muted-foreground" />
-          </ToggleGroupItem>
-          <ToggleGroupItem value="grouped">
-            <Icons.balanceGrouped className="w-4 h-4 sm:w-6 sm:h-6 text-muted-foreground" />
-          </ToggleGroupItem>
+          <ToggleGroupItem value="together">Combined</ToggleGroupItem>
+          <ToggleGroupItem value="grouped">Grouped</ToggleGroupItem>
         </ToggleGroup>
       </CardHeader>
-      <CardContent className="flex flex-col w-full gap-4">
-        <div className="flex w-full">
-          {displayMode === "grouped" ? (
-            <div className="flex w-full gap-4 flex-wrap sm:flex-nowrap">
-              <EntryRowList
-                data={expenses}
-                currency="USD"
-                direction="rtl"
-                className="order-2 sm:order-1"
-              />
-              <EntryRowList
-                data={incomes}
-                currency="USD"
-                className="order-1 sm:order-2"
-              />
-            </div>
-          ) : (
+      <CardContent className="flex flex-col w-full gap-4 max-w-full">
+        {displayMode === "grouped" ? (
+          <div className="flex w-full gap-2 flex-wrap sm:flex-nowrap">
+            <EntryRowList
+              data={expenses}
+              currency="USD"
+              direction="rtl"
+              className="order-2 sm:order-1 sm:w-1/2 sm:max-w-1/2"
+            />
+            <EntryRowList
+              data={incomes}
+              currency="USD"
+              className="order-1 sm:order-2 sm:w-1/2 sm:max-w-1/2"
+            />
+          </div>
+        ) : (
+          <div className="flex flex-col gap-4 w-full">
             <EntryRowList
               data={incomes
                 .concat(expenses)
                 .sort((a, b) => a.amount - b.amount)}
               currency="USD"
             />
-          )}
-        </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   )

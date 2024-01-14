@@ -17,8 +17,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { Icons } from "@/components/icons"
 
-import { RegularEntryIndicator } from "../regular-entry-indicator"
 import { EntryRowListProps } from "./entry-row-list"
 
 interface EntryRowProps {
@@ -28,7 +28,7 @@ interface EntryRowProps {
 }
 
 const entryRowVariants = cva(
-  "relative order-1 transition-[width] relative h-12 max-w-[95%] flex gap-2 items-center px-2 border-2 bg-muted",
+  "relative select-none order-1 transition-[width] relative h-12 max-w-[95%] flex gap-2 items-center px-2 border-2 bg-muted",
   {
     variants: {
       type: {
@@ -85,9 +85,12 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
 
   return (
     <div
-      className={cn("w-full flex items-center gap-2", {
-        "justify-end": direction === "rtl",
-      })}
+      className={cn(
+        "w-full flex items-center gap-2 text-sm sm:text-md md:text-lg",
+        {
+          "justify-end": direction === "rtl",
+        }
+      )}
     >
       <ContextMenu>
         <ContextMenuTrigger
@@ -98,7 +101,7 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
           }}
         >
           <p
-            className={cn("text-lg max-w-[200px] truncate", {
+            className={cn("truncate", {
               "justify-self-center": rowWidth < 200,
             })}
           >
@@ -106,7 +109,7 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
           </p>
           <p
             className={cn(
-              "font-medium text-lg",
+              "font-medium",
               direction === "rtl" ? "mr-auto" : "ml-auto",
               {
                 hidden: rowWidth < 200,
@@ -128,14 +131,16 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
                     {entry.createdAt}
                   </p>
                 </div>
-                {entry.category && (
-                  <Badge
-                    variant="outline"
-                    className={cn("border-muted-foreground")}
-                  >
-                    <p className="text-xs truncate">{entry.category}</p>
-                  </Badge>
-                )}
+                <div className="flex flex-col items-end gap-4">
+                  {entry.isRegular && (
+                    <Icons.repeat className="w-4 h-4 text-muted-foreground" />
+                  )}
+                  {entry.category && (
+                    <Badge variant="outline">
+                      <p className="text-xs truncate">{entry.category}</p>
+                    </Badge>
+                  )}
+                </div>
               </div>
             </PopoverContent>
           </Popover>
@@ -154,18 +159,12 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
           })}
         >
           <p
-            className={cn("hidden font-medium text-lg", {
+            className={cn("hidden font-medium ", {
               flex: rowWidth < 200,
             })}
           >
             {formatMoney(entry.amount, entry.currency)}
           </p>
-          {entry.isRegular && (
-            <RegularEntryIndicator
-              type={entry.type}
-              className={cn("text-muted-foreground")}
-            />
-          )}
         </div>
       </ContextMenu>
     </div>

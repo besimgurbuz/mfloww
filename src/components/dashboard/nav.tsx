@@ -25,10 +25,10 @@ export function DashboardNav() {
   ]
 
   return (
-    <nav className="custom-container flex items-center w-full h-14 sticky top-14 space-x-4 lg:space-x-8 bg-background">
+    <nav className="custom-container flex items-center w-full h-14 sticky z-50 top-14 space-x-4 lg:space-x-8 bg-background">
       <Sheet>
         <MonthSelectionCommand />
-        <div className="hidden items-center space-x-4 lg:space-x-8 sm:flex">
+        <div className="hidden items-center space-x-4 lg:space-x-6 sm:flex">
           {routes.map((route) => (
             <Link
               key={route.path}

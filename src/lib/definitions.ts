@@ -1,3 +1,5 @@
+import { typedObjectKeys } from "./utils"
+
 export type EntryType = "income" | "expense"
 
 export interface Entry {
@@ -73,9 +75,7 @@ export const SUPPORTED_CURRENCIES = {
 
 export type SupportedCurrencyCode = keyof typeof SUPPORTED_CURRENCIES
 
-export const SUPPORTED_CURRENCY_CODES: SupportedCurrencyCode[] = Object.keys(
-  SUPPORTED_CURRENCIES
-) as SupportedCurrencyCode[]
+export const SUPPORTED_CURRENCY_CODES = typedObjectKeys(SUPPORTED_CURRENCIES)
 export const SUPPORTED_CURRENCY_FLAGS = Object.values(SUPPORTED_CURRENCIES)
 
 export function getTargetCurrenciesByBase(

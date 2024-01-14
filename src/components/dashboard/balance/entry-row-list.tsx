@@ -1,7 +1,7 @@
 "use client"
 
 import { Entry, SupportedCurrencyCode } from "@/lib/definitions"
-import { cn, formatMoney } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 
 import { EntryRow } from "./entry-row"
 
@@ -18,7 +18,7 @@ export function EntryRowList({
   direction,
 }: EntryRowListProps) {
   return (
-    <div className={cn("flex w-full flex-col gap-3", className)}>
+    <div className={cn("flex w-full flex-col gap-2", className)}>
       {data.map((item, i) => (
         <EntryRow
           key={i}
@@ -31,9 +31,7 @@ export function EntryRowList({
         className={cn("font-semibold text-lg uppercase pt-2", {
           "self-end": direction === "rtl",
         })}
-      >
-        Total {formatMoney(2000, "USD")}
-      </h3>
+      ></h3>
     </div>
   )
 }

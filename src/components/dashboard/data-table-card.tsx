@@ -7,7 +7,7 @@ import { cn, formatMoney } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-import { RegularEntryIndicator } from "./regular-entry-indicator"
+import { Icons } from "../icons"
 
 const data: Entry[] = [
   {
@@ -75,7 +75,7 @@ export function DataTableCard({ data: { incomeCount, expenseCount } }: Props) {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row">
+      <CardHeader className="flex sm:flex-row">
         <div>
           <CardTitle>Incomes and expenses</CardTitle>
           <p className="text-sm text-muted-foreground">
@@ -92,9 +92,9 @@ export function DataTableCard({ data: { incomeCount, expenseCount } }: Props) {
             setFilter(value || filter)
           }}
         >
+          <ToggleGroupItem value="all">All</ToggleGroupItem>
           <ToggleGroupItem value="income">Incomes</ToggleGroupItem>
           <ToggleGroupItem value="expense">Expenses</ToggleGroupItem>
-          <ToggleGroupItem value="all">All</ToggleGroupItem>
         </ToggleGroup>
       </CardHeader>
       <CardContent className="grid w-full relative">
@@ -106,7 +106,7 @@ export function DataTableCard({ data: { incomeCount, expenseCount } }: Props) {
                 item.isRegular ? "opacity-0" : "opacity-100"
               )}
             >
-              <RegularEntryIndicator type={item.type} />
+              <Icons.repeat className="w-4 h-4 text-muted-foreground" />
             </div>
             <div className="flex flex-col">
               <h2>{item.name}</h2>
