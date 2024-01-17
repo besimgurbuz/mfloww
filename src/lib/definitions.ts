@@ -3,13 +3,15 @@ import { typedObjectKeys } from "./utils"
 export type EntryType = "income" | "expense"
 
 export interface Entry {
-  amount: number
   name: string
   type: EntryType
+  amount: number
   isRegular: boolean
   category?: string
   currency: SupportedCurrencyCode
   createdAt: string
+  // TODO: add exchangeRate type
+  exchangeRate: unknown
 }
 
 export const MONTH_NAMES: string[] = [

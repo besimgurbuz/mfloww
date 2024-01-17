@@ -92,9 +92,15 @@ export function DataTableCard({ data: { incomeCount, expenseCount } }: Props) {
             setFilter(value || filter)
           }}
         >
-          <ToggleGroupItem value="all">All</ToggleGroupItem>
-          <ToggleGroupItem value="income">Incomes</ToggleGroupItem>
-          <ToggleGroupItem value="expense">Expenses</ToggleGroupItem>
+          <ToggleGroupItem value="all" className="text-xs sm:text-sm">
+            All
+          </ToggleGroupItem>
+          <ToggleGroupItem value="income" className="text-xs sm:text-sm">
+            Incomes
+          </ToggleGroupItem>
+          <ToggleGroupItem value="expense" className="text-xs sm:text-sm">
+            Expenses
+          </ToggleGroupItem>
         </ToggleGroup>
       </CardHeader>
       <CardContent className="grid w-full relative">

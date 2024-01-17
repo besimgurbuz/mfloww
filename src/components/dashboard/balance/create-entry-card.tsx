@@ -6,7 +6,13 @@ import * as z from "zod"
 
 import { SUPPORTED_CURRENCY_CODES } from "@/lib/definitions"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
@@ -58,6 +64,9 @@ export function CreateEntryCard() {
     <Card>
       <CardHeader>
         <CardTitle>Create new entry</CardTitle>
+        <CardDescription>
+          Create an entry in the selected month.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -141,7 +150,7 @@ export function CreateEntryCard() {
                         <FormLabel>Type</FormLabel>
                         <FormControl>
                           <RadioGroup
-                            className="flex"
+                            className="flex gap-4"
                             defaultValue={field.value}
                             onValueChange={field.onChange}
                           >
@@ -187,7 +196,9 @@ export function CreateEntryCard() {
                 </div>
               </div>
             </div>
-            <Button type="submit">Create</Button>
+            <Button type="submit" className="self-end">
+              Create
+            </Button>
           </form>
         </Form>
       </CardContent>

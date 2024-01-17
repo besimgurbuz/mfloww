@@ -80,8 +80,7 @@ export function BalanceCard() {
             {formatMoney(2000, "USD")}
           </CardTitle>
           <p className="text-sm pt-2 text-muted-foreground">
-            With {incomes.length} different incomes and {expenses.length}{" "}
-            expenses.
+            With {incomes.length} incomes and {expenses.length} expenses.
           </p>
         </div>
         <ToggleGroup
