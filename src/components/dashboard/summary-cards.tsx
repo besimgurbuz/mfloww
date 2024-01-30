@@ -1,31 +1,31 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons"
 
+import { useAllEntries } from "@/lib/db/hooks"
 import { SupportedCurrencyCode } from "@/lib/definitions"
 import { formatMoney } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-type Props = {
-  data: {
-    balance: number
-    totalIncome: number
-    totalExpense: number
-    incomeAvgDiffOfYear: number
-    expenseAvgDiffOfYear: number
-    incomeCount: number
-    expenseCount: number
-    mostSpentCategory: string
-    mostSpentCategoryCount: number
-    currency: SupportedCurrencyCode
-  }
+interface Summary {
+  balance: number
+  totalIncome: number
+  totalExpense: number
+  incomeAvgDiffOfYear: number
+  expenseAvgDiffOfYear: number
+  incomeCount: number
+  expenseCount: number
+  mostSpentCategory: string
+  mostSpentCategoryCount: number
+  currency: SupportedCurrencyCode
 }
 
-export function SummaryCards({
-  data: {
+export function SummaryCards() {
+  const {
     balance,
     totalIncome,
-    totalExpense: totalExpenses,
+    totalExpense,
     incomeAvgDiffOfYear,
     expenseAvgDiffOfYear,
     incomeCount,
@@ -33,8 +33,8 @@ export function SummaryCards({
     mostSpentCategory,
     mostSpentCategoryCount,
     currency,
-  },
-}: Props) {
+  } = useSummaryData()
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center space-y-0 pb-2">
@@ -72,7 +72,7 @@ export function SummaryCards({
             </CardHeader>
             <CardContent>
               <h2 className="text-xl md:text-2xl font-bold">
-                {formatMoney(totalExpenses, currency)}
+                {formatMoney(totalExpense, currency)}
               </h2>
               <p className="text-sm text-muted-foreground">
                 {`${
@@ -99,4 +99,45 @@ export function SummaryCards({
       </CardContent>
     </Card>
   )
+}
+
+const initialSummary: Summary = {
+  balance: 0,
+  totalIncome: 0,
+  totalExpense: 0,
+  incomeAvgDiffOfYear: 0,
+  expenseAvgDiffOfYear: 0,
+  incomeCount: 0,
+  expenseCount: 0,
+  mostSpentCategory: "",
+  mostSpentCategoryCount: 0,
+  currency: "USD",
+}
+
+function useSummaryData(): Summary {
+  const entries = useAllEntries()
+  const [summary, setSummary] = useState<Summary>({ ...initialSummary })
+
+  useEffect(() => {
+    const summary = entries.reduce<Summary>(
+      (summary, entry) => {
+        if (entry.type === "income") {
+          summary.balance += entry.amount
+          summary.totalIncome += entry.amount
+          summary.incomeCount++
+        } else {
+          summary.balance -= entry.amount
+          summary.totalExpense += entry.amount
+          summary.expenseCount++
+        }
+
+        return summary
+      },
+      { ...initialSummary }
+    )
+
+    setSummary(summary)
+  }, [entries])
+
+  return summary
 }
