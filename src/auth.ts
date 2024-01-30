@@ -45,16 +45,9 @@ export const {
   providers: [
     Credentials({
       name: "anonymous",
-      credentials: {
-        id: { type: "string" },
-        email: { type: "string" },
-        name: { type: "string" },
-        image: { type: "string" },
-        key: { type: "string" },
-      },
       async authorize(credentials, request) {
         const anonymousUser = {
-          id: "",
+          id: crypto.randomUUID(),
           email: "",
           name: "anonymous",
           image: "",

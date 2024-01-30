@@ -14,7 +14,7 @@ export function LearnMore() {
     >
       <ScrollArea className="w-full text-center">
         <TabsList>
-          <TabsTrigger value="your-data">Your Data</TabsTrigger>
+          <TabsTrigger value="your-data">Your data</TabsTrigger>
           <TabsTrigger value="encrypted">Encrypted</TabsTrigger>
           <TabsTrigger value="currencies">Currencies</TabsTrigger>
           <TabsTrigger value="open-source">Open Source</TabsTrigger>

@@ -3,7 +3,7 @@
 import { ReactNode } from "react"
 
 import { DBContext } from "./context"
-import { useCreateAndInitDB } from "./hooks"
+import { useCreateAndInitLocalDB } from "./hooks"
 
 export function DBContextProvider({
   version,
@@ -12,14 +12,11 @@ export function DBContextProvider({
   version?: number
   children: ReactNode
 }) {
-  const { connection, transaction, inProgress } = useCreateAndInitDB(version)
+  const { connection, inProgress } = useCreateAndInitLocalDB(version)
 
   return (
     <>
-      {inProgress && "DB creating"}
-      <DBContext.Provider value={{ connection, transaction }}>
-        {children}
-      </DBContext.Provider>
+      <DBContext.Provider value={{ connection }}>{children}</DBContext.Provider>
     </>
   )
 }

@@ -17,14 +17,14 @@ export const authConfig = {
       return true
     },
     jwt({ token, user }) {
-      if (user?.key && user?.id) {
+      if (user?.key) {
         token.id = user.id
         token.key = user.key
       }
       return token
     },
     session({ session, token }) {
-      if (token.key && token.id) {
+      if (token.key) {
         session.user.id = token.id as string
         session.user.key = token.key as string
       }

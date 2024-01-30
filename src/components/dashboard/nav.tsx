@@ -14,6 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet"
+import { CreateEntry } from "./balance/create-entry"
 import { MonthSelectionCommand } from "./month-selection-command"
 
 export function DashboardNav() {
@@ -28,7 +29,7 @@ export function DashboardNav() {
     <nav className="custom-container flex items-center w-full h-14 sticky z-50 top-14 space-x-4 lg:space-x-8 bg-background">
       <Sheet>
         <MonthSelectionCommand />
-        <div className="hidden items-center space-x-4 lg:space-x-6 sm:flex">
+        <div className="hidden items-center space-x-4 lg:space-x-6 md:flex">
           {routes.map((route) => (
             <Link
               key={route.path}
@@ -42,30 +43,33 @@ export function DashboardNav() {
             </Link>
           ))}
         </div>
-        <SheetTrigger asChild className="!ml-auto sm:hidden">
-          <Button variant="ghost">
-            <Icons.menu className="w-6 h-6" />
-          </Button>
-        </SheetTrigger>
-        <SheetContent className="flex flex-col">
-          <SheetTitle className="flex gap-2">
-            <Icons.logo className="w-6 h-6" />
-            mfloww
-          </SheetTitle>
-          {routes.map((route) => (
-            <SheetClose key={route.path} asChild>
-              <Link
-                href={route.path}
-                className={cn(
-                  "font-medium transition-colors text-lg active:text-primary text-muted-foreground",
-                  pathname === route.path && "text-text"
-                )}
-              >
-                {route.name}
-              </Link>
-            </SheetClose>
-          ))}
-        </SheetContent>
+        <div className="!ml-auto flex items-center gap-2">
+          <CreateEntry />
+          <SheetTrigger asChild className="!ml-auto md:hidden">
+            <Button variant="ghost">
+              <Icons.menu className="w-6 h-6" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent className="flex flex-col">
+            <SheetTitle className="flex gap-2">
+              <Icons.logo className="w-6 h-6" />
+              mfloww
+            </SheetTitle>
+            {routes.map((route) => (
+              <SheetClose key={route.path} asChild>
+                <Link
+                  href={route.path}
+                  className={cn(
+                    "font-medium transition-colors text-lg active:text-primary text-muted-foreground",
+                    pathname === route.path && "text-text"
+                  )}
+                >
+                  {route.name}
+                </Link>
+              </SheetClose>
+            ))}
+          </SheetContent>
+        </div>
       </Sheet>
     </nav>
   )

@@ -2,10 +2,10 @@
 
 import { useState } from "react"
 
-import { Entry } from "@/lib/definitions"
-import { formatMoney } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { Entry } from "@/lib/definitions"
+import { formatMoney } from "@/lib/utils"
 
 import { EntryRowList } from "./entry-row-list"
 
@@ -16,7 +16,8 @@ const incomes: Entry[] = [
     currency: "USD",
     isRegular: true,
     type: "income",
-    createdAt: new Date().toLocaleTimeString(),
+    date: new Date().toLocaleDateString(),
+    exchangeRate: {} as Entry['exchangeRate'],
   },
   {
     amount: 45,
@@ -25,7 +26,8 @@ const incomes: Entry[] = [
     category: "app revenue",
     isRegular: false,
     type: "income",
-    createdAt: new Date().toLocaleTimeString(),
+    date: new Date().toLocaleDateString(),
+    exchangeRate: {} as Entry['exchangeRate'],
   },
   {
     amount: 45,
@@ -34,7 +36,8 @@ const incomes: Entry[] = [
     category: "other",
     isRegular: false,
     type: "income",
-    createdAt: new Date().toLocaleTimeString(),
+    date: new Date().toLocaleDateString(),
+    exchangeRate: {} as Entry['exchangeRate'],
   },
 ]
 
@@ -46,7 +49,8 @@ const expenses: Entry[] = [
     category: "rent",
     isRegular: false,
     type: "expense",
-    createdAt: new Date().toLocaleTimeString(),
+    date: new Date().toLocaleDateString(),
+    exchangeRate: {} as Entry['exchangeRate'],
   },
   {
     amount: 50,
@@ -55,7 +59,8 @@ const expenses: Entry[] = [
     category: "food",
     isRegular: true,
     type: "expense",
-    createdAt: new Date().toLocaleTimeString(),
+    date: new Date().toLocaleDateString(),
+    exchangeRate: {} as Entry['exchangeRate'],
   },
   {
     amount: 300,
@@ -64,7 +69,8 @@ const expenses: Entry[] = [
     category: "electronics",
     isRegular: false,
     type: "expense",
-    createdAt: new Date().toLocaleTimeString(),
+    date: new Date().toLocaleDateString(),
+    exchangeRate: {} as Entry['exchangeRate'],
   },
 ]
 

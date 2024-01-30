@@ -18,7 +18,6 @@ export default function Dashboard() {
   return (
     <div className="custom-container custom-min-h">
       <div className="flex flex-col gap-2 pt-4">
-        <h3 className="font-bold text-xl md:text-2xl pb-2">Overview</h3>
         <SummaryCards data={summaryData} />
         <DataTableCard data={{ incomeCount: 3, expenseCount: 38 }} />
       </div>

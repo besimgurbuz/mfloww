@@ -9,9 +9,8 @@ export interface Entry {
   isRegular: boolean
   category?: string
   currency: SupportedCurrencyCode
-  createdAt: string
-  // TODO: add exchangeRate type
-  exchangeRate: unknown
+  date: string
+  exchangeRate: Record<SupportedCurrencyCode, number>
 }
 
 export const MONTH_NAMES: string[] = [

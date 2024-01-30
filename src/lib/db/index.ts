@@ -21,7 +21,12 @@ export interface StoreIndex {
   options: IDBIndexParameters
 }
 
-export async function openDB(version: number = 1): Promise<DBConnection> {
+type OpenDBUpgradeFn = (connection: DBConnection) => void
+
+export async function openDB(
+  version: number = 1,
+  upgradeFn?: OpenDBUpgradeFn
+): Promise<DBConnection> {
   if (!window.indexedDB) {
     return {
       result: DBConnectionResult.NOT_SUPPORTED,
@@ -32,7 +37,6 @@ export async function openDB(version: number = 1): Promise<DBConnection> {
 
   return new Promise<DBConnection>(async (resolve, reject) => {
     const openRequest = window.indexedDB.open("MFLOWW_DB", version)
-
     openRequest.onerror = (errorEvent) => {
       resolve({
         result: DBConnectionResult.CONNECTION_ERROR,
@@ -40,7 +44,13 @@ export async function openDB(version: number = 1): Promise<DBConnection> {
         db: null,
       })
     }
-
+    openRequest.onupgradeneeded = () => {
+      upgradeFn?.({
+        db: openRequest.result,
+        error: null,
+        result: DBConnectionResult.CONNECTED,
+      })
+    }
     openRequest.onsuccess = (event) => {
       resolve({
         db: openRequest.result,
@@ -54,16 +64,14 @@ export async function openDB(version: number = 1): Promise<DBConnection> {
 export function createStore(
   { db }: DBConnection,
   storeName: string,
-  keyPath: string | string[],
-  storeIndexes: StoreIndex[]
+  options: IDBObjectStoreParameters = {},
+  storeIndexes: StoreIndex[] = []
 ) {
   if (!db) {
     throw new Error("Cannot create store without connection")
   }
 
-  const store = db.createObjectStore(storeName, {
-    keyPath,
-  })
+  const store = db.createObjectStore(storeName, options)
 
   for (let storeIndex of storeIndexes) {
     store.createIndex(storeIndex.name, storeIndex.keyPath, storeIndex.options)
@@ -72,30 +80,20 @@ export function createStore(
   return store
 }
 
-export async function createTransaction(
+export function createTransaction(
   { db }: DBConnection,
   storeNames: string | Iterable<string>,
   mode: IDBTransactionMode
-): Promise<DBTransaction> {
+): IDBTransaction {
   if (!db) {
     throw new Error("Cannot create transaction without connection")
   }
 
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction(storeNames, mode)
+  const transaction = db.transaction(storeNames, mode)
 
-    transaction.onerror = (event) => {
-      resolve({
-        error: (event as ErrorEvent).error,
-        transaction: null,
-      })
-    }
+  transaction.onerror = (event) => {
+    console.error(event as ErrorEvent)
+  }
 
-    transaction.oncomplete = () => {
-      resolve({
-        transaction,
-        error: null,
-      })
-    }
-  })
+  return transaction
 }
