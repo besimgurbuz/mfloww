@@ -127,9 +127,7 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
                   <p className="font-medium text-md">
                     {formatMoney(entry.amount, entry.currency)}
                   </p>
-                  <p className="text-sm text-muted-foreground">
-                    {entry.createdAt}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{entry.date}</p>
                 </div>
                 <div className="flex flex-col items-end gap-4">
                   {entry.isRegular && (

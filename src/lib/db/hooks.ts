@@ -36,11 +36,11 @@ export function useCreateAndInitLocalDB(version: number = 1) {
       )
     )
     setConnection(connection)
-  }, [])
+  }, [version])
 
   useEffect(() => {
     connectAndCreateDB()
-  }, [])
+  }, [connectAndCreateDB])
 
   return {
     connection,
