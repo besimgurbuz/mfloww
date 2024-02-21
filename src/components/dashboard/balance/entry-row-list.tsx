@@ -1,6 +1,9 @@
 "use client"
 
-import { Entry, SupportedCurrencyCode } from "@/lib/definitions"
+import { useEffect, useState } from "react"
+
+import { SupportedCurrencyCode } from "@/lib/definitions"
+import { Entry } from "@/lib/entry"
 import { cn } from "@/lib/utils"
 
 import { EntryRow } from "./entry-row"
@@ -17,13 +20,19 @@ export function EntryRowList({
   className,
   direction,
 }: EntryRowListProps) {
+  const [total, setTotal] = useState<number>()
+
+  useEffect(() => {
+    setTotal(data.reduce((acc: number, item) => acc + item.amount, 0))
+  }, [data])
+
   return (
     <div className={cn("flex w-full flex-col gap-2", className)}>
       {data.map((item, i) => (
         <EntryRow
           key={i}
           entry={item}
-          widthPercentage={30 * (Math.random() + 1)}
+          widthPercentage={(item.amount / (total || 1)) * 100}
           direction={direction || "ltr"}
         />
       ))}

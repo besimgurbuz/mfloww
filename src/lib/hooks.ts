@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState, useTransition } from "react"
 
+import { StorageKey, StorageType } from "./definitions"
+import { getValueFromStorage, setValueToStorage } from "./utils"
+
 export const useServerAction = <P, R>(
   action: (_: P) => Promise<R>,
   onFinished?: (_: R | undefined) => void
@@ -49,4 +52,30 @@ export function useMediaQuery(query: string) {
   }, [query])
 
   return value
+}
+
+export const useStorage = <T>(
+  key: StorageKey,
+  storageType: StorageType,
+  defaultValue?: T
+): [T | undefined, (value: T) => void] => {
+  // State to hold the value
+  const [value, setValue] = useState<T | null>(() =>
+    getValueFromStorage<T>(key, storageType)
+  )
+
+  useEffect(() => {
+    // Retrieve value from storage when component mounts
+    const storedValue = getValueFromStorage<T>(key, storageType)
+    if (storedValue !== null) {
+      setValue(storedValue)
+    }
+  }, [key, storageType])
+
+  const updateValue = (newValue: T) => {
+    setValue(newValue)
+    setValueToStorage(key, newValue, storageType)
+  }
+
+  return [value || defaultValue, updateValue]
 }

@@ -1,18 +1,5 @@
 import { typedObjectKeys } from "./utils"
 
-export type EntryType = "income" | "expense"
-
-export interface Entry {
-  name: string
-  type: EntryType
-  amount: number
-  isRegular: boolean
-  category?: string
-  currency: SupportedCurrencyCode
-  date: string
-  exchangeRate: Record<SupportedCurrencyCode, number>
-}
-
 export const MONTH_NAMES: string[] = [
   "January",
   "February",
@@ -79,9 +66,16 @@ export type SupportedCurrencyCode = keyof typeof SUPPORTED_CURRENCIES
 export const SUPPORTED_CURRENCY_CODES = typedObjectKeys(SUPPORTED_CURRENCIES)
 export const SUPPORTED_CURRENCY_FLAGS = Object.values(SUPPORTED_CURRENCIES)
 
-export function getTargetCurrenciesByBase(
-  base: SupportedCurrencyCode
-): SupportedCurrencyCode[] {
-  const codes = Object.keys(SUPPORTED_CURRENCIES)
-  return codes.filter((code) => code !== base) as SupportedCurrencyCode[]
-}
+export type StorageType = "localStorage" | "sessionStorage"
+export type StorageKey = string
+
+export type SetValueToStorage = <T>(
+  key: StorageKey,
+  value: T,
+  storageType: StorageType
+) => void
+
+export type GetValueFromStorage = <T>(
+  key: StorageKey,
+  storageType: StorageType
+) => T | null

@@ -28,7 +28,14 @@ export function DashboardNav() {
   return (
     <nav className="custom-container flex items-center w-full h-14 sticky z-50 top-14 space-x-4 lg:space-x-8 bg-background">
       <Sheet>
-        <MonthSelectionCommand />
+        <div className="flex gap-1">
+          <SheetTrigger asChild className="md:hidden">
+            <Button variant="ghost">
+              <Icons.menu className="w-6 h-6" />
+            </Button>
+          </SheetTrigger>
+          <MonthSelectionCommand />
+        </div>
         <div className="hidden items-center space-x-4 lg:space-x-6 md:flex">
           {routes.map((route) => (
             <Link
@@ -45,12 +52,7 @@ export function DashboardNav() {
         </div>
         <div className="!ml-auto flex items-center gap-2">
           <CreateEntry />
-          <SheetTrigger asChild className="!ml-auto md:hidden">
-            <Button variant="ghost">
-              <Icons.menu className="w-6 h-6" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent className="flex flex-col">
+          <SheetContent className="flex flex-col" side="left">
             <SheetTitle className="flex gap-2">
               <Icons.logo className="w-6 h-6" />
               mfloww

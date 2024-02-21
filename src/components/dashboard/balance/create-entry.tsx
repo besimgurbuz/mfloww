@@ -85,6 +85,10 @@ export function CreateEntry({
   function onSubmit(values: z.infer<typeof formSchema>) {
     createEntry({
       ...values,
+      amount:
+        values.type === "expense" && values.amount > 0
+          ? values.amount * -1
+          : values.amount,
       date: "",
       exchangeRate: {} as Record<SupportedCurrencyCode, number>,
     })
@@ -189,10 +193,13 @@ function CreateForm({
             name="category"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Category name</FormLabel>
+                <FormLabel>Category</FormLabel>
                 <FormControl>
-                  <Input placeholder="Category" {...field} />
+                  <Input placeholder="Home Expense, Groceries" {...field} />
                 </FormControl>
+                <FormDescription>
+                  Separate each category with a comma
+                </FormDescription>
               </FormItem>
             )}
           />

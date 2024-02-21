@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { cva } from "class-variance-authority"
 
-import { Entry } from "@/lib/definitions"
+import { Entry } from "@/lib/entry"
 import { cn, formatMoney } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -81,7 +81,7 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
     resizeObservable.observe(rowRef.current)
 
     return () => resizeObservable.disconnect()
-  }, [rowRef.current])
+  }, [rowRef])
 
   return (
     <div
@@ -109,7 +109,7 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
           </p>
           <p
             className={cn(
-              "font-medium",
+              "font-medium whitespace-nowrap",
               direction === "rtl" ? "mr-auto" : "ml-auto",
               {
                 hidden: rowWidth < 200,
@@ -124,7 +124,7 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-medium text-md">{entry.name}</h3>
-                  <p className="font-medium text-md">
+                  <p className="font-medium text-md whitespace-nowrap">
                     {formatMoney(entry.amount, entry.currency)}
                   </p>
                   <p className="text-sm text-muted-foreground">{entry.date}</p>
@@ -134,9 +134,13 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
                     <Icons.repeat className="w-4 h-4 text-muted-foreground" />
                   )}
                   {entry.category && (
-                    <Badge variant="outline">
-                      <p className="text-xs truncate">{entry.category}</p>
-                    </Badge>
+                    <div className="flex flex-wrap">
+                      {entry.category.split(",").map((category, idx) => (
+                        <Badge key={idx} variant="outline">
+                          <p className="text-xs truncate">{category.trim()}</p>
+                        </Badge>
+                      ))}
+                    </div>
                   )}
                 </div>
               </div>
@@ -157,7 +161,7 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
           })}
         >
           <p
-            className={cn("hidden font-medium ", {
+            className={cn("hidden font-medium whitespace-nowrap", {
               flex: rowWidth < 200,
             })}
           >
@@ -167,14 +171,4 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
       </ContextMenu>
     </div>
   )
-}
-
-function canFit(
-  rowWidth?: number,
-  targetWidth?: number,
-  siblingsWidth?: number
-): boolean {
-  if (!rowWidth || !targetWidth) return true
-
-  return targetWidth + (siblingsWidth || 0) < rowWidth
 }

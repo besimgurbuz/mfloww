@@ -2,88 +2,32 @@
 
 import { useState } from "react"
 
+import { Entry } from "@/lib/entry"
+import { formatMoney } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { Entry } from "@/lib/definitions"
-import { formatMoney } from "@/lib/utils"
 
 import { EntryRowList } from "./entry-row-list"
 
-const incomes: Entry[] = [
-  {
-    amount: 4500,
-    name: "income #1",
-    currency: "USD",
-    isRegular: true,
-    type: "income",
-    date: new Date().toLocaleDateString(),
-    exchangeRate: {} as Entry['exchangeRate'],
-  },
-  {
-    amount: 45,
-    name: "income #2income #2income #2income #2income #2income #2income #2",
-    currency: "USD",
-    category: "app revenue",
-    isRegular: false,
-    type: "income",
-    date: new Date().toLocaleDateString(),
-    exchangeRate: {} as Entry['exchangeRate'],
-  },
-  {
-    amount: 45,
-    name: "income #3",
-    currency: "USD",
-    category: "other",
-    isRegular: false,
-    type: "income",
-    date: new Date().toLocaleDateString(),
-    exchangeRate: {} as Entry['exchangeRate'],
-  },
-]
-
-const expenses: Entry[] = [
-  {
-    amount: 1500,
-    name: "expense #1",
-    currency: "EUR",
-    category: "rent",
-    isRegular: false,
-    type: "expense",
-    date: new Date().toLocaleDateString(),
-    exchangeRate: {} as Entry['exchangeRate'],
-  },
-  {
-    amount: 50,
-    name: "expense #2",
-    currency: "USD",
-    category: "food",
-    isRegular: true,
-    type: "expense",
-    date: new Date().toLocaleDateString(),
-    exchangeRate: {} as Entry['exchangeRate'],
-  },
-  {
-    amount: 300,
-    name: "expense #3",
-    currency: "USD",
-    category: "electronics",
-    isRegular: false,
-    type: "expense",
-    date: new Date().toLocaleDateString(),
-    exchangeRate: {} as Entry['exchangeRate'],
-  },
-]
-
 type DisplayMode = "together" | "grouped"
 
-export function BalanceCard() {
+export function BalanceCard({
+  balance,
+  incomes,
+  expenses,
+}: {
+  balance: number
+  incomes: Entry[]
+  expenses: Entry[]
+}) {
   const [displayMode, setDisplayMode] = useState<DisplayMode>("together")
+
   return (
     <Card className="w-full">
       <CardHeader className="flex sm:items-center sm:flex-row gap-2 w-full">
         <div>
-          <CardTitle className="uppercase">
-            {formatMoney(2000, "USD")}
+          <CardTitle className="uppercase whitespace-nowrap">
+            {formatMoney(balance, "USD")}
           </CardTitle>
           <p className="text-sm pt-2 text-muted-foreground">
             With {incomes.length} incomes and {expenses.length} expenses.
@@ -118,12 +62,7 @@ export function BalanceCard() {
           </div>
         ) : (
           <div className="flex flex-col gap-4 w-full">
-            <EntryRowList
-              data={incomes
-                .concat(expenses)
-                .sort((a, b) => a.amount - b.amount)}
-              currency="USD"
-            />
+            <EntryRowList data={incomes.concat(expenses)} currency="USD" />
           </div>
         )}
       </CardContent>
