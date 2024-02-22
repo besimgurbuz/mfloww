@@ -1,16 +1,21 @@
 "use client"
 
-import { ReactNode, useState } from "react"
+import { ReactNode } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { SubmitHandler, useForm, UseFormReturn } from "react-hook-form"
+import {
+  DefaultValues,
+  SubmitHandler,
+  useForm,
+  UseFormReturn,
+} from "react-hook-form"
 import * as z from "zod"
 
-import { useCreateEntryQuery } from "@/lib/db/hooks"
+import { useCreateEntryQuery, useUpdateEntryQuery } from "@/lib/db/hooks"
 import {
   SUPPORTED_CURRENCY_CODES,
   SupportedCurrencyCode,
 } from "@/lib/definitions"
-import { useMediaQuery } from "@/lib/hooks"
+import { Entry } from "@/lib/entry"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -21,7 +26,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import {
   Drawer,
@@ -31,7 +35,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer"
 import {
   Form,
@@ -66,66 +69,98 @@ const formSchema = z.object({
   currency: z.enum([firstCurrencyCode, ...otherCurrencyCodes]),
 })
 
-export function CreateEntry({
-  triggerClassName,
-}: {
-  triggerClassName?: string
-}) {
-  const [open, setOpen] = useState(false)
-  const isDesktop = useMediaQuery("(min-width: 768px)")
+type CreateUpdateEntryProps = {
+  isDesktop: boolean
+  open: boolean
+  onOpenChange: (state: boolean) => void
+} & ({ mode: "create"; entry?: never } | { mode: "edit"; entry: Entry })
+
+export function CreateUpdateEntry({
+  isDesktop,
+  open,
+  onOpenChange,
+  mode,
+  entry,
+}: CreateUpdateEntryProps) {
   const { createEntry } = useCreateEntryQuery()
+  const { updateEntry } = useUpdateEntryQuery()
+  const defaultValues: DefaultValues<z.infer<typeof formSchema>> =
+    mode === "create"
+      ? {
+          type: "income",
+          isRegular: false,
+        }
+      : {
+          name: entry.name,
+          amount: entry.amount,
+          category: entry.category,
+          currency: entry.currency,
+          isRegular: entry.isRegular,
+          type: entry.type,
+        }
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      type: "income",
-      isRegular: false,
-    },
+    defaultValues,
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    createEntry({
-      ...values,
-      amount:
-        values.type === "expense" && values.amount > 0
-          ? values.amount * -1
-          : values.amount,
-      date: "",
-      exchangeRate: {} as Record<SupportedCurrencyCode, number>,
-    })
-    setOpen(false)
+    if (mode === "create") {
+      createEntry({
+        ...values,
+        amount:
+          values.type === "expense" && values.amount > 0
+            ? values.amount * -1
+            : values.amount,
+        date: "",
+        exchangeRate: {} as Record<SupportedCurrencyCode, number>,
+      })
+    } else {
+      updateEntry({
+        ...values,
+        id: entry.id,
+        amount:
+          values.type === "expense" && values.amount > 0
+            ? values.amount * -1
+            : values.amount,
+        date: "",
+        exchangeRate: {} as Record<SupportedCurrencyCode, number>,
+      } as Entry)
+    }
+    onOpenChange(false)
   }
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button className={triggerClassName}>Create entry</Button>
-        </DialogTrigger>
+      <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent>
           <DialogHeader className="px-0">
-            <DialogTitle>Create a new entry</DialogTitle>
-            <DialogDescription>
-              Create an entry in the selected month.
-            </DialogDescription>
+            <DialogTitle>
+              {mode === "create" ? "Create a new entry" : `Edit ${entry.name}`}
+            </DialogTitle>
+            {mode === "create" && (
+              <DialogDescription>
+                Create an entry in the selected month.
+              </DialogDescription>
+            )}
           </DialogHeader>
-          <CreateForm form={form} onSubmit={onSubmit}>
+          <EntryForm form={form} onSubmit={onSubmit}>
             <DialogFooter className="flex self-center w-full">
-              <Button type="submit">Create</Button>
+              <Button type="submit">
+                {mode === "create" ? "Create" : "Save"}
+              </Button>
               <DialogClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
             </DialogFooter>
-          </CreateForm>
+          </EntryForm>
         </DialogContent>
       </Dialog>
     )
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Button className={triggerClassName}>Create Entry</Button>
-      </DrawerTrigger>
+    <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent>
         <div className="mx-auto w-full max-w-xl">
           <DrawerHeader className="px-0">
@@ -134,21 +169,23 @@ export function CreateEntry({
               Create an entry in the selected month.
             </DrawerDescription>
           </DrawerHeader>
-          <CreateForm form={form} onSubmit={onSubmit}>
+          <EntryForm form={form} onSubmit={onSubmit}>
             <DrawerFooter className="flex self-center w-full">
-              <Button type="submit">Create</Button>
+              <Button type="submit">
+                {mode === "create" ? "Create" : "Save"}
+              </Button>
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DrawerClose>
             </DrawerFooter>
-          </CreateForm>
+          </EntryForm>
         </div>
       </DrawerContent>
     </Drawer>
   )
 }
 
-function CreateForm({
+function EntryForm({
   form,
   onSubmit,
   children,
