@@ -1,5 +1,10 @@
 import { typedObjectKeys } from "./utils"
 
+export type Entry = {
+  month: number
+  year: number
+}
+
 export const MONTH_NAMES: string[] = [
   "January",
   "February",

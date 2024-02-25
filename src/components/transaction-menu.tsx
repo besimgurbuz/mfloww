@@ -3,9 +3,9 @@
 import { useState } from "react"
 import { TrashIcon } from "@radix-ui/react-icons"
 
-import { useDeleteEntryQuery } from "@/lib/db/hooks"
-import { Entry } from "@/lib/entry"
+import { useDeleteTransactionQuery } from "@/lib/db/hooks"
 import { useMediaQuery, useStorage } from "@/lib/hooks"
+import { Transaction } from "@/lib/transaction"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -32,12 +32,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import { CreateUpdateTransaction } from "./dashboard/create-update-transaction"
 import { Icons } from "./icons"
 
-export function EntryMenu({ entry }: { entry: Entry }) {
+export function TransactionMenu({ transaction }: { transaction: Transaction }) {
   const isDesktop = useMediaQuery("(min-width: 768px)")
-  const { deleteEntry } = useDeleteEntryQuery()
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+  const { deleteTransaction } = useDeleteTransactionQuery()
+  const [updateOpen, setUpdateOpen] = useState(false)
+  const [deleteOpen, setDeleteOpen] = useState(false)
   const [dontWarnDelete, setDontWarnDelete] = useStorage<boolean>(
     "DONT_WARN_DELETE",
     "sessionStorage",
@@ -52,7 +54,10 @@ export function EntryMenu({ entry }: { entry: Entry }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem className="flex gap-2 w-full font-bold">
+        <DropdownMenuItem
+          className="flex gap-2 w-full font-bold"
+          onClick={() => setUpdateOpen(true)}
+        >
           <Icons.pencil className="w-4 h-4" />
           Edit
         </DropdownMenuItem>
@@ -60,10 +65,10 @@ export function EntryMenu({ entry }: { entry: Entry }) {
           className="flex gap-2 w-full font-bold"
           onClick={async () => {
             if (dontWarnDelete) {
-              await deleteEntry(entry.id)
+              await deleteTransaction(transaction.id)
               return
             }
-            setOpenDeleteDialog(true)
+            setDeleteOpen(true)
           }}
         >
           <TrashIcon className="w-5 h-5" />
@@ -72,14 +77,21 @@ export function EntryMenu({ entry }: { entry: Entry }) {
       </DropdownMenuContent>
       <DeleteWarning
         isDesktop={isDesktop}
-        entryName={entry.name}
+        transactionName={transaction.name}
         showWarning={!!dontWarnDelete == false}
-        open={openDeleteDialog}
-        onOpenChange={setOpenDeleteDialog}
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
         onSubmit={async () => {
-          await deleteEntry(entry.id)
+          await deleteTransaction(transaction.id)
         }}
         onNeverAskedChecked={() => setDontWarnDelete(true)}
+      />
+      <CreateUpdateTransaction
+        isDesktop={isDesktop}
+        mode="edit"
+        transaction={transaction}
+        open={updateOpen}
+        onOpenChange={setUpdateOpen}
       />
     </DropdownMenu>
   )
@@ -87,7 +99,7 @@ export function EntryMenu({ entry }: { entry: Entry }) {
 
 type DeleteWarningProps = {
   isDesktop: boolean
-  entryName: string
+  transactionName: string
   open: boolean
   showWarning: boolean
   onOpenChange: (state: boolean) => void
@@ -97,7 +109,7 @@ type DeleteWarningProps = {
 
 function DeleteWarning({
   isDesktop,
-  entryName,
+  transactionName,
   open,
   onOpenChange,
   showWarning,
@@ -133,7 +145,7 @@ function DeleteWarning({
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="text-left">
-              Are you sure you want to delete {entryName} entry?
+              Are you sure you want to delete {transactionName}?
             </DialogTitle>
             <DialogDescription>
               <WarningContent />
@@ -153,7 +165,7 @@ function DeleteWarning({
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>
-            Are you sure you want to delete {entryName} entry?
+            Are you sure you want to delete {transactionName}?
           </DrawerTitle>
         </DrawerHeader>
         <div className="p-4">

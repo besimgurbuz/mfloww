@@ -2,25 +2,25 @@
 
 import { useState } from "react"
 
-import { Entry, EntryType } from "@/lib/entry"
+import { Transaction, TransactionType } from "@/lib/transaction"
 import { cn, formatMoney } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-import { EntryMenu } from "../entry-menu"
 import { Icons } from "../icons"
+import { TransactionMenu } from "../transaction-menu"
 
-type DataTableFilter = EntryType | "all"
+type DataTableFilter = TransactionType | "all"
 
-export function DataTableCard({
-  allEntries,
+export function TransactionTableCard({
+  transactions,
   incomes,
   expenses,
 }: {
-  allEntries: Entry[]
-  incomes: Entry[]
-  expenses: Entry[]
+  transactions: Transaction[]
+  incomes: Transaction[]
+  expenses: Transaction[]
 }) {
   const [filter, setFilter] = useState<DataTableFilter>("all")
 
@@ -30,7 +30,8 @@ export function DataTableCard({
         <div>
           <CardTitle>Incomes and expenses</CardTitle>
           <p className="text-sm text-muted-foreground mt-2">
-            You have {incomes.length} incomes and {expenses.length} expenses
+            You have {incomes.length} income{incomes.length > 1 && "s"} and{" "}
+            {expenses.length} expense{expenses.length > 1 && "s"}
             this month.
           </p>
         </div>
@@ -57,7 +58,7 @@ export function DataTableCard({
       <CardContent className="grid w-full relative overflow-x-auto">
         <DataTableCardContent
           filter={filter}
-          allEntries={allEntries}
+          transactions={transactions}
           incomes={incomes}
           expenses={expenses}
         />
@@ -68,28 +69,28 @@ export function DataTableCard({
 
 function DataTableCardContent({
   filter,
-  allEntries,
+  transactions,
   incomes,
   expenses,
 }: {
   filter: DataTableFilter
-  allEntries: Entry[]
-  incomes: Entry[]
-  expenses: Entry[]
+  transactions: Transaction[]
+  incomes: Transaction[]
+  expenses: Transaction[]
 }) {
   if (filter === "all") {
     return (
       <>
-        {allEntries.map((entry, idx) => (
-          <DataTableEntryItem key={idx} entry={entry} />
+        {transactions.map((transaction, idx) => (
+          <DataTableTransactionItem key={idx} transaction={transaction} />
         ))}
       </>
     )
   } else if (filter === "income") {
     return (
       <>
-        {incomes.map((entry, idx) => (
-          <DataTableEntryItem key={idx} entry={entry} />
+        {incomes.map((transaction, idx) => (
+          <DataTableTransactionItem key={idx} transaction={transaction} />
         ))}
       </>
     )
@@ -97,39 +98,43 @@ function DataTableCardContent({
 
   return (
     <>
-      {expenses.map((entry, idx) => (
-        <DataTableEntryItem key={idx} entry={entry} />
+      {expenses.map((transaction, idx) => (
+        <DataTableTransactionItem key={idx} transaction={transaction} />
       ))}
     </>
   )
 }
 
-function DataTableEntryItem({ entry }: { entry: Entry }) {
+function DataTableTransactionItem({
+  transaction,
+}: {
+  transaction: Transaction
+}) {
   return (
     <div className="flex items-center w-full py-2 gap-4">
       <div
         className={cn(
           "text-muted-foreground w-4",
-          entry.isRegular ? "opacity-100" : "opacity-0"
+          transaction.isRegular ? "opacity-100" : "opacity-0"
         )}
       >
         <Icons.repeat className="w-4 h-4 text-muted-foreground" />
       </div>
       <div className="flex flex-col min-w-fit">
-        <h2>{entry.name}</h2>
-        <p className="text-sm text-muted-foreground">{entry.date}</p>
+        <h2>{transaction.name}</h2>
+        <p className="text-sm text-muted-foreground">{transaction.date}</p>
       </div>
       <div className="flex gap-1 flex-wrap">
-        {entry.category?.split(",")?.map((category, idx) => (
+        {transaction.category?.split(",")?.map((category, idx) => (
           <Badge key={idx} variant="outline">
             {category.trim()}
           </Badge>
         ))}
       </div>
       <h2 className="font-medium text-lg ml-auto whitespace-nowrap">
-        {formatMoney(entry.amount, entry.currency)}
+        {formatMoney(transaction.amount, transaction.currency)}
       </h2>
-      <EntryMenu entry={entry} />
+      <TransactionMenu transaction={transaction} />
     </div>
   )
 }

@@ -83,10 +83,17 @@
   }
 
   .custom-container {
-    @apply container max-w-screen-2xl;
+    @apply container max-w-screen-2xl px-4 md:px-8;
   }
 
   .custom-min-h {
     @apply min-h-[calc(100vh-192px)];
+  }
+}
+
+@layer utilities {
+  .popover-content {
+    width: var(--radix-popover-trigger-width);
+    max-height: var(--radix-popover-content-available-height);
   }
 }

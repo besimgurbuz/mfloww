@@ -6,11 +6,12 @@ import {
   createTransaction,
   DBConnection,
   DBConnectionResult,
+  DBObjectStores,
   openDB,
 } from "@/lib/db"
-import { Entry } from "@/lib/entry"
+import { Transaction } from "@/lib/transaction"
 
-import EntryStatistics from "../entry/statistics"
+import TransactionStatistics from "../transaction/statistics"
 import { DBContext } from "./context"
 import { decryptObject, encrypt } from "./crypto-utils"
 
@@ -23,7 +24,7 @@ export function useCreateAndInitLocalDB(version: number = 1) {
     const connection = await openDB(version, (conn) =>
       createStore(
         conn,
-        "entry",
+        DBObjectStores.Transaction,
         {
           keyPath: "id",
         },
@@ -49,42 +50,51 @@ export function useCreateAndInitLocalDB(version: number = 1) {
   }
 }
 
-export function useEntries() {
+export function useTransactions() {
   const { data } = useSession()
   const { connection, tickCount } = useContext(DBContext)
-  const [allEntries, setAllEntries] = useState<Entry[]>([])
-  const [incomes, setIncomes] = useState<Entry[]>([])
-  const [expenses, setExpenses] = useState<Entry[]>([])
+  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [incomes, setIncomes] = useState<Transaction[]>([])
+  const [expenses, setExpenses] = useState<Transaction[]>([])
 
-  const getAllEntriesCb = useCallback(async () => {
+  const getAllTransactionsCallback = useCallback(async () => {
     if (!connection?.db || connection.result !== DBConnectionResult.CONNECTED) {
       return
     }
 
-    const transaction = createTransaction(connection, "entry", "readonly")
+    const dbTransaction = createTransaction(
+      connection,
+      DBObjectStores.Transaction,
+      "readonly"
+    )
 
     if (data?.user) {
-      const index = transaction.objectStore("entry").index("userId")
+      const index = dbTransaction
+        .objectStore(DBObjectStores.Transaction)
+        .index("userId")
       const request = index.getAll(data.user.id)
 
       request.onsuccess = () => {
-        const allEntries: Entry[] = []
-        const incomes: Entry[] = []
-        const expenses: Entry[] = []
+        const allTransactions: Transaction[] = []
+        const incomes: Transaction[] = []
+        const expenses: Transaction[] = []
 
         for (const item of request.result) {
-          const entry = decryptObject<Entry>(data.user.key, item.data)
+          const transaction = decryptObject<Transaction>(
+            data.user.key,
+            item.data
+          )
 
-          if (entry.type === "income") {
-            incomes.push(entry)
+          if (transaction.type === "income") {
+            incomes.push(transaction)
           } else {
-            expenses.push(entry)
+            expenses.push(transaction)
           }
 
-          allEntries.push(entry)
+          allTransactions.push(transaction)
         }
 
-        setAllEntries(allEntries)
+        setTransactions(allTransactions)
         setIncomes(incomes)
         setExpenses(expenses)
       }
@@ -92,34 +102,34 @@ export function useEntries() {
   }, [data?.user, connection])
 
   useEffect(() => {
-    getAllEntriesCb()
-  }, [getAllEntriesCb, tickCount])
+    getAllTransactionsCallback()
+  }, [getAllTransactionsCallback, tickCount])
 
-  return { allEntries, incomes, expenses }
+  return { transactions, incomes, expenses }
 }
 
-export function useEntriesStatistics() {
-  const { allEntries } = useEntries()
-  const entryStatistics = useMemo(
-    () => new EntryStatistics(allEntries),
-    [allEntries]
+export function useTransactionStatistics() {
+  const { transactions } = useTransactions()
+  const transactionStatistics = useMemo(
+    () => new TransactionStatistics(transactions),
+    [transactions]
   )
 
   useEffect(() => {
-    entryStatistics.setEntries(allEntries)
-  }, [allEntries, entryStatistics])
+    transactionStatistics.setTransactions(transactions)
+  }, [transactions, transactionStatistics])
 
-  return entryStatistics
+  return transactionStatistics
 }
 
-export function useCreateEntryQuery() {
+export function useCreateTransactionQuery() {
   const { data } = useSession()
   const { connection, tick } = useContext(DBContext)
   const [completed, setCompleted] = useState<boolean>()
   const [error, setError] = useState<ErrorEvent>()
 
   return {
-    createEntry: async (entry: Omit<Entry, "id">) => {
+    createTransaction: async (transaction: Omit<Transaction, "id">) => {
       if (
         !connection?.db ||
         connection.result !== DBConnectionResult.CONNECTED
@@ -127,20 +137,26 @@ export function useCreateEntryQuery() {
         return
       }
 
-      const transaction = createTransaction(connection, "entry", "readwrite")
+      const dbTransaction = createTransaction(
+        connection,
+        DBObjectStores.Transaction,
+        "readwrite"
+      )
 
       if (data?.user) {
-        const objectStore = transaction.objectStore("entry")
-        const entryId = window.crypto.randomUUID()
-        const encryptedEntry = {
-          id: entryId,
+        const objectStore = dbTransaction.objectStore(
+          DBObjectStores.Transaction
+        )
+        const transactionId = window.crypto.randomUUID()
+        const encryptedTransaction = {
+          id: transactionId,
           userId: data.user.id,
           data: encrypt(
             data.user.key,
-            JSON.stringify({ ...entry, id: entryId })
+            JSON.stringify({ ...transaction, id: transactionId })
           ),
         }
-        const request = objectStore.add(encryptedEntry)
+        const request = objectStore.add(encryptedTransaction)
 
         request.onsuccess = () => {
           setCompleted(true)
@@ -157,14 +173,14 @@ export function useCreateEntryQuery() {
   }
 }
 
-export function useDeleteEntryQuery() {
+export function useUpdateTransactionQuery() {
   const { data } = useSession()
   const { connection, tick } = useContext(DBContext)
   const [completed, setCompleted] = useState<boolean>()
   const [error, setError] = useState<ErrorEvent>()
 
   return {
-    deleteEntry: async (id: string) => {
+    updateTransaction: async (transaction: Transaction) => {
       if (
         !connection?.db ||
         connection.result !== DBConnectionResult.CONNECTED
@@ -172,10 +188,63 @@ export function useDeleteEntryQuery() {
         return
       }
 
-      const transaction = createTransaction(connection, "entry", "readwrite")
+      const dbTransaction = createTransaction(
+        connection,
+        DBObjectStores.Transaction,
+        "readwrite"
+      )
 
       if (data?.user) {
-        const objectStore = transaction.objectStore("entry")
+        const objectStore = dbTransaction.objectStore(
+          DBObjectStores.Transaction
+        )
+        const encryptedTransaction = {
+          id: transaction.id,
+          userId: data.user.id,
+          data: encrypt(data.user.key, JSON.stringify(transaction)),
+        }
+        const request = objectStore.put(encryptedTransaction)
+
+        request.onsuccess = () => {
+          setCompleted(true)
+          tick()
+        }
+
+        request.onerror = (event) => {
+          setError(event as ErrorEvent)
+        }
+      }
+    },
+    completed,
+    error,
+  }
+}
+
+export function useDeleteTransactionQuery() {
+  const { data } = useSession()
+  const { connection, tick } = useContext(DBContext)
+  const [completed, setCompleted] = useState<boolean>()
+  const [error, setError] = useState<ErrorEvent>()
+
+  return {
+    deleteTransaction: async (id: string) => {
+      if (
+        !connection?.db ||
+        connection.result !== DBConnectionResult.CONNECTED
+      ) {
+        return
+      }
+
+      const dbTransaction = createTransaction(
+        connection,
+        DBObjectStores.Transaction,
+        "readwrite"
+      )
+
+      if (data?.user) {
+        const objectStore = dbTransaction.objectStore(
+          DBObjectStores.Transaction
+        )
         const request = objectStore.delete(id)
 
         request.onsuccess = () => {

@@ -1,23 +1,23 @@
 "use client"
 
-import { useEntries, useEntriesStatistics } from "@/lib/db/hooks"
-import { DataTableCard } from "@/components/dashboard/data-table-card"
+import { useTransactions, useTransactionStatistics } from "@/lib/db/hooks"
 import { SummaryCards } from "@/components/dashboard/summary-cards"
+import { TransactionTableCard } from "@/components/dashboard/transaction-table-card"
 import { NoDataCard } from "@/components/no-data-card"
 
 export function DashboardWrapper() {
-  const { allEntries, incomes, expenses } = useEntries()
-  const statistics = useEntriesStatistics()
+  const { transactions, incomes, expenses } = useTransactions()
+  const statistics = useTransactionStatistics()
 
-  if (allEntries.length === 0) {
+  if (transactions.length === 0) {
     return <NoDataCard />
   }
 
   return (
     <>
       <SummaryCards {...statistics} />
-      <DataTableCard
-        allEntries={allEntries}
+      <TransactionTableCard
+        transactions={transactions}
         incomes={incomes}
         expenses={expenses}
       />

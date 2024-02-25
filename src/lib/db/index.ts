@@ -4,6 +4,11 @@ export enum DBConnectionResult {
   NOT_SUPPORTED,
 }
 
+export enum DBObjectStores {
+  Entry = "Entry",
+  Transaction = "transaction",
+}
+
 export interface DBConnection {
   result: DBConnectionResult
   error: Error | null

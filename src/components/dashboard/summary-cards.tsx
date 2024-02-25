@@ -2,12 +2,12 @@
 
 import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons"
 
-import EntryStatistics from "@/lib/entry/statistics"
+import TransactionStatistics from "@/lib/transaction/statistics"
 import { formatMoney } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export function SummaryCards(
-  statistics: Omit<EntryStatistics, "setEntries" | "spendingMap">
+  statistics: Omit<TransactionStatistics, "setTransactions" | "spendingMap">
 ) {
   return (
     <Card>
@@ -22,7 +22,7 @@ export function SummaryCards(
 }
 
 function SummaryCardsContent(
-  statistics: Omit<EntryStatistics, "setEntries" | "spendingMap">
+  statistics: Omit<TransactionStatistics, "setTransactions" | "spendingMap">
 ) {
   const { balance, income, expense, mostSpent } = statistics
 

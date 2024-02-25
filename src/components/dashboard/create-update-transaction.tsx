@@ -10,12 +10,15 @@ import {
 } from "react-hook-form"
 import * as z from "zod"
 
-import { useCreateEntryQuery, useUpdateEntryQuery } from "@/lib/db/hooks"
+import {
+  useCreateTransactionQuery,
+  useUpdateTransactionQuery,
+} from "@/lib/db/hooks"
 import {
   SUPPORTED_CURRENCY_CODES,
   SupportedCurrencyCode,
 } from "@/lib/definitions"
-import { Entry } from "@/lib/entry"
+import { Transaction } from "@/lib/transaction"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -61,7 +64,7 @@ const formSchema = z.object({
   name: z.string().min(2).max(100),
   amount: z.preprocess(
     (amount) => Number(z.string().parse(amount)),
-    z.number().positive().min(1)
+    z.number().positive()
   ),
   type: z.enum(["income", "expense"]),
   isRegular: z.boolean(),
@@ -69,21 +72,24 @@ const formSchema = z.object({
   currency: z.enum([firstCurrencyCode, ...otherCurrencyCodes]),
 })
 
-type CreateUpdateEntryProps = {
+type CreateUpdateTransactionProps = {
   isDesktop: boolean
   open: boolean
   onOpenChange: (state: boolean) => void
-} & ({ mode: "create"; entry?: never } | { mode: "edit"; entry: Entry })
+} & (
+  | { mode: "create"; transaction?: never }
+  | { mode: "edit"; transaction: Transaction }
+)
 
-export function CreateUpdateEntry({
+export function CreateUpdateTransaction({
   isDesktop,
   open,
   onOpenChange,
   mode,
-  entry,
-}: CreateUpdateEntryProps) {
-  const { createEntry } = useCreateEntryQuery()
-  const { updateEntry } = useUpdateEntryQuery()
+  transaction,
+}: CreateUpdateTransactionProps) {
+  const { createTransaction } = useCreateTransactionQuery()
+  const { updateTransaction } = useUpdateTransactionQuery()
   const defaultValues: DefaultValues<z.infer<typeof formSchema>> =
     mode === "create"
       ? {
@@ -91,12 +97,12 @@ export function CreateUpdateEntry({
           isRegular: false,
         }
       : {
-          name: entry.name,
-          amount: entry.amount,
-          category: entry.category,
-          currency: entry.currency,
-          isRegular: entry.isRegular,
-          type: entry.type,
+          name: transaction.name,
+          amount: Math.abs(transaction.amount),
+          category: transaction.category,
+          currency: transaction.currency,
+          isRegular: transaction.isRegular,
+          type: transaction.type,
         }
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -106,7 +112,7 @@ export function CreateUpdateEntry({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (mode === "create") {
-      createEntry({
+      createTransaction({
         ...values,
         amount:
           values.type === "expense" && values.amount > 0
@@ -116,16 +122,16 @@ export function CreateUpdateEntry({
         exchangeRate: {} as Record<SupportedCurrencyCode, number>,
       })
     } else {
-      updateEntry({
+      updateTransaction({
         ...values,
-        id: entry.id,
+        id: transaction.id,
         amount:
           values.type === "expense" && values.amount > 0
             ? values.amount * -1
             : values.amount,
         date: "",
         exchangeRate: {} as Record<SupportedCurrencyCode, number>,
-      } as Entry)
+      } as Transaction)
     }
     onOpenChange(false)
   }
@@ -136,15 +142,17 @@ export function CreateUpdateEntry({
         <DialogContent>
           <DialogHeader className="px-0">
             <DialogTitle>
-              {mode === "create" ? "Create a new entry" : `Edit ${entry.name}`}
+              {mode === "create"
+                ? "Create a new transaction"
+                : `Edit ${transaction.name}`}
             </DialogTitle>
             {mode === "create" && (
               <DialogDescription>
-                Create an entry in the selected month.
+                Create a transaction in the selected entry.
               </DialogDescription>
             )}
           </DialogHeader>
-          <EntryForm form={form} onSubmit={onSubmit}>
+          <TransactionForm form={form} onSubmit={onSubmit}>
             <DialogFooter className="flex self-center w-full">
               <Button type="submit">
                 {mode === "create" ? "Create" : "Save"}
@@ -153,7 +161,7 @@ export function CreateUpdateEntry({
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
             </DialogFooter>
-          </EntryForm>
+          </TransactionForm>
         </DialogContent>
       </Dialog>
     )
@@ -162,14 +170,20 @@ export function CreateUpdateEntry({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent>
-        <div className="mx-auto w-full max-w-xl">
+        <div className="mx-auto w-full max-w-xl px-4">
           <DrawerHeader className="px-0">
-            <DrawerTitle>Create a new entry</DrawerTitle>
-            <DrawerDescription>
-              Create an entry in the selected month.
-            </DrawerDescription>
+            <DrawerTitle>
+              {mode === "create"
+                ? "Create a new transaction"
+                : `Edit ${transaction.name}`}
+            </DrawerTitle>
+            {mode === "create" && (
+              <DrawerDescription>
+                Create a transaction in the selected entry.
+              </DrawerDescription>
+            )}
           </DrawerHeader>
-          <EntryForm form={form} onSubmit={onSubmit}>
+          <TransactionForm form={form} onSubmit={onSubmit}>
             <DrawerFooter className="flex self-center w-full">
               <Button type="submit">
                 {mode === "create" ? "Create" : "Save"}
@@ -178,14 +192,14 @@ export function CreateUpdateEntry({
                 <Button variant="outline">Cancel</Button>
               </DrawerClose>
             </DrawerFooter>
-          </EntryForm>
+          </TransactionForm>
         </div>
       </DrawerContent>
     </Drawer>
   )
 }
 
-function EntryForm({
+function TransactionForm({
   form,
   onSubmit,
   children,
@@ -197,10 +211,10 @@ function EntryForm({
   return (
     <Form {...form}>
       <form
-        className="flex flex-col gap-6"
+        className="flex flex-col gap-2"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
           <FormField
             control={form.control}
             name="name"
@@ -232,16 +246,13 @@ function EntryForm({
               <FormItem>
                 <FormLabel>Category</FormLabel>
                 <FormControl>
-                  <Input placeholder="Home Expense, Groceries" {...field} />
+                  <Input placeholder="Passive Income, Groceries" {...field} />
                 </FormControl>
-                <FormDescription>
-                  Separate each category with a comma
-                </FormDescription>
               </FormItem>
             )}
           />
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
           <FormField
             control={form.control}
             name="currency"
@@ -315,7 +326,7 @@ function EntryForm({
                       Regular
                     </FormLabel>
                     <FormDescription>
-                      Regular entries will repeat on every month
+                      Regular transaction will repeat on every month
                     </FormDescription>
                   </div>
                 </FormItem>

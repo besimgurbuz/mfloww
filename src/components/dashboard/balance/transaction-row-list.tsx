@@ -3,23 +3,23 @@
 import { useEffect, useState } from "react"
 
 import { SupportedCurrencyCode } from "@/lib/definitions"
-import { Entry } from "@/lib/entry"
+import { Transaction } from "@/lib/transaction"
 import { cn } from "@/lib/utils"
 
-import { EntryRow } from "./entry-row"
+import { TransactionRow } from "./transaction-row"
 
-export interface EntryRowListProps {
-  data: Entry[]
+export interface TransactionRowListProps {
+  data: Transaction[]
   currency: SupportedCurrencyCode
   direction?: "ltr" | "rtl"
   className?: string
 }
 
-export function EntryRowList({
+export function TransactionRowList({
   data,
   className,
   direction,
-}: EntryRowListProps) {
+}: TransactionRowListProps) {
   const [total, setTotal] = useState<number>()
 
   useEffect(() => {
@@ -29,9 +29,9 @@ export function EntryRowList({
   return (
     <div className={cn("flex w-full flex-col gap-2", className)}>
       {data.map((item, i) => (
-        <EntryRow
+        <TransactionRow
           key={i}
-          entry={item}
+          transaction={item}
           widthPercentage={(item.amount / (total || 1)) * 100}
           direction={direction || "ltr"}
         />

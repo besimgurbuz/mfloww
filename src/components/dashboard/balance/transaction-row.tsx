@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { cva } from "class-variance-authority"
 
-import { Entry } from "@/lib/entry"
+import { Transaction } from "@/lib/transaction"
 import { cn, formatMoney } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -19,15 +19,15 @@ import {
 } from "@/components/ui/popover"
 import { Icons } from "@/components/icons"
 
-import { EntryRowListProps } from "./entry-row-list"
+import { TransactionRowListProps } from "./transaction-row-list"
 
-interface EntryRowProps {
-  entry: Entry
+interface TransactionRowProps {
+  transaction: Transaction
   widthPercentage: number
-  direction: EntryRowListProps["direction"]
+  direction: TransactionRowListProps["direction"]
 }
 
-const entryRowVariants = cva(
+const transactionRowVariants = cva(
   "relative select-none order-1 transition-[width] relative h-12 max-w-[95%] flex gap-2 items-center px-2 border-2 bg-muted",
   {
     variants: {
@@ -65,7 +65,11 @@ const entryRowVariants = cva(
   }
 )
 
-export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
+export function TransactionRow({
+  transaction,
+  widthPercentage,
+  direction,
+}: TransactionRowProps) {
   const rowRef = useRef<HTMLDivElement>(null)
   const [rowWidth, setRowWidth] = useState(0)
 
@@ -95,7 +99,9 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
       <ContextMenu>
         <ContextMenuTrigger
           ref={rowRef}
-          className={cn(entryRowVariants({ type: entry.type, direction }))}
+          className={cn(
+            transactionRowVariants({ type: transaction.type, direction })
+          )}
           style={{
             width: `${widthPercentage}%`,
           }}
@@ -105,7 +111,7 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
               "justify-self-center": rowWidth < 200,
             })}
           >
-            {entry.name}
+            {transaction.name}
           </p>
           <p
             className={cn(
@@ -116,26 +122,28 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
               }
             )}
           >
-            {formatMoney(entry.amount, entry.currency)}
+            {formatMoney(transaction.amount, transaction.currency)}
           </p>
           <Popover>
             <PopoverTrigger className="absolute z-10 w-full h-full left-0 top-0"></PopoverTrigger>
             <PopoverContent>
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-medium text-md">{entry.name}</h3>
+                  <h3 className="font-medium text-md">{transaction.name}</h3>
                   <p className="font-medium text-md whitespace-nowrap">
-                    {formatMoney(entry.amount, entry.currency)}
+                    {formatMoney(transaction.amount, transaction.currency)}
                   </p>
-                  <p className="text-sm text-muted-foreground">{entry.date}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {transaction.date}
+                  </p>
                 </div>
                 <div className="flex flex-col items-end gap-4">
-                  {entry.isRegular && (
+                  {transaction.isRegular && (
                     <Icons.repeat className="w-4 h-4 text-muted-foreground" />
                   )}
-                  {entry.category && (
+                  {transaction.category && (
                     <div className="flex flex-wrap">
-                      {entry.category.split(",").map((category, idx) => (
+                      {transaction.category.split(",").map((category, idx) => (
                         <Badge key={idx} variant="outline">
                           <p className="text-xs truncate">{category.trim()}</p>
                         </Badge>
@@ -165,7 +173,7 @@ export function EntryRow({ entry, widthPercentage, direction }: EntryRowProps) {
               flex: rowWidth < 200,
             })}
           >
-            {formatMoney(entry.amount, entry.currency)}
+            {formatMoney(transaction.amount, transaction.currency)}
           </p>
         </div>
       </ContextMenu>

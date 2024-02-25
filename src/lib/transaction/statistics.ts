@@ -1,22 +1,22 @@
-import { Entry } from "./index"
+import { Transaction } from "./index"
 
 type MostSpent = {
   category: string
   amount: number
 }
 
-type EntrySumCount = {
+type TransactionCount = {
   count: number
   total: number
 }
 
-class EntryStatistics {
+class TransactionStatistics {
   balance = 0
-  income: EntrySumCount = {
+  income: TransactionCount = {
     count: 0,
     total: 0,
   }
-  expense: EntrySumCount = {
+  expense: TransactionCount = {
     count: 0,
     total: 0,
   }
@@ -26,29 +26,29 @@ class EntryStatistics {
   }
   spendingMap: Record<string, number> = {}
 
-  private entries!: Entry[]
+  private transactions!: Transaction[]
 
-  constructor(entries: Entry[]) {
-    this.entries = entries
+  constructor(entries: Transaction[]) {
+    this.transactions = entries
     this.update()
   }
 
-  setEntries(entries: Entry[]) {
-    this.entries = entries
+  setTransactions(entries: Transaction[]) {
+    this.transactions = entries
     this.update()
   }
 
   private update() {
     let balance = 0
-    let income: EntrySumCount = { count: 0, total: 0 }
-    let expense: EntrySumCount = { count: 0, total: 0 }
+    let income: TransactionCount = { count: 0, total: 0 }
+    let expense: TransactionCount = { count: 0, total: 0 }
     const spendingMap: Record<string, number> = {}
     let mostSpent: MostSpent = {
       amount: 0,
       category: "",
     }
 
-    for (const entry of this.entries) {
+    for (const entry of this.transactions) {
       if (entry.type === "income") {
         balance += entry.amount
         income.total += entry.amount
@@ -80,4 +80,4 @@ class EntryStatistics {
   }
 }
 
-export default EntryStatistics
+export default TransactionStatistics

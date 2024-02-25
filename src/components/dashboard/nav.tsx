@@ -1,8 +1,11 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { PlusIcon } from "@radix-ui/react-icons"
 
+import { useMediaQuery } from "@/lib/hooks"
 import { cn } from "@/lib/utils"
 
 import { Icons } from "../icons"
@@ -14,11 +17,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet"
-import { CreateEntry } from "./balance/create-entry"
-import { MonthSelectionCommand } from "./month-selection-command"
+import { CreateUpdateTransaction } from "./create-update-transaction"
+import { EntrySelectionCommand } from "./entry-selection-command"
 
 export function DashboardNav() {
   const pathname = usePathname()
+  const isDesktop = useMediaQuery("(min-width: 768px)")
+  const [createTransactionOpen, setCreateTransactionOpen] = useState(false)
   const routes: { path: string; name: string }[] = [
     { path: "/dashboard", name: "Overview" },
     { path: "/dashboard/balance", name: "Balance" },
@@ -26,15 +31,15 @@ export function DashboardNav() {
   ]
 
   return (
-    <nav className="custom-container flex items-center w-full h-14 sticky z-50 top-14 space-x-4 lg:space-x-8 bg-background">
+    <nav className="custom-container flex items-center w-full h-14 sticky z-50 top-0 md:top-14 space-x-4 lg:space-x-8 bg-background">
       <Sheet>
-        <div className="flex gap-1">
+        <div className="flex gap-2 w-full md:w-fit pr-2">
           <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost">
-              <Icons.menu className="w-6 h-6" />
+            <Button variant="ghost" className="px-2 h-8">
+              <Icons.menu className="w-5 h-5" />
             </Button>
           </SheetTrigger>
-          <MonthSelectionCommand />
+          <EntrySelectionCommand />
         </div>
         <div className="hidden items-center space-x-4 lg:space-x-6 md:flex">
           {routes.map((route) => (
@@ -51,7 +56,18 @@ export function DashboardNav() {
           ))}
         </div>
         <div className="!ml-auto flex items-center gap-2">
-          <CreateEntry />
+          <Button
+            onClick={() => setCreateTransactionOpen(true)}
+            className="px-2 h-8"
+          >
+            <PlusIcon className="w-5 h-5" />
+          </Button>
+          <CreateUpdateTransaction
+            isDesktop={isDesktop}
+            mode="create"
+            open={createTransactionOpen}
+            onOpenChange={setCreateTransactionOpen}
+          />
           <SheetContent className="flex flex-col" side="left">
             <SheetTitle className="flex gap-2">
               <Icons.logo className="w-6 h-6" />

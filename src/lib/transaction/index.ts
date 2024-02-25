@@ -1,11 +1,11 @@
 import { SupportedCurrencyCode } from "../definitions"
 
-export type EntryType = "income" | "expense"
+export type TransactionType = "income" | "expense"
 
-export interface Entry {
+export interface Transaction {
   id: string
   name: string
-  type: EntryType
+  type: TransactionType
   amount: number
   isRegular: boolean
   category?: string

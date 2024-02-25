@@ -1,12 +1,12 @@
 "use client"
 
-import { useEntries, useEntriesStatistics } from "@/lib/db/hooks"
+import { useTransactions, useTransactionStatistics } from "@/lib/db/hooks"
 import { BalanceCard } from "@/components/dashboard/balance/balance-card"
 import { NoDataCard } from "@/components/no-data-card"
 
 export function BalanceWrapper() {
-  const { allEntries, incomes, expenses } = useEntries()
-  const { balance } = useEntriesStatistics()
+  const { allEntries, incomes, expenses } = useTransactions()
+  const { balance } = useTransactionStatistics()
 
   if (allEntries.length === 0) {
     return <NoDataCard />

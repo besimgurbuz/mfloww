@@ -18,6 +18,7 @@ import { UserDropdown } from "./user-dropdown"
 
 export function Header() {
   const { status, data } = useSession()
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background backdrop-blur">
       <div className="custom-container w-full flex h-14  items-center">

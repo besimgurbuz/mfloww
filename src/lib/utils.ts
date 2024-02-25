@@ -2,7 +2,9 @@ import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 import {
+  Entry,
   GetValueFromStorage,
+  MONTH_NAMES,
   SetValueToStorage,
   StorageKey,
   StorageType,
@@ -14,7 +16,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatMoney(amount: number, currency: SupportedCurrencyCode) {
-  return amount.toLocaleString("en-US", { style: "currency", currency })
+  return new Intl.NumberFormat("en-US", { style: "currency", currency }).format(
+    amount
+  )
+}
+
+export function formatEntry(entry: Entry): string {
+  return `${MONTH_NAMES[entry.month]} ${entry.year}`
 }
 
 export function typedObjectKeys<

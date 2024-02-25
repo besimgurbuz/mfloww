@@ -8,8 +8,9 @@ import {
   PlusCircledIcon,
 } from "@radix-ui/react-icons"
 
-import { MONTH_NAMES } from "@/lib/definitions"
-import { cn } from "@/lib/utils"
+import { Entry } from "@/lib/definitions"
+import { useMediaQuery } from "@/lib/hooks"
+import { cn, formatEntry } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -22,11 +23,17 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer"
 import {
   Popover,
   PopoverContent,
@@ -35,15 +42,11 @@ import {
 
 import { MonthYearPicker } from "./month-picker"
 
-export function MonthSelectionCommand() {
+export function EntrySelectionCommand() {
   const [entries, setEntries] = useState<string[]>([])
   const [open, setOpen] = useState(false)
   const [selectedEntry, setSelectedEntry] = useState<string>()
-  const [createdEntry, setCreatedEntry] = useState<{
-    month: number
-    year: number
-  }>()
-  const [showNewEntryDialog, setShowNewEntryDialog] = useState(false)
+  const [showNewEntryModal, setShowNewEntryModal] = useState(false)
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -57,21 +60,21 @@ export function MonthSelectionCommand() {
   }, [])
 
   return (
-    <Dialog open={showNewEntryDialog} onOpenChange={setShowNewEntryDialog}>
+    <>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="justify-between w-[220px]"
+            className="justify-between w-full md:w-[220px]"
           >
-            {selectedEntry ? selectedEntry : "Select a month"}
+            {selectedEntry ? selectedEntry : "Select an entry"}
             <CommandShortcut>/</CommandShortcut>
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0" align="start">
+        <PopoverContent className="popover-content p-0" align="start">
           <Command>
             <CommandInput placeholder="Search entry..." />
             <CommandEmpty>No entry found.</CommandEmpty>
@@ -80,6 +83,7 @@ export function MonthSelectionCommand() {
                 <CommandItem
                   key={entry}
                   value={entry}
+                  aria-selected={selectedEntry === entry}
                   onSelect={() => {
                     setSelectedEntry(entry)
                     setOpen(false)
@@ -103,59 +107,112 @@ export function MonthSelectionCommand() {
                   className="flex gap-2"
                   onSelect={() => {
                     setOpen(false)
-                    setShowNewEntryDialog(true)
+                    setShowNewEntryModal(true)
                   }}
                 >
                   <PlusCircledIcon />
-                  Create month
+                  Create entry
                 </CommandItem>
               </DialogTrigger>
             </CommandGroup>
           </Command>
         </PopoverContent>
       </Popover>
-      <DialogContent className="max-w-[350px]">
-        <DialogHeader>
-          <DialogTitle>Create entry</DialogTitle>
-        </DialogHeader>
-        <DialogDescription>
-          Add a new entry based on month and year.
-        </DialogDescription>
-        <MonthYearPicker
-          onChange={(change) => {
-            setCreatedEntry({
-              ...change,
-            })
-          }}
-        />
-        <DialogFooter>
-          <Button
-            variant="outline"
-            onClick={() => {
-              setCreatedEntry(undefined)
-              setShowNewEntryDialog(false)
-            }}
-          >
-            Cancel
-          </Button>
+      <NewEntryDialogOrDrawer
+        open={showNewEntryModal}
+        setOpen={setShowNewEntryModal}
+        onSubmit={(entry) => {
+          const newEntry = formatEntry(entry)
+          if (entries.includes(newEntry)) {
+            setShowNewEntryModal(false)
+            return
+          }
+
+          setEntries([...entries, newEntry])
+          setOpen(false)
+          setShowNewEntryModal(false)
+          setSelectedEntry(newEntry)
+        }}
+      />
+    </>
+  )
+}
+
+type NewEntryDialogOrDrawerProps = {
+  open: boolean
+  setOpen: (state: boolean) => void
+  onSubmit: (monthYear: Entry) => void
+}
+
+function NewEntryDialogOrDrawer({
+  open,
+  setOpen,
+  onSubmit,
+}: NewEntryDialogOrDrawerProps) {
+  const isDesktop = useMediaQuery("(min-width: 768px)")
+  const [entry, setEntry] = useState<Entry>()
+
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-[350px]">
+          <DialogHeader>
+            <DialogTitle>Create an entry</DialogTitle>
+          </DialogHeader>
+          <MonthYearPicker onChange={setEntry} />
+          <DialogFooter>
+            <Button
+              type="submit"
+              disabled={entry === undefined}
+              onClick={() => {
+                onSubmit(entry!)
+              }}
+            >
+              Create
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setEntry(undefined)
+                setOpen(false)
+              }}
+            >
+              Cancel
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    )
+  }
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerContent className="px-4">
+        <DrawerHeader>
+          <DrawerTitle>Create an entry</DrawerTitle>
+        </DrawerHeader>
+        <MonthYearPicker onChange={setEntry} />
+        <DrawerFooter>
           <Button
             type="submit"
-            disabled={createdEntry === undefined}
+            disabled={entry === undefined}
             onClick={() => {
-              const newEntry = `${
-                MONTH_NAMES[createdEntry?.month as number]
-              } ${createdEntry?.year}`
-              setEntries([...entries, newEntry])
-              setCreatedEntry(undefined)
-              setOpen(false)
-              setShowNewEntryDialog(false)
-              setSelectedEntry(newEntry)
+              onSubmit(entry!)
             }}
           >
             Create
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <Button
+            variant="outline"
+            onClick={() => {
+              setEntry(undefined)
+              setOpen(false)
+            }}
+          >
+            Cancel
+          </Button>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   )
 }

@@ -37,7 +37,7 @@ export function LearnMore() {
         <Card>
           <CardHeader>
             <CardTitle>
-              Every entry you create is encrypted by your unique key
+              Every transaction you create is encrypted by your unique key
             </CardTitle>
             <p className="max-w-[800px] text-muted-foreground">
               When you start using the application, you&apos;ll get a unique
@@ -54,8 +54,8 @@ export function LearnMore() {
             <p className="max-w-[800px] text-muted-foreground">
               +25 different currencies are supported. You can create your
               entries in any of them. You will be able to define a base
-              currency. And every entry you make will be converted and displayed
-              in your base currency.
+              currency. And every transaction you make will be converted and
+              displayed in your base currency.
             </p>
           </CardHeader>
         </Card>
@@ -65,7 +65,7 @@ export function LearnMore() {
           <CardHeader>
             <CardTitle>Open Source</CardTitle>
             <p className="max-w-[800px] text-muted-foreground">
-              The code base is open source on GitHub. You can contribute to the
+              The source code is available on GitHub. You can contribute to the
               app or even fork it, customize it and use it by yourself.
             </p>
           </CardHeader>

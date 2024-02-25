@@ -2,12 +2,12 @@
 
 import { useState } from "react"
 
-import { Entry } from "@/lib/entry"
+import { Transaction } from "@/lib/transaction"
 import { formatMoney } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-import { EntryRowList } from "./entry-row-list"
+import { TransactionRowList } from "./transaction-row-list"
 
 type DisplayMode = "together" | "grouped"
 
@@ -17,8 +17,8 @@ export function BalanceCard({
   expenses,
 }: {
   balance: number
-  incomes: Entry[]
-  expenses: Entry[]
+  incomes: Transaction[]
+  expenses: Transaction[]
 }) {
   const [displayMode, setDisplayMode] = useState<DisplayMode>("together")
 
@@ -48,13 +48,13 @@ export function BalanceCard({
       <CardContent className="flex flex-col w-full gap-4 max-w-full">
         {displayMode === "grouped" ? (
           <div className="flex w-full gap-2 flex-wrap sm:flex-nowrap">
-            <EntryRowList
+            <TransactionRowList
               data={expenses}
               currency="USD"
               direction="rtl"
               className="order-2 sm:order-1 sm:w-1/2 sm:max-w-1/2"
             />
-            <EntryRowList
+            <TransactionRowList
               data={incomes}
               currency="USD"
               className="order-1 sm:order-2 sm:w-1/2 sm:max-w-1/2"
@@ -62,7 +62,10 @@ export function BalanceCard({
           </div>
         ) : (
           <div className="flex flex-col gap-4 w-full">
-            <EntryRowList data={incomes.concat(expenses)} currency="USD" />
+            <TransactionRowList
+              data={incomes.concat(expenses)}
+              currency="USD"
+            />
           </div>
         )}
       </CardContent>
