@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { DialogTrigger } from "@radix-ui/react-dialog"
 import {
   CaretSortIcon,
@@ -8,9 +8,10 @@ import {
   PlusCircledIcon,
 } from "@radix-ui/react-icons"
 
+import { useCreateEntryQuery } from "@/lib/db/hooks"
 import { Entry } from "@/lib/definitions"
 import { useMediaQuery } from "@/lib/hooks"
-import { cn, formatEntry } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -39,13 +40,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { DashboardStateContext } from "@/components/dashboard/dashboard-state-context"
 
 import { MonthYearPicker } from "./month-picker"
 
 export function EntrySelectionCommand() {
-  const [entries, setEntries] = useState<string[]>([])
+  const { entries, selectedEntry, setSelectedEntry } = useContext(
+    DashboardStateContext
+  )
+  const { createEntry } = useCreateEntryQuery()
   const [open, setOpen] = useState(false)
-  const [selectedEntry, setSelectedEntry] = useState<string>()
   const [showNewEntryModal, setShowNewEntryModal] = useState(false)
 
   useEffect(() => {
@@ -69,7 +73,7 @@ export function EntrySelectionCommand() {
             aria-expanded={open}
             className="justify-between w-full md:w-[220px]"
           >
-            {selectedEntry ? selectedEntry : "Select an entry"}
+            {selectedEntry ? selectedEntry.name : "Select an entry"}
             <CommandShortcut>/</CommandShortcut>
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -81,20 +85,22 @@ export function EntrySelectionCommand() {
             <CommandGroup heading="Entries">
               {entries.map((entry) => (
                 <CommandItem
-                  key={entry}
-                  value={entry}
-                  aria-selected={selectedEntry === entry}
+                  key={entry.name}
+                  value={entry.name}
+                  aria-selected={selectedEntry?.name === entry.name}
                   onSelect={() => {
-                    setSelectedEntry(entry)
+                    setSelectedEntry(entry.name)
                     setOpen(false)
                   }}
                 >
-                  {entry}
+                  {entry.name}
 
                   <CheckIcon
                     className={cn(
                       "ml-auto h-4 w-4",
-                      selectedEntry === entry ? "opacity-100" : "opacity-0"
+                      selectedEntry?.name === entry.name
+                        ? "opacity-100"
+                        : "opacity-0"
                     )}
                   />
                 </CommandItem>
@@ -121,17 +127,15 @@ export function EntrySelectionCommand() {
       <NewEntryDialogOrDrawer
         open={showNewEntryModal}
         setOpen={setShowNewEntryModal}
-        onSubmit={(entry) => {
-          const newEntry = formatEntry(entry)
-          if (entries.includes(newEntry)) {
+        onSubmit={async (entry) => {
+          try {
+            await createEntry(entry)
+            setOpen(false)
             setShowNewEntryModal(false)
-            return
+            setSelectedEntry(entry.name)
+          } catch (err) {
+            console.error(err)
           }
-
-          setEntries([...entries, newEntry])
-          setOpen(false)
-          setShowNewEntryModal(false)
-          setSelectedEntry(newEntry)
         }}
       />
     </>
@@ -141,7 +145,7 @@ export function EntrySelectionCommand() {
 type NewEntryDialogOrDrawerProps = {
   open: boolean
   setOpen: (state: boolean) => void
-  onSubmit: (monthYear: Entry) => void
+  onSubmit: (monthYear: Omit<Entry, "userId">) => void
 }
 
 function NewEntryDialogOrDrawer({

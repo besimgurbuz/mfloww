@@ -1,8 +1,9 @@
 import { typedObjectKeys } from "./utils"
 
 export type Entry = {
-  month: number
-  year: number
+  name: string
+  userId: string
+  date: string
 }
 
 export const MONTH_NAMES: string[] = [

@@ -1,4 +1,5 @@
 import { DBContextProvider } from "@/lib/db/provider"
+import { DashboardStateContextProvider } from "@/components/dashboard/dashboard-state-context-provider"
 import { DashboardNav } from "@/components/dashboard/nav"
 
 export default function DashboardLayout({
@@ -9,8 +10,10 @@ export default function DashboardLayout({
   return (
     <div>
       <DBContextProvider>
-        <DashboardNav />
-        <main>{children}</main>
+        <DashboardStateContextProvider>
+          <DashboardNav />
+          <main>{children}</main>
+        </DashboardStateContextProvider>
       </DBContextProvider>
     </div>
   )

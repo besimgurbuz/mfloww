@@ -4,6 +4,7 @@ import { useState } from "react"
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
 
 import { Entry, MONTH_ABREVVESIONS } from "@/lib/definitions"
+import { createDateFromMonthYear, formatEntry } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
@@ -28,7 +29,10 @@ export function MonthYearPicker({
             onClick={() => {
               setYear(year - 1)
               if (month !== undefined) {
-                onChange({ month, year })
+                onChange({
+                  date: createDateFromMonthYear(month, year).toISOString(),
+                  name: formatEntry(month, year),
+                } as Entry)
               }
             }}
             disabled={year <= currentYear - 10}
@@ -42,7 +46,10 @@ export function MonthYearPicker({
             onClick={() => {
               setYear(year + 1)
               if (month !== undefined) {
-                onChange({ month, year })
+                onChange({
+                  date: createDateFromMonthYear(month, year).toISOString(),
+                  name: formatEntry(month, year),
+                } as Entry)
               }
             }}
             disabled={year >= currentYear}
@@ -57,7 +64,10 @@ export function MonthYearPicker({
           onValueChange={(value) => {
             const intValue = Number(value || month)
             setMonth(intValue)
-            onChange({ month: intValue, year })
+            onChange({
+              date: createDateFromMonthYear(intValue, year).toISOString(),
+              name: formatEntry(intValue, year),
+            } as Entry)
           }}
         >
           {MONTH_ABREVVESIONS.map((m, index) => (

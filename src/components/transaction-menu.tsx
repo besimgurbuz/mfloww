@@ -87,6 +87,7 @@ export function TransactionMenu({ transaction }: { transaction: Transaction }) {
         onNeverAskedChecked={() => setDontWarnDelete(true)}
       />
       <CreateUpdateTransaction
+        enableShortcut={false}
         isDesktop={isDesktop}
         mode="edit"
         transaction={transaction}

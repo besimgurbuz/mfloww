@@ -122,7 +122,6 @@ function DataTableTransactionItem({
       </div>
       <div className="flex flex-col min-w-fit">
         <h2>{transaction.name}</h2>
-        <p className="text-sm text-muted-foreground">{transaction.date}</p>
       </div>
       <div className="flex gap-1 flex-wrap">
         {transaction.category?.split(",")?.map((category, idx) => (

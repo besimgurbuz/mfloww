@@ -1,15 +1,20 @@
 "use client"
 
-import { useTransactions, useTransactionStatistics } from "@/lib/db/hooks"
+import { useContext } from "react"
+
+import { useTransactionStatistics } from "@/lib/db/hooks"
+import { DashboardStateContext } from "@/components/dashboard/dashboard-state-context"
 import { SummaryCards } from "@/components/dashboard/summary-cards"
 import { TransactionTableCard } from "@/components/dashboard/transaction-table-card"
 import { NoDataCard } from "@/components/no-data-card"
 
 export function DashboardWrapper() {
-  const { transactions, incomes, expenses } = useTransactions()
+  const { entryTransactions, entryIncomes, entryExpenses } = useContext(
+    DashboardStateContext
+  )
   const statistics = useTransactionStatistics()
 
-  if (transactions.length === 0) {
+  if (entryTransactions.length === 0) {
     return <NoDataCard />
   }
 
@@ -17,9 +22,9 @@ export function DashboardWrapper() {
     <>
       <SummaryCards {...statistics} />
       <TransactionTableCard
-        transactions={transactions}
-        incomes={incomes}
-        expenses={expenses}
+        transactions={entryTransactions}
+        incomes={entryIncomes}
+        expenses={entryExpenses}
       />
     </>
   )

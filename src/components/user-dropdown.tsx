@@ -22,9 +22,7 @@ export function UserDropdown({ user }: { user?: User }) {
     const down = async (e: KeyboardEvent) => {
       if (e.key === "s" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
-        console.log("settings clicked")
       } else if (e.key === "o" && e.shiftKey && (e.metaKey || e.ctrlKey)) {
-        console.log("sign out")
         await signOut()
       }
     }

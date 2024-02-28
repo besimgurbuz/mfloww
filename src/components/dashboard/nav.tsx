@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils"
 
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
+import { CommandShortcut } from "../ui/command"
 import {
   Sheet,
   SheetClose,
@@ -17,6 +18,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip"
 import { CreateUpdateTransaction } from "./create-update-transaction"
 import { EntrySelectionCommand } from "./entry-selection-command"
 
@@ -56,13 +63,24 @@ export function DashboardNav() {
           ))}
         </div>
         <div className="!ml-auto flex items-center gap-2">
-          <Button
-            onClick={() => setCreateTransactionOpen(true)}
-            className="px-2 h-8"
-          >
-            <PlusIcon className="w-5 h-5" />
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  onClick={() => setCreateTransactionOpen(true)}
+                  className="px-2 h-8"
+                >
+                  <PlusIcon className="w-5 h-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className="flex gap-2" side="bottom">
+                <p>Create transaction</p>
+                <CommandShortcut>⌘K</CommandShortcut>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <CreateUpdateTransaction
+            enableShortcut={true}
             isDesktop={isDesktop}
             mode="create"
             open={createTransactionOpen}

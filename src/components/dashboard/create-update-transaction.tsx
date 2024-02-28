@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode } from "react"
+import { ReactNode, useContext, useEffect } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   DefaultValues,
@@ -57,15 +57,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { DashboardStateContext } from "@/components/dashboard/dashboard-state-context"
 
 const [firstCurrencyCode, ...otherCurrencyCodes] = SUPPORTED_CURRENCY_CODES
 
 const formSchema = z.object({
   name: z.string().min(2).max(100),
-  amount: z.preprocess(
-    (amount) => Number(z.string().parse(amount)),
-    z.number().positive()
-  ),
+  amount: z.number().positive(),
   type: z.enum(["income", "expense"]),
   isRegular: z.boolean(),
   category: z.string().min(2).max(50).optional(),
@@ -73,6 +71,7 @@ const formSchema = z.object({
 })
 
 type CreateUpdateTransactionProps = {
+  enableShortcut?: boolean
   isDesktop: boolean
   open: boolean
   onOpenChange: (state: boolean) => void
@@ -82,6 +81,7 @@ type CreateUpdateTransactionProps = {
 )
 
 export function CreateUpdateTransaction({
+  enableShortcut,
   isDesktop,
   open,
   onOpenChange,
@@ -90,6 +90,7 @@ export function CreateUpdateTransaction({
 }: CreateUpdateTransactionProps) {
   const { createTransaction } = useCreateTransactionQuery()
   const { updateTransaction } = useUpdateTransactionQuery()
+  const { selectedEntry } = useContext(DashboardStateContext)
   const defaultValues: DefaultValues<z.infer<typeof formSchema>> =
     mode === "create"
       ? {
@@ -104,34 +105,41 @@ export function CreateUpdateTransaction({
           isRegular: transaction.isRegular,
           type: transaction.type,
         }
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
   })
 
+  useEffect(() => {
+    if (!enableShortcut) {
+      return
+    }
+    const down = (event: KeyboardEvent) => {
+      if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
+        onOpenChange(!open)
+      }
+    }
+
+    document.addEventListener("keydown", down)
+    return () => document.removeEventListener("keydown", down)
+  }, [])
+
   function onSubmit(values: z.infer<typeof formSchema>) {
+    const newTransaction = {
+      ...values,
+      amount:
+        values.type === "expense" && values.amount > 0
+          ? values.amount * -1
+          : values.amount,
+      date: values.isRegular ? "" : selectedEntry?.date,
+      exchangeRate: {} as Record<SupportedCurrencyCode, number>,
+    } as Transaction
+
     if (mode === "create") {
-      createTransaction({
-        ...values,
-        amount:
-          values.type === "expense" && values.amount > 0
-            ? values.amount * -1
-            : values.amount,
-        date: "",
-        exchangeRate: {} as Record<SupportedCurrencyCode, number>,
-      })
+      createTransaction(newTransaction)
     } else {
-      updateTransaction({
-        ...values,
-        id: transaction.id,
-        amount:
-          values.type === "expense" && values.amount > 0
-            ? values.amount * -1
-            : values.amount,
-        date: "",
-        exchangeRate: {} as Record<SupportedCurrencyCode, number>,
-      } as Transaction)
+      newTransaction.id = transaction.id
+      updateTransaction(newTransaction)
     }
     onOpenChange(false)
   }
@@ -326,7 +334,7 @@ function TransactionForm({
                       Regular
                     </FormLabel>
                     <FormDescription>
-                      Regular transaction will repeat on every month
+                      Regular transaction will occur on every entry
                     </FormDescription>
                   </div>
                 </FormItem>
