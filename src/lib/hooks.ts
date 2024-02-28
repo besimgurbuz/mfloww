@@ -59,13 +59,11 @@ export const useStorage = <T>(
   storageType: StorageType,
   defaultValue?: T
 ): [T | undefined, (value: T) => void] => {
-  // State to hold the value
   const [value, setValue] = useState<T | null>(() =>
     getValueFromStorage<T>(key, storageType)
   )
 
   useEffect(() => {
-    // Retrieve value from storage when component mounts
     const storedValue = getValueFromStorage<T>(key, storageType)
     if (storedValue !== null) {
       setValue(storedValue)

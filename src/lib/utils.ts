@@ -43,6 +43,9 @@ export const setValueToStorage: SetValueToStorage = <T>(
   value: T,
   storageType: StorageType
 ) => {
+  if (typeof window === "undefined") {
+    return
+  }
   const storage = storageType === "localStorage" ? localStorage : sessionStorage
   storage.setItem(key, JSON.stringify(value))
 }
@@ -51,6 +54,9 @@ export const getValueFromStorage: GetValueFromStorage = <T>(
   key: StorageKey,
   storageType: StorageType
 ) => {
+  if (typeof window === "undefined") {
+    return null
+  }
   const storage = storageType === "localStorage" ? localStorage : sessionStorage
   const storedValue = storage.getItem(key)
   return storedValue ? JSON.parse(storedValue) : null
