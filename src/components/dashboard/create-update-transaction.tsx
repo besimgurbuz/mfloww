@@ -63,7 +63,10 @@ const [firstCurrencyCode, ...otherCurrencyCodes] = SUPPORTED_CURRENCY_CODES
 
 const formSchema = z.object({
   name: z.string().min(2).max(100),
-  amount: z.number().positive(),
+  amount: z.preprocess(
+    (arg) => Number(z.string().parse(arg)),
+    z.number().positive()
+  ),
   type: z.enum(["income", "expense"]),
   isRegular: z.boolean(),
   category: z.string().min(2).max(50).optional(),
