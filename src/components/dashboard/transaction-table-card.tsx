@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 
+import { Entry } from "@/lib/definitions"
 import { Transaction, TransactionType } from "@/lib/transaction"
 import { cn, formatMoney } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -9,15 +10,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 import { Icons } from "../icons"
-import { TransactionMenu } from "../transaction-menu"
+import { Button } from "../ui/button"
+import { TransactionMenu } from "./transaction-menu"
 
 type DataTableFilter = TransactionType | "all"
 
 export function TransactionTableCard({
+  selectedEntry,
   transactions,
   incomes,
   expenses,
 }: {
+  selectedEntry: Entry
   transactions: Transaction[]
   incomes: Transaction[]
   expenses: Transaction[]
@@ -31,8 +35,7 @@ export function TransactionTableCard({
           <CardTitle>Incomes and expenses</CardTitle>
           <p className="text-sm text-muted-foreground mt-2">
             You have {incomes.length} income{incomes.length > 1 && "s"} and{" "}
-            {expenses.length} expense{expenses.length > 1 && "s"}
-            this month.
+            {expenses.length} expense{expenses.length > 1 && "s"}.
           </p>
         </div>
         <ToggleGroup
@@ -133,7 +136,15 @@ function DataTableTransactionItem({
       <h2 className="font-medium text-lg ml-auto whitespace-nowrap">
         {formatMoney(transaction.amount, transaction.currency)}
       </h2>
-      <TransactionMenu transaction={transaction} />
+      <TransactionMenu
+        type="dropdown-menu"
+        trigger={
+          <Button variant="ghost">
+            <Icons.dotsHorizontal />
+          </Button>
+        }
+        transaction={transaction}
+      />
     </div>
   )
 }

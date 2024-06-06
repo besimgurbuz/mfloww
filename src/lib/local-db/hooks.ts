@@ -8,8 +8,9 @@ import {
   DBConnectionResult,
   DBObjectStores,
   openDB,
-} from "@/lib/db"
+} from "@/lib/local-db"
 import { Transaction } from "@/lib/transaction"
+import { DashboardStateContext } from "@/components/dashboard/dashboard-state-context"
 
 import { Entry } from "../definitions"
 import TransactionStatistics from "../transaction/statistics"
@@ -94,6 +95,9 @@ export function useTransactions() {
   const { data } = useSession()
   const { connection, tickCount } = useContext(DBContext)
   const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [regularTransactions, setRegularTransactions] = useState<Transaction[]>(
+    []
+  )
   const [incomes, setIncomes] = useState<Transaction[]>([])
   const [expenses, setExpenses] = useState<Transaction[]>([])
 
@@ -118,13 +122,16 @@ export function useTransactions() {
 
     request.onsuccess = () => {
       const allTransactions: Transaction[] = []
+      const regularTransactions: Record<string, Transaction> = {}
       const incomes: Transaction[] = []
       const expenses: Transaction[] = []
 
       for (const item of request.result) {
         const transaction = decryptObject<Transaction>(data.user.key, item.data)
 
-        if (transaction.type === "income") {
+        if (transaction.isRegular && !regularTransactions[transaction.name]) {
+          regularTransactions[transaction.name] = transaction
+        } else if (transaction.type === "income") {
           incomes.push(transaction)
         } else {
           expenses.push(transaction)
@@ -134,6 +141,7 @@ export function useTransactions() {
       }
 
       setTransactions(allTransactions)
+      setRegularTransactions(Object.values(regularTransactions))
       setIncomes(incomes)
       setExpenses(expenses)
     }
@@ -143,19 +151,20 @@ export function useTransactions() {
     getAllTransactionsCallback()
   }, [getAllTransactionsCallback, tickCount])
 
-  return { transactions, incomes, expenses }
+  return { transactions, regularTransactions, incomes, expenses }
 }
 
 export function useTransactionStatistics() {
-  const { transactions } = useTransactions()
+  // const { transactions } = useTransactions()
+  const { entryTransactions } = useContext(DashboardStateContext)
   const transactionStatistics = useMemo(
-    () => new TransactionStatistics(transactions),
-    [transactions]
+    () => new TransactionStatistics(entryTransactions),
+    [entryTransactions]
   )
 
   useEffect(() => {
-    transactionStatistics.setTransactions(transactions)
-  }, [transactions, transactionStatistics])
+    transactionStatistics.setTransactions(entryTransactions)
+  }, [entryTransactions, transactionStatistics])
 
   return transactionStatistics
 }
@@ -165,6 +174,7 @@ export function useCreateEntryQuery() {
   const { connection, tick } = useContext(DBContext)
   const [completed, setCompleted] = useState<boolean>()
   const [error, setError] = useState<ErrorEvent>()
+  const { regularTransactions } = useTransactions()
 
   return {
     createEntry: async (entry: Omit<Entry, "userId">) => {
@@ -178,22 +188,119 @@ export function useCreateEntryQuery() {
 
       const dbTransaction = createTransaction(
         connection,
-        DBObjectStores.Entry,
+        [DBObjectStores.Entry, DBObjectStores.Transaction],
         "readwrite"
       )
-      const objectStore = dbTransaction.objectStore(DBObjectStores.Entry)
-      const request = objectStore.add({
-        ...entry,
-        userId: data.user.id,
-      })
+      const entryStore = dbTransaction.objectStore(DBObjectStores.Entry)
+      const transactionStore = dbTransaction.objectStore(
+        DBObjectStores.Transaction
+      )
+      const regularTransactionRequests = regularTransactions.map(
+        (transaction) => {
+          const transactionId = window.crypto.randomUUID()
+          const encryptedTransaction = {
+            id: transactionId,
+            userId: data.user.id,
+            data: encrypt(
+              data.user.key,
+              JSON.stringify({
+                ...transaction,
+                id: transactionId,
+                date: entry.date,
+              })
+            ),
+          }
+          return new Promise<void>((resolve, reject) => {
+            const request = transactionStore.add(encryptedTransaction)
+            request.onsuccess = () => {
+              resolve()
+            }
+            request.onerror = (event) => {
+              reject(event as ErrorEvent)
+            }
+          })
+        }
+      )
 
-      request.onsuccess = () => {
+      try {
+        await new Promise<void>((resolve, reject) => {
+          const request = entryStore.add({
+            ...entry,
+            userId: data.user.id,
+          })
+          request.onsuccess = () => {
+            resolve()
+          }
+
+          request.onerror = (event) => {
+            reject(event as ErrorEvent)
+          }
+        })
+        await Promise.all(regularTransactionRequests)
         setCompleted(true)
         tick()
+      } catch (error) {
+        setError(error as ErrorEvent)
+      }
+    },
+    completed,
+    error,
+  }
+}
+
+export function useCreateRegularTransactionQuery() {
+  const { data } = useSession()
+  const { connection, tick } = useContext(DBContext)
+  const [completed, setCompleted] = useState<boolean>()
+  const [error, setError] = useState<ErrorEvent>()
+  const entries = useEntries()
+
+  return {
+    createRegularTransaction: async (transaction: Omit<Transaction, "id">) => {
+      if (
+        !connection?.db ||
+        connection.result !== DBConnectionResult.CONNECTED ||
+        !data?.user
+      ) {
+        return
       }
 
-      request.onerror = (event) => {
-        setError(event as ErrorEvent)
+      const payload = entries.map((entry) => ({
+        ...transaction,
+        date: entry.date,
+      }))
+      const dbTransaction = createTransaction(
+        connection,
+        DBObjectStores.Transaction,
+        "readwrite"
+      )
+      const objectStore = dbTransaction.objectStore(DBObjectStores.Transaction)
+      const requests = payload.map((transaction) => {
+        return new Promise<void>((resolve, reject) => {
+          const transactionId = window.crypto.randomUUID()
+          const encryptedTransaction = {
+            id: transactionId,
+            userId: data.user.id,
+            data: encrypt(
+              data.user.key,
+              JSON.stringify({ ...transaction, id: transactionId })
+            ),
+          }
+          const request = objectStore.add(encryptedTransaction)
+          request.onsuccess = () => {
+            resolve()
+          }
+          request.onerror = (event) => {
+            reject(event as ErrorEvent)
+          }
+        })
+      })
+      try {
+        await Promise.all(requests)
+        setCompleted(true)
+        tick()
+      } catch (error) {
+        setError(error as ErrorEvent)
       }
     },
     completed,
@@ -238,7 +345,6 @@ export function useCreateTransactionQuery() {
         setCompleted(true)
         tick()
       }
-
       request.onerror = (event) => {
         setError(event as ErrorEvent)
       }

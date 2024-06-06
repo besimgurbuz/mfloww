@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, useContext, useEffect } from "react"
+import { ReactNode, useContext, useEffect, useMemo } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   DefaultValues,
@@ -11,13 +11,15 @@ import {
 import * as z from "zod"
 
 import {
-  useCreateTransactionQuery,
-  useUpdateTransactionQuery,
-} from "@/lib/db/hooks"
-import {
   SUPPORTED_CURRENCY_CODES,
   SupportedCurrencyCode,
 } from "@/lib/definitions"
+import {
+  useCreateRegularTransactionQuery,
+  useCreateTransactionQuery,
+  useTransactions,
+  useUpdateTransactionQuery,
+} from "@/lib/local-db/hooks"
 import { Transaction } from "@/lib/transaction"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -64,7 +66,7 @@ const [firstCurrencyCode, ...otherCurrencyCodes] = SUPPORTED_CURRENCY_CODES
 const formSchema = z.object({
   name: z.string().min(2).max(100),
   amount: z.preprocess(
-    (arg) => Number(z.string().parse(arg)),
+    (arg) => Number(z.string().or(z.number()).parse(arg)),
     z.number().positive()
   ),
   type: z.enum(["income", "expense"]),
@@ -92,9 +94,25 @@ export function CreateUpdateTransaction({
   transaction,
 }: CreateUpdateTransactionProps) {
   const { createTransaction } = useCreateTransactionQuery()
+  const { createRegularTransaction } = useCreateRegularTransactionQuery()
   const { updateTransaction } = useUpdateTransactionQuery()
   const { selectedEntry } = useContext(DashboardStateContext)
-  const defaultValues: DefaultValues<z.infer<typeof formSchema>> =
+  const { transactions } = useTransactions()
+  const formSchemaWithUniqueNames = useMemo(() => {
+    const transactionNames = new Set(
+      transactions.map((transaction) => transaction.name)
+    )
+    return formSchema.extend({
+      name: z
+        .string()
+        .min(2)
+        .max(100)
+        .refine((name) => !transactionNames.has(name)),
+    })
+  }, [transactions])
+  const defaultValues: DefaultValues<
+    z.infer<typeof formSchemaWithUniqueNames>
+  > =
     mode === "create"
       ? {
           type: "income",
@@ -108,8 +126,8 @@ export function CreateUpdateTransaction({
           isRegular: transaction.isRegular,
           type: transaction.type,
         }
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof formSchemaWithUniqueNames>>({
+    resolver: zodResolver(formSchemaWithUniqueNames),
     defaultValues,
   })
 
@@ -127,19 +145,23 @@ export function CreateUpdateTransaction({
     return () => document.removeEventListener("keydown", down)
   }, [])
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof formSchemaWithUniqueNames>) {
     const newTransaction = {
       ...values,
       amount:
         values.type === "expense" && values.amount > 0
           ? values.amount * -1
           : values.amount,
-      date: values.isRegular ? "" : selectedEntry?.date,
+      date: selectedEntry?.date,
       exchangeRate: {} as Record<SupportedCurrencyCode, number>,
     } as Transaction
 
     if (mode === "create") {
-      createTransaction(newTransaction)
+      if (newTransaction.isRegular) {
+        createRegularTransaction(newTransaction)
+      } else {
+        createTransaction(newTransaction)
+      }
     } else {
       newTransaction.id = transaction.id
       updateTransaction(newTransaction)
@@ -154,7 +176,7 @@ export function CreateUpdateTransaction({
           <DialogHeader className="px-0">
             <DialogTitle>
               {mode === "create"
-                ? "Create a new transaction"
+                ? "Create transaction"
                 : `Edit ${transaction.name}`}
             </DialogTitle>
             {mode === "create" && (
@@ -210,15 +232,13 @@ export function CreateUpdateTransaction({
   )
 }
 
-function TransactionForm({
-  form,
-  onSubmit,
-  children,
-}: {
+type TransactionFormProps = {
   form: UseFormReturn<z.infer<typeof formSchema>>
   onSubmit: SubmitHandler<z.infer<typeof formSchema>>
   children: ReactNode
-}) {
+}
+
+function TransactionForm({ form, onSubmit, children }: TransactionFormProps) {
   return (
     <Form {...form}>
       <form

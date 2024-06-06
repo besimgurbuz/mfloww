@@ -61,3 +61,37 @@ export const getValueFromStorage: GetValueFromStorage = <T>(
   const storedValue = storage.getItem(key)
   return storedValue ? JSON.parse(storedValue) : null
 }
+
+export function quickSort<T>(list: T[], cb: (val: T) => number): void {
+  function partition(arr: T[], lo: number, hi: number) {
+    const pivot = arr[hi]
+    const pivotVal = cb(pivot)
+    let idx = lo - 1
+
+    for (let i = lo; i < hi; ++i) {
+      if (cb(arr[i]) > pivotVal) {
+        idx++
+        const tmp = arr[i]
+        arr[i] = arr[idx]
+        arr[idx] = tmp
+      }
+    }
+
+    idx++
+    arr[hi] = arr[idx]
+    arr[idx] = pivot
+
+    return idx
+  }
+  function qs(arr: T[], lo: number, hi: number) {
+    if (lo >= hi) {
+      return
+    }
+
+    const pivotIdx = partition(arr, lo, hi)
+    qs(arr, lo, pivotIdx - 1)
+    qs(arr, pivotIdx + 1, hi)
+  }
+
+  qs(list, 0, list.length - 1)
+}

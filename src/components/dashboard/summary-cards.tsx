@@ -32,9 +32,6 @@ function SummaryCardsContent(
         <h2 className="text-xl md:text-2xl font-bold whitespace-nowrap">
           {formatMoney(balance, "USD")}
         </h2>
-        <p className="text-sm text-muted-foreground">
-          {income.count} incomes, {expense.count} expenses
-        </p>
       </div>
       <div className="grid gap-2 sm:grid-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <Card>
@@ -67,19 +64,21 @@ function SummaryCardsContent(
               </p> */}
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-            <CardTitle>Most Spent Category</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <h2 className="text-xl md:text-2xl font-bold">
-              {mostSpent.category}
-            </h2>
-            <p className="text-sm text-muted-foreground whitespace-nowrap">
-              {formatMoney(mostSpent.amount, "USD")} has spent
-            </p>
-          </CardContent>
-        </Card>
+        {mostSpent.category && (
+          <Card>
+            <CardHeader className="flex flex-row items-center space-y-0 pb-2">
+              <CardTitle>Most Spent Category</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <h2 className="text-xl md:text-2xl font-bold">
+                {mostSpent.category}
+              </h2>
+              <p className="text-sm text-muted-foreground whitespace-nowrap">
+                {formatMoney(mostSpent.amount, "USD")} has spent
+              </p>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </>
   )

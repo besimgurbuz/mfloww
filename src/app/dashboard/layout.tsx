@@ -1,4 +1,4 @@
-import { DBContextProvider } from "@/lib/db/provider"
+import { DBContextProvider } from "@/lib/local-db/provider"
 import { DashboardStateContextProvider } from "@/components/dashboard/dashboard-state-context-provider"
 import { DashboardNav } from "@/components/dashboard/nav"
 

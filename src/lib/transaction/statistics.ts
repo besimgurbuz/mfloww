@@ -28,13 +28,13 @@ class TransactionStatistics {
 
   private transactions!: Transaction[]
 
-  constructor(entries: Transaction[]) {
-    this.transactions = entries
+  constructor(transactions: Transaction[]) {
+    this.transactions = transactions
     this.update()
   }
 
-  setTransactions(entries: Transaction[]) {
-    this.transactions = entries
+  setTransactions(transactions: Transaction[]) {
+    this.transactions = transactions
     this.update()
   }
 

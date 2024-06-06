@@ -8,9 +8,9 @@ import {
   PlusCircledIcon,
 } from "@radix-ui/react-icons"
 
-import { useCreateEntryQuery } from "@/lib/db/hooks"
 import { Entry } from "@/lib/definitions"
 import { useMediaQuery } from "@/lib/hooks"
+import { useCreateEntryQuery } from "@/lib/local-db/hooks"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -161,7 +161,7 @@ function NewEntryDialogOrDrawer({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-[350px]">
           <DialogHeader>
-            <DialogTitle>Create an entry</DialogTitle>
+            <DialogTitle>Create entry</DialogTitle>
           </DialogHeader>
           <MonthYearPicker onChange={setEntry} />
           <DialogFooter>
@@ -193,7 +193,7 @@ function NewEntryDialogOrDrawer({
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerContent className="px-4">
         <DrawerHeader>
-          <DrawerTitle>Create an entry</DrawerTitle>
+          <DrawerTitle>Create entry</DrawerTitle>
         </DrawerHeader>
         <MonthYearPicker onChange={setEntry} />
         <DrawerFooter>
