@@ -1,8 +1,7 @@
 import { useEffect } from "react"
-import { User } from "next-auth"
-import { useFormState } from "react-dom"
+import { signOut } from "firebase/auth"
 
-import { signOut } from "@/lib/actions"
+import { auth } from "@/lib/firebase"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -14,16 +13,15 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { UserState } from "@/app/user-context"
 
-export function UserDropdown({ user }: { user?: User }) {
-  const [, dispatchSignOut] = useFormState(signOut, undefined)
-
+export function UserDropdown({ user }: { user: UserState | null }) {
   useEffect(() => {
     const down = async (e: KeyboardEvent) => {
       if (e.key === "s" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
       } else if (e.key === "o" && e.shiftKey && (e.metaKey || e.ctrlKey)) {
-        await signOut()
+        await signOut(auth)
       }
     }
 
@@ -61,9 +59,7 @@ export function UserDropdown({ user }: { user?: User }) {
           <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <form action={dispatchSignOut} className="w-full">
-            <button className="w-full text-start">Log out</button>
-          </form>
+          <button className="w-full text-start">Log out</button>
           <DropdownMenuShortcut>⇧⌘O</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>

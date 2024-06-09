@@ -1,6 +1,5 @@
 import { DBContextProvider } from "@/lib/local-db/provider"
-import { DashboardStateContextProvider } from "@/components/dashboard/dashboard-state-context-provider"
-import { DashboardNav } from "@/components/dashboard/nav"
+import { DashboardStateContextProvider } from "@/app/dashboard/dashboard-context"
 
 export default function DashboardLayout({
   children,
@@ -11,7 +10,6 @@ export default function DashboardLayout({
     <div>
       <DBContextProvider>
         <DashboardStateContextProvider>
-          <DashboardNav />
           <main>{children}</main>
         </DashboardStateContextProvider>
       </DBContextProvider>

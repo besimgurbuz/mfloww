@@ -59,7 +59,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { DashboardStateContext } from "@/components/dashboard/dashboard-state-context"
+import { DashboardStateContext } from "@/app/dashboard/dashboard-context"
 
 const [firstCurrencyCode, ...otherCurrencyCodes] = SUPPORTED_CURRENCY_CODES
 

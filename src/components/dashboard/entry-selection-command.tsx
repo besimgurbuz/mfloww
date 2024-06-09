@@ -40,7 +40,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { DashboardStateContext } from "@/components/dashboard/dashboard-state-context"
+import { DashboardStateContext } from "@/app/dashboard/dashboard-context"
 
 import { MonthYearPicker } from "./month-picker"
 

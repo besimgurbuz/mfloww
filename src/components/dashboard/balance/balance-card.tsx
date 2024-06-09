@@ -3,8 +3,7 @@
 import { useState } from "react"
 
 import { Transaction } from "@/lib/transaction"
-import { formatMoney } from "@/lib/utils"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 import { TransactionRowList } from "./transaction-row-list"
@@ -12,27 +11,17 @@ import { TransactionRowList } from "./transaction-row-list"
 type DisplayMode = "together" | "grouped"
 
 export function BalanceCard({
-  balance,
   incomes,
   expenses,
 }: {
-  balance: number
   incomes: Transaction[]
   expenses: Transaction[]
 }) {
-  const [displayMode, setDisplayMode] = useState<DisplayMode>("together")
+  const [displayMode, setDisplayMode] = useState<DisplayMode>("grouped")
 
   return (
     <Card className="w-full">
       <CardHeader className="flex sm:items-center sm:flex-row gap-2 w-full">
-        <div>
-          <CardTitle className="uppercase whitespace-nowrap">
-            {formatMoney(balance, "USD")}
-          </CardTitle>
-          <p className="text-sm pt-2 text-muted-foreground">
-            With {incomes.length} incomes and {expenses.length} expenses.
-          </p>
-        </div>
         <ToggleGroup
           type="single"
           className="ml-auto"

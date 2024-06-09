@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
@@ -10,6 +11,7 @@ import {
 
 import { auth } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
 
 import { Icons } from "../icons"
 
@@ -17,6 +19,9 @@ type SingInProvider = "github" | "google" | "anonymous"
 
 export function SignInForm() {
   const [isPending, setIsPending] = useState(false)
+  const searchParams = useSearchParams()
+  const { toast } = useToast()
+  const router = useRouter()
 
   const getUserCredentials = async (provider: SingInProvider) => {
     if (provider === "anonymous") {
@@ -32,16 +37,40 @@ export function SignInForm() {
   const signIn = async (provider: SingInProvider) => {
     setIsPending(true)
     const credentials = await getUserCredentials(provider)
+    const idToken = await credentials.user.getIdToken()
     const res = await fetch("/api/sign-in", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(credentials),
+      body: JSON.stringify({ idToken }),
     })
-    console.log(res)
+
+    if (!res.ok) {
+      toast({
+        variant: "destructive",
+        title: res.statusText,
+        description:
+          "An error occured while trying to sign you in, please try again later.",
+        duration: 30000,
+      })
+    } else {
+      router.push("/dashboard")
+    }
     setIsPending(false)
   }
+
+  useEffect(() => {
+    if (searchParams.get("redirected") === "true") {
+      setTimeout(() => {
+        toast({
+          title: "Unauthorized access",
+          description: "You need to sign in to access the dashboard.",
+          duration: 30000,
+        })
+      })
+    }
+  }, [toast, searchParams])
 
   return (
     <div className="grid gap-6 w-full">

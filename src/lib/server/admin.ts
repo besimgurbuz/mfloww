@@ -1,17 +1,13 @@
-import admin from "firebase-admin"
+import admin, { ServiceAccount } from "firebase-admin"
 import { getAuth } from "firebase-admin/auth"
 import { getFirestore } from "firebase-admin/firestore"
 
+import serviceAccount from "../../../service-key.json"
+
 try {
-  console.log("Firebase Admin Initializing...")
   admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.FB_PROJECT_ID,
-      clientEmail: process.env.FB_CLIENT_EMAIL,
-      privateKey: process.env.FB_PRIVATE_KEY,
-    }),
+    credential: admin.credential.cert(serviceAccount as ServiceAccount),
   })
-  console.log("Firebase Admin Initialized")
 } catch (error: any) {
   if (!/already exists/u.test(error.message)) {
     console.error("Firebase Admin Error: ", error.stack)

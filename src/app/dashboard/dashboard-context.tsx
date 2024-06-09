@@ -1,13 +1,27 @@
 "use client"
 
-import { ReactNode, useEffect, useState } from "react"
+import { createContext, ReactNode, useEffect, useState } from "react"
 
 import { Entry } from "@/lib/definitions"
 import { useStorage } from "@/lib/hooks"
 import { useEntries, useTransactions } from "@/lib/local-db/hooks"
 import { Transaction } from "@/lib/transaction"
 
-import { DashboardStateContext } from "./dashboard-state-context"
+export const DashboardStateContext = createContext<{
+  entries: Entry[]
+  selectedEntry?: Entry
+  entryTransactions: Transaction[]
+  entryIncomes: Transaction[]
+  entryExpenses: Transaction[]
+  setSelectedEntry: (newEntry: string) => void
+}>({
+  entries: [],
+  selectedEntry: undefined,
+  entryTransactions: [],
+  entryIncomes: [],
+  entryExpenses: [],
+  setSelectedEntry: () => {},
+})
 
 export function DashboardStateContextProvider({
   children,

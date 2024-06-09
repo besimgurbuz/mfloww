@@ -1,22 +1,25 @@
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
-import { adminAuth } from "@/lib/server/admin"
+import { adminAuth, adminDB } from "@/lib/server/admin"
 
 type ResponseData = {
   status: "signed-in" | "error"
   error?: string
 }
 
-export const POST = async (
-  req: NextRequest,
-  res: NextResponse<ResponseData>
-) => {
-  const body = await req.json()
-  const { idToken } = body
-  console.log(body)
+export const POST = async (req: NextRequest) => {
+  const { idToken } = await req.json()
   const expiresIn = 60 * 60 * 24 * 8 * 1000 // 8 days
   const decodedToken = await adminAuth.verifyIdToken(idToken)
+  const usersCollection = adminDB.collection("users")
+  const user = await usersCollection.doc(decodedToken.uid).get()
+
+  if (!user.exists) {
+    await usersCollection.doc(decodedToken.uid).set({
+      key: crypto.randomUUID(),
+    })
+  }
 
   if (new Date().getTime() / 1000 - decodedToken.auth_time < 5 * 60) {
     const cookie = await adminAuth.createSessionCookie(idToken, { expiresIn })
@@ -26,10 +29,7 @@ export const POST = async (
       secure: true,
       path: "/",
     }
-
-    const cookieStore = cookies()
-
-    cookieStore.set("__session", cookie, options)
+    cookies().set("__session", cookie, options)
 
     return NextResponse.json({ status: "signed-in" }, { status: 200 })
   } else {
@@ -38,4 +38,9 @@ export const POST = async (
       { status: 401 }
     )
   }
+}
+
+export const DELETE = async (req: NextRequest) => {
+  req.cookies.delete("__session")
+  return NextResponse.json({ status: "signed-out" }, { status: 200 })
 }

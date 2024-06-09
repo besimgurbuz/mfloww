@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { useSession } from "next-auth/react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,13 +11,13 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Icons } from "@/components/icons"
+import { useUser } from "@/app/user-context"
 
 import { ThemeModeToggle } from "./theme-mode-toggle"
 import { UserDropdown } from "./user-dropdown"
 
 export function Header() {
-  const { status, data } = useSession()
-
+  const { user } = useUser()
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background backdrop-blur">
       <div className="custom-container w-full flex h-14  items-center">
@@ -36,7 +35,7 @@ export function Header() {
             </NavigationMenuItem>
           </NavigationMenuList>
           <NavigationMenuList>
-            {status === "unauthenticated" ? (
+            {!user ? (
               <>
                 <NavigationMenuItem>
                   <Link href="/sign-in" legacyBehavior passHref>
@@ -65,7 +64,7 @@ export function Header() {
                 </NavigationMenuItem>
               </>
             ) : (
-              <UserDropdown user={data?.user} />
+              <UserDropdown user={user} />
             )}
           </NavigationMenuList>
         </NavigationMenu>

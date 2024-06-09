@@ -83,6 +83,7 @@ export function quickSort<T>(list: T[], cb: (val: T) => number): void {
 
     return idx
   }
+
   function qs(arr: T[], lo: number, hi: number) {
     if (lo >= hi) {
       return
