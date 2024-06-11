@@ -54,11 +54,23 @@ export function useMediaQuery(query: string) {
   return value
 }
 
-export const useStorage = <T>(
+export function useStorage<T>(
+  key: StorageKey,
+  storageType: StorageType,
+  defaultValue: T
+): [T, (value: T) => void]
+
+export function useStorage<T>(
   key: StorageKey,
   storageType: StorageType,
   defaultValue?: T
-): [T | undefined, (value: T) => void] => {
+): [T | undefined, (value: T) => void]
+
+export function useStorage<T>(
+  key: StorageKey,
+  storageType: StorageType,
+  defaultValue?: T
+): [T | undefined, (value: T) => void] {
   const [value, setValue] = useState<T | null>(() =>
     getValueFromStorage<T>(key, storageType)
   )

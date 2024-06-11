@@ -1,6 +1,6 @@
 import { createContext } from "react"
 
-import { DBConnection } from "@/lib/db"
+import { DBConnection } from "@/lib/local-db"
 
 export const DBContext = createContext<{
   connection?: DBConnection | null

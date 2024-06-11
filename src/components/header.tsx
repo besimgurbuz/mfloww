@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { useSession } from "next-auth/react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,20 +11,21 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Icons } from "@/components/icons"
+import { useUser } from "@/app/user-context"
 
 import { ThemeModeToggle } from "./theme-mode-toggle"
 import { UserDropdown } from "./user-dropdown"
 
 export function Header() {
-  const { status, data } = useSession()
-
+  const { user, loading } = useUser()
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background backdrop-blur">
+      <h3>{loading}</h3>
       <div className="custom-container w-full flex h-14  items-center">
         <NavigationMenu className="max-w-full flex justify-between">
           <NavigationMenuList className="mr-auto">
             <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
+              <Link href={user ? "/dashboard" : "/"} legacyBehavior passHref>
                 <NavigationMenuLink>
                   <div className="flex gap-2 text-xl md:text-2xl font-medium font-sans">
                     <Icons.logo className="w-6 h-6 md:w-8 md:h-8"></Icons.logo>
@@ -36,7 +36,7 @@ export function Header() {
             </NavigationMenuItem>
           </NavigationMenuList>
           <NavigationMenuList>
-            {status === "unauthenticated" ? (
+            {!user ? (
               <>
                 <NavigationMenuItem>
                   <Link href="/sign-in" legacyBehavior passHref>
@@ -65,7 +65,7 @@ export function Header() {
                 </NavigationMenuItem>
               </>
             ) : (
-              <UserDropdown user={data?.user} />
+              <UserDropdown user={user} loading={loading} />
             )}
           </NavigationMenuList>
         </NavigationMenu>

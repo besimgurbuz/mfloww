@@ -1,5 +1,4 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from "react"
-import { useSession } from "next-auth/react"
 
 import {
   createStore,
@@ -8,10 +7,11 @@ import {
   DBConnectionResult,
   DBObjectStores,
   openDB,
-} from "@/lib/db"
+} from "@/lib/local-db"
 import { Transaction } from "@/lib/transaction"
+import { DashboardStateContext } from "@/app/dashboard/dashboard-context"
+import { useUser } from "@/app/user-context"
 
-import { Entry } from "../definitions"
 import TransactionStatistics from "../transaction/statistics"
 import { DBContext } from "./context"
 import { decryptObject, encrypt } from "./crypto-utils"
@@ -23,9 +23,6 @@ export function useCreateAndInitLocalDB(version: number = 1) {
   const connectAndCreateDB = useCallback(async () => {
     setInProgress(true)
     const connection = await openDB(version, (conn) => {
-      createStore(conn, DBObjectStores.Entry, { keyPath: "name" }, [
-        { name: "userId", keyPath: "userId", options: {} },
-      ])
       createStore(
         conn,
         DBObjectStores.Transaction,
@@ -54,46 +51,13 @@ export function useCreateAndInitLocalDB(version: number = 1) {
   }
 }
 
-export function useEntries() {
-  const { data } = useSession()
-  const { connection, tickCount } = useContext(DBContext)
-  const [entries, setEntries] = useState<Entry[]>([])
-
-  const getAllEntriesCallback = useCallback(async () => {
-    if (
-      !connection?.db ||
-      connection.result !== DBConnectionResult.CONNECTED ||
-      !data?.user
-    ) {
-      return
-    }
-
-    const dbTransaction = createTransaction(
-      connection,
-      DBObjectStores.Entry,
-      "readonly"
-    )
-    const index = dbTransaction
-      .objectStore(DBObjectStores.Entry)
-      .index("userId")
-    const request = index.getAll(data.user.id)
-
-    request.onsuccess = () => {
-      setEntries(request.result)
-    }
-  }, [data?.user, connection])
-
-  useEffect(() => {
-    getAllEntriesCallback()
-  }, [getAllEntriesCallback, tickCount])
-
-  return entries
-}
-
 export function useTransactions() {
-  const { data } = useSession()
+  const { user } = useUser()
   const { connection, tickCount } = useContext(DBContext)
   const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [regularTransactions, setRegularTransactions] = useState<Transaction[]>(
+    []
+  )
   const [incomes, setIncomes] = useState<Transaction[]>([])
   const [expenses, setExpenses] = useState<Transaction[]>([])
 
@@ -101,7 +65,7 @@ export function useTransactions() {
     if (
       !connection?.db ||
       connection.result !== DBConnectionResult.CONNECTED ||
-      !data?.user
+      !user
     ) {
       return
     }
@@ -114,17 +78,20 @@ export function useTransactions() {
     const index = dbTransaction
       .objectStore(DBObjectStores.Transaction)
       .index("userId")
-    const request = index.getAll(data.user.id)
+    const request = index.getAll(user.id)
 
     request.onsuccess = () => {
       const allTransactions: Transaction[] = []
+      const regularTransactions: Record<string, Transaction> = {}
       const incomes: Transaction[] = []
       const expenses: Transaction[] = []
 
       for (const item of request.result) {
-        const transaction = decryptObject<Transaction>(data.user.key, item.data)
+        const transaction = decryptObject<Transaction>(user.key, item.data)
 
-        if (transaction.type === "income") {
+        if (transaction.isRegular && !regularTransactions[transaction.name]) {
+          regularTransactions[transaction.name] = transaction
+        } else if (transaction.type === "income") {
           incomes.push(transaction)
         } else {
           expenses.push(transaction)
@@ -134,75 +101,35 @@ export function useTransactions() {
       }
 
       setTransactions(allTransactions)
+      setRegularTransactions(Object.values(regularTransactions))
       setIncomes(incomes)
       setExpenses(expenses)
     }
-  }, [data?.user, connection])
+  }, [user, connection])
 
   useEffect(() => {
     getAllTransactionsCallback()
   }, [getAllTransactionsCallback, tickCount])
 
-  return { transactions, incomes, expenses }
+  return { transactions, regularTransactions, incomes, expenses }
 }
 
 export function useTransactionStatistics() {
-  const { transactions } = useTransactions()
+  const { entryTransactions } = useContext(DashboardStateContext)
   const transactionStatistics = useMemo(
-    () => new TransactionStatistics(transactions),
-    [transactions]
+    () => new TransactionStatistics(entryTransactions),
+    [entryTransactions]
   )
 
   useEffect(() => {
-    transactionStatistics.setTransactions(transactions)
-  }, [transactions, transactionStatistics])
+    transactionStatistics.setTransactions(entryTransactions)
+  }, [entryTransactions, transactionStatistics])
 
   return transactionStatistics
 }
 
-export function useCreateEntryQuery() {
-  const { data } = useSession()
-  const { connection, tick } = useContext(DBContext)
-  const [completed, setCompleted] = useState<boolean>()
-  const [error, setError] = useState<ErrorEvent>()
-
-  return {
-    createEntry: async (entry: Omit<Entry, "userId">) => {
-      if (
-        !connection?.db ||
-        connection.result !== DBConnectionResult.CONNECTED ||
-        !data?.user
-      ) {
-        return
-      }
-
-      const dbTransaction = createTransaction(
-        connection,
-        DBObjectStores.Entry,
-        "readwrite"
-      )
-      const objectStore = dbTransaction.objectStore(DBObjectStores.Entry)
-      const request = objectStore.add({
-        ...entry,
-        userId: data.user.id,
-      })
-
-      request.onsuccess = () => {
-        setCompleted(true)
-        tick()
-      }
-
-      request.onerror = (event) => {
-        setError(event as ErrorEvent)
-      }
-    },
-    completed,
-    error,
-  }
-}
-
 export function useCreateTransactionQuery() {
-  const { data } = useSession()
+  const { user } = useUser()
   const { connection, tick } = useContext(DBContext)
   const [completed, setCompleted] = useState<boolean>()
   const [error, setError] = useState<ErrorEvent>()
@@ -212,7 +139,7 @@ export function useCreateTransactionQuery() {
       if (
         !connection?.db ||
         connection.result !== DBConnectionResult.CONNECTED ||
-        !data?.user
+        !user
       ) {
         return
       }
@@ -226,9 +153,9 @@ export function useCreateTransactionQuery() {
       const transactionId = window.crypto.randomUUID()
       const encryptedTransaction = {
         id: transactionId,
-        userId: data.user.id,
+        userId: user.id,
         data: encrypt(
-          data.user.key,
+          user.key,
           JSON.stringify({ ...transaction, id: transactionId })
         ),
       }
@@ -238,7 +165,6 @@ export function useCreateTransactionQuery() {
         setCompleted(true)
         tick()
       }
-
       request.onerror = (event) => {
         setError(event as ErrorEvent)
       }
@@ -249,7 +175,7 @@ export function useCreateTransactionQuery() {
 }
 
 export function useUpdateTransactionQuery() {
-  const { data } = useSession()
+  const { user } = useUser()
   const { connection, tick } = useContext(DBContext)
   const [completed, setCompleted] = useState<boolean>()
   const [error, setError] = useState<ErrorEvent>()
@@ -259,7 +185,7 @@ export function useUpdateTransactionQuery() {
       if (
         !connection?.db ||
         connection.result !== DBConnectionResult.CONNECTED ||
-        !data?.user
+        !user
       ) {
         return
       }
@@ -272,8 +198,8 @@ export function useUpdateTransactionQuery() {
       const objectStore = dbTransaction.objectStore(DBObjectStores.Transaction)
       const encryptedTransaction = {
         id: transaction.id,
-        userId: data.user.id,
-        data: encrypt(data.user.key, JSON.stringify(transaction)),
+        userId: user.id,
+        data: encrypt(user.key, JSON.stringify(transaction)),
       }
       const request = objectStore.put(encryptedTransaction)
 
@@ -292,7 +218,7 @@ export function useUpdateTransactionQuery() {
 }
 
 export function useDeleteTransactionQuery() {
-  const { data } = useSession()
+  const { user } = useUser()
   const { connection, tick } = useContext(DBContext)
   const [completed, setCompleted] = useState<boolean>()
   const [error, setError] = useState<ErrorEvent>()
@@ -302,7 +228,7 @@ export function useDeleteTransactionQuery() {
       if (
         !connection?.db ||
         connection.result !== DBConnectionResult.CONNECTED ||
-        !data?.user
+        !user
       ) {
         return
       }

@@ -1,11 +1,13 @@
 import { Metadata } from "next"
 import { Inter } from "next/font/google"
-import { SessionProvider } from "next-auth/react"
 
+import { Toaster } from "@/components/ui/toaster"
 import { Header } from "@/components/header"
 import { ThemeProvider } from "@/components/theme-provider"
 
 import "./globals.css"
+
+import { UserProvider } from "./user-context"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -25,7 +27,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} min-h-screen bg-background antialiased`}
       >
-        <SessionProvider>
+        <UserProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -71,7 +73,8 @@ export default function RootLayout({
               </div>
             </footer>
           </ThemeProvider>
-        </SessionProvider>
+          <Toaster />
+        </UserProvider>
       </body>
     </html>
   )

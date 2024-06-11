@@ -23,7 +23,7 @@ export function TransactionRowList({
   const [total, setTotal] = useState<number>()
 
   useEffect(() => {
-    setTotal(data.reduce((acc: number, item) => acc + item.amount, 0))
+    setTotal(data.reduce((acc: number, item) => acc + Math.abs(item.amount), 0))
   }, [data])
 
   return (
@@ -32,7 +32,7 @@ export function TransactionRowList({
         <TransactionRow
           key={i}
           transaction={item}
-          widthPercentage={(item.amount / (total || 1)) * 100}
+          widthPercentage={(Math.abs(item.amount) / (total || 1)) * 100}
           direction={direction || "ltr"}
         />
       ))}

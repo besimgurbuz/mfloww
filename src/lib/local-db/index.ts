@@ -5,7 +5,6 @@ export enum DBConnectionResult {
 }
 
 export enum DBObjectStores {
-  Entry = "entry",
   Transaction = "transaction",
 }
 
