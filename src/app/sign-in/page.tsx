@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Sign in | mfloww",
 }
 
-const closedBetaActive = process.env.CLOSED_BETA
+const closedBetaActive = process.env.CLOSED_BETA === "true"
 
 export default function SignIn() {
   return (

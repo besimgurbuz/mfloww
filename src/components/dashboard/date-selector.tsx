@@ -58,7 +58,7 @@ export function DateSelector({
 
   return (
     <div className="flex gap-2 items-center">
-      <div className="flex gap-2 items-center border">
+      <div className="flex gap-2 items-center border rounded-md">
         <Button variant="ghost" onClick={decreaseDate}>
           <CaretLeftIcon className="w-5 h-5" />
         </Button>

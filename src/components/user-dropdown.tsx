@@ -1,4 +1,8 @@
-import { useEffect } from "react"
+"use client"
+
+import { useCallback, useEffect } from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { signOut } from "firebase/auth"
 
 import { auth } from "@/lib/firebase"
@@ -19,10 +23,13 @@ import { UserState } from "@/app/user-context"
 type UserDropdownProps = UserState
 
 export function UserDropdown({ user, loading }: UserDropdownProps) {
-  const signOutFn = async () => {
+  const router = useRouter()
+
+  const signOutFn = useCallback(async () => {
     await fetch("/api/sign-in", { method: "DELETE" })
     await signOut(auth)
-  }
+    router.push("/")
+  }, [router])
 
   useEffect(() => {
     const down = async (e: KeyboardEvent) => {
@@ -35,7 +42,7 @@ export function UserDropdown({ user, loading }: UserDropdownProps) {
 
     document.addEventListener("keydown", down)
     return () => document.removeEventListener("keydown", down)
-  }, [])
+  }, [signOutFn])
 
   if (!user) {
     return <></>
@@ -46,12 +53,13 @@ export function UserDropdown({ user, loading }: UserDropdownProps) {
   }
 
   const { email, image, name } = user
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={image || undefined} />
+            <AvatarImage src={image} />
             <AvatarFallback>A</AvatarFallback>
           </Avatar>
         </Button>
@@ -67,8 +75,10 @@ export function UserDropdown({ user, loading }: UserDropdownProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          Settings
-          <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+          <Link href="/settings" className="w-full flex">
+            Settings
+            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <button

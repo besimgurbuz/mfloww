@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, useContext, useEffect, useMemo } from "react"
+import { ReactNode, useContext, useEffect, useMemo, useRef } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   DefaultValues,
@@ -49,7 +49,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { AmountInput, BaseInput } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
   Select,
@@ -59,6 +59,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { DashboardStateContext } from "@/app/dashboard/dashboard-context"
+
+import { CategorySelect } from "../category-select"
 
 const [firstCurrencyCode, ...otherCurrencyCodes] = SUPPORTED_CURRENCY_CODES
 
@@ -233,6 +235,8 @@ type TransactionFormProps = {
 }
 
 function TransactionForm({ form, onSubmit, children }: TransactionFormProps) {
+  const amountInputRef = useRef<HTMLInputElement>(null)
+
   return (
     <Form {...form}>
       <form
@@ -247,7 +251,7 @@ function TransactionForm({ form, onSubmit, children }: TransactionFormProps) {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Name" {...field} />
+                  <BaseInput placeholder="Name" {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -259,7 +263,47 @@ function TransactionForm({ form, onSubmit, children }: TransactionFormProps) {
               <FormItem>
                 <FormLabel>Amount</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="1000" {...field} />
+                  <AmountInput
+                    placeholder="10,000.00"
+                    type="number"
+                    inputRef={amountInputRef}
+                    prefix={
+                      <FormField
+                        control={form.control}
+                        name="currency"
+                        render={({ field }) => (
+                          <FormItem>
+                            <Select
+                              onValueChange={(...event) => {
+                                field.onChange(event)
+                                if (amountInputRef.current) {
+                                  setTimeout(() => {
+                                    amountInputRef.current?.focus()
+                                  }, 0)
+                                }
+                              }}
+                              defaultValue={field.value}
+                            >
+                              <FormControl className="outline-none  rounded-none border-none focus:ring-0">
+                                <SelectTrigger>
+                                  <SelectValue placeholder="USD" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent className="font-medium">
+                                {SUPPORTED_CURRENCY_CODES.map((code) => (
+                                  <SelectItem key={code} value={code}>
+                                    {code}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    }
+                    {...field}
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -271,40 +315,16 @@ function TransactionForm({ form, onSubmit, children }: TransactionFormProps) {
               <FormItem>
                 <FormLabel>Category</FormLabel>
                 <FormControl>
-                  <Input placeholder="Passive Income, Groceries" {...field} />
+                  <CategorySelect
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
                 </FormControl>
               </FormItem>
             )}
           />
         </div>
         <div className="flex flex-col gap-2">
-          <FormField
-            control={form.control}
-            name="currency"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Currency</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Currency" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="font-medium">
-                    {SUPPORTED_CURRENCY_CODES.map((code) => (
-                      <SelectItem key={code} value={code}>
-                        {code}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <div className="flex flex-col gap-4">
             <FormField
               control={form.control}
@@ -351,7 +371,7 @@ function TransactionForm({ form, onSubmit, children }: TransactionFormProps) {
                       Regular
                     </FormLabel>
                     <FormDescription>
-                      Regular transaction will occur on every entry
+                      Regular transaction will occur on month
                     </FormDescription>
                   </div>
                 </FormItem>

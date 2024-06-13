@@ -1,16 +1,12 @@
-import admin from "firebase-admin"
+import admin, { ServiceAccount } from "firebase-admin"
 import { getAuth } from "firebase-admin/auth"
 import { getFirestore } from "firebase-admin/firestore"
 
-const { FB_PROJECT_ID, FB_CLIENT_EMAIL, FB_PRIVATE_KEY } = process.env
+import serviceAccount from "../../../service-key.json"
 
 try {
   admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: FB_PROJECT_ID,
-      clientEmail: FB_CLIENT_EMAIL,
-      privateKey: FB_PRIVATE_KEY,
-    }),
+    credential: admin.credential.cert(serviceAccount as ServiceAccount),
   })
 } catch (error: any) {
   if (!/already exists/u.test(error.message)) {

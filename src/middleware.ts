@@ -4,13 +4,13 @@ export async function middleware(request: NextRequest) {
   const session = request.cookies.get("__session")
   const sessionKey = session?.value
   const { pathname } = request.nextUrl
-  const protectedPaths = ["/dashboard"]
+  const protectedPaths = ["/dashboard", "/settings"]
   const authoredPaths = ["/", "/sign-in"]
 
   if (protectedPaths.includes(pathname)) {
     if (!sessionKey) {
       return NextResponse.redirect(
-        new URL("/sign-in?redirected=true", request.url)
+        new URL(`/sign-in?redirected=${pathname.replace("/", "")}`, request.url)
       )
     }
 
@@ -24,7 +24,7 @@ export async function middleware(request: NextRequest) {
 
     if (!verifyRes.ok) {
       return NextResponse.redirect(
-        new URL("/sign-in?redirected=true", request.url)
+        new URL(`/sign-in?redirected=${pathname.replace("/", "")}`, request.url)
       )
     }
 

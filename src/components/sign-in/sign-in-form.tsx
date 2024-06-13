@@ -63,11 +63,13 @@ export function SignInForm() {
   }
 
   useEffect(() => {
-    if (searchParams.get("redirected") === "true") {
+    if (searchParams.get("redirected")) {
       setTimeout(() => {
         toast({
           title: "Unauthorized access",
-          description: "You need to sign in to access the dashboard.",
+          description: `You need to sign in to access to ${searchParams.get(
+            "redirected"
+          )}`,
           duration: 30000,
         })
       })
