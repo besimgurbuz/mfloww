@@ -43,7 +43,7 @@ export function SignInForm() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ idToken }),
+      body: JSON.stringify({ idToken, name: credentials.user.displayName }),
     })
 
     if (!res.ok) {

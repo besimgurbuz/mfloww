@@ -135,7 +135,7 @@ export function useCreateTransactionQuery() {
   const [error, setError] = useState<ErrorEvent>()
 
   return {
-    createTransaction: async (transaction: Omit<Transaction, "id">) => {
+    createTransaction: (transaction: Omit<Transaction, "id">) => {
       if (
         !connection?.db ||
         connection.result !== DBConnectionResult.CONNECTED ||

@@ -58,7 +58,6 @@ export function DashboardWrapper() {
         <CreateUpdateTransaction
           enableShortcut={true}
           isDesktop={isDesktop}
-          mode="create"
           open={createTransactionOpen}
           onOpenChange={setCreateTransactionOpen}
         />

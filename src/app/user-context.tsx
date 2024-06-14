@@ -29,6 +29,18 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    const verify = async () => {
+      const res = await fetch("/api/verify-token", { method: "POST" })
+
+      if (res.ok) {
+        const user = await res.json()
+        setUser(user)
+        setLoading(false)
+      } else {
+        setUser(null)
+        setLoading(false)
+      }
+    }
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         setUser(null)
@@ -53,7 +65,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false)
     })
 
-    return () => unsubscribe()
+    verify()
+
+    return unsubscribe
   }, [])
 
   return (

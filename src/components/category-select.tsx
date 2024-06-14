@@ -10,7 +10,7 @@ import EmojiPicker from "./emoji-picker"
 import { Input } from "./ui/input"
 
 type CategorySelectProps = {
-  value?: string
+  defaultValue?: string
   onChange: (value: string) => void
 }
 
@@ -28,7 +28,10 @@ const predefiedCategories: Category[] = [
   { name: "Bills", icon: "🧾" },
 ]
 
-export function CategorySelect({ value, onChange }: CategorySelectProps) {
+export function CategorySelect({
+  defaultValue,
+  onChange,
+}: CategorySelectProps) {
   const [addActive, setAddActive] = useState(false)
   const [selectedEmoji, setSelectedEmoji] = useState("💰")
   const [newCategory, setNewCategory] = useState("")
@@ -37,7 +40,7 @@ export function CategorySelect({ value, onChange }: CategorySelectProps) {
 
   const [categories, setCategories] = useStorage<Category[]>(
     "CUSTOM_CATEGORIES",
-    "sessionStorage",
+    "localStorage",
     predefiedCategories
   )
 
@@ -65,7 +68,7 @@ export function CategorySelect({ value, onChange }: CategorySelectProps) {
   return (
     <ToggleGroup
       type="single"
-      value={value}
+      value={defaultValue}
       onValueChange={onChange}
       className="flex justify-start flex-wrap gap-1"
     >
@@ -88,7 +91,7 @@ export function CategorySelect({ value, onChange }: CategorySelectProps) {
         <div className="flex">
           <Input
             type="text"
-            inputRef={newCategoryInputRef}
+            ref={newCategoryInputRef}
             className={cn({
               "border-red": newCategoryInputError,
             })}

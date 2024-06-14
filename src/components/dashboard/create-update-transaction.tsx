@@ -1,14 +1,9 @@
 "use client"
 
-import { ReactNode, useContext, useEffect, useMemo, useRef } from "react"
+import { ReactNode, useContext, useEffect } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  DefaultValues,
-  SubmitHandler,
-  useForm,
-  UseFormReturn,
-} from "react-hook-form"
-import * as z from "zod"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { z } from "zod"
 
 import {
   SUPPORTED_CURRENCY_CODES,
@@ -16,7 +11,6 @@ import {
 } from "@/lib/definitions"
 import {
   useCreateTransactionQuery,
-  useTransactions,
   useUpdateTransactionQuery,
 } from "@/lib/local-db/hooks"
 import { Transaction } from "@/lib/transaction"
@@ -47,9 +41,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form"
-import { AmountInput, BaseInput } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
   Select,
@@ -60,76 +52,37 @@ import {
 } from "@/components/ui/select"
 import { DashboardStateContext } from "@/app/dashboard/dashboard-context"
 
+import { AmountInput } from "../amount-input"
 import { CategorySelect } from "../category-select"
+import { BaseInput } from "../ui/input"
 
-const [firstCurrencyCode, ...otherCurrencyCodes] = SUPPORTED_CURRENCY_CODES
-
-const formSchema = z.object({
-  name: z.string().min(2).max(100),
-  amount: z.preprocess(
-    (arg) => Number(z.string().or(z.number()).parse(arg)),
-    z.number().positive()
-  ),
-  type: z.enum(["income", "expense"]),
-  isRegular: z.boolean(),
-  category: z.string().min(2).max(50).optional(),
-  currency: z.enum([firstCurrencyCode, ...otherCurrencyCodes]),
-})
+type TransactionFormValues = {
+  name: string
+  amount: number
+  category?: string
+  currency: SupportedCurrencyCode
+  isRegular: boolean
+  type: "income" | "expense"
+}
 
 type CreateUpdateTransactionProps = {
   enableShortcut?: boolean
   isDesktop: boolean
   open: boolean
+  fillData?: Transaction
   onOpenChange: (state: boolean) => void
-} & (
-  | { mode: "create"; transaction?: never }
-  | { mode: "edit"; transaction: Transaction }
-)
+}
 
 export function CreateUpdateTransaction({
   enableShortcut,
   isDesktop,
   open,
+  fillData,
   onOpenChange,
-  mode,
-  transaction,
 }: CreateUpdateTransactionProps) {
   const { createTransaction } = useCreateTransactionQuery()
   const { updateTransaction } = useUpdateTransactionQuery()
   const { selectedDate } = useContext(DashboardStateContext)
-  const { transactions } = useTransactions()
-  const formSchemaWithUniqueNames = useMemo(() => {
-    const transactionNames = new Set(
-      transactions.map((transaction) => transaction.name)
-    )
-    return formSchema.extend({
-      name: z
-        .string()
-        .min(2)
-        .max(100)
-        .refine((name) => !transactionNames.has(name)),
-    })
-  }, [transactions])
-  const defaultValues: DefaultValues<
-    z.infer<typeof formSchemaWithUniqueNames>
-  > =
-    mode === "create"
-      ? {
-          type: "income",
-          isRegular: false,
-        }
-      : {
-          name: transaction.name,
-          amount: Math.abs(transaction.amount),
-          category: transaction.category,
-          currency: transaction.currency,
-          isRegular: transaction.isRegular,
-          type: transaction.type,
-        }
-  const form = useForm<z.infer<typeof formSchemaWithUniqueNames>>({
-    resolver: zodResolver(formSchemaWithUniqueNames),
-    defaultValues,
-  })
 
   useEffect(() => {
     if (!enableShortcut) {
@@ -145,7 +98,8 @@ export function CreateUpdateTransaction({
     return () => document.removeEventListener("keydown", down)
   }, [])
 
-  function onSubmit(values: z.infer<typeof formSchemaWithUniqueNames>) {
+  const onSubmit = (values: TransactionFormValues) => {
+    console.log("on submit", values)
     const newTransaction = {
       ...values,
       amount:
@@ -156,10 +110,10 @@ export function CreateUpdateTransaction({
       exchangeRate: {} as Record<SupportedCurrencyCode, number>,
     } as Transaction
 
-    if (mode === "create") {
+    if (!fillData) {
       createTransaction(newTransaction)
     } else {
-      newTransaction.id = transaction.id
+      newTransaction.id = fillData.id
       updateTransaction(newTransaction)
     }
     onOpenChange(false)
@@ -171,21 +125,17 @@ export function CreateUpdateTransaction({
         <DialogContent>
           <DialogHeader className="px-0">
             <DialogTitle>
-              {mode === "create"
-                ? "Create transaction"
-                : `Edit ${transaction.name}`}
+              {!fillData ? "Create transaction" : `Edit ${fillData.name}`}
             </DialogTitle>
-            {mode === "create" && (
+            {!fillData && (
               <DialogDescription>
-                Create a transaction in the selected entry.
+                Create a transaction in the selected date.
               </DialogDescription>
             )}
           </DialogHeader>
-          <TransactionForm form={form} onSubmit={onSubmit}>
+          <TransactionForm fillData={fillData} onSubmit={onSubmit}>
             <DialogFooter className="flex self-center w-full">
-              <Button type="submit">
-                {mode === "create" ? "Create" : "Save"}
-              </Button>
+              <Button type="submit">{!fillData ? "Create" : "Save"}</Button>
               <DialogClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
@@ -202,21 +152,17 @@ export function CreateUpdateTransaction({
         <div className="mx-auto w-full max-w-xl px-4">
           <DrawerHeader className="px-0">
             <DrawerTitle>
-              {mode === "create"
-                ? "Create a new transaction"
-                : `Edit ${transaction.name}`}
+              {!fillData ? "Create a new transaction" : `Edit ${fillData.name}`}
             </DrawerTitle>
-            {mode === "create" && (
+            {!fillData && (
               <DrawerDescription>
                 Create a transaction in the selected entry.
               </DrawerDescription>
             )}
           </DrawerHeader>
-          <TransactionForm form={form} onSubmit={onSubmit}>
+          <TransactionForm fillData={fillData} onSubmit={onSubmit}>
             <DrawerFooter className="flex self-center w-full">
-              <Button type="submit">
-                {mode === "create" ? "Create" : "Save"}
-              </Button>
+              <Button type="submit">{!fillData ? "Create" : "Save"}</Button>
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DrawerClose>
@@ -228,14 +174,39 @@ export function CreateUpdateTransaction({
   )
 }
 
+const [firstCurr, ...otherCurrs] = SUPPORTED_CURRENCY_CODES
+
+const formSchema = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  currency: z.enum([firstCurr, ...otherCurrs]),
+  amount: z.number().min(1, { message: "Amount is required" }),
+  category: z.string().optional(),
+  type: z.enum(["income", "expense"]),
+  isRegular: z.boolean(),
+})
+
 type TransactionFormProps = {
-  form: UseFormReturn<z.infer<typeof formSchema>>
-  onSubmit: SubmitHandler<z.infer<typeof formSchema>>
+  fillData?: Transaction
   children: ReactNode
+  onSubmit: SubmitHandler<TransactionFormValues>
 }
 
-function TransactionForm({ form, onSubmit, children }: TransactionFormProps) {
-  const amountInputRef = useRef<HTMLInputElement>(null)
+function TransactionForm({
+  fillData,
+  onSubmit,
+  children,
+}: TransactionFormProps) {
+  const form = useForm<z.infer<typeof formSchema>>({
+    defaultValues: {
+      name: fillData?.name || "",
+      currency: fillData?.currency || firstCurr,
+      amount: fillData?.amount || 0,
+      category: fillData?.category || "",
+      isRegular: fillData?.isRegular || false,
+      type: fillData?.type || "income",
+    },
+    resolver: zodResolver(formSchema),
+  })
 
   return (
     <Form {...form}>
@@ -264,45 +235,38 @@ function TransactionForm({ form, onSubmit, children }: TransactionFormProps) {
                 <FormLabel>Amount</FormLabel>
                 <FormControl>
                   <AmountInput
-                    placeholder="10,000.00"
-                    type="number"
-                    inputRef={amountInputRef}
+                    ref={field.ref}
+                    name="amount"
+                    defaultValue={field.value}
+                    onChange={field.onChange}
                     prefix={
                       <FormField
                         control={form.control}
                         name="currency"
                         render={({ field }) => (
-                          <FormItem>
-                            <Select
-                              onValueChange={(...event) => {
-                                field.onChange(event)
-                                if (amountInputRef.current) {
-                                  setTimeout(() => {
-                                    amountInputRef.current?.focus()
-                                  }, 0)
-                                }
-                              }}
-                              defaultValue={field.value}
-                            >
-                              <FormControl className="outline-none  rounded-none border-none focus:ring-0">
-                                <SelectTrigger>
-                                  <SelectValue placeholder="USD" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent className="font-medium">
-                                {SUPPORTED_CURRENCY_CODES.map((code) => (
-                                  <SelectItem key={code} value={code}>
-                                    {code}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
+                          <Select
+                            onValueChange={(event) => {
+                              field.onChange(event)
+                              setTimeout(() => form.setFocus("amount"))
+                            }}
+                            defaultValue={field.value}
+                          >
+                            <FormControl className="outline-none  rounded-none border-none focus:ring-0">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Currency" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent className="font-medium">
+                              {SUPPORTED_CURRENCY_CODES.map((code) => (
+                                <SelectItem key={code} value={code}>
+                                  {code}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                         )}
                       />
                     }
-                    {...field}
                   />
                 </FormControl>
               </FormItem>
@@ -316,7 +280,7 @@ function TransactionForm({ form, onSubmit, children }: TransactionFormProps) {
                 <FormLabel>Category</FormLabel>
                 <FormControl>
                   <CategorySelect
-                    value={field.value}
+                    defaultValue={field.value}
                     onChange={field.onChange}
                   />
                 </FormControl>

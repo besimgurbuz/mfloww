@@ -84,8 +84,7 @@ export function TransactionMenu({
         <CreateUpdateTransaction
           enableShortcut={false}
           isDesktop={isDesktop}
-          mode="edit"
-          transaction={transaction}
+          fillData={transaction}
           open={updateOpen}
           onOpenChange={setUpdateOpen}
         />
@@ -132,8 +131,7 @@ export function TransactionMenu({
       <CreateUpdateTransaction
         enableShortcut={false}
         isDesktop={isDesktop}
-        mode="edit"
-        transaction={transaction}
+        fillData={transaction}
         open={updateOpen}
         onOpenChange={setUpdateOpen}
       />

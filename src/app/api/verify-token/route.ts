@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 
-import { adminAuth } from "@/lib/server/admin"
+import { adminAuth, adminDB } from "@/lib/server/admin"
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
   const sessionCookie = req.cookies.get("__session")
@@ -29,9 +29,28 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     )
   }
 
+  const userData = (
+    await adminDB.collection("users").doc(decodedToken.uid).get()
+  ).data()
+
+  if (!userData) {
+    return new NextResponse(
+      JSON.stringify({
+        message: "Unauthorized",
+      }),
+      {
+        status: 401,
+      }
+    )
+  }
+
   return new NextResponse(
     JSON.stringify({
-      message: "Authorized",
+      id: decodedToken.uid,
+      key: userData!.key,
+      name: userData!.name,
+      email: decodedToken.email,
+      image: decodedToken.picture,
     }),
     {
       status: 200,

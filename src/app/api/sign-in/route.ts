@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { adminAuth, adminDB } from "@/lib/server/admin"
 
 export const POST = async (req: NextRequest) => {
-  const { idToken } = await req.json()
+  const { idToken, name } = await req.json()
 
   if (process.env.ALLOW_SIGN_IN !== "true") {
     return NextResponse.json(
@@ -24,6 +24,7 @@ export const POST = async (req: NextRequest) => {
   if (!user.exists) {
     await usersCollection.doc(decodedToken.uid).set({
       key: crypto.randomUUID(),
+      name,
     })
   }
 
