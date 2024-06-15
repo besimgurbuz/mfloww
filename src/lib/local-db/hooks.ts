@@ -90,7 +90,7 @@ export function useTransactions() {
         const transaction = decryptObject<Transaction>(user.key, item.data)
 
         if (transaction.isRegular && !regularTransactions[transaction.name]) {
-          regularTransactions[transaction.name] = transaction
+          regularTransactions[transaction.id] = transaction
         } else if (transaction.type === "income") {
           incomes.push(transaction)
         } else {
@@ -104,6 +104,7 @@ export function useTransactions() {
       setRegularTransactions(Object.values(regularTransactions))
       setIncomes(incomes)
       setExpenses(expenses)
+      console.log(allTransactions)
     }
   }, [user, connection])
 
@@ -115,10 +116,10 @@ export function useTransactions() {
 }
 
 export function useTransactionStatistics() {
-  const { entryTransactions } = useContext(DashboardStateContext)
+  const { entryTransactions, baseCurrency } = useContext(DashboardStateContext)
   const transactionStatistics = useMemo(
-    () => new TransactionStatistics(entryTransactions),
-    [entryTransactions]
+    () => new TransactionStatistics(entryTransactions, baseCurrency),
+    [entryTransactions, baseCurrency]
   )
 
   useEffect(() => {

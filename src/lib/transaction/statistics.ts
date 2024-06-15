@@ -1,3 +1,4 @@
+import { SupportedCurrencyCode } from "../definitions"
 import { Transaction } from "./index"
 
 type MostSpent = {
@@ -27,14 +28,24 @@ class TransactionStatistics {
   spendingMap: Record<string, number> = {}
 
   private transactions!: Transaction[]
+  private baseCurrency!: SupportedCurrencyCode
 
-  constructor(transactions: Transaction[]) {
+  constructor(
+    transactions: Transaction[],
+    baseCurrency: SupportedCurrencyCode
+  ) {
     this.transactions = transactions
+    this.baseCurrency = baseCurrency
     this.update()
   }
 
   setTransactions(transactions: Transaction[]) {
     this.transactions = transactions
+    this.update()
+  }
+
+  setBaseCurrency(baseCurrency: SupportedCurrencyCode) {
+    this.baseCurrency = baseCurrency
     this.update()
   }
 
@@ -49,18 +60,20 @@ class TransactionStatistics {
     }
 
     for (const entry of this.transactions) {
+      const rate = entry.exchangeRate[this.baseCurrency] || 1
+      const realAmount = entry.amount * rate
       if (entry.type === "income") {
-        balance += entry.amount
-        income.total += entry.amount
+        balance += realAmount
+        income.total += realAmount
         income.count++
       } else {
-        balance += entry.amount
-        expense.total += entry.amount
+        balance += realAmount
+        expense.total += realAmount
         expense.count++
 
         if (entry.category) {
           const spentAmount = Math.abs(
-            (spendingMap[entry.category] || 0) + entry.amount
+            (spendingMap[entry.category] || 0) * rate + entry.amount * rate
           )
           spendingMap[entry.category] = spentAmount
 

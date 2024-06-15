@@ -22,6 +22,7 @@ import { DashboardStateContext } from "@/app/dashboard/dashboard-context"
 
 export function DashboardWrapper() {
   const {
+    baseCurrency,
     selectedDate,
     entryTransactions,
     entryIncomes,
@@ -44,7 +45,7 @@ export function DashboardWrapper() {
             <TooltipTrigger asChild>
               <Button
                 onClick={() => setCreateTransactionOpen(true)}
-                className="px-2 h-16 w-16 fixed bottom-8 right-8 md:h-8 md:w-8 md:relative md:bottom-0 md:right-0"
+                className="px-2 h-16 w-16 fixed bottom-8 right-8 md:h-8 md:w-8 md:relative md:bottom-0 md:right-0 z-10"
               >
                 <PlusIcon className="w-8 h-8" />
               </Button>
@@ -62,8 +63,12 @@ export function DashboardWrapper() {
           onOpenChange={setCreateTransactionOpen}
         />
       </div>
-      <SummaryCards {...statistics} />
-      <BalanceCard incomes={entryIncomes} expenses={entryExpenses} />
+      <SummaryCards {...statistics} base={baseCurrency} />
+      <BalanceCard
+        baseCurrency={baseCurrency}
+        incomes={entryIncomes}
+        expenses={entryExpenses}
+      />
       <TransactionTableCard
         transactions={entryTransactions}
         incomes={entryIncomes}

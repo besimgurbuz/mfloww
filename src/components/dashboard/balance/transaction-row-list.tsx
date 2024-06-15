@@ -10,29 +10,41 @@ import { TransactionRow } from "./transaction-row"
 
 export interface TransactionRowListProps {
   data: Transaction[]
-  currency: SupportedCurrencyCode
+  baseCurrency: SupportedCurrencyCode
   direction?: "ltr" | "rtl"
   className?: string
 }
 
 export function TransactionRowList({
   data,
+  baseCurrency,
   className,
   direction,
 }: TransactionRowListProps) {
   const [total, setTotal] = useState<number>()
 
   useEffect(() => {
-    setTotal(data.reduce((acc: number, item) => acc + Math.abs(item.amount), 0))
-  }, [data])
+    setTotal(
+      data.reduce(
+        (acc: number, item) =>
+          acc + Math.abs((item.exchangeRate[baseCurrency] || 1) * item.amount),
+        0
+      )
+    )
+  }, [data, baseCurrency])
 
   return (
     <div className={cn("flex w-full flex-col gap-2", className)}>
       {data.map((item, i) => (
         <TransactionRow
           key={i}
+          baseCurrency={baseCurrency}
           transaction={item}
-          widthPercentage={(Math.abs(item.amount) / (total || 1)) * 100}
+          widthPercentage={
+            (Math.abs((item.exchangeRate[baseCurrency] || 1) * item.amount) /
+              (total || 1)) *
+            100
+          }
           direction={direction || "ltr"}
         />
       ))}

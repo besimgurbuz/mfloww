@@ -54,7 +54,7 @@ export function Header() {
                     rel="noreferrer"
                   >
                     <Button variant="ghost" size="icon">
-                      <Icons.gitHub className="h-4 w-4 md:h-6 md:w-6" />
+                      <Icons.github className="h-4 w-4 md:h-6 md:w-6" />
                     </Button>
                   </NavigationMenuLink>
                 </NavigationMenuItem>

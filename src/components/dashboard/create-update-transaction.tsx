@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, useContext, useEffect } from "react"
+import { ReactNode, useContext, useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
@@ -9,10 +9,12 @@ import {
   SUPPORTED_CURRENCY_CODES,
   SupportedCurrencyCode,
 } from "@/lib/definitions"
+import { useStorage } from "@/lib/hooks"
 import {
   useCreateTransactionQuery,
   useUpdateTransactionQuery,
 } from "@/lib/local-db/hooks"
+import { fetchExchangeRates } from "@/lib/rates"
 import { Transaction } from "@/lib/transaction"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -54,6 +56,7 @@ import { DashboardStateContext } from "@/app/dashboard/dashboard-context"
 
 import { AmountInput } from "../amount-input"
 import { CategorySelect } from "../category-select"
+import { Icons } from "../icons"
 import { BaseInput } from "../ui/input"
 
 type TransactionFormValues = {
@@ -82,7 +85,8 @@ export function CreateUpdateTransaction({
 }: CreateUpdateTransactionProps) {
   const { createTransaction } = useCreateTransactionQuery()
   const { updateTransaction } = useUpdateTransactionQuery()
-  const { selectedDate } = useContext(DashboardStateContext)
+  const { selectedDate, ratesStore } = useContext(DashboardStateContext)
+  const [isFetchingRates, setFetchingRates] = useState(false)
 
   useEffect(() => {
     if (!enableShortcut) {
@@ -96,10 +100,16 @@ export function CreateUpdateTransaction({
 
     document.addEventListener("keydown", down)
     return () => document.removeEventListener("keydown", down)
-  }, [])
+  }, [enableShortcut, onOpenChange, open])
 
-  const onSubmit = (values: TransactionFormValues) => {
-    console.log("on submit", values)
+  const onSubmit = async (values: TransactionFormValues) => {
+    let exchangeRate = ratesStore[values.currency]
+    if (!exchangeRate) {
+      setFetchingRates(true)
+      exchangeRate = await fetchExchangeRates(values.currency)
+      setFetchingRates(false)
+    }
+
     const newTransaction = {
       ...values,
       amount:
@@ -107,7 +117,7 @@ export function CreateUpdateTransaction({
           ? values.amount * -1
           : values.amount,
       date: selectedDate,
-      exchangeRate: {} as Record<SupportedCurrencyCode, number>,
+      exchangeRate,
     } as Transaction
 
     if (!fillData) {
@@ -135,7 +145,16 @@ export function CreateUpdateTransaction({
           </DialogHeader>
           <TransactionForm fillData={fillData} onSubmit={onSubmit}>
             <DialogFooter className="flex self-center w-full">
-              <Button type="submit">{!fillData ? "Create" : "Save"}</Button>
+              <Button
+                type="submit"
+                className="flex  gap-2"
+                disabled={isFetchingRates}
+              >
+                {isFetchingRates && (
+                  <Icons.spinner className="h-4 w-4 animate-spin" />
+                )}
+                {!fillData ? "Create" : "Save"}
+              </Button>
               <DialogClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
@@ -193,14 +212,19 @@ type TransactionFormProps = {
 
 function TransactionForm({
   fillData,
-  onSubmit,
   children,
+  onSubmit,
 }: TransactionFormProps) {
+  const [baseCurrency] = useStorage<SupportedCurrencyCode>(
+    "SELECTED_BASE_CURRENCY",
+    "localStorage",
+    "USD"
+  )
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       name: fillData?.name || "",
-      currency: fillData?.currency || firstCurr,
-      amount: fillData?.amount || 0,
+      currency: baseCurrency,
+      amount: Math.abs(fillData?.amount || 0),
       category: fillData?.category || "",
       isRegular: fillData?.isRegular || false,
       type: fillData?.type || "income",

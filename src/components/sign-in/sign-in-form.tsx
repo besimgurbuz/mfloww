@@ -43,7 +43,12 @@ export function SignInForm() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ idToken, name: credentials.user.displayName }),
+      body: JSON.stringify({
+        idToken,
+        name: credentials.user.displayName || "Anonymous",
+        provider: provider,
+        picture: credentials.user.photoURL,
+      }),
     })
 
     if (!res.ok) {
@@ -101,7 +106,7 @@ export function SignInForm() {
         disabled={isPending}
         onClick={() => signIn("github")}
       >
-        <Icons.gitHub className="w-6 h-6" /> GitHub
+        <Icons.github className="w-6 h-6" /> GitHub
       </Button>
       <Button
         variant="outline"

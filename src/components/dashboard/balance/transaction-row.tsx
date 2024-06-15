@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react"
 import { cva } from "class-variance-authority"
 
+import { SupportedCurrencyCode } from "@/lib/definitions"
+import { useFormattedTransactionAmount } from "@/lib/hooks"
 import { Transaction } from "@/lib/transaction"
 import { cn, formatMoney } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -19,6 +21,7 @@ import { TransactionRowListProps } from "./transaction-row-list"
 interface TransactionRowProps {
   transaction: Transaction
   widthPercentage: number
+  baseCurrency: SupportedCurrencyCode
   direction: TransactionRowListProps["direction"]
 }
 
@@ -63,10 +66,15 @@ const transactionRowVariants = cva(
 export function TransactionRow({
   transaction,
   widthPercentage,
+  baseCurrency,
   direction,
 }: TransactionRowProps) {
   const rowRef = useRef<HTMLDivElement>(null)
   const [rowWidth, setRowWidth] = useState(0)
+  const { amount, realAmount } = useFormattedTransactionAmount(
+    transaction,
+    baseCurrency
+  )
 
   useEffect(() => {
     if (!rowRef.current) return
@@ -80,7 +88,7 @@ export function TransactionRow({
     resizeObservable.observe(rowRef.current)
 
     return () => resizeObservable.disconnect()
-  }, [rowRef])
+  }, [rowRef, rowWidth])
 
   return (
     <div
@@ -112,17 +120,20 @@ export function TransactionRow({
             >
               {transaction.name}
             </p>
-            <p
+            <div
               className={cn(
-                "font-medium whitespace-nowrap",
+                "whitespace-nowrap flex flex-col",
                 direction === "rtl" ? "mr-auto" : "ml-auto",
                 {
                   hidden: rowWidth < 200,
                 }
               )}
             >
-              {formatMoney(transaction.amount, transaction.currency)}
-            </p>
+              <h3 className="text-lg font-medium">{amount}</h3>
+              {realAmount && (
+                <p className="text-muted-foreground text-xs">{realAmount}</p>
+              )}
+            </div>
             <Popover>
               <PopoverTrigger className="absolute z-10 w-full h-full left-0 top-0"></PopoverTrigger>
               <PopoverContent>
@@ -163,19 +174,22 @@ export function TransactionRow({
         })}
       >
         <p
-          className={cn("hidden font-medium truncate", {
+          className={cn("hidden font-medium truncate items-center", {
             flex: rowWidth < 50,
           })}
         >
           {transaction.name}
         </p>
-        <p
-          className={cn("hidden font-medium whitespace-nowrap", {
+        <div
+          className={cn("hidden flex-col whitespace-nowrap", {
             flex: rowWidth < 200,
           })}
         >
-          {formatMoney(transaction.amount, transaction.currency)}
-        </p>
+          <h3 className="text-lg font-medium">{amount}</h3>
+          {realAmount && (
+            <p className="text-muted-foreground text-xs">{realAmount}</p>
+          )}
+        </div>
       </div>
     </div>
   )

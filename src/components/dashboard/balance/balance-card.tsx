@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 
+import { SupportedCurrencyCode } from "@/lib/definitions"
 import { Transaction } from "@/lib/transaction"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
@@ -13,9 +14,11 @@ type DisplayMode = "together" | "grouped"
 export function BalanceCard({
   incomes,
   expenses,
+  baseCurrency,
 }: {
   incomes: Transaction[]
   expenses: Transaction[]
+  baseCurrency: SupportedCurrencyCode
 }) {
   const [displayMode, setDisplayMode] = useState<DisplayMode>("grouped")
 
@@ -39,13 +42,13 @@ export function BalanceCard({
           <div className="flex w-full gap-2 flex-wrap sm:flex-nowrap">
             <TransactionRowList
               data={expenses}
-              currency="USD"
+              baseCurrency={baseCurrency}
               direction="rtl"
               className="order-2 sm:order-1 sm:w-1/2 sm:max-w-1/2"
             />
             <TransactionRowList
               data={incomes}
-              currency="USD"
+              baseCurrency={baseCurrency}
               className="order-1 sm:order-2 sm:w-1/2 sm:max-w-1/2"
             />
           </div>
@@ -53,7 +56,7 @@ export function BalanceCard({
           <div className="flex flex-col gap-4 w-full">
             <TransactionRowList
               data={incomes.concat(expenses)}
-              currency="USD"
+              baseCurrency={baseCurrency}
             />
           </div>
         )}

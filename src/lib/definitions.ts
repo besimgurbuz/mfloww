@@ -85,3 +85,9 @@ export type GetValueFromStorage = <T>(
   key: StorageKey,
   storageType: StorageType
 ) => T | null
+
+export interface ExchangeRate {
+  base: SupportedCurrencyCode
+  rates: Record<SupportedCurrencyCode, number>
+  remaining?: number
+}

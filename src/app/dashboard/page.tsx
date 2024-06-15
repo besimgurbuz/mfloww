@@ -1,4 +1,10 @@
+import { Metadata } from "next"
+
 import { DashboardWrapper } from "./wrapper"
+
+export const metadata: Metadata = {
+  title: "Dashboard | mfloww",
+}
 
 export default function Dashboard() {
   return (

@@ -22,7 +22,10 @@ import { UserState } from "@/app/user-context"
 
 type UserDropdownProps = UserState
 
-export function UserDropdown({ user, loading }: UserDropdownProps) {
+export function UserDropdown({
+  user,
+  loading,
+}: Omit<UserDropdownProps, "syncUser">) {
   const router = useRouter()
 
   const signOutFn = useCallback(async () => {

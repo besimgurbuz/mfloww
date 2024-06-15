@@ -26,7 +26,7 @@ export default function Home() {
               href="https://github.com/besimgurbuz/mfloww"
             >
               <Button className="flex gap-2" variant="outline">
-                <Icons.gitHub className="w-6 h-6" /> GitHub
+                <Icons.github className="w-6 h-6" /> GitHub
               </Button>
             </a>
           </div>

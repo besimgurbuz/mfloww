@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState, useTransition } from "react"
 
-import { StorageKey, StorageType } from "./definitions"
-import { getValueFromStorage, setValueToStorage } from "./utils"
+import { StorageKey, StorageType, SupportedCurrencyCode } from "./definitions"
+import { Transaction } from "./transaction"
+import { formatMoney, getValueFromStorage, setValueToStorage } from "./utils"
 
 export const useServerAction = <P, R>(
   action: (_: P) => Promise<R>,
-  onFinished?: (_: R | undefined) => void
+  options?: {
+    onFinished?: (_: R | undefined) => void
+    onFailed?: (_: Error | undefined) => void
+  }
 ): [(_: P) => Promise<R | undefined>, boolean] => {
   const [isPending, startTransition] = useTransition()
   const [result, setResult] = useState<R>()
@@ -15,20 +19,25 @@ export const useServerAction = <P, R>(
   useEffect(() => {
     if (!finished) return
 
-    if (onFinished) onFinished(result)
+    if (options?.onFinished) options.onFinished(result)
     resolver.current?.(result)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result, finished])
 
   const runAction = async (args: P): Promise<R | undefined> => {
     startTransition(() => {
-      action(args).then((data) => {
-        setResult(data)
-        setFinished(true)
-      })
+      action(args)
+        .then((data) => {
+          setResult(data)
+          setFinished(true)
+        })
+        .catch((error) => {
+          if (options?.onFailed) options.onFailed(error)
+          setFinished(true)
+        })
     })
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       resolver.current = resolve
     })
   }
@@ -88,4 +97,29 @@ export function useStorage<T>(
   }
 
   return [value || defaultValue, updateValue]
+}
+
+export function useFormattedTransactionAmount(
+  transaction: Transaction,
+  baseCurrency: SupportedCurrencyCode
+) {
+  const [amount, setAmount] = useState<string>(
+    formatMoney(transaction.amount, transaction.currency)
+  )
+  const [realAmount, setRealAmount] = useState<string | null>(null)
+
+  useEffect(() => {
+    setAmount(formatMoney(transaction.amount, transaction.currency))
+
+    if (transaction.currency !== baseCurrency) {
+      setRealAmount(
+        formatMoney(
+          transaction.amount * transaction.exchangeRate[baseCurrency],
+          baseCurrency
+        )
+      )
+    }
+  }, [transaction, baseCurrency])
+
+  return { amount, realAmount }
 }

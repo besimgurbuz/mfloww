@@ -19,14 +19,48 @@ export type UserState = {
     name: string
     email: string
     image: string
+    provider: "google" | "email" | "anonymous"
   } | null
   loading: boolean
+  syncUser: () => void
 }
-const UserContext = createContext<UserState>({ user: null, loading: true })
+const UserContext = createContext<UserState>({
+  user: null,
+  loading: true,
+  syncUser: () => {},
+})
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserState["user"]>(null)
   const [loading, setLoading] = useState(true)
+  const syncUser = async () => {
+    const user = auth.currentUser
+
+    if (!user) {
+      setUser(null)
+      setLoading(false)
+      return
+    }
+
+    setLoading(true)
+    const usersCollection = collection(db, "users")
+    const userDoc = await getDoc(doc(usersCollection, user.uid))
+    const userData = userDoc.data()
+
+    if (userDoc.exists()) {
+      setUser({
+        id: user.uid,
+        key: userData!.key,
+        name: userData!.name,
+        email: user.email || "",
+        image: userData!.picture,
+        provider: userData!.provider as "google" | "email" | "anonymous",
+      })
+    } else {
+      setUser(null)
+    }
+    setLoading(false)
+  }
 
   useEffect(() => {
     const verify = async () => {
@@ -42,27 +76,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       }
     }
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        setUser(null)
-        setLoading(false)
-        return
-      }
-      setLoading(true)
-      const usersCollection = collection(db, "users")
-      const userDoc = await getDoc(doc(usersCollection, user?.uid))
-
-      if (userDoc.exists()) {
-        setUser({
-          id: user.uid,
-          key: userDoc.data()!.key,
-          name: user.displayName || user.email || "Anonymous",
-          email: user.email || "",
-          image: user.photoURL || "",
-        })
+      if (user) {
+        await syncUser()
       } else {
         setUser(null)
+        setLoading(false)
       }
-      setLoading(false)
     })
 
     verify()
@@ -71,7 +90,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   return (
-    <UserContext.Provider value={{ user, loading }}>
+    <UserContext.Provider value={{ user, loading, syncUser }}>
       {children}
     </UserContext.Provider>
   )
