@@ -6,7 +6,7 @@ import { cva } from "class-variance-authority"
 import { SupportedCurrencyCode } from "@/lib/definitions"
 import { useFormattedTransactionAmount } from "@/lib/hooks"
 import { Transaction } from "@/lib/transaction"
-import { cn, formatMoney } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import {
   Popover,
@@ -140,9 +140,14 @@ export function TransactionRow({
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="font-medium text-md">{transaction.name}</h3>
-                    <p className="font-medium text-md whitespace-nowrap">
-                      {formatMoney(transaction.amount, transaction.currency)}
-                    </p>
+                    <div className="whitespace-nowrap">
+                      <p className="font-medium text-md ">{amount}</p>
+                      {realAmount && (
+                        <p className="text-sm text-muted-foreground">
+                          {realAmount}
+                        </p>
+                      )}
+                    </div>
                   </div>
                   <div className="flex flex-col items-end gap-4">
                     {transaction.isRegular && (

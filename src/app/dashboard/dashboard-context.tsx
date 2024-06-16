@@ -72,7 +72,11 @@ export function DashboardStateContextProvider({
         (transaction) =>
           transaction.date === selectedDate || transaction.isRegular
       )
-      .sort((a, b) => Math.abs(b.amount) - Math.abs(a.amount))
+      .sort(
+        (a, b) =>
+          Math.abs(b.amount * (b.exchangeRate[baseCurrency] || 1)) -
+          Math.abs(a.amount * (a.exchangeRate[baseCurrency] || 1))
+      )
 
     const entryIncomes = entryTransactions.filter((el) => el.type === "income")
     const entryExpenses = entryTransactions.filter(
@@ -81,7 +85,7 @@ export function DashboardStateContextProvider({
     setEntryTransactions(entryTransactions)
     setEntryIncomes(entryIncomes)
     setEntryExpenses(entryExpenses)
-  }, [selectedDate, transactions])
+  }, [selectedDate, transactions, baseCurrency])
 
   useEffect(() => {
     fillExchangeRates()

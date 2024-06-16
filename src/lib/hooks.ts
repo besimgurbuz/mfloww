@@ -118,6 +118,8 @@ export function useFormattedTransactionAmount(
           baseCurrency
         )
       )
+    } else {
+      setRealAmount(null)
     }
   }, [transaction, baseCurrency])
 
