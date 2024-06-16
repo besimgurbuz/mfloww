@@ -2,25 +2,60 @@ import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
 import { adminAuth, adminDB } from "@/lib/server/admin"
+import { decrypt } from "@/lib/server/crypto"
 
 export const POST = async (req: NextRequest) => {
   const { idToken, name, provider, picture } = await req.json()
 
-  if (process.env.ALLOW_SIGN_IN !== "true") {
+  if (!idToken || !name || !provider || !picture) {
     return NextResponse.json(
-      {
-        status: "error",
-        error: "Sign in is disabled at the moment. Please try again later.",
-      },
-      { status: 403 }
+      { status: "error", error: "Required fields are missing" },
+      { status: 400 }
     )
   }
 
   const expiresIn = 60 * 60 * 24 * 12 * 1000 // 12 days
   const decodedToken = await adminAuth.verifyIdToken(idToken)
   const usersCollection = adminDB.collection("users")
-  const user = await usersCollection.doc(decodedToken.uid).get()
 
+  if (process.env.CLOSED_BETA === "true") {
+    const betaAccess = cookies().get("__beta_access")
+
+    if (!betaAccess?.value) {
+      return NextResponse.json(
+        {
+          status: "error",
+          error: "We're in closed beta test. Please try again later.",
+        },
+        { status: 403 }
+      )
+    }
+
+    const accessInfoDoc = await adminDB
+      .collection("beta")
+      .doc(decrypt(betaAccess.value))
+      .get()
+
+    if (!accessInfoDoc.exists || accessInfoDoc.data()?.used) {
+      cookies().delete("__beta_access")
+      return NextResponse.json(
+        {
+          status: "error",
+          error: "The access code is invalid or already used.",
+        },
+        { status: 403 }
+      )
+    }
+
+    await accessInfoDoc.ref.update({
+      used: true,
+      usedAt: new Date(),
+      usedBy: decodedToken.email,
+    })
+    cookies().delete("__beta_access")
+  }
+
+  const user = await usersCollection.doc(decodedToken.uid).get()
   if (!user.exists) {
     await usersCollection.doc(decodedToken.uid).set({
       key: crypto.randomUUID(),

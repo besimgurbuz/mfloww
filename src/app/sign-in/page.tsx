@@ -2,6 +2,8 @@ import { Metadata } from "next"
 
 import { SignInForm } from "@/components/sign-in/sign-in-form"
 
+import { ClosedBeta } from "./closed-beta"
+
 export const metadata: Metadata = {
   title: "Sign in | mfloww",
 }
@@ -31,35 +33,6 @@ export default function SignIn() {
           )}
         </div>
       </div>
-    </div>
-  )
-}
-
-function ClosedBeta() {
-  return (
-    <div className="flex flex-col space-y-2 text-center">
-      <h1 className="text-2xl font-semibold text-center">Closed beta</h1>
-      <p className="text-sm text-muted-foreground">
-        We are currently in a closed beta phase.
-      </p>
-      <p className="text-sm text-muted-foreground">
-        We would like you to join our exclusive group of testers. By
-        participating, you’ll gain exclusive access to new enhancements, provide
-        valuable feedback, and gain discounts on future subscriptions.
-      </p>
-      <p className="text-sm text-muted-foreground">
-        If you are interested in joining our closed beta, reach out to us at{" "}
-        <a
-          href="mailto:contact@mfloww.com?subject=Closed Beta Interest"
-          className="font-medium underline underline-offset-4"
-        >
-          contact@mfloww.com
-        </a>{" "}
-        to express your interest and get started .
-      </p>
-      <p className="text-sm font-medium text-muted-foreground">
-        Together, we&apos;ll create something amazing!
-      </p>
     </div>
   )
 }

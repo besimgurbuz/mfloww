@@ -94,7 +94,7 @@ export function Account() {
         <CardHeader>
           <CardTitle>Account</CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-4">
+        <CardContent className="grid gap-6">
           {user?.provider && (
             <Icon name={user.provider as any} className="w-5 h-5" />
           )}

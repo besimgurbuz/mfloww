@@ -47,7 +47,7 @@ export function System() {
         <CardHeader>
           <CardTitle>System</CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-4">
+        <CardContent className="grid gap-6">
           <div className="flex flex-wrap gap-2 justify-between items-center">
             <div className="flex flex-col gap-2">
               <Label>Base Currency</Label>
