@@ -2,15 +2,17 @@ import admin from "firebase-admin"
 import { getAuth } from "firebase-admin/auth"
 import { getFirestore } from "firebase-admin/firestore"
 
-const { FB_PROJECT_ID, FB_PRIVATE_KEY, FB_CLIENT_EMAIL } = process.env
+const { FB_ACCOUNT } = process.env
+
+const serviceCredentials = JSON.parse(FB_ACCOUNT!)
+serviceCredentials.private_key = serviceCredentials.private_key.replace(
+  /\\n/g,
+  "\n"
+)
 
 try {
   admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: FB_PROJECT_ID,
-      privateKey: (FB_PRIVATE_KEY as string).replace(/\\n/g, "\n"),
-      clientEmail: FB_CLIENT_EMAIL,
-    }),
+    credential: admin.credential.cert(serviceCredentials),
   })
 } catch (error: any) {
   if (!/already exists/u.test(error.message)) {
