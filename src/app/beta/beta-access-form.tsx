@@ -56,7 +56,7 @@ export function BetaAcessForm() {
         type="text"
         onChange={(value) => setAccessCode(value.toUpperCase())}
       >
-        <InputOTPGroup className="w-fit">
+        <InputOTPGroup className="w-[300px] sm:w-fit">
           {Array.from({ length: 12 }).map((_, index) => (
             <InputOTPSlot key={index} index={index} />
           ))}
