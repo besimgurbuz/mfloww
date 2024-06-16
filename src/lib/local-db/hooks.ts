@@ -104,7 +104,6 @@ export function useTransactions() {
       setRegularTransactions(Object.values(regularTransactions))
       setIncomes(incomes)
       setExpenses(expenses)
-      console.log(allTransactions)
     }
   }, [user, connection])
 
@@ -241,6 +240,44 @@ export function useDeleteTransactionQuery() {
       )
       const objectStore = dbTransaction.objectStore(DBObjectStores.Transaction)
       const request = objectStore.delete(id)
+
+      request.onsuccess = () => {
+        setCompleted(true)
+        tick()
+      }
+
+      request.onerror = (event) => {
+        setError(event as ErrorEvent)
+      }
+    },
+    completed,
+    error,
+  }
+}
+
+export function useDeleteAllTransactionsQuery() {
+  const { user } = useUser()
+  const { connection, tick } = useContext(DBContext)
+  const [completed, setCompleted] = useState<boolean>()
+  const [error, setError] = useState<ErrorEvent>()
+
+  return {
+    deleteAllTransactions: async () => {
+      if (
+        !connection?.db ||
+        connection.result !== DBConnectionResult.CONNECTED ||
+        !user
+      ) {
+        return
+      }
+
+      const dbTransaction = createTransaction(
+        connection,
+        DBObjectStores.Transaction,
+        "readwrite"
+      )
+      const objectStore = dbTransaction.objectStore(DBObjectStores.Transaction)
+      const request = objectStore.clear()
 
       request.onsuccess = () => {
         setCompleted(true)

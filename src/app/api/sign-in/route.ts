@@ -49,7 +49,7 @@ export const POST = async (req: NextRequest) => {
   }
 }
 
-export const DELETE = async (req: NextRequest) => {
+export const DELETE = async () => {
   cookies().delete("__session")
   return NextResponse.json({ status: "signed-out" }, { status: 200 })
 }

@@ -70,13 +70,13 @@ export function DeleteWarning({
             <DialogTitle className="text-left">
               Are you sure you want to delete {transactionName}?
             </DialogTitle>
-            <DialogDescription>
-              <WarningContent />
-            </DialogDescription>
           </DialogHeader>
+          <DialogDescription>
+            <WarningContent />
+          </DialogDescription>
           <DialogFooter className="flex gap-2">
-            <Button onClick={onConfirm}>Confirm</Button>
             <DialogClose>Cancel</DialogClose>
+            <Button onClick={onConfirm}>Confirm</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

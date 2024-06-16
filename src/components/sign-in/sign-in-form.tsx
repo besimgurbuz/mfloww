@@ -12,6 +12,7 @@ import {
 import { auth } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
+import { useUser } from "@/app/user-context"
 
 import { Icons } from "../icons"
 
@@ -21,6 +22,7 @@ export function SignInForm() {
   const [isPending, setIsPending] = useState(false)
   const searchParams = useSearchParams()
   const { toast } = useToast()
+  const { syncUser } = useUser()
   const router = useRouter()
 
   const getUserCredentials = async (provider: SingInProvider) => {
@@ -62,6 +64,7 @@ export function SignInForm() {
         duration: 30000,
       })
     } else {
+      syncUser()
       router.push("/dashboard")
     }
     setIsPending(false)
