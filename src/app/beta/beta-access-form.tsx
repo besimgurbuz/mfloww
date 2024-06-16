@@ -53,6 +53,7 @@ export function BetaAcessForm() {
         maxLength={12}
         pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
         value={accessCode}
+        type="text"
         onChange={(value) => setAccessCode(value.toUpperCase())}
       >
         <InputOTPGroup className="w-fit">
