@@ -5,7 +5,7 @@ export async function middleware(request: NextRequest) {
   const sessionKey = session?.value
   const { pathname } = request.nextUrl
   const protectedPaths = ["/dashboard", "/settings"]
-  const authoredPaths = ["/", "/sign-in"]
+  const authoredPaths = ["/", "/sign-in", "/beta"]
 
   if (protectedPaths.includes(pathname)) {
     if (!sessionKey) {
