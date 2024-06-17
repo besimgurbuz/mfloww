@@ -5,8 +5,9 @@ import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons"
 
 import { SupportedCurrencyCode } from "@/lib/definitions"
 import TransactionStatistics from "@/lib/transaction/statistics"
-import { formatMoney } from "@/lib/utils"
+import { cn, formatMoney } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 type SummaryCardsProps = Omit<
   TransactionStatistics,
@@ -53,52 +54,44 @@ function SummaryCardsContent({ base, ...statistics }: SummaryCardsProps) {
             <CardTitle>Total incomes</CardTitle>
             <TriangleUpIcon className="w-6 h-6 text-green ml-auto" />
           </CardHeader>
-          <CardContent>
+          <CardContent className="mt-auto">
             <h2 className="text-xl md:text-2xl font-bold whitespace-nowrap">
               {formatMoney(income.total, base)}
             </h2>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="flex flex-col">
           <CardHeader className="flex flex-row items-center space-y-0 pb-2">
             <CardTitle>Total Expenses</CardTitle>
             <TriangleDownIcon className="w-6 h-6 text-red ml-auto" />
           </CardHeader>
-          <CardContent>
+          <CardContent className="mt-auto">
             <h2 className="text-xl md:text-2xl font-bold whitespace-nowrap">
               {formatMoney(expense.total, base)}
             </h2>
           </CardContent>
         </Card>
-        {mostSpent.category && (
-          <Card>
-            <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-              <CardTitle>Most Spent Category</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <h2 className="text-xl md:text-2xl font-bold">
-                {mostSpent.category}
-              </h2>
-              <p className="text-sm text-muted-foreground whitespace-nowrap">
-                {formatMoney(mostSpent.amount, base)} has spent
-              </p>
-            </CardContent>
-          </Card>
-        )}
         {spendingsByCategory.length > 0 && (
-          <Card>
-            <CardHeader className="flex flex-row items-center space-y-0 pb-2">
+          <Card className="sm:col-span-2">
+            <CardHeader className="flex flex-row items-center space-y-0 pb-4">
               <CardTitle>Spendings by Category</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid gap-2">
-                {spendingsByCategory.map(({ category, amount }) => (
-                  <div key={category} className="flex justify-between text-sm">
-                    <p>{category}</p>
-                    <p>{formatMoney(amount, base)}</p>
-                  </div>
-                ))}
-              </div>
+              <ScrollArea className="h-24">
+                <div className="grid gap-2">
+                  {spendingsByCategory.map(({ category, amount }, index) => (
+                    <div
+                      key={category}
+                      className={cn("flex justify-between text-sm", {
+                        "text-md font-medium": index === 0,
+                      })}
+                    >
+                      <p className="truncate">{category}</p>
+                      <p>{formatMoney(amount, base)}</p>
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
             </CardContent>
           </Card>
         )}

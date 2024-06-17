@@ -160,12 +160,11 @@ function DataTableTransactionItem({
         <h2>{transaction.name}</h2>
       </div>
       <div className="flex gap-1 flex-wrap">
-        {transaction.category &&
-          transaction.category?.split(",")?.map((category, idx) => (
-            <Badge key={idx} variant="outline">
-              {category.trim()}
-            </Badge>
-          ))}
+        {transaction.category && (
+          <Badge variant="outline" className="truncate">
+            {transaction.category.trim()}
+          </Badge>
+        )}
       </div>
       <div className="ml-auto whitespace-nowrap">
         <h2 className="font-medium text-lg">{amount}</h2>
