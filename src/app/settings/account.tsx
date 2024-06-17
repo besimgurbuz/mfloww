@@ -151,11 +151,7 @@ export function Account() {
                 </DialogDescription>
                 <DialogFooter className="gap-2">
                   <DialogClose>Cancel</DialogClose>
-                  <Button
-                    variant="destructive"
-                    onClick={dispatchDeleteAccount}
-                    className="w-fit flex gap-2"
-                  >
+                  <Button variant="destructive" onClick={dispatchDeleteAccount}>
                     {isPendingDeleteAccount && (
                       <Icons.spinner className="h-4 w-4 animate-spin" />
                     )}
