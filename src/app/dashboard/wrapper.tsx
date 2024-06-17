@@ -73,6 +73,7 @@ export function DashboardWrapper() {
         transactions={entryTransactions}
         incomes={entryIncomes}
         expenses={entryExpenses}
+        baseCurrency={baseCurrency}
       />
     </>
   )

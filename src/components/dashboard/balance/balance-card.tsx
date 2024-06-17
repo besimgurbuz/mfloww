@@ -1,8 +1,7 @@
 "use client"
 
-import { useState } from "react"
-
 import { SupportedCurrencyCode } from "@/lib/definitions"
+import { useStorage } from "@/lib/hooks"
 import { Transaction } from "@/lib/transaction"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
@@ -20,7 +19,11 @@ export function BalanceCard({
   expenses: Transaction[]
   baseCurrency: SupportedCurrencyCode
 }) {
-  const [displayMode, setDisplayMode] = useState<DisplayMode>("grouped")
+  const [displayMode, setDisplayMode] = useStorage<DisplayMode>(
+    "GRAPH_DISPLAY_MODE",
+    "localStorage",
+    "grouped"
+  )
 
   return (
     <Card className="w-full">

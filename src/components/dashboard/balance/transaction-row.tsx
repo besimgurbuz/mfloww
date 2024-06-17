@@ -131,7 +131,13 @@ export function TransactionRow({
             >
               <h3 className="text-lg font-medium">{amount}</h3>
               {realAmount && (
-                <p className="text-muted-foreground text-xs">{realAmount}</p>
+                <p
+                  className={cn("text-muted-foreground text-xs", {
+                    "text-end": direction === "ltr",
+                  })}
+                >
+                  {realAmount}
+                </p>
               )}
             </div>
             <Popover>

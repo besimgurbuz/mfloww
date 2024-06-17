@@ -2,8 +2,10 @@
 
 import { useState } from "react"
 
+import { SupportedCurrencyCode } from "@/lib/definitions"
+import { useFormattedTransactionAmount } from "@/lib/hooks"
 import { Transaction, TransactionType } from "@/lib/transaction"
-import { cn, formatMoney } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
@@ -14,15 +16,19 @@ import { TransactionMenu } from "./transaction-menu"
 
 type DataTableFilter = TransactionType | "all"
 
+type TransactionTableCardProps = {
+  transactions: Transaction[]
+  incomes: Transaction[]
+  expenses: Transaction[]
+  baseCurrency: SupportedCurrencyCode
+}
+
 export function TransactionTableCard({
   transactions,
   incomes,
   expenses,
-}: {
-  transactions: Transaction[]
-  incomes: Transaction[]
-  expenses: Transaction[]
-}) {
+  baseCurrency,
+}: TransactionTableCardProps) {
   const [filter, setFilter] = useState<DataTableFilter>("all")
 
   return (
@@ -61,10 +67,19 @@ export function TransactionTableCard({
           transactions={transactions}
           incomes={incomes}
           expenses={expenses}
+          baseCurrency={baseCurrency}
         />
       </CardContent>
     </Card>
   )
+}
+
+type DataTableCardContentProps = {
+  filter: DataTableFilter
+  transactions: Transaction[]
+  incomes: Transaction[]
+  expenses: Transaction[]
+  baseCurrency: SupportedCurrencyCode
 }
 
 function DataTableCardContent({
@@ -72,34 +87,49 @@ function DataTableCardContent({
   transactions,
   incomes,
   expenses,
-}: {
-  filter: DataTableFilter
-  transactions: Transaction[]
-  incomes: Transaction[]
-  expenses: Transaction[]
-}) {
-  if (filter === "all") {
-    return (
-      <>
-        {transactions.map((transaction, idx) => (
-          <DataTableTransactionItem key={idx} transaction={transaction} />
-        ))}
-      </>
-    )
-  } else if (filter === "income") {
-    return (
-      <>
-        {incomes.map((transaction, idx) => (
-          <DataTableTransactionItem key={idx} transaction={transaction} />
-        ))}
-      </>
-    )
-  }
-
+  baseCurrency,
+}: DataTableCardContentProps) {
   return (
     <>
-      {expenses.map((transaction, idx) => (
-        <DataTableTransactionItem key={idx} transaction={transaction} />
+      {filter === "all" && (
+        <DataTAbleTransactionList
+          transactions={transactions}
+          baseCurrency={baseCurrency}
+        />
+      )}
+      {filter === "income" && (
+        <DataTAbleTransactionList
+          transactions={incomes}
+          baseCurrency={baseCurrency}
+        />
+      )}
+      {filter === "expense" && (
+        <DataTAbleTransactionList
+          transactions={expenses}
+          baseCurrency={baseCurrency}
+        />
+      )}
+    </>
+  )
+}
+
+type DataTableTransactionListProps = {
+  transactions: Transaction[]
+  baseCurrency: SupportedCurrencyCode
+}
+
+function DataTAbleTransactionList({
+  transactions,
+  baseCurrency,
+}: DataTableTransactionListProps) {
+  return (
+    <>
+      {transactions.map((transaction, idx) => (
+        <DataTableTransactionItem
+          key={idx}
+          transaction={transaction}
+          baseCurrency={baseCurrency}
+        />
       ))}
     </>
   )
@@ -107,9 +137,15 @@ function DataTableCardContent({
 
 function DataTableTransactionItem({
   transaction,
+  baseCurrency,
 }: {
   transaction: Transaction
+  baseCurrency: SupportedCurrencyCode
 }) {
+  const { amount, realAmount } = useFormattedTransactionAmount(
+    transaction,
+    baseCurrency
+  )
   return (
     <div className="flex items-center w-full py-2 gap-4">
       <div
@@ -130,9 +166,10 @@ function DataTableTransactionItem({
           </Badge>
         ))}
       </div>
-      <h2 className="font-medium text-lg ml-auto whitespace-nowrap">
-        {formatMoney(transaction.amount, transaction.currency)}
-      </h2>
+      <div className="ml-auto whitespace-nowrap">
+        <h2 className="font-medium text-lg">{amount}</h2>
+        <p className="text-sm text-muted-foreground text-end">{realAmount}</p>
+      </div>
       <TransactionMenu
         type="dropdown-menu"
         trigger={

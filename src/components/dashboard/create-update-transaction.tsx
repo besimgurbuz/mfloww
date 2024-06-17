@@ -223,7 +223,7 @@ function TransactionForm({
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       name: fillData?.name || "",
-      currency: baseCurrency,
+      currency: fillData?.currency || baseCurrency,
       amount: Math.abs(fillData?.amount || 0),
       category: fillData?.category || "",
       isRegular: fillData?.isRegular || false,
