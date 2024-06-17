@@ -72,9 +72,9 @@ class TransactionStatistics {
         expense.count++
 
         if (entry.category) {
-          const spentAmount = Math.abs(
-            (spendingMap[entry.category] || 0) * rate + entry.amount * rate
-          )
+          const spentAmount =
+            (spendingMap[entry.category] || 0) + Math.abs(entry.amount) * rate
+
           spendingMap[entry.category] = spentAmount
 
           if (spentAmount > mostSpent.amount) {
