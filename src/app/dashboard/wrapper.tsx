@@ -70,6 +70,7 @@ export function DashboardWrapper() {
       />
       <BalanceCard
         baseCurrency={baseCurrency}
+        allTransactions={entryTransactions}
         incomes={entryIncomes}
         expenses={entryExpenses}
       />

@@ -10,15 +10,19 @@ import { TransactionRowList } from "./transaction-row-list"
 
 type DisplayMode = "together" | "grouped"
 
-export function BalanceCard({
-  incomes,
-  expenses,
-  baseCurrency,
-}: {
+type BalanceCardProps = {
+  allTransactions: Transaction[]
   incomes: Transaction[]
   expenses: Transaction[]
   baseCurrency: SupportedCurrencyCode
-}) {
+}
+
+export function BalanceCard({
+  allTransactions,
+  incomes,
+  expenses,
+  baseCurrency,
+}: BalanceCardProps) {
   const [displayMode, setDisplayMode] = useStorage<DisplayMode>(
     "GRAPH_DISPLAY_MODE",
     "localStorage",
@@ -58,7 +62,7 @@ export function BalanceCard({
         ) : (
           <div className="flex flex-col gap-4 w-full">
             <TransactionRowList
-              data={incomes.concat(expenses)}
+              data={allTransactions}
               baseCurrency={baseCurrency}
             />
           </div>
