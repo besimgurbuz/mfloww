@@ -203,6 +203,10 @@ export function useMontlyDiffPercentage(
     let previousDateIncome = 0
     let previousDateExpense = 0
 
+    if (transactions.length === 0) {
+      return
+    }
+
     transactions.forEach((transaction) => {
       if (transaction.date === selectedDate || transaction.isRegular) {
         if (transaction.type === "income") {
@@ -229,38 +233,26 @@ export function useMontlyDiffPercentage(
     const expenseDifference = selectedDateExpense - previousDateExpense
 
     const incomePercentageDifference = Math.abs(
-      (incomeDifference / previousDateIncome) * 100
+      (incomeDifference / (previousDateIncome || 1)) * 100
     )
     const expensePercentageDifference = Math.abs(
-      (expenseDifference / previousDateExpense) * 100
+      (expenseDifference / (previousDateExpense || 1)) * 100
     )
 
     // Create the highlight objects
-    const incomeHighlight: MontlyDifference = {
+    const incomeDiff: MontlyDifference = {
       percentage: incomePercentageDifference,
       isIncreased: incomeDifference > 0,
       type: "income",
     }
-    const expenseHighlight: MontlyDifference = {
+    const expenseDiff: MontlyDifference = {
       percentage: expensePercentageDifference,
       isIncreased: expenseDifference < 0,
       type: "expense",
     }
-    console.log(
-      "incomeDifference",
-      incomeDifference,
-      previousDateIncome,
-      incomePercentageDifference
-    )
-    console.log(
-      "expenseDifference",
-      expenseDifference,
-      previousDateExpense,
-      expensePercentageDifference
-    )
 
-    setIncomeHighlight(incomeDifference !== 0 ? incomeHighlight : null)
-    setExpenseHighlight(expenseDifference !== 0 ? expenseHighlight : null)
+    setIncomeHighlight(incomeDifference !== 0 ? incomeDiff : null)
+    setExpenseHighlight(expenseDifference !== 0 ? expenseDiff : null)
   }, [transactions, baseCurrency, selectedDate])
 
   return {
