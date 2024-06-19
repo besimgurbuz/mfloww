@@ -3,8 +3,7 @@
 import { useContext, useState } from "react"
 import { PlusIcon } from "@radix-ui/react-icons"
 
-import { useMediaQuery } from "@/lib/hooks"
-import { useTransactionStatistics } from "@/lib/local-db/hooks"
+import { useMediaQuery, useTransactionStatistics } from "@/lib/hooks"
 import { Button } from "@/components/ui/button"
 import { CommandShortcut } from "@/components/ui/command"
 import {
@@ -27,6 +26,7 @@ export function DashboardWrapper() {
     entryTransactions,
     entryIncomes,
     entryExpenses,
+    montlyDifference,
     setSelectedDate,
   } = useContext(DashboardStateContext)
   const statistics = useTransactionStatistics()
@@ -63,7 +63,11 @@ export function DashboardWrapper() {
           onOpenChange={setCreateTransactionOpen}
         />
       </div>
-      <SummaryCards {...statistics} base={baseCurrency} />
+      <SummaryCards
+        {...statistics}
+        base={baseCurrency}
+        montlyDifference={montlyDifference}
+      />
       <BalanceCard
         baseCurrency={baseCurrency}
         incomes={entryIncomes}

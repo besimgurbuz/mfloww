@@ -1,34 +1,51 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons"
 
 import { SupportedCurrencyCode } from "@/lib/definitions"
 import TransactionStatistics from "@/lib/transaction/statistics"
 import { cn, formatMoney } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { DashboardContext } from "@/app/dashboard/dashboard-context"
+
+import { MontlyDifference } from "./montly-difference"
 
 type SummaryCardsProps = Omit<
   TransactionStatistics,
   "setTransactions" | "setBaseCurrency"
-> & { base: SupportedCurrencyCode }
+> & {
+  base: SupportedCurrencyCode
+  montlyDifference: DashboardContext["montlyDifference"]
+}
 
-export function SummaryCards({ base, ...statistics }: SummaryCardsProps) {
+export function SummaryCards({
+  base,
+  montlyDifference,
+  ...statistics
+}: SummaryCardsProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center space-y-0 pb-2">
         <CardTitle>Balance</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
-        <SummaryCardsContent {...statistics} base={base} />
+        <SummaryCardsContent
+          {...statistics}
+          base={base}
+          montlyDifference={montlyDifference}
+        />
       </CardContent>
     </Card>
   )
 }
 
-function SummaryCardsContent({ base, ...statistics }: SummaryCardsProps) {
-  const { balance, income, expense, mostSpent, spendingMap } = statistics
+function SummaryCardsContent({
+  base,
+  montlyDifference: { incomeDiff, expenseDiff },
+  ...statistics
+}: SummaryCardsProps) {
+  const { balance, income, expense, spendingMap } = statistics
   const [spendingsByCategory, setSpendingsByCategory] = useState<
     { category: string; amount: number }[]
   >([])
@@ -52,23 +69,23 @@ function SummaryCardsContent({ base, ...statistics }: SummaryCardsProps) {
         <Card className="flex flex-col">
           <CardHeader className="flex flex-row items-center space-y-0 pb-2">
             <CardTitle>Total incomes</CardTitle>
-            <TriangleUpIcon className="w-6 h-6 text-green ml-auto" />
           </CardHeader>
-          <CardContent className="mt-auto">
+          <CardContent className="mt-auto flex flex-col gap-2">
             <h2 className="text-xl md:text-2xl font-bold whitespace-nowrap">
               {formatMoney(income.total, base)}
             </h2>
+            {incomeDiff && <MontlyDifference difference={incomeDiff} />}
           </CardContent>
         </Card>
         <Card className="flex flex-col">
           <CardHeader className="flex flex-row items-center space-y-0 pb-2">
             <CardTitle>Total Expenses</CardTitle>
-            <TriangleDownIcon className="w-6 h-6 text-red ml-auto" />
           </CardHeader>
-          <CardContent className="mt-auto">
+          <CardContent className="mt-auto flex flex-col gap-2">
             <h2 className="text-xl md:text-2xl font-bold whitespace-nowrap">
               {formatMoney(expense.total, base)}
             </h2>
+            {expenseDiff && <MontlyDifference difference={expenseDiff} />}
           </CardContent>
         </Card>
         {spendingsByCategory.length > 0 && (

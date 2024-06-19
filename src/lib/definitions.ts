@@ -91,3 +91,11 @@ export interface ExchangeRate {
   rates: Record<SupportedCurrencyCode, number>
   remaining?: number
 }
+
+export type RatesStore = Record<SupportedCurrencyCode, ExchangeRate["rates"]>
+
+export type MontlyDifference = {
+  percentage: number
+  isIncreased: boolean
+  type: "income" | "expense"
+}

@@ -42,7 +42,7 @@ const transactionRowVariants = cva(
       {
         type: "income",
         direction: "rtl",
-        class: "border-l-green",
+        class: "border-l-success",
       },
       {
         type: "expense",
@@ -52,7 +52,7 @@ const transactionRowVariants = cva(
       {
         type: "income",
         direction: "ltr",
-        class: "border-r-green",
+        class: "border-r-success",
       },
       {
         type: "expense",

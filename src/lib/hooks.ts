@@ -1,7 +1,25 @@
-import { useEffect, useRef, useState, useTransition } from "react"
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from "react"
 
-import { StorageKey, StorageType, SupportedCurrencyCode } from "./definitions"
+import { DashboardStateContext } from "@/app/dashboard/dashboard-context"
+
+import {
+  MontlyDifference,
+  RatesStore,
+  StorageKey,
+  StorageType,
+  SupportedCurrencyCode,
+} from "./definitions"
+import { fetchExchangeRates } from "./rates"
 import { Transaction } from "./transaction"
+import TransactionStatistics from "./transaction/statistics"
 import { formatMoney, getValueFromStorage, setValueToStorage } from "./utils"
 
 export const useServerAction = <P, R>(
@@ -99,6 +117,20 @@ export function useStorage<T>(
   return [value || defaultValue, updateValue]
 }
 
+export function useTransactionStatistics() {
+  const { entryTransactions, baseCurrency } = useContext(DashboardStateContext)
+  const transactionStatistics = useMemo(
+    () => new TransactionStatistics(entryTransactions, baseCurrency),
+    [entryTransactions, baseCurrency]
+  )
+
+  useEffect(() => {
+    transactionStatistics.setTransactions(entryTransactions)
+  }, [entryTransactions, transactionStatistics])
+
+  return transactionStatistics
+}
+
 export function useFormattedTransactionAmount(
   transaction: Transaction,
   baseCurrency: SupportedCurrencyCode
@@ -124,4 +156,121 @@ export function useFormattedTransactionAmount(
   }, [transaction, baseCurrency])
 
   return { amount, realAmount }
+}
+
+export function useExchangeRatesStore(
+  baseCurrency: SupportedCurrencyCode,
+  intervalDurationMs = 1000 * 60 * 5
+) {
+  const [ratesStore, setRatesStore] = useState<RatesStore>({} as RatesStore)
+  const fillExchangeRates = useCallback(async () => {
+    const exchangeRates = await fetchExchangeRates(baseCurrency)
+    setRatesStore((prev) => ({
+      ...prev,
+      [baseCurrency]: exchangeRates,
+    }))
+  }, [baseCurrency])
+
+  useEffect(() => {
+    fillExchangeRates()
+    const interval = setInterval(() => {
+      fillExchangeRates()
+    }, intervalDurationMs)
+
+    return () => clearInterval(interval)
+  }, [fillExchangeRates, intervalDurationMs])
+
+  return ratesStore
+}
+
+export function useMontlyDiffPercentage(
+  transactions: Transaction[],
+  baseCurrency: SupportedCurrencyCode,
+  selectedDate: string
+) {
+  const [incomeDiff, setIncomeHighlight] = useState<MontlyDifference | null>(
+    null
+  )
+  const [expenseDiff, setExpenseHighlight] = useState<MontlyDifference | null>(
+    null
+  )
+
+  useEffect(() => {
+    const previousDate = getPreviousMonth(selectedDate)
+
+    let selectedDateIncome = 0
+    let selectedDateExpense = 0
+    let previousDateIncome = 0
+    let previousDateExpense = 0
+
+    transactions.forEach((transaction) => {
+      if (transaction.date === selectedDate || transaction.isRegular) {
+        if (transaction.type === "income") {
+          selectedDateIncome +=
+            transaction.amount * (transaction.exchangeRate[baseCurrency] || 1)
+        } else if (transaction.type === "expense") {
+          selectedDateExpense +=
+            transaction.amount * (transaction.exchangeRate[baseCurrency] || 1)
+        }
+      }
+
+      if (transaction.date === previousDate || transaction.isRegular) {
+        if (transaction.type === "income") {
+          previousDateIncome +=
+            transaction.amount * (transaction.exchangeRate[baseCurrency] || 1)
+        } else if (transaction.type === "expense") {
+          previousDateExpense +=
+            transaction.amount * (transaction.exchangeRate[baseCurrency] || 1)
+        }
+      }
+    })
+
+    const incomeDifference = selectedDateIncome - previousDateIncome
+    const expenseDifference = selectedDateExpense - previousDateExpense
+
+    const incomePercentageDifference = Math.abs(
+      (incomeDifference / previousDateIncome) * 100
+    )
+    const expensePercentageDifference = Math.abs(
+      (expenseDifference / previousDateExpense) * 100
+    )
+
+    // Create the highlight objects
+    const incomeHighlight: MontlyDifference = {
+      percentage: incomePercentageDifference,
+      isIncreased: incomeDifference > 0,
+      type: "income",
+    }
+    const expenseHighlight: MontlyDifference = {
+      percentage: expensePercentageDifference,
+      isIncreased: expenseDifference < 0,
+      type: "expense",
+    }
+    console.log(
+      "incomeDifference",
+      incomeDifference,
+      previousDateIncome,
+      incomePercentageDifference
+    )
+    console.log(
+      "expenseDifference",
+      expenseDifference,
+      previousDateExpense,
+      expensePercentageDifference
+    )
+
+    setIncomeHighlight(incomeDifference !== 0 ? incomeHighlight : null)
+    setExpenseHighlight(expenseDifference !== 0 ? expenseHighlight : null)
+  }, [transactions, baseCurrency, selectedDate])
+
+  return {
+    incomeDiff,
+    expenseDiff,
+  }
+}
+
+function getPreviousMonth(dateString: string): string {
+  const [month, year] = dateString.split("_")
+  const date = new Date(Number(year), Number(month) - 1)
+  return `${date.getMonth()}_${date.getFullYear()}`
 }

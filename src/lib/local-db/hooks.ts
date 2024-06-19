@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 
 import {
   createStore,
@@ -9,10 +9,8 @@ import {
   openDB,
 } from "@/lib/local-db"
 import { Transaction } from "@/lib/transaction"
-import { DashboardStateContext } from "@/app/dashboard/dashboard-context"
 import { useUser } from "@/app/user-context"
 
-import TransactionStatistics from "../transaction/statistics"
 import { DBContext } from "./context"
 import { decryptObject, encrypt } from "./crypto-utils"
 
@@ -112,20 +110,6 @@ export function useTransactions() {
   }, [getAllTransactionsCallback, tickCount])
 
   return { transactions, regularTransactions, incomes, expenses }
-}
-
-export function useTransactionStatistics() {
-  const { entryTransactions, baseCurrency } = useContext(DashboardStateContext)
-  const transactionStatistics = useMemo(
-    () => new TransactionStatistics(entryTransactions, baseCurrency),
-    [entryTransactions, baseCurrency]
-  )
-
-  useEffect(() => {
-    transactionStatistics.setTransactions(entryTransactions)
-  }, [entryTransactions, transactionStatistics])
-
-  return transactionStatistics
 }
 
 export function useCreateTransactionQuery() {
