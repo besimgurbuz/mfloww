@@ -7,15 +7,13 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 import "./globals.css"
 
+import { MAIN_METADATA } from "@/lib/metadata"
+
 import { UserProvider } from "./user-context"
 
 const inter = Inter({ subsets: ["latin"] })
 
-export const metadata: Metadata = {
-  title: "mfloww",
-  description:
-    "View your money flow in beautifully designed charts. Keep your data in your device. Encrypted. +25 Currency. Open Source.",
-}
+export const metadata: Metadata = MAIN_METADATA
 
 export default function RootLayout({
   children,
