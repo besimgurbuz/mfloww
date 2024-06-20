@@ -77,7 +77,6 @@ export const MAIN_METADATA: Metadata = {
     "money flow income application",
     "money flow management system application",
   ],
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
   creator: "Besim Gürbüz",
   twitter: {
     site: "@mflowwcom",

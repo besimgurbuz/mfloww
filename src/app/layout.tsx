@@ -1,4 +1,4 @@
-import { Metadata } from "next"
+import { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 
 import { Toaster } from "@/components/ui/toaster"
@@ -14,6 +14,11 @@ import { UserProvider } from "./user-context"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = MAIN_METADATA
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+}
 
 export default function RootLayout({
   children,
