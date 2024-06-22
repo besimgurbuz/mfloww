@@ -16,16 +16,16 @@ import {
 import { Icons } from "@/components/icons"
 
 import { TransactionMenu } from "../transaction-menu"
-import { TransactionRowListProps } from "./transaction-row-list"
+import { BarListProps } from "./bar-list"
 
-interface TransactionRowProps {
+interface BarProps {
   transaction: Transaction
   widthPercentage: number
   baseCurrency: SupportedCurrencyCode
-  direction: TransactionRowListProps["direction"]
+  direction: BarListProps["direction"]
 }
 
-const transactionRowVariants = cva(
+const barVariants = cva(
   "relative select-none order-1 transition-[width] relative h-12 max-w-[95%] flex gap-2 items-center px-2 border-2 bg-muted",
   {
     variants: {
@@ -63,12 +63,12 @@ const transactionRowVariants = cva(
   }
 )
 
-export function TransactionRow({
+export function Bar({
   transaction,
   widthPercentage,
   baseCurrency,
   direction,
-}: TransactionRowProps) {
+}: BarProps) {
   const rowRef = useRef<HTMLDivElement>(null)
   const [rowWidth, setRowWidth] = useState(0)
   const { amount, realAmount } = useFormattedTransactionAmount(
@@ -105,9 +105,7 @@ export function TransactionRow({
         trigger={
           <div
             ref={rowRef}
-            className={cn(
-              transactionRowVariants({ type: transaction.type, direction })
-            )}
+            className={cn(barVariants({ type: transaction.type, direction }))}
             style={{
               width: `${widthPercentage}%`,
             }}

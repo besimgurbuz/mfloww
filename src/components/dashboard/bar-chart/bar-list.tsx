@@ -6,21 +6,21 @@ import { SupportedCurrencyCode } from "@/lib/definitions"
 import { Transaction } from "@/lib/transaction"
 import { cn } from "@/lib/utils"
 
-import { TransactionRow } from "./transaction-row"
+import { Bar } from "./bar"
 
-export interface TransactionRowListProps {
+export interface BarListProps {
   data: Transaction[]
   baseCurrency: SupportedCurrencyCode
   direction?: "ltr" | "rtl"
   className?: string
 }
 
-export function TransactionRowList({
+export function BarList({
   data,
   baseCurrency,
   className,
   direction,
-}: TransactionRowListProps) {
+}: BarListProps) {
   const [total, setTotal] = useState<number>()
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export function TransactionRowList({
   return (
     <div className={cn("flex w-full flex-col gap-2", className)}>
       {data.map((item, i) => (
-        <TransactionRow
+        <Bar
           key={i}
           baseCurrency={baseCurrency}
           transaction={item}

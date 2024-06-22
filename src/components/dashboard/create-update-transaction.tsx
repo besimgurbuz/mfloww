@@ -44,7 +44,6 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
   Select,
   SelectContent,
@@ -58,6 +57,7 @@ import { AmountInput } from "../amount-input"
 import { CategorySelect } from "../category-select"
 import { Icons } from "../icons"
 import { BaseInput } from "../ui/input"
+import { Tabs, TabsList, TabsTrigger } from "../ui/tabs"
 
 type TransactionFormValues = {
   name: string
@@ -238,135 +238,121 @@ function TransactionForm({
         className="flex flex-col gap-2"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="flex flex-col gap-2">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <BaseInput placeholder="Name" {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="amount"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Amount</FormLabel>
-                <FormControl>
-                  <AmountInput
-                    ref={field.ref}
-                    name="amount"
-                    defaultValue={field.value}
-                    onChange={field.onChange}
-                    prefix={
-                      <FormField
-                        control={form.control}
-                        name="currency"
-                        render={({ field }) => (
-                          <Select
-                            onValueChange={(event) => {
-                              field.onChange(event)
-                              setTimeout(() => form.setFocus("amount"))
-                            }}
-                            defaultValue={field.value}
-                          >
-                            <FormControl className="outline-none  rounded-none border-none focus:ring-0">
-                              <SelectTrigger>
-                                <SelectValue placeholder="Currency" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent className="font-medium">
-                              {SUPPORTED_CURRENCY_CODES.map((code) => (
-                                <SelectItem key={code} value={code}>
-                                  {code}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        )}
-                      />
-                    }
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="category"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Category</FormLabel>
-                <FormControl>
-                  <CategorySelect
-                    defaultValue={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-4">
-            <FormField
-              control={form.control}
-              name="type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Type</FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      className="flex gap-4"
-                      defaultValue={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="income" />
-                        </FormControl>
-                        <FormLabel>Income</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="expense" />
-                        </FormControl>
-                        <FormLabel>Expense</FormLabel>
-                      </FormItem>
-                    </RadioGroup>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="isRegular"
-              render={({ field }) => (
-                <FormItem className="flex items-center gap-2">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <BaseInput placeholder="My income" {...field} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="amount"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Amount</FormLabel>
+              <FormControl>
+                <AmountInput
+                  ref={field.ref}
+                  name="amount"
+                  defaultValue={field.value}
+                  onChange={field.onChange}
+                  prefix={
+                    <FormField
+                      control={form.control}
+                      name="currency"
+                      render={({ field }) => (
+                        <Select
+                          onValueChange={(event) => {
+                            field.onChange(event)
+                            setTimeout(() => form.setFocus("amount"))
+                          }}
+                          defaultValue={field.value}
+                        >
+                          <FormControl className="outline-none  rounded-none border-none focus:ring-0">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Currency" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="font-medium">
+                            {SUPPORTED_CURRENCY_CODES.map((code) => (
+                              <SelectItem key={code} value={code}>
+                                {code}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      )}
                     />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel className="text-sm font-normal space-y-1">
-                      Regular
-                    </FormLabel>
-                    <FormDescription>
-                      Regular transaction will occur on month
-                    </FormDescription>
-                  </div>
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
+                  }
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Type</FormLabel>
+              <FormControl>
+                <Tabs defaultValue={field.value} onValueChange={field.onChange}>
+                  <TabsList>
+                    <FormControl>
+                      <TabsTrigger value="income">Income</TabsTrigger>
+                    </FormControl>
+                    <FormControl>
+                      <TabsTrigger value="expense">Expense</TabsTrigger>
+                    </FormControl>
+                  </TabsList>
+                </Tabs>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="category"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Category</FormLabel>
+              <FormControl>
+                <CategorySelect
+                  defaultValue={field.value}
+                  onChange={field.onChange}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="isRegular"
+          render={({ field }) => (
+            <FormItem className="flex items-center gap-2">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel className="text-sm font-normal space-y-1">
+                  Regular
+                </FormLabel>
+                <FormDescription>
+                  Regular transaction will occur on month
+                </FormDescription>
+              </div>
+            </FormItem>
+          )}
+        />
         {children}
       </form>
     </Form>

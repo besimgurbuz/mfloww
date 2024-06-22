@@ -12,12 +12,15 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { BalanceCard } from "@/components/dashboard/balance/balance-card"
+import { BalanceCard } from "@/components/dashboard/balance-card"
+import { BarChartCard } from "@/components/dashboard/bar-chart/bar-chart-card"
 import { CreateUpdateTransaction } from "@/components/dashboard/create-update-transaction"
 import { DateSelector } from "@/components/dashboard/date-selector"
-import { SummaryCards } from "@/components/dashboard/summary-cards"
+import { SpendingsByCategoryCard } from "@/components/dashboard/spendings-by-category"
 import { TransactionTableCard } from "@/components/dashboard/transaction-table-card"
 import { DashboardStateContext } from "@/app/dashboard/dashboard-context"
+
+import { useUser } from "../user-context"
 
 export function DashboardWrapper() {
   const {
@@ -29,6 +32,7 @@ export function DashboardWrapper() {
     montlyDifference,
     setSelectedDate,
   } = useContext(DashboardStateContext)
+  const { user } = useUser()
   const statistics = useTransactionStatistics()
   const isDesktop = useMediaQuery("(min-width: 768px)")
   const [createTransactionOpen, setCreateTransactionOpen] = useState(false)
@@ -63,22 +67,28 @@ export function DashboardWrapper() {
           onOpenChange={setCreateTransactionOpen}
         />
       </div>
-      <SummaryCards
-        {...statistics}
-        base={baseCurrency}
-        montlyDifference={montlyDifference}
-      />
-      <BalanceCard
-        baseCurrency={baseCurrency}
-        allTransactions={entryTransactions}
-        incomes={entryIncomes}
-        expenses={entryExpenses}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <BalanceCard
+          base={baseCurrency}
+          montlyDifference={montlyDifference}
+          statistics={statistics}
+        />
+        <SpendingsByCategoryCard
+          base={baseCurrency}
+          spendingMap={statistics.spendingMap}
+        />
+      </div>
       <TransactionTableCard
         transactions={entryTransactions}
         incomes={entryIncomes}
         expenses={entryExpenses}
         baseCurrency={baseCurrency}
+      />
+      <BarChartCard
+        baseCurrency={baseCurrency}
+        allTransactions={entryTransactions}
+        incomes={entryIncomes}
+        expenses={entryExpenses}
       />
     </>
   )

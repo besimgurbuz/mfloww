@@ -6,23 +6,23 @@ import { Transaction } from "@/lib/transaction"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-import { TransactionRowList } from "./transaction-row-list"
+import { BarList } from "./bar-list"
 
 type DisplayMode = "together" | "grouped"
 
-type BalanceCardProps = {
+type BarChartCardProps = {
   allTransactions: Transaction[]
   incomes: Transaction[]
   expenses: Transaction[]
   baseCurrency: SupportedCurrencyCode
 }
 
-export function BalanceCard({
+export function BarChartCard({
   allTransactions,
   incomes,
   expenses,
   baseCurrency,
-}: BalanceCardProps) {
+}: BarChartCardProps) {
   const [displayMode, setDisplayMode] = useStorage<DisplayMode>(
     "GRAPH_DISPLAY_MODE",
     "localStorage",
@@ -47,13 +47,13 @@ export function BalanceCard({
       <CardContent className="flex flex-col w-full gap-4 max-w-full">
         {displayMode === "grouped" ? (
           <div className="flex w-full gap-2 flex-wrap sm:flex-nowrap">
-            <TransactionRowList
+            <BarList
               data={expenses}
               baseCurrency={baseCurrency}
               direction="rtl"
               className="order-2 sm:order-1 sm:w-1/2 sm:max-w-1/2"
             />
-            <TransactionRowList
+            <BarList
               data={incomes}
               baseCurrency={baseCurrency}
               className="order-1 sm:order-2 sm:w-1/2 sm:max-w-1/2"
@@ -61,10 +61,7 @@ export function BalanceCard({
           </div>
         ) : (
           <div className="flex flex-col gap-4 w-full">
-            <TransactionRowList
-              data={allTransactions}
-              baseCurrency={baseCurrency}
-            />
+            <BarList data={allTransactions} baseCurrency={baseCurrency} />
           </div>
         )}
       </CardContent>
