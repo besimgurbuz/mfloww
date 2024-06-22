@@ -34,7 +34,9 @@ export function BarList({
   }, [data, baseCurrency])
 
   return (
-    <div className={cn("flex w-full flex-col gap-2", className)}>
+    <div
+      className={cn("flex w-full flex-col gap-2 overflow-y-auto", className)}
+    >
       {data.map((item, i) => (
         <Bar
           key={i}

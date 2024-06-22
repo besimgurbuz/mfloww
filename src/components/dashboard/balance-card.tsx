@@ -27,7 +27,7 @@ export function BalanceCard({
           {formatMoney(balance, base)}
         </h2>
       </CardHeader>
-      <CardContent className="flex gap-8">
+      <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
         <div>
           <h2 className="font-bold">Incomes</h2>
           <div className="flex flex-col gap-2">
