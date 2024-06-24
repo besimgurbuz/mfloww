@@ -236,8 +236,8 @@ function DataTableRow({ transaction, baseCurrency }: DataTableRowProps) {
         )}
       </TableCell>
       <TableCell>
-        <h2 className="font-medium text-lg">{amount}</h2>
-        <h2 className="text-lg text-muted-foreground">{realAmount}</h2>
+        <h2 className="font-medium text-lg truncate">{amount}</h2>
+        <h2 className="text-lg text-muted-foreground truncate">{realAmount}</h2>
       </TableCell>
       <TableCell>
         <TransactionMenu
