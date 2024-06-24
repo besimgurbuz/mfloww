@@ -6,6 +6,7 @@ export const MAIN_METADATA: Metadata = {
     "Open source money flow visualization application that respects your privacy.",
   applicationName: "mfloww",
   authors: [{ name: "Besim Gürbüz", url: "https://besim.dev" }],
+  manifest: "/manifest.json",
   keywords: [
     "money",
     "flow",
@@ -85,6 +86,12 @@ export const MAIN_METADATA: Metadata = {
     description:
       "Open source money flow visualization application that respects your privacy.",
     card: "summary_large_image",
-    images: "https://mfloww.com/og-image.png",
+    images: "/og-image.png",
   },
+  icons: [
+    {
+      rel: "apple-touch-icon",
+      url: "/apple-touch-icon.png",
+    },
+  ],
 }

@@ -1,0 +1,22 @@
+{
+  "short_name": "mfloww",
+  "name": "mfloww",
+  "description": "Open source money flow visualization application that respects your privacy.",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#020817",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#000000"
+}
