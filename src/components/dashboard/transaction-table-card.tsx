@@ -1,17 +1,25 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
 import { SupportedCurrencyCode } from "@/lib/definitions"
 import { useFormattedTransactionAmount } from "@/lib/hooks"
 import { Transaction, TransactionType } from "@/lib/transaction"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-import { Icons } from "../icons"
-import { Button } from "../ui/button"
+import { Icon, Icons } from "../icons"
 import { TransactionMenu } from "./transaction-menu"
 
 type DataTableFilter = TransactionType | "all"
@@ -29,7 +37,7 @@ export function TransactionTableCard({
   expenses,
   baseCurrency,
 }: TransactionTableCardProps) {
-  const [filter, setFilter] = useState<DataTableFilter>("all")
+  const [type, setType] = useState<DataTableFilter>("all")
 
   return (
     <Card>
@@ -44,10 +52,10 @@ export function TransactionTableCard({
         <ToggleGroup
           type="single"
           defaultValue="all"
-          value={filter}
+          value={type}
           className="ml-auto"
           onValueChange={(value: DataTableFilter) =>
-            setFilter((prevFilter) => value || prevFilter)
+            setType((prevFilter) => value || prevFilter)
           }
         >
           <ToggleGroupItem value="all" className="text-xs sm:text-sm">
@@ -62,11 +70,9 @@ export function TransactionTableCard({
         </ToggleGroup>
       </CardHeader>
       <CardContent className="grid w-full relative overflow-x-auto">
-        <DataTableCardContent
-          filter={filter}
+        <DataTable
+          type={type}
           transactions={transactions}
-          incomes={incomes}
-          expenses={expenses}
           baseCurrency={baseCurrency}
         />
       </CardContent>
@@ -74,111 +80,155 @@ export function TransactionTableCard({
   )
 }
 
-type DataTableCardContentProps = {
-  filter: DataTableFilter
+type DataTableProps = {
   transactions: Transaction[]
-  incomes: Transaction[]
-  expenses: Transaction[]
   baseCurrency: SupportedCurrencyCode
+  type: "all" | "income" | "expense"
 }
 
-function DataTableCardContent({
-  filter,
-  transactions,
-  incomes,
-  expenses,
-  baseCurrency,
-}: DataTableCardContentProps) {
+function DataTable({ transactions, baseCurrency, type }: DataTableProps) {
+  const [sort, setSort] = useState<{ key: string; order: "asc" | "desc" }>({
+    key: "amount",
+    order: "desc",
+  })
+  const typedTransactions = useMemo(() => {
+    if (type === "all") {
+      return [...transactions]
+    }
+    return transactions.filter((transaction) => transaction.type === type)
+  }, [transactions, type])
+  const sortedData = useMemo(() => {
+    return typedTransactions.sort((a, b) => {
+      if (sort.key === "amount") {
+        const aAmount = Math.abs(a.amount * (a.exchangeRate[baseCurrency] || 1))
+        const bAmount = Math.abs(b.amount * (b.exchangeRate[baseCurrency] || 1))
+
+        if (sort.order === "asc") {
+          return aAmount - bAmount
+        } else {
+          return bAmount - aAmount
+        }
+      }
+
+      const aVal = a[sort.key as keyof Transaction] as string | number
+      const bVal = b[sort.key as keyof Transaction] as string | number
+
+      if (sort.order === "asc") {
+        return aVal > bVal ? 1 : -1
+      } else {
+        return aVal < bVal ? 1 : -1
+      }
+    })
+  }, [typedTransactions, sort, baseCurrency])
+
+  const handleSort = (key: string) => {
+    if (sort.key === key) {
+      setSort((prevSort) => ({
+        key: prevSort.key,
+        order: prevSort.order === "asc" ? "desc" : "asc",
+      }))
+    } else {
+      setSort({ key, order: "asc" })
+    }
+  }
+
   return (
-    <>
-      {filter === "all" && (
-        <DataTAbleTransactionList
-          transactions={transactions}
-          baseCurrency={baseCurrency}
-        />
-      )}
-      {filter === "income" && (
-        <DataTAbleTransactionList
-          transactions={incomes}
-          baseCurrency={baseCurrency}
-        />
-      )}
-      {filter === "expense" && (
-        <DataTAbleTransactionList
-          transactions={expenses}
-          baseCurrency={baseCurrency}
-        />
-      )}
-    </>
+    <Table>
+      <TableHeader>
+        <TableRow className="hover:bg-background">
+          <TableHead className="w-[100px]"></TableHead>
+          <TableHead
+            onClick={() => handleSort("name")}
+            className="group flex gap-1 items-center hover:cursor-pointer"
+          >
+            Name
+            <Icon
+              name={
+                sort.key === "name" && sort.order === "desc"
+                  ? "arrowDown"
+                  : "arrowUp"
+              }
+              className={cn("group-hover:opacity-100 opacity-0", {
+                "opacity-100": sort.key === "name",
+              })}
+            />
+          </TableHead>
+          <TableHead>Category</TableHead>
+          <TableHead
+            onClick={() => handleSort("amount")}
+            className="group flex gap-1 items-center hover:cursor-pointer"
+          >
+            Amount
+            <Icon
+              name={
+                sort.key === "amount" && sort.order === "desc"
+                  ? "arrowDown"
+                  : "arrowUp"
+              }
+              className={cn("group-hover:opacity-100 opacity-0", {
+                "opacity-100": sort.key === "amount",
+              })}
+            />
+          </TableHead>
+          <TableHead className="w-[100px]"></TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {sortedData.map((transaction) => (
+          <DataTableRow
+            key={transaction.id}
+            transaction={transaction}
+            baseCurrency={baseCurrency}
+          />
+        ))}
+      </TableBody>
+    </Table>
   )
 }
 
-type DataTableTransactionListProps = {
-  transactions: Transaction[]
-  baseCurrency: SupportedCurrencyCode
-}
-
-function DataTAbleTransactionList({
-  transactions,
-  baseCurrency,
-}: DataTableTransactionListProps) {
-  return (
-    <>
-      {transactions.map((transaction, idx) => (
-        <DataTableTransactionItem
-          key={idx}
-          transaction={transaction}
-          baseCurrency={baseCurrency}
-        />
-      ))}
-    </>
-  )
-}
-
-function DataTableTransactionItem({
-  transaction,
-  baseCurrency,
-}: {
+type DataTableRowProps = {
   transaction: Transaction
   baseCurrency: SupportedCurrencyCode
-}) {
+}
+
+function DataTableRow({ transaction, baseCurrency }: DataTableRowProps) {
   const { amount, realAmount } = useFormattedTransactionAmount(
     transaction,
     baseCurrency
   )
   return (
-    <div className="flex items-center w-full py-2 gap-4">
-      <div
+    <TableRow>
+      <TableCell
         className={cn(
           "text-muted-foreground w-4",
           transaction.isRegular ? "opacity-100" : "opacity-0"
         )}
       >
         <Icons.repeat className="w-4 h-4 text-muted-foreground" />
-      </div>
-      <div className="flex flex-col min-w-fit">
-        <h2>{transaction.name}</h2>
-      </div>
-      <div className="flex gap-1 flex-wrap">
+      </TableCell>
+      <TableCell>{transaction.name}</TableCell>
+      <TableCell>
         {transaction.category && (
           <Badge variant="outline" className="truncate">
             {transaction.category.trim()}
           </Badge>
         )}
-      </div>
-      <div className="ml-auto whitespace-nowrap">
+      </TableCell>
+      <TableCell>
         <h2 className="font-medium text-lg">{amount}</h2>
-        <p className="text-sm text-muted-foreground text-end">{realAmount}</p>
-      </div>
-      <TransactionMenu
-        type="dropdown-menu"
-        trigger={
-          <Button variant="ghost">
-            <Icons.dotsHorizontal />
-          </Button>
-        }
-        transaction={transaction}
-      />
-    </div>
+        <p className="text-sm text-muted-foreground">{realAmount}</p>
+      </TableCell>
+      <TableCell>
+        <TransactionMenu
+          type="dropdown-menu"
+          trigger={
+            <Button variant="ghost">
+              <Icons.dotsHorizontal />
+            </Button>
+          }
+          transaction={transaction}
+        />
+      </TableCell>
+    </TableRow>
   )
 }

@@ -29,7 +29,7 @@ export function BalanceCard({
       </CardHeader>
       <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
         <div>
-          <h2 className="font-bold">Incomes</h2>
+          <h2 className="font-bold">Income</h2>
           <div className="flex flex-col gap-2">
             <h3 className="text-xl md:text-2xl font-bold whitespace-nowrap">
               {formatMoney(income.total, base)}
@@ -38,7 +38,7 @@ export function BalanceCard({
           </div>
         </div>
         <div>
-          <h2 className="font-bold">Expenses</h2>
+          <h2 className="font-bold">Expense</h2>
           <div className="flex flex-col gap-2">
             <h3 className="text-xl md:text-2xl font-bold whitespace-nowrap">
               {formatMoney(expense.total, base)}
