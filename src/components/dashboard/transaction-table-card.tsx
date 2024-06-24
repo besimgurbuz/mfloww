@@ -139,36 +139,57 @@ function DataTable({ transactions, baseCurrency, type }: DataTableProps) {
           <TableHead className="w-[100px]"></TableHead>
           <TableHead
             onClick={() => handleSort("name")}
-            className="group flex gap-1 items-center hover:cursor-pointer"
+            className="hover:cursor-pointer"
           >
-            Name
-            <Icon
-              name={
-                sort.key === "name" && sort.order === "desc"
-                  ? "arrowDown"
-                  : "arrowUp"
-              }
-              className={cn("group-hover:opacity-100 opacity-0", {
-                "opacity-100": sort.key === "name",
-              })}
-            />
+            <div className="group flex gap-1 items-center">
+              Name
+              <Icon
+                name={
+                  sort.key === "name" && sort.order === "desc"
+                    ? "arrowDown"
+                    : "arrowUp"
+                }
+                className={cn("group-hover:opacity-100 opacity-0", {
+                  "opacity-100": sort.key === "name",
+                })}
+              />
+            </div>
           </TableHead>
-          <TableHead>Category</TableHead>
+          <TableHead
+            onClick={() => handleSort("category")}
+            className="hover:cursor-pointer"
+          >
+            <div className="group flex gap-1 items-center">
+              Category
+              <Icon
+                name={
+                  sort.key === "category" && sort.order === "desc"
+                    ? "arrowDown"
+                    : "arrowUp"
+                }
+                className={cn("group-hover:opacity-100 opacity-0", {
+                  "opacity-100": sort.key === "category",
+                })}
+              />
+            </div>
+          </TableHead>
           <TableHead
             onClick={() => handleSort("amount")}
-            className="group flex gap-1 items-center hover:cursor-pointer"
+            className="hover:cursor-pointer"
           >
-            Amount
-            <Icon
-              name={
-                sort.key === "amount" && sort.order === "desc"
-                  ? "arrowDown"
-                  : "arrowUp"
-              }
-              className={cn("group-hover:opacity-100 opacity-0", {
-                "opacity-100": sort.key === "amount",
-              })}
-            />
+            <div className="group flex gap-1 items-center">
+              Amount
+              <Icon
+                name={
+                  sort.key === "amount" && sort.order === "desc"
+                    ? "arrowDown"
+                    : "arrowUp"
+                }
+                className={cn("group-hover:opacity-100 opacity-0", {
+                  "opacity-100": sort.key === "amount",
+                })}
+              />
+            </div>
           </TableHead>
           <TableHead className="w-[100px]"></TableHead>
         </TableRow>

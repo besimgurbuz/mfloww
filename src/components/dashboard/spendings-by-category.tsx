@@ -38,7 +38,7 @@ export function SpendingsByCategoryCard({
         <CardTitle>Spendings by Category</CardTitle>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-24">
+        <ScrollArea className="h-[128px]">
           <div className="grid gap-2">
             {spendingsByCategory.map(({ category, amount }, index) => (
               <div
