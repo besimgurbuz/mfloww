@@ -7,9 +7,11 @@ export interface Transaction {
   name: string
   type: TransactionType
   amount: number
-  isRegular: boolean
   category?: string
   currency: SupportedCurrencyCode
-  date: string
+  date: {
+    start: number
+    end: number
+  }
   exchangeRate: Record<SupportedCurrencyCode, number>
 }

@@ -17,7 +17,6 @@ import {
 import { fetchExchangeRates } from "@/lib/rates"
 import { Transaction } from "@/lib/transaction"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
   DialogClose,
@@ -39,7 +38,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -58,13 +56,14 @@ import { CategorySelect } from "../category-select"
 import { Icons } from "../icons"
 import { BaseInput } from "../ui/input"
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs"
+import { TransactionDateSelector } from "./transaction-date"
 
 type TransactionFormValues = {
   name: string
   amount: number
   category?: string
   currency: SupportedCurrencyCode
-  isRegular: boolean
+  date: Transaction["date"]
   type: "income" | "expense"
 }
 
@@ -111,12 +110,18 @@ export function CreateUpdateTransaction({
     }
 
     const newTransaction = {
-      ...values,
+      name: values.name,
+      type: values.type,
       amount:
         values.type === "expense" && values.amount > 0
           ? values.amount * -1
           : values.amount,
-      date: selectedDate,
+      category: values.category,
+      currency: values.currency,
+      date: {
+        start: selectedDate,
+        end: selectedDate,
+      },
       exchangeRate,
     } as Transaction
 
@@ -144,7 +149,10 @@ export function CreateUpdateTransaction({
             )}
           </DialogHeader>
           <TransactionForm fillData={fillData} onSubmit={onSubmit}>
-            <DialogFooter className="flex self-center w-full">
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
               <Button
                 type="submit"
                 className="flex  gap-2"
@@ -155,9 +163,6 @@ export function CreateUpdateTransaction({
                 )}
                 {!fillData ? "Create" : "Save"}
               </Button>
-              <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DialogClose>
             </DialogFooter>
           </TransactionForm>
         </DialogContent>
@@ -180,11 +185,11 @@ export function CreateUpdateTransaction({
             )}
           </DrawerHeader>
           <TransactionForm fillData={fillData} onSubmit={onSubmit}>
-            <DrawerFooter className="flex self-center w-full">
-              <Button type="submit">{!fillData ? "Create" : "Save"}</Button>
+            <DrawerFooter className="grid grid-cols-2">
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DrawerClose>
+              <Button type="submit">{!fillData ? "Create" : "Save"}</Button>
             </DrawerFooter>
           </TransactionForm>
         </div>
@@ -201,7 +206,10 @@ const formSchema = z.object({
   amount: z.number().min(1, { message: "Amount is required" }),
   category: z.string().optional(),
   type: z.enum(["income", "expense"]),
-  isRegular: z.boolean(),
+  date: z.object({
+    start: z.string().min(1),
+    end: z.string().min(1),
+  }),
 })
 
 type TransactionFormProps = {
@@ -226,7 +234,10 @@ function TransactionForm({
       currency: fillData?.currency || baseCurrency,
       amount: Math.abs(fillData?.amount || 0),
       category: fillData?.category || "",
-      isRegular: fillData?.isRegular || false,
+      date: {
+        start: fillData?.date?.start || "",
+        end: fillData?.date?.end || "",
+      },
       type: fillData?.type || "income",
     },
     resolver: zodResolver(formSchema),
@@ -304,12 +315,8 @@ function TransactionForm({
               <FormControl>
                 <Tabs defaultValue={field.value} onValueChange={field.onChange}>
                   <TabsList>
-                    <FormControl>
-                      <TabsTrigger value="income">Income</TabsTrigger>
-                    </FormControl>
-                    <FormControl>
-                      <TabsTrigger value="expense">Expense</TabsTrigger>
-                    </FormControl>
+                    <TabsTrigger value="income">Income</TabsTrigger>
+                    <TabsTrigger value="expense">Expense</TabsTrigger>
                   </TabsList>
                 </Tabs>
               </FormControl>
@@ -333,23 +340,18 @@ function TransactionForm({
         />
         <FormField
           control={form.control}
-          name="isRegular"
+          name="date"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-2">
+            <FormItem className="flex flex-col">
+              <FormLabel className="text-sm font-normal space-y-1">
+                Recurring
+              </FormLabel>
               <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
+                <TransactionDateSelector
+                  defaultValue={field.value}
+                  onValueChange={field.onChange}
                 />
               </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel className="text-sm font-normal space-y-1">
-                  Regular
-                </FormLabel>
-                <FormDescription>
-                  Regular transaction will occur on month
-                </FormDescription>
-              </div>
             </FormItem>
           )}
         />
