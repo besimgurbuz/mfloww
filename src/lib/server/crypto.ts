@@ -1,7 +1,7 @@
 import { createCipheriv, createDecipheriv, randomBytes } from "crypto"
 
 const algorithm = "aes-256-cbc"
-const secretKey = "sDiVAmKrf9YzcFzDAt2t7wFRa5g3mWSB"
+const secretKey = process.env["CRYPTO_KEY"] as string
 
 export function encrypt(text: string) {
   const iv = randomBytes(16)
