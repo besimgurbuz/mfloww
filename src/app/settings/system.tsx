@@ -27,6 +27,8 @@ import {
 } from "@/components/ui/select"
 import { ThemeModeToggle } from "@/components/theme-mode-toggle"
 
+import { DataSync } from "./data-sync"
+
 export function System() {
   const [baseCurrency, setBaseCurrency] = useStorage(
     "SELECTED_BASE_CURRENCY",
@@ -122,6 +124,15 @@ export function System() {
                 <SelectItem value="en">English</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+          <div className="flex flex-wrap gap-2 justify-between items-center">
+            <div className="flex flex-col gap-2">
+              <Label>Data Sync</Label>
+              <p className="text-muted-foreground text-sm">
+                Upload your local data or download the data stored in the cloud.
+              </p>
+            </div>
+            <DataSync remainingUpload={0} />
           </div>
           <div className="flex flex-wrap gap-2 justify-between items-center">
             <div className="flex flex-col gap-2">

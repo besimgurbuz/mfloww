@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation"
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
-  signInAnonymously,
   signInWithPopup,
 } from "firebase/auth"
 
@@ -16,7 +15,7 @@ import { useUser } from "@/app/user-context"
 
 import { Icons } from "../icons"
 
-type SingInProvider = "github" | "google" | "anonymous"
+type SingInProvider = "github" | "google"
 
 export function SignInForm() {
   const [isPending, setIsPending] = useState(false)
@@ -26,9 +25,6 @@ export function SignInForm() {
   const router = useRouter()
 
   const getUserCredentials = async (provider: SingInProvider) => {
-    if (provider === "anonymous") {
-      return await signInAnonymously(auth)
-    }
     const authProvider =
       provider === "github"
         ? new GithubAuthProvider()
@@ -47,7 +43,7 @@ export function SignInForm() {
       },
       body: JSON.stringify({
         idToken,
-        name: credentials.user.displayName || "Anonymous",
+        name: credentials.user.displayName,
         provider: provider,
         picture: credentials.user.photoURL,
       }),
@@ -86,23 +82,6 @@ export function SignInForm() {
 
   return (
     <div className="grid gap-6 w-full">
-      <Button
-        className="w-full"
-        disabled={isPending}
-        onClick={() => signIn("anonymous")}
-      >
-        Sign in Anonymously
-      </Button>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t"></span>
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
       <Button
         variant="outline"
         className="flex gap-2 font-semibold w-full"

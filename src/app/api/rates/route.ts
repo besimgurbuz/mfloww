@@ -70,10 +70,10 @@ export const GET = async (req: NextRequest) => {
   const sessionCookie = req.cookies.get("__session")
 
   if (!sessionCookie) {
-    return new NextResponse(
-      JSON.stringify({
+    return NextResponse.json(
+      {
         message: "Unauthorized",
-      }),
+      },
       {
         status: 401,
       }
@@ -83,10 +83,10 @@ export const GET = async (req: NextRequest) => {
   const decodedToken = await adminAuth.verifySessionCookie(sessionCookie.value)
 
   if (!decodedToken) {
-    return new NextResponse(
-      JSON.stringify({
+    return NextResponse.json(
+      {
         message: "Unauthorized",
-      }),
+      },
       {
         status: 401,
       }
@@ -99,10 +99,10 @@ export const GET = async (req: NextRequest) => {
     !baseCurrency ||
     !SUPPORTED_CURRENCY_CODES.includes(baseCurrency as SupportedCurrencyCode)
   ) {
-    return new NextResponse(
-      JSON.stringify({
+    return NextResponse.json(
+      {
         message: "Invalid base currency",
-      }),
+      },
       {
         status: 400,
       }
@@ -113,7 +113,7 @@ export const GET = async (req: NextRequest) => {
     baseCurrency as SupportedCurrencyCode
   )
 
-  return new NextResponse(JSON.stringify(exchangeRate), {
+  return NextResponse.json(exchangeRate, {
     status: 200,
   })
 }
