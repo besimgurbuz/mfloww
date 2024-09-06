@@ -67,13 +67,13 @@ export const POST = async (req: NextRequest) => {
 
   if (new Date().getTime() / 1000 - decodedToken.auth_time < 5 * 60) {
     const cookie = await adminAuth.createSessionCookie(idToken, { expiresIn })
-    const options = {
+    cookies().set("__session", cookie, {
       maxAge: expiresIn,
       httpOnly: true,
       secure: true,
       path: "/",
-    }
-    cookies().set("__session", cookie, options)
+      sameSite: "strict",
+    })
 
     return NextResponse.json({ status: "signed-in" }, { status: 200 })
   } else {

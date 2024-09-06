@@ -13,3 +13,9 @@ export interface Transaction {
   date: string
   exchangeRate: Record<SupportedCurrencyCode, number>
 }
+
+export interface EncryptedTransaction {
+  id: string
+  userId: string
+  data: string
+}

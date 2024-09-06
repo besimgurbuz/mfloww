@@ -65,6 +65,17 @@ export async function openDB(
   })
 }
 
+export function dbRequestPromise<T>(request: IDBRequest<T>): Promise<T> {
+  return new Promise((resolve, reject) => {
+    request.onsuccess = () => {
+      resolve(request.result)
+    }
+    request.onerror = (event) => {
+      reject(event)
+    }
+  })
+}
+
 export function createStore(
   { db }: DBConnection,
   storeName: string,

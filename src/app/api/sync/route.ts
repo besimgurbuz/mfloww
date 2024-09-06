@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { Timestamp } from "firebase-admin/firestore"
 
 import { adminAuth, adminDB } from "@/lib/server/admin"
-import { encrypt } from "@/lib/server/crypto"
+import { decrypt, encrypt } from "@/lib/server/crypto"
 
 // Use the environment variable or default to 24 hours if not set
 const SYNC_EXPIRATION_TIME = process.env.SYNC_DATA_EXPIRATION_TIME
@@ -38,28 +38,12 @@ export const POST = async (req: NextRequest) => {
   }
 
   const userId = decodedToken.uid
-  const { data } = await req.json()
-
-  const remainingUpload = await adminDB
-    .collection("sync-remain")
-    .doc(userId)
-    .get()
-
-  if (remainingUpload.exists && remainingUpload.data()?.remain < 1) {
-    return NextResponse.json(
-      {
-        message: "No remaining upload",
-      },
-      {
-        status: 400,
-      }
-    )
-  }
+  const data = await req.json()
 
   if (!validateData(data)) {
     return NextResponse.json(
       {
-        message: "Uploaded data is corrupted",
+        message: "Uploaded data is invalid",
       },
       {
         status: 400,
@@ -67,26 +51,77 @@ export const POST = async (req: NextRequest) => {
     )
   }
 
-  const encryptedData = encrypt(data)
-  await adminDB
-    .collection("sync-remain")
-    .doc(userId)
-    .set({
-      remain: (remainingUpload.data()?.remain || 3) - 1,
-    })
+  const encryptedData = encrypt(JSON.stringify(data))
   await adminDB
     .collection("sync")
     .doc(userId)
     .set({
       data: encryptedData,
+      createdAt: Timestamp.now(),
       expiresAt: Timestamp.fromMillis(Date.now() + SYNC_EXPIRATION_TIME),
     })
 
   return NextResponse.json({
-    message: `Data uploaded successfully, ${
-      remainingUpload.data()?.remain - 1
-    } uploads remaining. Your data will be available for download for the next 24 hours.`,
+    message: "Data uploaded successfully",
   })
+}
+
+export const GET = async () => {
+  const sessionCookie = cookies().get("__session")
+
+  if (!sessionCookie) {
+    return NextResponse.json(
+      {
+        message: "Unauthorized",
+      },
+      {
+        status: 401,
+      }
+    )
+  }
+
+  const decodedToken = await adminAuth.verifySessionCookie(sessionCookie.value)
+
+  if (!decodedToken) {
+    return NextResponse.json(
+      {
+        message: "Unauthorized",
+      },
+      {
+        status: 401,
+      }
+    )
+  }
+
+  const userId = decodedToken.uid
+  const syncDataDoc = await adminDB.collection("sync").doc(userId).get()
+  const syncData = syncDataDoc.data()
+
+  if (!syncDataDoc.exists || !syncData) {
+    return NextResponse.json(
+      {
+        message: "No data to download",
+      },
+      {
+        status: 404,
+      }
+    )
+  }
+
+  try {
+    const decryptedData = decrypt(syncData.data)
+
+    return NextResponse.json(JSON.parse(decryptedData))
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "No available data to download",
+      },
+      {
+        status: 404,
+      }
+    )
+  }
 }
 
 function validateData(data: unknown): boolean {

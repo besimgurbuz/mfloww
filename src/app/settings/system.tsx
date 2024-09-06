@@ -129,10 +129,11 @@ export function System() {
             <div className="flex flex-col gap-2">
               <Label>Data Sync</Label>
               <p className="text-muted-foreground text-sm">
-                Upload your local data or download the data stored in the cloud.
+                Upload your local data or download the latest data stored in the
+                cloud.
               </p>
             </div>
-            <DataSync remainingUpload={0} />
+            <DataSync />
           </div>
           <div className="flex flex-wrap gap-2 justify-between items-center">
             <div className="flex flex-col gap-2">

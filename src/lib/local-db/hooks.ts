@@ -6,9 +6,10 @@ import {
   DBConnection,
   DBConnectionResult,
   DBObjectStores,
+  dbRequestPromise,
   openDB,
 } from "@/lib/local-db"
-import { Transaction } from "@/lib/transaction"
+import { EncryptedTransaction, Transaction } from "@/lib/transaction"
 import { useUser } from "@/app/user-context"
 
 import { DBContext } from "./context"
@@ -46,6 +47,102 @@ export function useCreateAndInitLocalDB(version: number = 1) {
   return {
     connection,
     inProgress,
+  }
+}
+
+export function useEncryptedTransactions() {
+  const { user } = useUser()
+  const { connection, tickCount } = useContext(DBContext)
+  const [transactions, setTransactions] = useState<EncryptedTransaction[]>([])
+
+  const getAllTransactionsCallback = useCallback(async () => {
+    if (
+      !connection?.db ||
+      connection.result !== DBConnectionResult.CONNECTED ||
+      !user
+    ) {
+      return
+    }
+
+    const dbTransaction = createTransaction(
+      connection,
+      DBObjectStores.Transaction,
+      "readonly"
+    )
+    const index = dbTransaction
+      .objectStore(DBObjectStores.Transaction)
+      .index("userId")
+    const request = index.getAll(user.id)
+
+    request.onsuccess = () => {
+      const allTransactions: EncryptedTransaction[] = []
+      for (const item of request.result) {
+        allTransactions.push(item)
+      }
+      setTransactions(allTransactions)
+    }
+  }, [user, connection])
+
+  useEffect(() => {
+    getAllTransactionsCallback()
+  }, [getAllTransactionsCallback, tickCount])
+
+  return { transactions }
+}
+
+export function useImportEncryptedTransactions() {
+  const { user } = useUser()
+  const { connection, tick } = useContext(DBContext)
+  const [completed, setCompleted] = useState<boolean>()
+  const [error, setError] = useState<ErrorEvent>()
+
+  return {
+    importTransactions: async (
+      transactions: EncryptedTransaction[],
+      mode: "merge" | "replace",
+      conflictResolution: "local" | "remote"
+    ) => {
+      if (
+        !connection?.db ||
+        connection.result !== DBConnectionResult.CONNECTED ||
+        !user
+      ) {
+        return
+      }
+
+      const dbTransaction = createTransaction(
+        connection,
+        DBObjectStores.Transaction,
+        "readwrite"
+      )
+
+      for (const transaction of transactions) {
+        if (mode === "merge") {
+          const request = dbTransaction
+            .objectStore(DBObjectStores.Transaction)
+            .get(transaction.id)
+          const result = await dbRequestPromise(request)
+
+          if (result && conflictResolution === "local") {
+            continue
+          }
+        }
+        const addRequest = dbTransaction
+          .objectStore(DBObjectStores.Transaction)
+          .add(transaction)
+        await dbRequestPromise(addRequest)
+      }
+
+      dbTransaction.oncomplete = () => {
+        setCompleted(true)
+        tick()
+      }
+      dbTransaction.onerror = (event) => {
+        setError(event as ErrorEvent)
+      }
+    },
+    completed,
+    error,
   }
 }
 
@@ -135,7 +232,7 @@ export function useCreateTransactionQuery() {
       )
       const objectStore = dbTransaction.objectStore(DBObjectStores.Transaction)
       const transactionId = window.crypto.randomUUID()
-      const encryptedTransaction = {
+      const encryptedTransaction: EncryptedTransaction = {
         id: transactionId,
         userId: user.id,
         data: encrypt(
@@ -180,7 +277,7 @@ export function useUpdateTransactionQuery() {
         "readwrite"
       )
       const objectStore = dbTransaction.objectStore(DBObjectStores.Transaction)
-      const encryptedTransaction = {
+      const encryptedTransaction: EncryptedTransaction = {
         id: transaction.id,
         userId: user.id,
         data: encrypt(user.key, JSON.stringify(transaction)),
