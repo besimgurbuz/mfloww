@@ -3,7 +3,7 @@ import { Timestamp } from "firebase-admin/firestore"
 
 import { adminDB } from "@/lib/server/admin"
 
-export const POST = async (req: NextRequest) => {
+export const GET = async (req: NextRequest) => {
   if (
     req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
   ) {
