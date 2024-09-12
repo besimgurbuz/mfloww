@@ -6,7 +6,7 @@ import {
   useImportEncryptedTransactions,
 } from "@/lib/local-db/hooks"
 import { EncryptedTransaction } from "@/lib/transaction"
-import { formatTimePassedSince, formatTimeRemainingUntil } from "@/lib/utils"
+import { formatTimePassedSince } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -195,12 +195,24 @@ export function DataSync() {
     return formatTimePassedSince(syncStatus?.createdAt)
   }, [syncStatus?.createdAt])
 
-  const availableUntilTime = useMemo(() => {
+  const availibilityTooltip = useMemo(() => {
     if (!syncStatus?.expiresAt) {
-      return "never"
+      return "No available data to download."
     }
 
-    return formatTimeRemainingUntil(syncStatus?.expiresAt)
+    const expiresAt = new Date(syncStatus.expiresAt)
+    const now = new Date()
+    const diffInHours = Math.floor(
+      (expiresAt.getTime() - now.getTime()) / (1000 * 60 * 60)
+    )
+
+    if (diffInHours <= 0) {
+      return "Data will be deleted in the next cycle."
+    }
+
+    return `Data is available for download for next ${diffInHours} hour${
+      diffInHours > 1 ? "s" : ""
+    }.`
   }, [syncStatus?.expiresAt])
 
   return (
@@ -236,10 +248,7 @@ export function DataSync() {
                   </Button>
                 </DialogTrigger>
               </TooltipTrigger>
-              <TooltipContent>
-                Data is available for download for the next {availableUntilTime}
-                .
-              </TooltipContent>
+              <TooltipContent>{availibilityTooltip}</TooltipContent>
             </Tooltip>
             <DialogContent>
               <DialogHeader>
@@ -308,7 +317,7 @@ export function DataSync() {
           </Dialog>
         </TooltipProvider>
       </div>
-      {syncStatus && (
+      {syncStatus?.hasSync && (
         <Badge
           variant="secondary"
           className="flex w-fit items-center gap-1 cursor-help"
