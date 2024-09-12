@@ -207,10 +207,10 @@ export function DataSync() {
     )
 
     if (diffInHours <= 0) {
-      return "Data will be deleted in the next cycle."
+      return "Sync data will be deleted in the next cycle."
     }
 
-    return `Data is available for download for next ${diffInHours} hour${
+    return `Sync data is available for next ${diffInHours} hour${
       diffInHours > 1 ? "s" : ""
     }.`
   }, [syncStatus?.expiresAt])
