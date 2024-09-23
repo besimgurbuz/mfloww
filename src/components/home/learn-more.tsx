@@ -24,11 +24,10 @@ export function LearnMore() {
       <TabsContent value="your-data" className="w-full md:w-fit">
         <Card>
           <CardHeader>
-            <CardTitle>Your data belongs to you and you alone!</CardTitle>
+            <CardTitle>Your data belongs exclusively to you</CardTitle>
             <p className="max-w-[800px] text-muted-foreground">
-              Any sort of data you create is stored in your device. But
-              Don&apos;t worry you can still send your data to your other
-              devices.
+              All data you create is securely stored on your device. You have
+              the option to synchronize your data across your personal devices.
             </p>
           </CardHeader>
         </Card>
@@ -37,12 +36,12 @@ export function LearnMore() {
         <Card>
           <CardHeader>
             <CardTitle>
-              Every transaction you create is encrypted by your unique key
+              Every transaction is encrypted with your unique key
             </CardTitle>
             <p className="max-w-[800px] text-muted-foreground">
-              When you start using the application, you&apos;ll get a unique
-              key. This key will be generated even you decided to use as
-              anonymous. Your entries will be encrypted by your key.
+              Upon initializing your account, you&apos;ll receive a unique
+              encryption key. All your entries are securely encrypted using this
+              key.
             </p>
           </CardHeader>
         </Card>
@@ -50,12 +49,12 @@ export function LearnMore() {
       <TabsContent value="currencies" className="w-full md:w-fit">
         <Card>
           <CardHeader>
-            <CardTitle>+25 Currencies</CardTitle>
+            <CardTitle>Support for Over 25 Currencies</CardTitle>
             <p className="max-w-[800px] text-muted-foreground">
-              +25 different currencies are supported. You can create your
-              entries in any of them. You will be able to define a base
-              currency. And every transaction you make will be converted and
-              displayed in your base currency.
+              We support more than 25 different currencies. You can record
+              entries in any supported currency. Additionally, you can set a
+              base currency, and all transactions will be automatically
+              converted and displayed in your chosen base currency.
             </p>
           </CardHeader>
         </Card>
@@ -63,10 +62,12 @@ export function LearnMore() {
       <TabsContent value="open-source" className="w-full md:w-fit">
         <Card>
           <CardHeader>
-            <CardTitle>Open Source</CardTitle>
+            <CardTitle>Open Source Software</CardTitle>
             <p className="max-w-[800px] text-muted-foreground">
-              The source code is available on GitHub. You can contribute to the
-              app or even fork it, customize it and use it by yourself.
+              Our source code is publicly available on GitHub. We welcome
+              contributions to the application. You&apos;re also free to fork
+              the repository, customize it to your needs, and deploy your own
+              version.
             </p>
           </CardHeader>
         </Card>
