@@ -14,7 +14,7 @@ export default function Home() {
           <section className="mx-auto py-6 max-w-[980px] flex flex-col items-center w-full">
             <LandingIllustration className="w-[280px] md:w-[500px] lg:w-[600px] my-2" />
             <h1 className="text-center text-3xl md:text-5xl lg:text-6xl text-foreground font-bold font-sans">
-              Visualize your financial flow
+              Visualize your money flow
             </h1>
             <p className="pt-2 max-w-[750px] text-center text-lg text-muted-foreground sm:text-xl">
               Experience your financial data through elegantly designed charts.
