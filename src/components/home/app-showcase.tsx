@@ -23,7 +23,7 @@ export function AppShowcase() {
   return (
     <div className="flex flex-col gap-4 items-center justify-center">
       <div className="relative flex items-center justify-center w-[290px] h-[598px] rounded-[49px] bg-[#414141]">
-        <div className="relative flex items-center justify-center w-[264px] h-[575px] rounded-[36px]">
+        <div className="relative bg-black flex items-center justify-center w-[264px] h-[575px] rounded-[36px]">
           {screens.map((_, index) => (
             <Image
               key={index}
