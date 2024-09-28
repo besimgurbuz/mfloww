@@ -24,8 +24,7 @@ export default function SignIn() {
                   Sign in
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                  You can either continue as anonymous or sign in with a
-                  provider you choose.
+                  You sign in with a provider you choose.
                 </p>
               </div>
               <SignInForm />
