@@ -24,7 +24,7 @@ export default function SignIn() {
                   Sign in
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                  You sign in with a provider you choose.
+                  You can sign in with a provider you choose.
                 </p>
               </div>
               <SignInForm />
